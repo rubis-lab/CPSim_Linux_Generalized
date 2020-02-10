@@ -1,6 +1,11 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Engine",
+    "\\Simulator",
+    "\\Simulator\\bin\\x64",
+    "\\Simulator\\bin\\x64\\Debug"
   ],
+  "SelectedNode": "\\Simulator",
   "PreviewInSolutionExplorer": false
 }
