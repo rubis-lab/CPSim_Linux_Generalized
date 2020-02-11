@@ -1,3 +1,7 @@
+/**
+@file main.cpp
+@
+*/
 #include <cstdio>
 #include <memory>
 #include <vector>

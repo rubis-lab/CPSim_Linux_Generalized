@@ -23,6 +23,12 @@ for the JavaScript code in this file
 var NAVTREE =
 [
   [ "CPSimRe", "index.html", [
+    [ "CPSim Re-implementation", "index.html", [
+      [ "What is CPSim", "index.html#intro", null ],
+      [ "Developers", "index.html#developer", null ],
+      [ "Try our demo", "index.html#Links", null ]
+    ] ],
+    [ "TryPage", "_try_page.html", null ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],

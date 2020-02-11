@@ -1,0 +1,17 @@
+/**
+ @file     MainPage.doxy
+ @brief    File of Main Page
+ */
+
+ /**
+   @mainpage   CPSim Re-implementation
+   @section intro What is CPSim
+   - Cyber Physical System Simulator : A program can be used for simulation of cyber system of automotive systems.
+   
+   @section developer Developers
+        - Seonghyeon Park
+        - Alex
+        - Jin Choi
+   @section Links Try our demo
+       @ref TryPage
+   */

@@ -1,11 +1,10 @@
 {
   "ExpandedNodes": [
     "",
+    "\\Documentation",
     "\\Engine",
-    "\\Simulator",
-    "\\Simulator\\bin\\x64",
-    "\\Simulator\\bin\\x64\\Debug"
+    "\\Simulator"
   ],
-  "SelectedNode": "\\Simulator",
+  "SelectedNode": "\\Engine\\main.cpp",
   "PreviewInSolutionExplorer": false
 }
