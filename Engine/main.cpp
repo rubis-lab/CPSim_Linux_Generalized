@@ -1,19 +1,35 @@
-/**
-@file main.cpp
-@
+/** This file is engine code of CPSim-Re engine
+ * @file main.cpp
+ * @brief Codes for Engine-Main
+ * @page Main of Engine
+ * @author Seonghyeon Park
+ * @date 2020-02-24
+ * @section Logic
+ *  Abstraction for Main Code Logic is as below algorithm,
+ *  1. Execute Initializer
+ *  2. Check all the informations for running simulator
+ *  3. Execute Schedule Simulator
+ *  4. Execute Offline Guider
+ *  5. Execute Online Progressive Scheduling
+ *  6. Execute Executor
+ *  7. Execute OPS Updater
+ *  8. Repeat Execution
+ *
 */
+
 #include <cstdio>
 #include <memory>
 #include <vector>
 #include "Task.h"
 #include "ECUTask.h"
 
-// Important Note:
-// A lot of classes have "Task" in their name.
-// This Task is simply a name used in "Task Based Parallelism" programming model.
-// It does not have to do with "Simulation tasks".
-// Everything is a task.
+/**
+    @fn main(void)
+    @brief main code of engine
+    @return none
+    @param none
 
+*/
 int main()
 {
     printf("hello from CPSim!\n");
