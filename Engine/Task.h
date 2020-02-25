@@ -1,29 +1,48 @@
-/** 이 파일은 Task 모듈의 의사코드 작성 파일입니다.
- *  독시파일을 위해 만들어졌으며, 형태는 아래와 같이 맞추자
- *  @file Task.cpp
- *  @brief Pseudo Codes for Engine-Task
+/** 
+ *  This file is the header file for the Task class.
+ *  @file Task.h
+ *  @brief Header file for Engine-Task
  *  @page Task
  *  @author Seonghyeon Park
  *  @date 2020-02-18
- *  @section Logic
- *  Task 로직은 다음과 같다.
- *  1. Specification 모듈 실행 및 성공값 리턴 받고 아닐 경우, 에러 출력
- *  2. Specification에 필요한 인스턴스 변수들 생성 및 CAN 인터페이스 모듈 생성
- *  3.
- *
+ *  @section Task's Properties
+ *  A Task has below properties.
+ *  1. Name, 
+ *  2. Period,
+ *  3. Deadline,
+ *  4. Function Code
+ *  4. Best Case Execution Time
+ *  5. Worst Case Execution Time
+ *  6. Offset
  *
  */
+
+#ifndef TASK_H__
+#define TASK_H__
 #include <cstdio>
+#include <vector>
 
 /// @class Task
 class Task
 {
-public:
-	virtual void Update() = 0;
-	virtual bool ShouldWeExecute() = 0;
+	private:
+		char name[20];
+		int period;
+		int deadline;
+		int wcet;
+		int bcet;
+		int offset;
+		int is_read;
+		int is_write;
+		int producer;
 
-	virtual ~Task()
-	{
-		printf("Destroyed\n");
-	}
+	public:
+		virtual void Update() = 0;
+		virtual bool ShouldWeExecute() = 0;
+		virtual ~Task()
+		{
+			printf("Destroyed\n");
+		}
 };
+
+#endif

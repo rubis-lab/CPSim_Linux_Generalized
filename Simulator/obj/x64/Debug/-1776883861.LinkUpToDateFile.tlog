@@ -1,1 +1,0 @@
-g++ -o "/home/shpark/projects/Simulator/bin/x64/Debug/Simulator.out" -Wl,--no-undefined -Wl,-z,relro -Wl,-z,now -Wl,-z,noexecstack /home/shpark/projects/Simulator/obj/x64/Debug/test.o

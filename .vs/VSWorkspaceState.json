@@ -1,10 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Documentation",
-    "\\Engine",
-    "\\Simulator"
+    "\\Engine"
   ],
-  "SelectedNode": "\\Engine\\main.cpp",
+  "SelectedNode": "\\Engine\\CMakeLists.txt",
   "PreviewInSolutionExplorer": false
 }

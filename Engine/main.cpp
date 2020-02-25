@@ -17,9 +17,7 @@
  *
 */
 
-#include <cstdio>
 #include <memory>
-#include <vector>
 #include "Task.h"
 #include "ECUTask.h"
 
