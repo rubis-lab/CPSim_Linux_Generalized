@@ -17,35 +17,60 @@
  *
 */
 
+/*
+    Header file lists.. in UNIX standard library
+*/
 #include <memory>
-#include "Task.h"
-#include "ECUTask.h"
+#include <stdio.h>
+#include <unistd.h>
+
+/*
+    Header file lists.. in our simulator
+*/
+#include "Initializer.h"
+#include "ScheduleSimulator.h"
+#include "OfflineGuider.h"
 
 /**
     @fn main(void)
-    @brief main code of engine
+    @brief this is main code of engine.
     @return none
     @param none
 
 */
 int main()
 {
-    printf("hello from CPSim!\n");
-	
-	std::vector<std::unique_ptr<Task>> tasks;
-	
-	std::unique_ptr<Task> sampleTask = std::make_unique<ECUTask>();
+    /** [Initialization with Specification]
+     *  To run simulator, 
+     *  first we need to initialize all of the instances of ECU, Task, CAN, etc.).
+     *  For this, we create initializer module here, and call initialize function which includes all the functions
+     *  that we need.
+    */
+    Initializer initializer_module;
+    initializer_module.initialize();
+    
+    /** [Generation of Real-Cyber System's Scheduling]
+     * To run simulator, 
+     * second, we need to calculate all of the ECUs' behavior.
+     * For this, we simulate those ECUs' job scheduling scenario with the specificated informations.
+     */
+    ScheduleSimulator schedule_simulator_on_Real;
+    
+    /** [Construction of Job Precedence Graph(Offline Guider)]
+     * To run simulator, 
+     * third, we need to consider those constraints(Physical Read Constraint, Physical Write Constraint, Producer-Consumer Constraint)
+     * For this, we create offline guider, and make a graph data structure for representing all of the jobs' precedence relationship.
+    */
+    OfflineGuider offline_guider;
+    offline_guider.construct_job_precedence_graph();
 
-	static_cast<ECUTask*>(sampleTask.get())->InsertSoftwareComponentTask();
-	
-	tasks.push_back(std::move(sampleTask));
-	
-	bool continueSimulation = true;
-	
-	while(continueSimulation)
-		for(int i = 0; i < tasks.size(); i++)
-			if(tasks[i]->ShouldWeExecute())
-				tasks[i]->Update();
-
+    /** [Execute Jobs and Update the graph]
+     * To start simulator,
+     * forth, we need to schedule those jobs' that is already inserted in the Job Precedence Graph.
+     * For this, we create executor which is responsible for 
+    */
     return 0;
 }
+
+/**
+*/
