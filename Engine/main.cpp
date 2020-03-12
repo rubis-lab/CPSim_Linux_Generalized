@@ -69,6 +69,8 @@ int main()
      * forth, we need to schedule those jobs' that is already inserted in the Job Precedence Graph.
      * For this, we create executor which is responsible for 
     */
+    Executor executor;
+    executor.run_simulation();
     return 0;
 }
 
