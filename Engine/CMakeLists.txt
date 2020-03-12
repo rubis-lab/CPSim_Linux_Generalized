@@ -1,11 +1,17 @@
-﻿# CMakeList.txt: CPSim에 대한 CMake 프로젝트, 여기에 소스를 포함하고
-# 프로젝트 특정 논리를 정의합니다.
-#
-cmake_minimum_required (VERSION 3.8)
+﻿# Required Cmake Version
+CMAKE_MINIMUM_REQUIRED (VERSION 3.8)
 
-project ("CPSim")
+# Project name and version
+PROJECT ("CPSim")
+SET ( PROJECT_VERSION_MAJOR 0 )
+SET ( PROJECT_VERSION_MINOR 1 )
 
-# 이 프로젝트의 실행 파일에 소스를 추가합니다.
-add_executable (CPSim "CPSim.cpp" "CPSim.h")
+# Build configuration and makefile creation
+SET ( CMAKE_BUILD_TYPE Debug )
+SET ( CMAKE_VERBOSE_MAKEFILE true )
 
-# TODO: 필요한 경우 테스트를 추가하고 대상을 설치합니다.
+
+
+
+# Add source files at here using this formats.
+add_executable ( ${OUTPUT_ELF} ${SRC_FILES})
