@@ -1,3 +1,6 @@
+#ifndef JOB_H__
+#define JOB_H__
+
 /** 
  *  This file is the header file for the Job class.
  *  @file Job.h
@@ -22,3 +25,5 @@
 class Job {
 
 };
+
+#endif

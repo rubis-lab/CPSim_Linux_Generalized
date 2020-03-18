@@ -15,5 +15,8 @@
 class ScheduleSimulator {
 private:
 public:
+    ScheduleSimulator();
+    ~ScheduleSimulator();
 
+    void simulate_scheduling_on_Real();
 };
