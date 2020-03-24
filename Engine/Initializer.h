@@ -13,7 +13,8 @@
  *  
 */
 
-class Initializer{
+class Initializer
+{
 private:
 public:
     /**

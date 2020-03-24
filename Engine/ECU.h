@@ -11,7 +11,8 @@
  *
  */
 
-class ECU{
+class ECU
+{
 private:
 public:
     ECU();
