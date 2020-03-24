@@ -10,6 +10,9 @@ CMakeFiles/CPSim-0.1.out.dir/Engine/Initializer.cpp.o: ../Engine/Initializer.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/OfflineGuider.cpp.o: ../Engine/OfflineGuider.cpp
 CMakeFiles/CPSim-0.1.out.dir/Engine/OfflineGuider.cpp.o: ../Engine/OfflineGuider.h
 
+CMakeFiles/CPSim-0.1.out.dir/Engine/PrecedenceGraph.cpp.o: ../Engine/PrecedenceGraph.cpp
+CMakeFiles/CPSim-0.1.out.dir/Engine/PrecedenceGraph.cpp.o: ../Engine/PrecedenceGraph.h
+
 CMakeFiles/CPSim-0.1.out.dir/Engine/ScheduleSimulator.cpp.o: ../Engine/ScheduleSimulator.cpp
 CMakeFiles/CPSim-0.1.out.dir/Engine/ScheduleSimulator.cpp.o: ../Engine/ScheduleSimulator.h
 

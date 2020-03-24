@@ -23,6 +23,7 @@
 #include <memory>
 #include <stdio.h>
 #include <unistd.h>
+#include <dlfcn.h>
 
 /*
     Header file lists.. in our simulator

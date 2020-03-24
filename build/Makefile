@@ -207,6 +207,33 @@ Engine/OfflineGuider.cpp.s:
 	$(MAKE) -f CMakeFiles/CPSim-0.1.out.dir/build.make CMakeFiles/CPSim-0.1.out.dir/Engine/OfflineGuider.cpp.s
 .PHONY : Engine/OfflineGuider.cpp.s
 
+Engine/PrecedenceGraph.o: Engine/PrecedenceGraph.cpp.o
+
+.PHONY : Engine/PrecedenceGraph.o
+
+# target to build an object file
+Engine/PrecedenceGraph.cpp.o:
+	$(MAKE) -f CMakeFiles/CPSim-0.1.out.dir/build.make CMakeFiles/CPSim-0.1.out.dir/Engine/PrecedenceGraph.cpp.o
+.PHONY : Engine/PrecedenceGraph.cpp.o
+
+Engine/PrecedenceGraph.i: Engine/PrecedenceGraph.cpp.i
+
+.PHONY : Engine/PrecedenceGraph.i
+
+# target to preprocess a source file
+Engine/PrecedenceGraph.cpp.i:
+	$(MAKE) -f CMakeFiles/CPSim-0.1.out.dir/build.make CMakeFiles/CPSim-0.1.out.dir/Engine/PrecedenceGraph.cpp.i
+.PHONY : Engine/PrecedenceGraph.cpp.i
+
+Engine/PrecedenceGraph.s: Engine/PrecedenceGraph.cpp.s
+
+.PHONY : Engine/PrecedenceGraph.s
+
+# target to generate assembly for a file
+Engine/PrecedenceGraph.cpp.s:
+	$(MAKE) -f CMakeFiles/CPSim-0.1.out.dir/build.make CMakeFiles/CPSim-0.1.out.dir/Engine/PrecedenceGraph.cpp.s
+.PHONY : Engine/PrecedenceGraph.cpp.s
+
 Engine/ScheduleSimulator.o: Engine/ScheduleSimulator.cpp.o
 
 .PHONY : Engine/ScheduleSimulator.o
@@ -279,6 +306,9 @@ help:
 	@echo "... Engine/OfflineGuider.o"
 	@echo "... Engine/OfflineGuider.i"
 	@echo "... Engine/OfflineGuider.s"
+	@echo "... Engine/PrecedenceGraph.o"
+	@echo "... Engine/PrecedenceGraph.i"
+	@echo "... Engine/PrecedenceGraph.s"
 	@echo "... Engine/ScheduleSimulator.o"
 	@echo "... Engine/ScheduleSimulator.i"
 	@echo "... Engine/ScheduleSimulator.s"

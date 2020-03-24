@@ -4,6 +4,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/CPSim-0.1.out.dir/Engine/ScheduleSimulator.cpp.o"
   "CMakeFiles/CPSim-0.1.out.dir/Engine/OfflineGuider.cpp.o"
   "CMakeFiles/CPSim-0.1.out.dir/Engine/Executor.cpp.o"
+  "CMakeFiles/CPSim-0.1.out.dir/Engine/PrecedenceGraph.cpp.o"
   "Debug/CPSim-0.1.out.pdb"
   "Debug/CPSim-0.1.out"
 )

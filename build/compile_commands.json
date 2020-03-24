@@ -23,5 +23,10 @@
   "directory": "/home/park/git_base/Re-implemented-CPSim/build",
   "command": "/usr/bin/g++-7    -g   -o CMakeFiles/CPSim-0.1.out.dir/Engine/Executor.cpp.o -c /home/park/git_base/Re-implemented-CPSim/Engine/Executor.cpp",
   "file": "/home/park/git_base/Re-implemented-CPSim/Engine/Executor.cpp"
+},
+{
+  "directory": "/home/park/git_base/Re-implemented-CPSim/build",
+  "command": "/usr/bin/g++-7    -g   -o CMakeFiles/CPSim-0.1.out.dir/Engine/PrecedenceGraph.cpp.o -c /home/park/git_base/Re-implemented-CPSim/Engine/PrecedenceGraph.cpp",
+  "file": "/home/park/git_base/Re-implemented-CPSim/Engine/PrecedenceGraph.cpp"
 }
 ]
