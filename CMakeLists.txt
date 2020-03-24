@@ -17,7 +17,8 @@ SET ( OUTPUT_ELF
 SET ( SRC_FILES
         Engine/main.cpp Engine/Initializer.h Engine/Initializer.cpp Engine/ScheduleSimulator.h
         Engine/ScheduleSimulator.cpp Engine/OfflineGuider.h Engine/OfflineGuider.cpp
-        Engine/Executor.h Engine/Executor.cpp
+        Engine/Executor.h Engine/Executor.cpp Engine/PrecedenceGraph.h Engine/PrecedenceGraph.cpp
+        
         )
 
 # Compiler Information
