@@ -1,3 +1,8 @@
+#ifndef TASK_H__
+#define TASK_H__
+#include <cstdio>
+#include <string.h>
+#include <vector>
 /** 
  *  This file is the header file for the Task class.
  *  @file Task.h
@@ -7,42 +12,40 @@
  *  @date 2020-02-18
  *  @section Task's Properties
  *  A Task has below properties.
- *  1. Name, 
- *  2. Period,
- *  3. Deadline,
- *  4. Function Code
- *  4. Best Case Execution Time
- *  5. Worst Case Execution Time
- *  6. Offset
+ *  1. Name,
+ *  2. Task ID 
+ *  3. Period,
+ *  4. Deadline,
+ *  5. Function Code
+ *  6. Best Case Execution Time
+ *  7. Worst Case Execution Time
+ *  8. Offset
  *
  */
-
-#ifndef TASK_H__
-#define TASK_H__
-#include <cstdio>
-#include <vector>
 
 /// @class Task
 class Task
 {
-	private:
-		char name[20];
-		int period;
-		int deadline;
-		int wcet;
-		int bcet;
-		int offset;
-		int is_read;
-		int is_write;
-		int producer;
+private:
+	char task_name_[20];
+	int task_id_;
+	int period_;
+	int deadline_;
+	int wcet_;
+	int bcet_;
+	int offset_;
+	int is_read_;
+	int is_write_;
+	Task* producer_;
+	Task* consumer_;
 
-	public:
+public:
+	Task();
+	Task(char*, int, int, int, int, int, int, int, int, char*, char*);
+	~Task();
 		virtual void Update() = 0;
 		virtual bool ShouldWeExecute() = 0;
-		virtual ~Task()
-		{
-			printf("Destroyed\n");
-		}
+		
 };
 
 #endif

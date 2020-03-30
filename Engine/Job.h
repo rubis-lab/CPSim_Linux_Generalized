@@ -1,6 +1,6 @@
 #ifndef JOB_H__
 #define JOB_H__
-
+#include "Task.h"
 /** 
  *  This file is the header file for the Job class.
  *  @file Job.h
@@ -22,7 +22,14 @@
  */
 
  /// @class Job
-class Job {
+class Job : public Task
+{
+private:
+    int job_id;
+public: 
+    Job();
+    Job();
+    ~Job();
 
 };
 

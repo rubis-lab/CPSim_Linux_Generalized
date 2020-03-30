@@ -12,7 +12,7 @@ Initializer::~Initializer()
 
 int Initializer::execution_time_mapping_function()
 {
-
+    //ECU to Simulator PC
 }
 
 int Initializer::can_interface_initalizer(int num_channel)
