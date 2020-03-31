@@ -2,20 +2,13 @@
 #define NETWORK_H__
 #include <string.h>
 
-/**
- *
- *  @file Network.h
- *  @brief class for Engine-Network
- *  @page Network
- *  @author Seonghyeon Park
- *  @date 2020-03-24
- *  @section Logic
- *  the properties of Network
- *  - ECU id
- *  - Performance (Unit : MHz)
- *  - SchedulingPolicy (e.g., RM, EDF, etc.)
- */
-
+/** This file is engine code of CPSim-Re engine
+ * @file Network.h
+ * @class Network
+ * @author Seonghyeon Park
+ * @date 2020-03-31
+ * @brief Codes for Engine-Network 
+*/
 
 class Network
 {

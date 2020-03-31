@@ -14,6 +14,12 @@
 #include <pcan.h>
 #include <libpcan.h>
 
+/** This file is engine code of CPSim-Re engine
+ * @file CANInterface.h
+ * @author Seonghyeon Park
+ * @date 2020-03-31
+ * @brief Codes for Engine-CANInterface 
+*/
 
 using namespace std;
 
@@ -31,8 +37,9 @@ typedef struct
 } TPCANMsg;
 #endif
 
-/* CAN Message class
- * This class is responsible for sending messages via CAN bus
+/** CAN Message class
+ * @class CAN_Msg
+ * @brief This class is responsible for sending messages via CAN bus
  */
 class CAN_Msg
 {

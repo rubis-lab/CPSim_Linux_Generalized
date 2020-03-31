@@ -1,18 +1,14 @@
-/** OfflineGuider 
- *
- *  @file OfflineGuider.cpp
- *  @brief Pseudo Codes for Engine-OfflineGuider
- *  @page OfflineGuider
- *  @author Seonghyeon Park
- *  @date 2020-02-18
- *  @section Logic
- *  OfflineGuider 
- *  1. 
- *
- *
- */
+#ifndef OFFLINEGUIDER_H__
+#define OFFLINEGUIDER_H__
 
- /// @class OfflineGuider
+/** This file is engine code of CPSim-Re engine
+ * @file OfflineGuider.h
+ * @class OfflineGuider
+ * @author Seonghyeon Park
+ * @date 2020-03-31
+ * @brief Codes for Engine-OfflineGuider 
+*/
+
 class OfflineGuider {
 private:
 public:
@@ -26,3 +22,5 @@ public:
     */
     void construct_job_precedence_graph();
 };
+
+#endif

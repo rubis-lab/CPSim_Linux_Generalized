@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['task_21',['Task',['../class_task.html',1,'']]]
+  ['initializer',['Initializer',['../class_initializer.html',1,'']]]
 ];

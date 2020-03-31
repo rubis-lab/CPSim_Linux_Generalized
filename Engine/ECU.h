@@ -2,13 +2,11 @@
 #define ECU_H__
 #include <string.h>
 /**
- *
  *  @file ECU.h
- *  @brief class for Engine-ECU
- *  @page ECU
+ *  @class ECU
  *  @author Seonghyeon Park
- *  @date 2020-02-18
- *  @section Logic
+ *  @date 2020-03-31
+ *  @brief class for Engine-ECU
  *  the properties of ECU
  *  - ECU id
  *  - Performance (Unit : MHz)

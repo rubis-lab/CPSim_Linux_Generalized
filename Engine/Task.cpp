@@ -1,11 +1,11 @@
 #include "Task.h"
 
-/** 
+/**
  *  This file is the cpp file for the Task class.
  *  @file Task.cpp
  *  @brief cpp file for Engine-Task
  *  @author Seonghyeon Park
- *  @date 2020-02-18
+ *  @date 2020-03-31
  */
 
 Task::Task()

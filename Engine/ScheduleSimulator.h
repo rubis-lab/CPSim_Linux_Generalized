@@ -1,17 +1,14 @@
-/**
- *
- *  @file ScheduleSimulator.cpp
- *  @brief Pseudo Codes for Engine-ScheduleSimulator
- *  @page ScheduleSimulator
- *  @author Seonghyeon Park
- *  @date 2020-02-18
- *  @section Logic
- *  ScheduleSimulator
- *
- *
- */
+#ifndef SCHEDULESIMULATOR_H__
+#define SCHEDULESIMULATOR_H__
 
- /// @class ScheduleSimulator
+/** This file is engine code of CPSim-Re engine
+ * @file ScheduleSimulator.h
+ * @class ScheduleSimulator
+ * @author Seonghyeon Park
+ * @date 2020-03-31
+ * @brief Codes for Engine-ScheduleSimulator 
+*/
+
 class ScheduleSimulator {
 private:
 public:
@@ -20,3 +17,5 @@ public:
 
     void simulate_scheduling_on_Real();
 };
+
+#endif

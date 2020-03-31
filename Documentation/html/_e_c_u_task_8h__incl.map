@@ -1,8 +1,4 @@
-<map id="C:/Users/RUBIS/Documents/GitHub/Re&#45;implemented&#45;CPSim/Engine/ECUTask.h" name="C:/Users/RUBIS/Documents/GitHub/Re&#45;implemented&#45;CPSim/Engine/ECUTask.h">
-<area shape="rect" id="node1" title=" " alt="" coords="89,5,276,61"/>
-<area shape="rect" id="node2" href="$_task_8h.html" title=" " alt="" coords="17,184,79,211"/>
-<area shape="rect" id="node4" href="$_software_component_task_8h.html" title=" " alt="" coords="23,109,201,136"/>
-<area shape="rect" id="node5" title=" " alt="" coords="225,109,281,136"/>
-<area shape="rect" id="node6" title=" " alt="" coords="305,109,375,136"/>
-<area shape="rect" id="node3" title=" " alt="" coords="19,259,77,285"/>
+<map id="Engine/ECUTask.h" name="Engine/ECUTask.h">
+<area shape="rect" id="node2" href="$_task_8h.html" title="Task.h" alt="" coords="82,155,145,181"/>
+<area shape="rect" id="node6" href="$_software_component_task_8h.html" title="SoftwareComponentTask.h" alt="" coords="23,80,204,107"/>
 </map>

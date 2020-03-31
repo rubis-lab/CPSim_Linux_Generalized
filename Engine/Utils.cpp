@@ -1,5 +1,14 @@
 #include "Utils.h"
 
+/**
+ *  This file is the cpp file for the RUBIS_Util class.
+ *  @file RUBIS_Util.cpp
+ *  @brief cpp file for Engine-RUBIS_Util
+ *  @author Seonghyeon Park
+ *  @date 2020-03-31
+ */
+
+/*
 int utils::cpuClock = 3000;
 int utils::elapsedMs = 0;
 int utils::hyperPeriod = 0;
@@ -38,3 +47,4 @@ int utils::getRealElapsedMs(int ecuClock) // How much time would have passed on 
 {
 	return elapsedMs / (cpuClock / ecuClock);
 }
+*/

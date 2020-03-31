@@ -1,10 +1,11 @@
 #include "ECU.h"
 
 /**
- *
+ *  This file is the cpp file for the ECU class.
  *  @file ECU.cpp
+ *  @brief cpp file for Engine-ECU
  *  @author Seonghyeon Park
- *  @date 2020-03-24
+ *  @date 2020-03-31
  */
 
 ECU::ECU()

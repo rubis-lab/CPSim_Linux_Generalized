@@ -3,14 +3,14 @@
 #include <cstdio>
 #include <string.h>
 #include <vector>
-/** 
- *  This file is the header file for the Task class.
- *  @file Task.h
- *  @brief Header file for Engine-Task
- *  @page Task
- *  @author Seonghyeon Park
- *  @date 2020-02-18
- *  @section Task's Properties
+
+/** This file is engine code of CPSim-Re engine
+ * @file Task.h
+ * @class Task
+ * @author Seonghyeon Park
+ * @date 2020-03-31
+ * @brief 
+ *  Task's Properties
  *  A Task has below properties.
  *  1. Name,
  *  2. Task ID 
@@ -20,10 +20,8 @@
  *  6. Best Case Execution Time
  *  7. Worst Case Execution Time
  *  8. Offset
- *
  */
 
-/// @class Task
 class Task
 {
 private:

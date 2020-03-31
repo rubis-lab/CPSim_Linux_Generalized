@@ -1,0 +1,6 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$class_task.html" title="Task&#39;s Properties A Task has below properties. " alt="" coords="5,56,56,83"/>
+<area shape="rect" id="node2" href="$class_e_c_u_task.html" title="ECUTask" alt="" coords="149,5,229,32"/>
+<area shape="rect" id="node3" href="$class_job.html" title="Header file for Engine&#45;Job A job is the instance of certain task. So it has dynamical properties with..." alt="" coords="168,56,211,83"/>
+<area shape="rect" id="node4" href="$class_software_component_task.html" title="SoftwareComponentTask" alt="" coords="104,107,275,133"/>
+</map>

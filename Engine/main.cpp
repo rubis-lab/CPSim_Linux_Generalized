@@ -1,10 +1,10 @@
 /** This file is engine code of CPSim-Re engine
  * @file main.cpp
  * @brief Codes for Engine-Main
- * @page Main of Engine
+ * @page Simulator
  * @author Seonghyeon Park
- * @date 2020-02-24
- * @section Logic
+ * @date 2020-03-31
+ * @section Simulator Logic
  *  Abstraction for Main Code Logic is as below algorithm,
  *  1. Execute Initializer
  *  2. Check all the informations for running simulator

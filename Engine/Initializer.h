@@ -4,13 +4,13 @@
 #include <libpcan.h>
 
 /** This file is engine code of CPSim-Re engine
- * @file Executor.h
- * @brief Codes for Engine-Executor
- * @page Executor
+ * @file Initializer.h
  * @author Seonghyeon Park
- * @date 2020-02-24
- * @section Logic
- *  
+ * @date 2020-03-31
+ * @class Initializer
+ * @brief Codes for Engine-Initializer.\n
+ * The Initializer is responsible for initializing entire objects of 
+ * simulator engine.
 */
 
 class Initializer

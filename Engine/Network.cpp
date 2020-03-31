@@ -1,17 +1,11 @@
 #include "Network.h"
 
 /**
- *
+ *  This file is the cpp file for the Network class.
  *  @file Network.cpp
- *  @brief class for Engine-Network
- *  @page Network
+ *  @brief cpp file for Engine-Network
  *  @author Seonghyeon Park
- *  @date 2020-03-24
- *  @section Logic
- *  the properties of Network
- *  - ECU id
- *  - Performance (Unit : MHz)
- *  - SchedulingPolicy (e.g., RM, EDF, etc.)
+ *  @date 2020-03-31
  */
 
 Network::Network()

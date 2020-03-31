@@ -1,12 +1,12 @@
 #ifndef EXECUTOR_H_
 #define EXECUTOR_H_
+
 /** This file is engine code of CPSim-Re engine
  * @file Executor.h
- * @brief Codes for Engine-Executor
- * @page Executor
+ * @class Executor
  * @author Seonghyeon Park
- * @date 2020-02-24
- * @section Logic
+ * @date 2020-03-31
+ * @brief Codes for Engine-Executor
  *  
 */
 

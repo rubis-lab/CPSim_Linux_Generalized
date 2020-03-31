@@ -1,5 +1,13 @@
 #include "CANInterface.h"
 
+/**
+ *  This file is the cpp file for the CANInterface class.
+ *  @file CANInterface.cpp
+ *  @brief cpp file for Engine-CANInterface
+ *  @author Seonghyeon Park
+ *  @date 2020-03-31
+ */
+
 pthread_mutex_t section_for_can_sending = PTHREAD_MUTEX_INITIALIZER;
 
 CAN_Msg::CAN_Msg()
