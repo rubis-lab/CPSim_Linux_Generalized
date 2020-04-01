@@ -9,7 +9,7 @@
  */
 
 /**
- * @fn void Executor::Executor()
+ * @fn Executor::Executor()
  * @brief the function of basic constructor of Executor
  * @author Seonghyeon Park
  * @date 2020-03-31
@@ -26,7 +26,7 @@ Executor::Executor(){
 }
 
 /**
- * @fn void Executor::~Executor()
+ * @fn Executor::~Executor()
  * @brief the function of basic destroyer of Executor
  * @author Seonghyeon Park
  * @date 2020-03-31

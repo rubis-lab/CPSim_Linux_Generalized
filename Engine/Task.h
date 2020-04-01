@@ -2,6 +2,7 @@
 #define TASK_H__
 #include <cstdio>
 #include <string.h>
+#include <string>
 #include <vector>
 
 /** This file is engine code of CPSim-Re engine
@@ -25,24 +26,24 @@
 class Task
 {
 private:
-	char task_name_[20];
-	int task_id_;
-	int period_;
-	int deadline_;
-	int wcet_;
-	int bcet_;
-	int offset_;
-	int is_read_;
-	int is_write_;
-	Task* producer_;
-	Task* consumer_;
+	std::string _task_name;
+	int _task_id;
+	int _period;
+	int _deadline;
+	int _wcet;
+	int _bcet;
+	int _offset;
+	int _is_read;
+	int _is_write;
+	Task* _producer;
+	Task* _consumer;
 
 public:
 	Task();
-	Task(char*, int, int, int, int, int, int, int, int, char*, char*);
+	Task(std::string, int, int, int, int, int, int, int, int, std::string, std::string);
 	~Task();
-		virtual void Update() = 0;
-		virtual bool ShouldWeExecute() = 0;
+	virtual void Update() = 0;
+	virtual bool ShouldWeExecute() = 0;
 		
 };
 
