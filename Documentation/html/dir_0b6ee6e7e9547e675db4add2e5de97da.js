@@ -39,7 +39,7 @@ var dir_0b6ee6e7e9547e675db4add2e5de97da =
     [ "Parser.h", "_parser_8h.html", null ],
     [ "PrecedenceGraph.cpp", "_precedence_graph_8cpp.html", null ],
     [ "PrecedenceGraph.h", "_precedence_graph_8h.html", [
-      [ "PrecedenceGraph", "class_precedence_graph.html", null ]
+      [ "PrecedenceGraph", "class_precedence_graph.html", "class_precedence_graph" ]
     ] ],
     [ "ScheduleSimulator.cpp", "_schedule_simulator_8cpp.html", null ],
     [ "ScheduleSimulator.h", "_schedule_simulator_8h.html", [
@@ -49,14 +49,15 @@ var dir_0b6ee6e7e9547e675db4add2e5de97da =
     [ "SoftwareComponentTask.h", "_software_component_task_8h.html", [
       [ "SoftwareComponentTask", "class_software_component_task.html", "class_software_component_task" ]
     ] ],
-    [ "Specificator.h", "_specificator_8h.html", null ],
+    [ "Specificator.cpp", "_specificator_8cpp.html", null ],
+    [ "Specificator.h", "_specificator_8h.html", [
+      [ "Specifier", "class_specifier.html", "class_specifier" ]
+    ] ],
     [ "Task.cpp", "_task_8cpp.html", null ],
     [ "Task.h", "_task_8h.html", [
       [ "Task", "class_task.html", "class_task" ]
     ] ],
     [ "TryPage.doxy", "_try_page_8doxy.html", null ],
     [ "Utils.cpp", "_utils_8cpp.html", null ],
-    [ "Utils.h", "_utils_8h.html", [
-      [ "RUBIS_Util", "class_r_u_b_i_s___util.html", "class_r_u_b_i_s___util" ]
-    ] ]
+    [ "Utils.h", "_utils_8h.html", null ]
 ];

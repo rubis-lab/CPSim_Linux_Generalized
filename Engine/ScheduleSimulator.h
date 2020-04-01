@@ -8,7 +8,6 @@
  * @date 2020-03-31
  * @brief Codes for Engine-ScheduleSimulator 
 */
-
 class ScheduleSimulator {
 private:
 public:

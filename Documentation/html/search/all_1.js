@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['baud_5frate_5f',['baud_rate_',['../class_network.html#a77341643ff78ea0eede8f13dadc19315',1,'Network']]],
-  ['bcet_5f',['bcet_',['../class_task.html#ad56a9794806443edf775e36abc07f571',1,'Task']]],
-  ['bug_20list',['Bug List',['../bug.html',1,'']]]
+  ['architecture_5fid',['ARCHITECTURE_ID',['../_c_make_c_compiler_id_8c.html#aba35d0d200deaeb06aee95ca297acb28',1,'ARCHITECTURE_ID():&#160;CMakeCCompilerId.c'],['../_c_make_c_x_x_compiler_id_8cpp.html#aba35d0d200deaeb06aee95ca297acb28',1,'ARCHITECTURE_ID():&#160;CMakeCXXCompilerId.cpp']]]
 ];

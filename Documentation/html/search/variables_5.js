@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['hyperperiod',['hyperPeriod',['../class_r_u_b_i_s___util.html#ae949db673c012b2caf4a48256383f055',1,'RUBIS_Util']]]
+  ['features',['features',['../feature__tests_8c.html#a1582568e32f689337602a16bf8a5bff0',1,'features():&#160;feature_tests.c'],['../feature__tests_8cxx.html#a1582568e32f689337602a16bf8a5bff0',1,'features():&#160;feature_tests.cxx']]]
 ];

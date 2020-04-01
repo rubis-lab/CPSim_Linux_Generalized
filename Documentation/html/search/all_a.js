@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['leastcommonmultiple',['leastCommonMultiple',['../class_r_u_b_i_s___util.html#ac53996a614d2f2bdf1568591f74365e9',1,'RUBIS_Util']]],
-  ['leastcommonmultipleva',['leastCommonMultipleVa',['../class_r_u_b_i_s___util.html#a8a5c4b53be25af880583958e7196056d',1,'RUBIS_Util']]],
-  ['logger',['Logger',['../class_logger.html',1,'Logger'],['../class_logger.html#abc41bfb031d896170c7675fa96a6b30c',1,'Logger::Logger()']]],
-  ['logger_2ecpp',['Logger.cpp',['../_logger_8cpp.html',1,'']]],
-  ['logger_2eh',['Logger.h',['../_logger_8h.html',1,'']]]
+  ['job',['Job',['../class_job.html',1,'Job'],['../class_job.html#a666013a882e328576a340ad37118ccba',1,'Job::Job()'],['../class_job.html#a666013a882e328576a340ad37118ccba',1,'Job::Job()']]],
+  ['job_2ecpp',['Job.cpp',['../_job_8cpp.html',1,'']]],
+  ['job_2eh',['Job.h',['../_job_8h.html',1,'']]],
+  ['job_5fid',['job_id',['../class_job.html#ab154568a2319db1e0cf6296872e6a398',1,'Job']]]
 ];

@@ -1,12 +1,19 @@
 var searchData=
 [
-  ['task',['Task',['../class_task.html',1,'Task'],['../class_task.html#a0ca53354bdc006762a0fda68c64f7608',1,'Task::Task()'],['../class_task.html#a830189bacf35b9887cf9195a33b4221a',1,'Task::Task(char *, int, int, int, int, int, int, int, int, char *, char *)']]],
-  ['task_2ecpp',['Task.cpp',['../_task_8cpp.html',1,'']]],
-  ['task_2eh',['Task.h',['../_task_8h.html',1,'']]],
-  ['task_5fid_5f',['task_id_',['../class_task.html#a11cd89d3f3fdf14467eeb1dd56ac3ce9',1,'Task']]],
-  ['task_5fname',['task_name',['../class_c_a_n___msg.html#a1b025430f962cb48e4ff693141d8a91b',1,'CAN_Msg']]],
-  ['task_5fname_5f',['task_name_',['../class_task.html#af1cfab0e70eabf6602e82706441515ed',1,'Task']]],
-  ['time',['time',['../class_c_a_n___msg.html#aa99268ac0aca894a4661e75a969bf245',1,'CAN_Msg']]],
-  ['todo_20list',['Todo List',['../todo.html',1,'']]],
-  ['trypage_2edoxy',['TryPage.doxy',['../_try_page_8doxy.html',1,'']]]
+  ['schedulesimulator',['ScheduleSimulator',['../class_schedule_simulator.html',1,'ScheduleSimulator'],['../class_schedule_simulator.html#a0e8c02af2c3d50c79ba7e4ce0ea889b1',1,'ScheduleSimulator::ScheduleSimulator()']]],
+  ['schedulesimulator_2ecpp',['ScheduleSimulator.cpp',['../_schedule_simulator_8cpp.html',1,'']]],
+  ['schedulesimulator_2eh',['ScheduleSimulator.h',['../_schedule_simulator_8h.html',1,'']]],
+  ['scheduling_5fpolicy_5f',['scheduling_policy_',['../class_e_c_u.html#aa8a5e76fa12b3454eb15b1848533a471',1,'ECU']]],
+  ['section_5ffor_5fcan_5fsending',['section_for_can_sending',['../_c_a_n_interface_8cpp.html#aae14110ae24d0d1bdf9dda8e21c3a572',1,'CANInterface.cpp']]],
+  ['shouldweexecute',['ShouldWeExecute',['../class_e_c_u_task.html#aa34e23e9c1ce904e50a66adeef15e412',1,'ECUTask::ShouldWeExecute()'],['../class_software_component_task.html#a44cabcb70150ce68fb34c15c1cff6428',1,'SoftwareComponentTask::ShouldWeExecute()'],['../class_task.html#ab0838c0e25d5babb7e20e73704452d9c',1,'Task::ShouldWeExecute()']]],
+  ['simulate_5fscheduling_5fon_5freal',['simulate_scheduling_on_Real',['../class_schedule_simulator.html#ac1184f8e22de895c23661fcad2584c82',1,'ScheduleSimulator']]],
+  ['softwarecomponenttask',['SoftwareComponentTask',['../class_software_component_task.html',1,'SoftwareComponentTask'],['../class_software_component_task.html#aa3dd14c885a8170c591fc8c134122be9',1,'SoftwareComponentTask::SoftwareComponentTask()']]],
+  ['softwarecomponenttask_2ecpp',['SoftwareComponentTask.cpp',['../_software_component_task_8cpp.html',1,'']]],
+  ['softwarecomponenttask_2eh',['SoftwareComponentTask.h',['../_software_component_task_8h.html',1,'']]],
+  ['softwarecomponenttasks',['softwareComponentTasks',['../class_e_c_u_task.html#aff62ff8f737a7b6ac59bb1f1f79bbd73',1,'ECUTask']]],
+  ['specificator_2ecpp',['Specificator.cpp',['../_specificator_8cpp.html',1,'']]],
+  ['specificator_2eh',['Specificator.h',['../_specificator_8h.html',1,'']]],
+  ['specifier',['Specifier',['../class_specifier.html',1,'Specifier'],['../class_specifier.html#af7cbf80643daae3244fc2442d48b8f4b',1,'Specifier::Specifier()']]],
+  ['stringify',['STRINGIFY',['../_c_make_c_compiler_id_8c.html#a43e1cad902b6477bec893cb6430bd6c8',1,'STRINGIFY():&#160;CMakeCCompilerId.c'],['../_c_make_c_x_x_compiler_id_8cpp.html#a43e1cad902b6477bec893cb6430bd6c8',1,'STRINGIFY():&#160;CMakeCXXCompilerId.cpp']]],
+  ['stringify_5fhelper',['STRINGIFY_HELPER',['../_c_make_c_compiler_id_8c.html#a2ae9b72bb13abaabfcf2ee0ba7d3fa1d',1,'STRINGIFY_HELPER():&#160;CMakeCCompilerId.c'],['../_c_make_c_x_x_compiler_id_8cpp.html#a2ae9b72bb13abaabfcf2ee0ba7d3fa1d',1,'STRINGIFY_HELPER():&#160;CMakeCXXCompilerId.cpp']]]
 ];

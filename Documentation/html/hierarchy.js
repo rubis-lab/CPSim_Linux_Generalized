@@ -8,8 +8,8 @@ var hierarchy =
     [ "Network", "class_network.html", null ],
     [ "OfflineGuider", "class_offline_guider.html", null ],
     [ "PrecedenceGraph", "class_precedence_graph.html", null ],
-    [ "RUBIS_Util", "class_r_u_b_i_s___util.html", null ],
     [ "ScheduleSimulator", "class_schedule_simulator.html", null ],
+    [ "Specifier", "class_specifier.html", null ],
     [ "Task", "class_task.html", [
       [ "ECUTask", "class_e_c_u_task.html", null ],
       [ "Job", "class_job.html", null ],

@@ -8,14 +8,56 @@
  *  @date 2020-03-31
  */
 
-ScheduleSimulator::ScheduleSimulator(){
+/**
+ * @fn ScheduleSimulator::ScheduleSimulator()
+ * @brief the function of basic constructor of ScheduleSimulator
+ * @author Seonghyeon Park
+ * @date 2020-04-01
+ * @details 
+ *  - None
+ * @param none
+ * @return ScheduleSimulator
+ * @bug none
+ * @warning none
+ * @todo none
+ */
+ScheduleSimulator::ScheduleSimulator()
+{
 
 }
 
-ScheduleSimulator::~ScheduleSimulator(){
+/**
+ * @fn ScheduleSimulator::~ScheduleSimulator()
+ * @brief the function of basic destroyer of ScheduleSimulator
+ * @author Seonghyeon Park
+ * @date 2020-04-01
+ * @details 
+ *  - None
+ * @param none
+ * @return none
+ * @bug none
+ * @warning none
+ * @todo none
+ */
+ScheduleSimulator::~ScheduleSimulator()
+{
 
 }
 
-void ScheduleSimulator::simulate_scheduling_on_Real(){
+/**
+ * @fn void ScheduleSimulator::simulate_scheduling_on_Real()
+ * @brief this function simulates a scheduling scenario of Real Cyber System.
+ * @author Seonghyeon Park
+ * @date 2020-04-01
+ * @details 
+ *  - None
+ * @param none
+ * @return none
+ * @bug none
+ * @warning none
+ * @todo will be implemented tonight.
+ */
+void ScheduleSimulator::simulate_scheduling_on_Real()
+{
     
 }

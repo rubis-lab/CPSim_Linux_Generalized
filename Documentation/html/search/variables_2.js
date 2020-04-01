@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['data_5findex1',['data_index1',['../class_c_a_n___msg.html#ab6c97db83c179bd85a1e7d7fbf12d5d3',1,'CAN_Msg']]],
-  ['data_5findex2',['data_index2',['../class_c_a_n___msg.html#a272a3ef8a3bb1939078640ee6930242d',1,'CAN_Msg']]],
-  ['deadline_5f',['deadline_',['../class_task.html#a563980e4eaadc1dba3805d660ba0ac31',1,'Task']]]
+  ['channel',['channel',['../class_c_a_n___msg.html#a9a450e927f3dd4c6ebfea634ef563f86',1,'CAN_Msg']]]
 ];

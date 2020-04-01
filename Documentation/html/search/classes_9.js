@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['schedulesimulator',['ScheduleSimulator',['../class_schedule_simulator.html',1,'']]],
-  ['softwarecomponenttask',['SoftwareComponentTask',['../class_software_component_task.html',1,'']]]
+  ['task',['Task',['../class_task.html',1,'']]]
 ];

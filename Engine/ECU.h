@@ -1,6 +1,7 @@
 #ifndef ECU_H__
 #define ECU_H__
 #include <string.h>
+
 /**
  *  @file ECU.h
  *  @class ECU
@@ -12,7 +13,6 @@
  *  - Performance (Unit : MHz)
  *  - SchedulingPolicy (e.g., RM, EDF, etc.)
  */
-
 class ECU
 {
 private:

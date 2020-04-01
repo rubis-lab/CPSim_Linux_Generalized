@@ -1,9 +1,8 @@
 var searchData=
 [
-  ['offlineguider',['OfflineGuider',['../class_offline_guider.html',1,'OfflineGuider'],['../class_offline_guider.html#a9faa36b1b11ce8888be96073c7eb77d2',1,'OfflineGuider::OfflineGuider()']]],
-  ['offlineguider_2ecpp',['OfflineGuider.cpp',['../_offline_guider_8cpp.html',1,'']]],
-  ['offlineguider_2eh',['OfflineGuider.h',['../_offline_guider_8h.html',1,'']]],
-  ['offset_5f',['offset_',['../class_task.html#aad3b09b1bb962c27622724519eb3ccfd',1,'Task']]],
-  ['output_5fdata1',['output_data1',['../class_c_a_n___msg.html#ae52a32538884fe24b857b1712534db2c',1,'CAN_Msg']]],
-  ['output_5fdata2',['output_data2',['../class_c_a_n___msg.html#a2b9004747a9a37304a650da759000f61',1,'CAN_Msg']]]
+  ['network',['Network',['../class_network.html',1,'Network'],['../class_network.html#a3cc2fb4f8fa4d507077e8da85ce5a1c8',1,'Network::Network()'],['../class_network.html#a6766fadec4ad1af91692b88e0a423255',1,'Network::Network(int, char *)']]],
+  ['network_2ecpp',['Network.cpp',['../_network_8cpp.html',1,'']]],
+  ['network_2eh',['Network.h',['../_network_8h.html',1,'']]],
+  ['network_5fid_5f',['network_id_',['../class_network.html#a4799a98cf8c0cd641db98ca26b48aa4b',1,'Network']]],
+  ['num_5fdata',['num_data',['../class_c_a_n___msg.html#ae41e46217e797d46c9b24c7606626ec3',1,'CAN_Msg']]]
 ];

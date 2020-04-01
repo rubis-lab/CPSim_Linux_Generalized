@@ -22,7 +22,8 @@
  * @warning none
  * @todo none
  */
-Logger::Logger(){
+Logger::Logger()
+{
 
 }
 
@@ -39,6 +40,7 @@ Logger::Logger(){
  * @warning none
  * @todo none
  */
-Logger::~Logger(){
+Logger::~Logger()
+{
 
 }

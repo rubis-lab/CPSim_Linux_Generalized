@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['ecu_5fid_5f',['ecu_id_',['../class_e_c_u.html#aa37f084804ef25bad52fb3244a990f3c',1,'ECU']]],
-  ['elapsedms',['elapsedMs',['../class_r_u_b_i_s___util.html#a8ff11bafd6df909de90ccaf49bb2e009',1,'RUBIS_Util']]]
+  ['data_5findex1',['data_index1',['../class_c_a_n___msg.html#ab6c97db83c179bd85a1e7d7fbf12d5d3',1,'CAN_Msg']]],
+  ['data_5findex2',['data_index2',['../class_c_a_n___msg.html#a272a3ef8a3bb1939078640ee6930242d',1,'CAN_Msg']]]
 ];
