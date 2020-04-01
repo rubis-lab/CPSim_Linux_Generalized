@@ -9,7 +9,7 @@
  * @file Task.h
  * @class Task
  * @author Seonghyeon Park
- * @date 2020-03-31
+ * @date 2020-04-01
  * @brief 
  *  Task's Properties
  *  A Task has below properties.
