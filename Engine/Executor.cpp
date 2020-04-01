@@ -16,7 +16,7 @@
  * @details 
  *  - None
  * @param none
- * @return none
+ * @return Executor
  * @bug none
  * @warning none
  * @todo none
@@ -48,15 +48,13 @@ Executor::~Executor(){
  * @author Seonghyeon Park
  * @date 2020-03-31
  * @details 
- *  - it 
- *  - and
- *  - so
- *  - result of this
+ *  This function is essential function for running simulation.\n
+ *  It has a loop that iterately runs a process for the simulation steps.\n
  * @param none
  * @return none
  * @bug none
  * @warning none
- * @todo implement this later
+ * @todo implement this today's night
  */
 void Executor::run_simulation(){
 
