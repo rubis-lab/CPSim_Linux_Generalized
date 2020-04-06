@@ -17,7 +17,7 @@
  *
 */
 
-/*
+/**
     Header file lists.. in UNIX standard library
 */
 #include <memory>
@@ -25,7 +25,7 @@
 #include <unistd.h>
 #include <dlfcn.h>
 
-/*
+/**
     Header file lists.. in our simulator
 */
 #include "Initializer.h"
