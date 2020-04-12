@@ -23,7 +23,9 @@
  */
 OfflineGuider::OfflineGuider()
 {
-
+    /**
+        This is basic constructor.
+     */
 }
 
 /**
@@ -41,7 +43,9 @@ OfflineGuider::OfflineGuider()
  */
 OfflineGuider::~OfflineGuider()
 {
-
+    /**
+        This is basic destructor.
+     */
 }
 
 /**
