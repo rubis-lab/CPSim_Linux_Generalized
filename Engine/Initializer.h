@@ -18,7 +18,7 @@ class Initializer
 private:
 public:
     /**
-     * Constructor & Destroyer
+     * Constructor & Destructor
     */
     Initializer();
     ~Initializer();
