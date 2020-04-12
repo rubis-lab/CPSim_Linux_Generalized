@@ -103,6 +103,19 @@ int Initializer::parsing_specificated_information()
  */
 void Initializer::initialize()
 {
+    /**
+     * For initialization of simulator engine, we need below steps.
+     * 1. CAN Network initialization
+     * 2. 
+     */
+    
+    /**
+     * CAN Network Initialization
+     */
+
+    /**
+     * CAN Network Initialization
+     */
 
     printf("Initialized\n");
 }
