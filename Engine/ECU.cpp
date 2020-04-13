@@ -23,7 +23,9 @@
  */
 ECU::ECU()
 {
-
+    /**
+     * This is basic constructor.
+     */
 }
 
 /**
@@ -50,7 +52,7 @@ ECU::ECU(int performance, int scheduling_policy, char* ecu_id)
 
 /**
  * @fn ECU::~ECU()
- * @brief the function of basic destroyer of ECU
+ * @brief the function of basic destructor of ECU
  * @author Seonghyeon Park
  * @date 2020-04-01
  * @details 
@@ -63,5 +65,7 @@ ECU::ECU(int performance, int scheduling_policy, char* ecu_id)
  */
 ECU::~ECU()
 {
-    
+    /**
+     * This is basic destructor.
+     */
 }
