@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <pcan.h>
 #include <libpcan.h>
+#include "Utils.h"
 
 /** This file is engine code of CPSim-Re engine
  * @file Initializer.h
@@ -26,7 +27,8 @@ public:
     int execution_time_mapping_function();
     int can_interface_initalizer(int num_channel);
     int parsing_specificated_information();
-
+    
+    void set_simulatorPC_performance();
     void initialize();
 };
 

@@ -30,7 +30,7 @@ SET ( CMAKE_C_COMPILER "g++" )
 # Compile Options, Linking Options
 # -g : Debug
 # -wall : warn to every vague codes
-# ADD_COMPILE_OPTIONS ( -g -wall )
+ADD_COMPILE_OPTIONS ( -std=c++1z )
 # SET ( CMAKE_EXE_LINKER_FLAGS "-static -Wl, --gc-sections" )
 
 # Common Linking Libraries

@@ -117,5 +117,5 @@ void Initializer::initialize()
      * CAN Network Initialization
      */
 
-    printf("Initialized\n");
+    printf("Initialized, Performance: %d\n", utils::simulatorPC_performance);
 }
