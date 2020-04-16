@@ -1,32 +1,32 @@
 [
 {
-  "directory": "/home/park/git_base/Re-implemented-CPSim/build",
-  "command": "/usr/bin/g++-7    -g   -std=c++1z -o CMakeFiles/CPSim-0.1.out.dir/Engine/main.cpp.o -c /home/park/git_base/Re-implemented-CPSim/Engine/main.cpp",
-  "file": "/home/park/git_base/Re-implemented-CPSim/Engine/main.cpp"
+  "directory": "/home/park/Desktop/Projects/Re-implemented-CPSim/build",
+  "command": "/usr/bin/g++-7    -g   -std=c++1z -o CMakeFiles/CPSim-0.1.out.dir/Engine/main.cpp.o -c /home/park/Desktop/Projects/Re-implemented-CPSim/Engine/main.cpp",
+  "file": "/home/park/Desktop/Projects/Re-implemented-CPSim/Engine/main.cpp"
 },
 {
-  "directory": "/home/park/git_base/Re-implemented-CPSim/build",
-  "command": "/usr/bin/g++-7    -g   -std=c++1z -o CMakeFiles/CPSim-0.1.out.dir/Engine/Initializer.cpp.o -c /home/park/git_base/Re-implemented-CPSim/Engine/Initializer.cpp",
-  "file": "/home/park/git_base/Re-implemented-CPSim/Engine/Initializer.cpp"
+  "directory": "/home/park/Desktop/Projects/Re-implemented-CPSim/build",
+  "command": "/usr/bin/g++-7    -g   -std=c++1z -o CMakeFiles/CPSim-0.1.out.dir/Engine/Initializer.cpp.o -c /home/park/Desktop/Projects/Re-implemented-CPSim/Engine/Initializer.cpp",
+  "file": "/home/park/Desktop/Projects/Re-implemented-CPSim/Engine/Initializer.cpp"
 },
 {
-  "directory": "/home/park/git_base/Re-implemented-CPSim/build",
-  "command": "/usr/bin/g++-7    -g   -std=c++1z -o CMakeFiles/CPSim-0.1.out.dir/Engine/ScheduleSimulator.cpp.o -c /home/park/git_base/Re-implemented-CPSim/Engine/ScheduleSimulator.cpp",
-  "file": "/home/park/git_base/Re-implemented-CPSim/Engine/ScheduleSimulator.cpp"
+  "directory": "/home/park/Desktop/Projects/Re-implemented-CPSim/build",
+  "command": "/usr/bin/g++-7    -g   -std=c++1z -o CMakeFiles/CPSim-0.1.out.dir/Engine/ScheduleSimulator.cpp.o -c /home/park/Desktop/Projects/Re-implemented-CPSim/Engine/ScheduleSimulator.cpp",
+  "file": "/home/park/Desktop/Projects/Re-implemented-CPSim/Engine/ScheduleSimulator.cpp"
 },
 {
-  "directory": "/home/park/git_base/Re-implemented-CPSim/build",
-  "command": "/usr/bin/g++-7    -g   -std=c++1z -o CMakeFiles/CPSim-0.1.out.dir/Engine/OfflineGuider.cpp.o -c /home/park/git_base/Re-implemented-CPSim/Engine/OfflineGuider.cpp",
-  "file": "/home/park/git_base/Re-implemented-CPSim/Engine/OfflineGuider.cpp"
+  "directory": "/home/park/Desktop/Projects/Re-implemented-CPSim/build",
+  "command": "/usr/bin/g++-7    -g   -std=c++1z -o CMakeFiles/CPSim-0.1.out.dir/Engine/OfflineGuider.cpp.o -c /home/park/Desktop/Projects/Re-implemented-CPSim/Engine/OfflineGuider.cpp",
+  "file": "/home/park/Desktop/Projects/Re-implemented-CPSim/Engine/OfflineGuider.cpp"
 },
 {
-  "directory": "/home/park/git_base/Re-implemented-CPSim/build",
-  "command": "/usr/bin/g++-7    -g   -std=c++1z -o CMakeFiles/CPSim-0.1.out.dir/Engine/Executor.cpp.o -c /home/park/git_base/Re-implemented-CPSim/Engine/Executor.cpp",
-  "file": "/home/park/git_base/Re-implemented-CPSim/Engine/Executor.cpp"
+  "directory": "/home/park/Desktop/Projects/Re-implemented-CPSim/build",
+  "command": "/usr/bin/g++-7    -g   -std=c++1z -o CMakeFiles/CPSim-0.1.out.dir/Engine/Executor.cpp.o -c /home/park/Desktop/Projects/Re-implemented-CPSim/Engine/Executor.cpp",
+  "file": "/home/park/Desktop/Projects/Re-implemented-CPSim/Engine/Executor.cpp"
 },
 {
-  "directory": "/home/park/git_base/Re-implemented-CPSim/build",
-  "command": "/usr/bin/g++-7    -g   -std=c++1z -o CMakeFiles/CPSim-0.1.out.dir/Engine/PrecedenceGraph.cpp.o -c /home/park/git_base/Re-implemented-CPSim/Engine/PrecedenceGraph.cpp",
-  "file": "/home/park/git_base/Re-implemented-CPSim/Engine/PrecedenceGraph.cpp"
+  "directory": "/home/park/Desktop/Projects/Re-implemented-CPSim/build",
+  "command": "/usr/bin/g++-7    -g   -std=c++1z -o CMakeFiles/CPSim-0.1.out.dir/Engine/PrecedenceGraph.cpp.o -c /home/park/Desktop/Projects/Re-implemented-CPSim/Engine/PrecedenceGraph.cpp",
+  "file": "/home/park/Desktop/Projects/Re-implemented-CPSim/Engine/PrecedenceGraph.cpp"
 }
 ]
