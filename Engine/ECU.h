@@ -1,6 +1,6 @@
 #ifndef ECU_H__
 #define ECU_H__
-#include <string.h>
+#include <string>
 
 /**
  *  @file ECU.h
@@ -16,12 +16,29 @@
 class ECU
 {
 private:
-    int performance_;
-    int scheduling_policy_;
-    char ecu_id_[20];
+    int _performance;
+    std::string _scheduling_policy;
+    int _ecu_id;
 public:
+    /**
+     * Constructors and Destructors
+     */
     ECU();
-    ECU(int, int, char*);
+    ECU(int, int, std::string);
     ~ECU();
+
+    /**
+     * Getter member functions
+     */
+    int get_ECU_id();
+    int get_performance();
+    std::string get_scheduling_policy();
+
+    /**
+     * Setter member functions
+     */
+    void set_ECU_id();
+    void set_performance();
+    void set_scheduling_policy();
 };
 #endif

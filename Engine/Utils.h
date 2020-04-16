@@ -21,7 +21,7 @@ namespace utils
     inline int hyper_period = 0;
     inline int elapsed_time = 0;
     inline int simulatorPC_performance = 3000;
-    unsigned int ecu_counter =0;
+    inline unsigned int ecu_counter = 0;
 
     int greatest_common_divider(int a, int b);
     int least_common_multiple(int a, int b);
@@ -30,6 +30,6 @@ namespace utils
 
 namespace vectors
 {
-    std::vector<std::shared_ptr<ECU>> ecu_vector;
-    std::vector<std::shared_ptr<Task>> task_vector;
+    inline std::vector<std::shared_ptr<ECU>> ecu_vector;
+    inline std::vector<std::shared_ptr<Task>> task_vector;
 }

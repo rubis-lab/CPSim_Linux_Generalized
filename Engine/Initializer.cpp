@@ -114,8 +114,18 @@ void Initializer::initialize()
      */
 
     /**
-     * CAN Network Initialization
+     * ECU Vector Initialization
      */
 
-    printf("Initialized, Performance: %d\n", utils::simulatorPC_performance);
+    std::shared_ptr<ECU> ecu1(nullptr);
+    ecu1 = std::make_shared<ECU>(1,1,"RM");
+    std::cout<< ecu1->get_ECU_id()<<ecu1.get()->get_performance()<<ecu1.get()->get_scheduling_policy();
+    vectors::ecu_vector.push_back(std::move(ecu1));
+    
+    /**
+     * Task Vector Initialization
+     */
+
+    std::cout << "Initialized, Performance: " << utils::simulatorPC_performance << std::endl;
+    std::cout << vectors::ecu_vector.size() << std::endl;
 }

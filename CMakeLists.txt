@@ -15,10 +15,22 @@ SET ( OUTPUT_ELF
         "${CMAKE_PROJECT_NAME}-${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.out"
         )
 SET ( SRC_FILES
-        Engine/main.cpp Engine/Initializer.h Engine/Initializer.cpp Engine/ScheduleSimulator.h
-        Engine/ScheduleSimulator.cpp Engine/OfflineGuider.h Engine/OfflineGuider.cpp
-        Engine/Executor.h Engine/Executor.cpp Engine/PrecedenceGraph.h Engine/PrecedenceGraph.cpp
-        
+        # set main file first
+        Engine/main.cpp 
+        # set initializer files 
+        Engine/Initializer.h Engine/Initializer.cpp 
+        # set schedule_simulator files
+        Engine/ScheduleSimulator.h Engine/ScheduleSimulator.cpp 
+        # set offline_guider files
+        Engine/OfflineGuider.h Engine/OfflineGuider.cpp
+        # set Executor files
+        Engine/Executor.h Engine/Executor.cpp 
+        # set Precedence_graph files
+        Engine/PrecedenceGraph.h Engine/PrecedenceGraph.cpp
+        # set ECU files
+        Engine/ECU.h Engine/ECU.cpp
+        # set Network files
+        Engine/Network.h Engine/Network.cpp 
         )
 
 # Compiler Information
