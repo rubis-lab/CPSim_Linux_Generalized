@@ -8,12 +8,7 @@
  *  @date 2020-03-31
  */
 
-/*
-int utils::cpuClock = 3000;
-int utils::elapsedMs = 0;
-int utils::hyperPeriod = 0;
-
-int utils::greatestCommonDivider(int a, int b)
+int utils::greatest_common_divider(int a, int b)
 {
 	for (;;)
 	{
@@ -24,27 +19,46 @@ int utils::greatestCommonDivider(int a, int b)
 	}
 }
 
-int utils::leastCommonMultiple(int a, int b)
+int utils::least_common_multiple(int a, int b)
 {
-	int temp = greatestCommonDivider(a, b);
-	return temp ? (a / temp * b) : 0;
+	return 0;
 }
 
-int utils::leastCommonMultipleVa(int argCount, int* args)
+int utils::calculate_hyper_period()
 {
-	if (argCount == 1) return args[0];
-	else if (argCount < 2) return 0;
 
-	int currentLmc = leastCommonMultiple(args[0], args[1]);
-
-	for (int i = 2; i < argCount; i++)
-		currentLmc = leastCommonMultiple(currentLmc, args[i]);
-
-	return currentLmc;
 }
 
-int utils::getRealElapsedMs(int ecuClock) // How much time would have passed on a real ECU system.
+/**
+ * @fn void insert_can_msg()
+ * @brief This function inserts CAN_Msg class into 'msg_list' list.
+ * @author Seonghyeon Park
+ * @date 2020-04-01
+ * @details 
+ *  Each class is inserted into the list according to its time.
+ * @param none
+ * @return none
+ * @bug none
+ * @warning none
+ * @todo none
+ */
+void utils::insert_can_msg(std::shared_ptr<CAN_message> input)
 {
-	return elapsedMs / (cpuClock / ecuClock);
+	// first element
+	if (vectors::can_msg_vector.empty())
+	{
+		vectors::can_msg_vector.push_back(input);
+		return;
+	}
+
+	std::vector<std::shared_ptr<CAN_message>>::iterator iter;
+	for (iter = vectors::can_msg_vector.begin(); iter != vectors::can_msg_vector.end(); iter++)
+	{
+		if (iter->get()->get_time() > input.get()->get_time())
+		{
+			vectors::can_msg_vector.insert(iter, input);
+			return;
+		}
+	}
+	vectors::can_msg_vector.push_back(input);		// push target to the last position
 }
-*/

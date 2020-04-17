@@ -36,7 +36,27 @@
 },
 {
   "directory": "/home/park/git_base/Re-implemented-CPSim/build",
+  "command": "/usr/bin/g++-7    -g   -std=c++1z -o CMakeFiles/CPSim-0.1.out.dir/Engine/Task.cpp.o -c /home/park/git_base/Re-implemented-CPSim/Engine/Task.cpp",
+  "file": "/home/park/git_base/Re-implemented-CPSim/Engine/Task.cpp"
+},
+{
+  "directory": "/home/park/git_base/Re-implemented-CPSim/build",
+  "command": "/usr/bin/g++-7    -g   -std=c++1z -o CMakeFiles/CPSim-0.1.out.dir/Engine/Job.cpp.o -c /home/park/git_base/Re-implemented-CPSim/Engine/Job.cpp",
+  "file": "/home/park/git_base/Re-implemented-CPSim/Engine/Job.cpp"
+},
+{
+  "directory": "/home/park/git_base/Re-implemented-CPSim/build",
   "command": "/usr/bin/g++-7    -g   -std=c++1z -o CMakeFiles/CPSim-0.1.out.dir/Engine/Network.cpp.o -c /home/park/git_base/Re-implemented-CPSim/Engine/Network.cpp",
   "file": "/home/park/git_base/Re-implemented-CPSim/Engine/Network.cpp"
+},
+{
+  "directory": "/home/park/git_base/Re-implemented-CPSim/build",
+  "command": "/usr/bin/g++-7    -g   -std=c++1z -o CMakeFiles/CPSim-0.1.out.dir/Engine/CAN_message.cpp.o -c /home/park/git_base/Re-implemented-CPSim/Engine/CAN_message.cpp",
+  "file": "/home/park/git_base/Re-implemented-CPSim/Engine/CAN_message.cpp"
+},
+{
+  "directory": "/home/park/git_base/Re-implemented-CPSim/build",
+  "command": "/usr/bin/g++-7    -g   -std=c++1z -o CMakeFiles/CPSim-0.1.out.dir/Engine/Utils.cpp.o -c /home/park/git_base/Re-implemented-CPSim/Engine/Utils.cpp",
+  "file": "/home/park/git_base/Re-implemented-CPSim/Engine/Utils.cpp"
 }
 ]

@@ -90,3 +90,165 @@ Task::~Task()
 {
 
 }
+
+/**
+ * @fn std::string get_task_name()
+ * @brief Getter for task name
+ * @author Seonghyeon Park
+ * @date 2020-04-17
+ * @details 
+ *  - None
+ * @param none
+ * @return Task name
+ * @bug none
+ * @warning none
+ * @todo none
+ */
+std::string Task::get_task_name()
+{
+    return _task_name;
+}
+
+/**
+ * @fn int get_task_id()
+ * @brief Getter for task ID
+ * @author Seonghyeon Park
+ * @date 2020-04-17
+ * @details 
+ *  - None
+ * @param none
+ * @return Task ID
+ * @bug none
+ * @warning none
+ * @todo none
+ */
+int Task::get_task_id()
+{
+    return _task_id;
+}
+
+/**
+ * @fn int get_period()
+ * @brief Getter for task period
+ * @author Seonghyeon Park
+ * @date 2020-04-17
+ * @details 
+ *  - None
+ * @param none
+ * @return Task Period
+ * @bug none
+ * @warning none
+ * @todo none
+ */
+int Task::get_period()
+{
+    return _period;
+}
+
+/**
+ * @fn int get_deadline()
+ * @brief Getter for task deadline
+ * @author Seonghyeon Park
+ * @date 2020-04-17
+ * @details 
+ *  - None
+ * @param none
+ * @return Task Deadline
+ * @bug none
+ * @warning none
+ * @todo none
+ */
+int Task::get_deadline()
+{
+    return _deadline;
+}
+
+/**
+ * @fn int get_wcet()
+ * @brief Getter for task's worst case execution time
+ * @author Seonghyeon Park
+ * @date 2020-04-17
+ * @details 
+ *  - None
+ * @param none
+ * @return Task worst case execution time
+ * @bug none
+ * @warning none
+ * @todo none
+ */
+int Task::get_wcet()
+{
+    return _wcet;
+}
+
+/**
+ * @fn int get_bcet()
+ * @brief Getter for task's best case execution time
+ * @author Seonghyeon Park
+ * @date 2020-04-17
+ * @details 
+ *  - None
+ * @param none
+ * @return Task best case execution time
+ * @bug none
+ * @warning none
+ * @todo none
+ */
+int Task::get_bcet()
+{
+    return _bcet;
+}
+
+/**
+ * @fn int get_offset()
+ * @brief Getter for task's offset
+ * @author Seonghyeon Park
+ * @date 2020-04-17
+ * @details 
+ *  - None
+ * @param none
+ * @return Task offset
+ * @bug none
+ * @warning none
+ * @todo none
+ */
+int Task::get_offset()
+{
+    return _offset;
+}
+
+/**
+ * @fn int get_is_read()
+ * @brief Getter for task's read constraint
+ * @author Seonghyeon Park
+ * @date 2020-04-17
+ * @details 
+ *  - None
+ * @param none
+ * @return Task read constraint
+ * @bug none
+ * @warning none
+ * @todo none
+ */
+int Task::get_is_read()
+{
+    return _is_read;
+}
+
+/**
+ * @fn int get_is_write()
+ * @brief Getter for task's write constraint
+ * @author Seonghyeon Park
+ * @date 2020-04-17
+ * @details 
+ *  - None
+ * @param none
+ * @return Task write constraint
+ * @bug none
+ * @warning none
+ * @todo none
+ */
+int Task::get_is_write()
+{
+    return _is_write;
+}

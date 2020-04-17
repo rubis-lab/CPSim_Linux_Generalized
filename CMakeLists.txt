@@ -29,8 +29,16 @@ SET ( SRC_FILES
         Engine/PrecedenceGraph.h Engine/PrecedenceGraph.cpp
         # set ECU files
         Engine/ECU.h Engine/ECU.cpp
+        # set Task files
+        Engine/Task.h Engine/Task.cpp
+        # set Job files
+        Engine/Job.h Engine/Job.cpp
         # set Network files
         Engine/Network.h Engine/Network.cpp 
+        # set CAN_message files
+        Engine/CAN_message.h Engine/CAN_message.cpp
+        # set Utils files
+        Engine/Utils.h Engine/Utils.cpp
         )
 
 # Compiler Information

@@ -39,12 +39,31 @@ private:
 	Task* _consumer;
 
 public:
+    /**
+     * Constructors and Destructors
+     */
 	Task();
 	Task(std::string, int, int, int, int, int, int, int, int, std::string, std::string);
 	~Task();
-	virtual void Update() = 0;
-	virtual bool ShouldWeExecute() = 0;
-		
+
+    /**
+     * Getter member functions
+     */
+	std::string get_task_name();
+	int get_task_id();
+	int get_period();
+	int get_deadline();
+	int get_wcet();
+	int get_bcet();
+	int get_offset();
+	int get_is_read();
+	int get_is_write();
+	Task* get_producer();
+	Task* get_consumer();
+	
+    /**
+     * Setter member functions
+     */
 };
 
 #endif

@@ -21,8 +21,6 @@
  * @brief Codes for Engine-CANInterface 
 */
 
-using namespace std;
-
 // for CAN
 #define PCANUSB1	"/dev/pcan32"
 #define PCANUSB2	"/dev/pcan32"
@@ -38,10 +36,10 @@ typedef struct
 #endif
 
 /** CAN Message class
- * @class CAN_Msg
+ * @class CAN_message
  * @brief This class is responsible for sending messages via CAN bus
  */
-class CAN_Msg
+class CAN_message
 {
 private:
 	unsigned long long time;		// (expected) sending time
@@ -49,9 +47,9 @@ private:
 	char task_name[20];				// a task's name who tries to send this message
 
 public:
-	CAN_Msg();
-	CAN_Msg(unsigned long long, int, int, int, int, int, float, float, char*);
-	~CAN_Msg();
+	CAN_message();
+	CAN_message(unsigned long long, int, int, int, int, int, float, float, char*);
+	~CAN_message();
 	TPCANMsg msg;					// message struct provided by PCAN-USB API
 	int num_data;
 	int data_index1;
@@ -64,6 +62,6 @@ public:
 	char* get_task_name();
 };
 
-void insert_can_msg(list<CAN_Msg*>* msg_list, CAN_Msg* input);
+
 
 #endif

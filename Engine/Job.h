@@ -24,7 +24,6 @@ private:
     int job_id;
 public: 
     Job();
-    Job();
     ~Job();
 
 };

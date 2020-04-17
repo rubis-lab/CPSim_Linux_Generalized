@@ -6,7 +6,11 @@ file(REMOVE_RECURSE
   "CMakeFiles/CPSim-0.1.out.dir/Engine/Executor.cpp.o"
   "CMakeFiles/CPSim-0.1.out.dir/Engine/PrecedenceGraph.cpp.o"
   "CMakeFiles/CPSim-0.1.out.dir/Engine/ECU.cpp.o"
+  "CMakeFiles/CPSim-0.1.out.dir/Engine/Task.cpp.o"
+  "CMakeFiles/CPSim-0.1.out.dir/Engine/Job.cpp.o"
   "CMakeFiles/CPSim-0.1.out.dir/Engine/Network.cpp.o"
+  "CMakeFiles/CPSim-0.1.out.dir/Engine/CAN_message.cpp.o"
+  "CMakeFiles/CPSim-0.1.out.dir/Engine/Utils.cpp.o"
   "Debug/CPSim-0.1.out.pdb"
   "Debug/CPSim-0.1.out"
 )

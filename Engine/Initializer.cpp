@@ -116,16 +116,19 @@ void Initializer::initialize()
     /**
      * ECU Vector Initialization
      */
-
     std::shared_ptr<ECU> ecu1(nullptr);
     ecu1 = std::make_shared<ECU>(1,1,"RM");
-    std::cout<< ecu1->get_ECU_id()<<ecu1.get()->get_performance()<<ecu1.get()->get_scheduling_policy();
     vectors::ecu_vector.push_back(std::move(ecu1));
-    
+
     /**
      * Task Vector Initialization
      */
+    std::shared_ptr<Task> task1(nullptr);
+    task1 = std::make_shared<Task>("LK", 0, 10, 10, 4, 2, 0, 1, 0, "SENSING", "DM");
+    vectors::task_vector.push_back(std::move(task1));
+    std::cout << utils::least_common_multiple(5,4) << std::endl;
+
+
 
     std::cout << "Initialized, Performance: " << utils::simulatorPC_performance << std::endl;
-    std::cout << vectors::ecu_vector.size() << std::endl;
 }
