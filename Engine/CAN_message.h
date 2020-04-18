@@ -50,6 +50,7 @@ public:
 	CAN_message();
 	CAN_message(unsigned long long, int, int, int, int, int, float, float, char*);
 	~CAN_message();
+	
 	TPCANMsg msg;					// message struct provided by PCAN-USB API
 	int num_data;
 	int data_index1;

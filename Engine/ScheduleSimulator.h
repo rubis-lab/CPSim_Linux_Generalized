@@ -1,5 +1,6 @@
 #ifndef SCHEDULESIMULATOR_H__
 #define SCHEDULESIMULATOR_H__
+#include "Utils.h"
 
 /** This file is engine code of CPSim-Re engine
  * @file ScheduleSimulator.h

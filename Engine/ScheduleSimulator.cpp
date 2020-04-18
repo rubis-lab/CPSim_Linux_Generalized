@@ -63,5 +63,5 @@ void ScheduleSimulator::simulate_scheduling_on_Real()
      *  Generate scheduling simulation to refer to.
      *  Generated Scheduling Simulation Result will be stored to the utils:: 
      */
-    //sch
+    _hyper_period = utils::hyper_period;
 }

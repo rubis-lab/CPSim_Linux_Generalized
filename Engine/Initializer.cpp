@@ -112,6 +112,7 @@ void Initializer::initialize()
     /**
      * CAN Network Initialization
      */
+    
 
     /**
      * ECU Vector Initialization

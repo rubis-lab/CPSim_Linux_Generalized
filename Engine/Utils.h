@@ -1,3 +1,6 @@
+#ifndef UTILS_H__
+#define UTILS_H__
+
 #include <numeric>
 #include <vector>
 #include <cstdarg>
@@ -38,3 +41,5 @@ namespace vectors
     inline std::vector<std::shared_ptr<Task>> task_vector;
     inline std::vector<std::shared_ptr<CAN_message>> can_msg_vector;
 }
+
+#endif
