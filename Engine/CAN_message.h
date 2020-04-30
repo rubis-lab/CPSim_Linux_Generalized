@@ -2,6 +2,7 @@
 #define CAN_INTERFACE_H__
 
 #include <stdio.h>
+#include <string>
 #include <string.h>
 #include <iostream>
 #include <list>
@@ -44,11 +45,11 @@ class CAN_message
 private:
 	unsigned long long time;		// (expected) sending time
 	int channel;					// CAN bus channel
-	char task_name[20];				// a task's name who tries to send this message
+	std::string _task_name;				// a task's name who tries to send this message
 
 public:
 	CAN_message();
-	CAN_message(unsigned long long, int, int, int, int, int, float, float, char*);
+	CAN_message(unsigned long long, int, int, int, int, int, float, float, std::string);
 	~CAN_message();
 	
 	TPCANMsg msg;					// message struct provided by PCAN-USB API
@@ -60,7 +61,7 @@ public:
 
 	unsigned long long get_time();
 	int get_channel();
-	char* get_task_name();
+	std::string get_task_name();
 };
 
 

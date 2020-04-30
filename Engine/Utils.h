@@ -6,9 +6,12 @@
 #include <cstdarg>
 #include <iostream>
 #include <memory>
+#include <signal.h>
+#include <thread>
 #include "Task.h"
 #include "ECU.h"
 #include "CAN_message.h"
+#include "Logger.h"
 
 /** This file is engine code of CPSim-Re engine
  * @file RUBIS_Util.h
@@ -31,7 +34,8 @@ namespace utils
     int least_common_multiple(int a, int b);
     int least_common_multiple_array(int argc, int* args);
     int calculate_hyper_period();
-
+    
+    void exit_simulation(int signo);
     void insert_can_msg(std::shared_ptr<CAN_message> input);
 }
 
@@ -41,5 +45,14 @@ namespace vectors
     inline std::vector<std::shared_ptr<Task>> task_vector;
     inline std::vector<std::shared_ptr<CAN_message>> can_msg_vector;
 }
+
+namespace global_object
+{
+    inline std::shared_ptr<Logger> logger;
+    inline std::thread logger_thread();
+}
+
+
+    
 
 #endif

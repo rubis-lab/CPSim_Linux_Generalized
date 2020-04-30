@@ -15,6 +15,10 @@ private:
 public:
     Specifier();
     ~Specifier();
+
+    int specify_number_of_tasks();
+    int specify_number_of_ECUs();
+    void specify_the_system();
 };
 
 #endif

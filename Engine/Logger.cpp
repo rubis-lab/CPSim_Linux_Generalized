@@ -24,12 +24,12 @@
  */
 Logger::Logger()
 {
-
+    
 }
 
 /**
  * @fn Logger::~Logger()
- * @brief the function of basic destroyer of Logger
+ * @brief the function of basic destructor of Logger
  * @author Seonghyeon Park
  * @date 2020-04-01
  * @details 
@@ -43,4 +43,22 @@ Logger::Logger()
 Logger::~Logger()
 {
 
+}
+
+/**
+ * @fn void start_logging()
+ * @brief this function starts the logging of simulation events
+ * @author Seonghyeon Park
+ * @date 2020-04-01
+ * @details 
+ *  - None
+ * @param none
+ * @return none
+ * @bug none
+ * @warning none
+ * @todo none
+ */
+void Logger::start_logging()
+{
+    std::cout << "Logging starts" << std::endl;
 }

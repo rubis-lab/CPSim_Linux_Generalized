@@ -113,6 +113,7 @@ void Initializer::initialize()
      * CAN Network Initialization
      */
     
+    
 
     /**
      * ECU Vector Initialization
@@ -129,7 +130,11 @@ void Initializer::initialize()
     vectors::task_vector.push_back(std::move(task1));
     std::cout << utils::least_common_multiple(5,4) << std::endl;
 
-
+    /**
+     * Logger Initialized
+     */
+    global_object::logger = std::make_shared<Logger>();
+    std::thread logger_thread(&Logger::start_logging, global_object::logger);
 
     std::cout << "Initialized, Performance: " << utils::simulatorPC_performance << std::endl;
 }

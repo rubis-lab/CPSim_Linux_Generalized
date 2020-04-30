@@ -62,3 +62,9 @@ void utils::insert_can_msg(std::shared_ptr<CAN_message> input)
 	}
 	vectors::can_msg_vector.push_back(input);		// push target to the last position
 }
+
+void utils::exit_simulation(int signo)
+{
+	::join();
+	std::cout << "Simulation End\n" << SIGINT;
+}

@@ -17,8 +17,12 @@ SET ( OUTPUT_ELF
 SET ( SRC_FILES
         # set main file first
         Engine/main.cpp 
-        # set initializer files 
-        Engine/Initializer.h Engine/Initializer.cpp 
+        # set Initializer files 
+        Engine/Initializer.h Engine/Initializer.cpp
+        # set Logger files
+        Engine/Logger.h Engine/Logger.cpp
+        # set Parser files
+        Engine/Parser.h Engine/Parser.cpp 
         # set schedule_simulator files
         Engine/ScheduleSimulator.h Engine/ScheduleSimulator.cpp 
         # set offline_guider files
@@ -54,7 +58,7 @@ ADD_COMPILE_OPTIONS ( -std=c++1z )
 # SET ( CMAKE_EXE_LINKER_FLAGS "-static -Wl, --gc-sections" )
 
 # Common Linking Libraries
-LINK_LIBRARIES( dl )
+LINK_LIBRARIES( dl pthread)
 
 # "Debug" Configruation options
 SET ( CMAKE_C_FLAGS_DEBUG "-DDEBUG -DC_FLAGS" )

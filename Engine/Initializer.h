@@ -3,6 +3,8 @@
 #include <pcan.h>
 #include <libpcan.h>
 #include "Utils.h"
+#include "Logger.h"
+#include <thread>
 
 /** This file is engine code of CPSim-Re engine
  * @file Initializer.h

@@ -261,6 +261,33 @@ Engine/Job.cpp.s:
 	$(MAKE) -f CMakeFiles/CPSim-0.1.out.dir/build.make CMakeFiles/CPSim-0.1.out.dir/Engine/Job.cpp.s
 .PHONY : Engine/Job.cpp.s
 
+Engine/Logger.o: Engine/Logger.cpp.o
+
+.PHONY : Engine/Logger.o
+
+# target to build an object file
+Engine/Logger.cpp.o:
+	$(MAKE) -f CMakeFiles/CPSim-0.1.out.dir/build.make CMakeFiles/CPSim-0.1.out.dir/Engine/Logger.cpp.o
+.PHONY : Engine/Logger.cpp.o
+
+Engine/Logger.i: Engine/Logger.cpp.i
+
+.PHONY : Engine/Logger.i
+
+# target to preprocess a source file
+Engine/Logger.cpp.i:
+	$(MAKE) -f CMakeFiles/CPSim-0.1.out.dir/build.make CMakeFiles/CPSim-0.1.out.dir/Engine/Logger.cpp.i
+.PHONY : Engine/Logger.cpp.i
+
+Engine/Logger.s: Engine/Logger.cpp.s
+
+.PHONY : Engine/Logger.s
+
+# target to generate assembly for a file
+Engine/Logger.cpp.s:
+	$(MAKE) -f CMakeFiles/CPSim-0.1.out.dir/build.make CMakeFiles/CPSim-0.1.out.dir/Engine/Logger.cpp.s
+.PHONY : Engine/Logger.cpp.s
+
 Engine/Network.o: Engine/Network.cpp.o
 
 .PHONY : Engine/Network.o
@@ -314,6 +341,33 @@ Engine/OfflineGuider.s: Engine/OfflineGuider.cpp.s
 Engine/OfflineGuider.cpp.s:
 	$(MAKE) -f CMakeFiles/CPSim-0.1.out.dir/build.make CMakeFiles/CPSim-0.1.out.dir/Engine/OfflineGuider.cpp.s
 .PHONY : Engine/OfflineGuider.cpp.s
+
+Engine/Parser.o: Engine/Parser.cpp.o
+
+.PHONY : Engine/Parser.o
+
+# target to build an object file
+Engine/Parser.cpp.o:
+	$(MAKE) -f CMakeFiles/CPSim-0.1.out.dir/build.make CMakeFiles/CPSim-0.1.out.dir/Engine/Parser.cpp.o
+.PHONY : Engine/Parser.cpp.o
+
+Engine/Parser.i: Engine/Parser.cpp.i
+
+.PHONY : Engine/Parser.i
+
+# target to preprocess a source file
+Engine/Parser.cpp.i:
+	$(MAKE) -f CMakeFiles/CPSim-0.1.out.dir/build.make CMakeFiles/CPSim-0.1.out.dir/Engine/Parser.cpp.i
+.PHONY : Engine/Parser.cpp.i
+
+Engine/Parser.s: Engine/Parser.cpp.s
+
+.PHONY : Engine/Parser.s
+
+# target to generate assembly for a file
+Engine/Parser.cpp.s:
+	$(MAKE) -f CMakeFiles/CPSim-0.1.out.dir/build.make CMakeFiles/CPSim-0.1.out.dir/Engine/Parser.cpp.s
+.PHONY : Engine/Parser.cpp.s
 
 Engine/PrecedenceGraph.o: Engine/PrecedenceGraph.cpp.o
 
@@ -474,12 +528,18 @@ help:
 	@echo "... Engine/Job.o"
 	@echo "... Engine/Job.i"
 	@echo "... Engine/Job.s"
+	@echo "... Engine/Logger.o"
+	@echo "... Engine/Logger.i"
+	@echo "... Engine/Logger.s"
 	@echo "... Engine/Network.o"
 	@echo "... Engine/Network.i"
 	@echo "... Engine/Network.s"
 	@echo "... Engine/OfflineGuider.o"
 	@echo "... Engine/OfflineGuider.i"
 	@echo "... Engine/OfflineGuider.s"
+	@echo "... Engine/Parser.o"
+	@echo "... Engine/Parser.i"
+	@echo "... Engine/Parser.s"
 	@echo "... Engine/PrecedenceGraph.o"
 	@echo "... Engine/PrecedenceGraph.i"
 	@echo "... Engine/PrecedenceGraph.s"
