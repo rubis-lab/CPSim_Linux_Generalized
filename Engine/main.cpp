@@ -74,8 +74,7 @@ int main()
     */
     Executor executor;
     executor.run_simulation();
-
-    
+    signal(SIGINT, utils::exit_simulation);    
     return 0;
 }
 

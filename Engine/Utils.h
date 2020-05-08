@@ -49,10 +49,7 @@ namespace vectors
 namespace global_object
 {
     inline std::shared_ptr<Logger> logger;
-    inline std::thread logger_thread();
+    inline std::shared_ptr<std::thread> logger_thread;
 }
-
-
-    
 
 #endif

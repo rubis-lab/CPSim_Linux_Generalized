@@ -134,7 +134,7 @@ void Initializer::initialize()
      * Logger Initialized
      */
     global_object::logger = std::make_shared<Logger>();
-    std::thread logger_thread(&Logger::start_logging, global_object::logger);
+    global_object::logger_thread = std::make_shared<std::thread>(&Logger::start_logging, global_object::logger);
 
     std::cout << "Initialized, Performance: " << utils::simulatorPC_performance << std::endl;
 }

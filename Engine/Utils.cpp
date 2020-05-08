@@ -65,6 +65,6 @@ void utils::insert_can_msg(std::shared_ptr<CAN_message> input)
 
 void utils::exit_simulation(int signo)
 {
-	::join();
+	global_object::logger_thread->join();
 	std::cout << "Simulation End\n" << SIGINT;
 }
