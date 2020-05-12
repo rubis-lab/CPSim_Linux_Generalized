@@ -101,7 +101,7 @@ int Initializer::parsing_specificated_information()
  * @warning none
  * @todo none
  */
-void Initializer::initialize()
+void Initializer::initialize(std::string location)
 {
     /**
      * For initialization of simulator engine, we need below steps.
@@ -109,6 +109,16 @@ void Initializer::initialize()
      * 2. 
      */
     
+    /**
+     * Speicification Initialization
+     */
+    if (!location.empty())
+    {
+        utils::file_path = location;
+    }
+    Specifier specifier;
+    specifier.specify_the_system(utils::file_path);
+
     /**
      * CAN Network Initialization
      */
@@ -118,8 +128,7 @@ void Initializer::initialize()
     /**
      * ECU Vector Initialization
      */
-    std::shared_ptr<ECU> ecu1(nullptr);
-    ecu1 = std::make_shared<ECU>(1,1,"RM");
+    std::shared_ptr<ECU> ecu1 = std::make_shared<ECU>(1,1,"RM");
     vectors::ecu_vector.push_back(std::move(ecu1));
 
     /**
@@ -128,10 +137,11 @@ void Initializer::initialize()
     std::shared_ptr<Task> task1(nullptr);
     task1 = std::make_shared<Task>("LK", 0, 10, 10, 4, 2, 0, 1, 0, "SENSING", "DM");
     vectors::task_vector.push_back(std::move(task1));
-    std::cout << utils::least_common_multiple(5,4) << std::endl;
+    utils::least_common_multiple_array(&vectors::task_vector);
+    std::cout << "test task_vector size is " << vectors::task_vector.size() << std::endl;
 
     /**
-     * Logger Initialized
+     * Logger Thread Initialized
      */
     global_object::logger = std::make_shared<Logger>();
     global_object::logger_thread = std::make_shared<std::thread>(&Logger::start_logging, global_object::logger);

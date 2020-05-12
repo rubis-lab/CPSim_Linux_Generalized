@@ -75,7 +75,7 @@ Task::Task(std::string task_name, int task_id, int period, int deadline, int wce
 
 /**
  * @fn Task::~Task()
- * @brief the function of basic destroyer of Task
+ * @brief the function of basic destructor of Task
  * @author Seonghyeon Park
  * @date 2020-04-01
  * @details 

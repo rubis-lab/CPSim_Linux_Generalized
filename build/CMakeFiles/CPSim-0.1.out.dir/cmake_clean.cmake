@@ -3,6 +3,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/CPSim-0.1.out.dir/Engine/Initializer.cpp.o"
   "CMakeFiles/CPSim-0.1.out.dir/Engine/Logger.cpp.o"
   "CMakeFiles/CPSim-0.1.out.dir/Engine/Parser.cpp.o"
+  "CMakeFiles/CPSim-0.1.out.dir/Engine/Specifier.cpp.o"
   "CMakeFiles/CPSim-0.1.out.dir/Engine/ScheduleSimulator.cpp.o"
   "CMakeFiles/CPSim-0.1.out.dir/Engine/OfflineGuider.cpp.o"
   "CMakeFiles/CPSim-0.1.out.dir/Engine/Executor.cpp.o"

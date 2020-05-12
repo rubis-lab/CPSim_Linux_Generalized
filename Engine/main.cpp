@@ -40,8 +40,9 @@
     @param none
 
 */
-int main()
+int main(int argc, char *argv[])
 {
+    std::cout << 8%13;
     /** [Initialization with Specification]
      *  To run simulator, 
      *  first we need to initialize all of the instances of ECU, Task, CAN, etc.).
@@ -49,7 +50,14 @@ int main()
      *  that we need.
     */
     Initializer initializer_module;
-    initializer_module.initialize();
+    if (argv[1] != NULL)
+    {
+        initializer_module.initialize(argv[1]);
+    }
+    else
+    {
+        initializer_module.initialize("");
+    }
     
     /** [Generation of Real-Cyber System's Scheduling]
      * To run simulator, 

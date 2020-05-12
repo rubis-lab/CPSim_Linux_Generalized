@@ -22,7 +22,9 @@ SET ( SRC_FILES
         # set Logger files
         Engine/Logger.h Engine/Logger.cpp
         # set Parser files
-        Engine/Parser.h Engine/Parser.cpp 
+        Engine/Parser.h Engine/Parser.cpp
+        # set Specifier files
+        Engine/Specifier.h Engine/Specifier.cpp 
         # set schedule_simulator files
         Engine/ScheduleSimulator.h Engine/ScheduleSimulator.cpp 
         # set offline_guider files

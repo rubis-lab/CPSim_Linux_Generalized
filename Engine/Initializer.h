@@ -2,9 +2,12 @@
 #include <stdio.h>
 #include <pcan.h>
 #include <libpcan.h>
+#include <thread>
+
+#include "Specifier.h"
 #include "Utils.h"
 #include "Logger.h"
-#include <thread>
+
 
 /** This file is engine code of CPSim-Re engine
  * @file Initializer.h
@@ -31,7 +34,7 @@ public:
     int parsing_specificated_information();
     
     void set_simulatorPC_performance();
-    void initialize();
+    void initialize(std::string location);
 };
 
 #endif

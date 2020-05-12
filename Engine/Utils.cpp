@@ -8,25 +8,57 @@
  *  @date 2020-03-31
  */
 
+/**
+ * @fn int greatest_common_divider
+ * @brief get the greatest common divider of two numbers
+ * @author Seonghyeon Park
+ * @date 2020-05-12
+ * @details 
+ *  - None
+ * @param int a
+ * @param int b
+ * @return a
+ * @bug none
+ * @warning none
+ * @todo none
+ */
 int utils::greatest_common_divider(int a, int b)
 {
-	for (;;)
-	{
-		if (a == 0) return b;
-		b %= a;
-		if (b == 0) return a;
-		a %= b;
+	int c;
+	
+	while (b != 0)
+	{	
+		c = a % b;
+		a = b;
+		b = c;
 	}
+
+	return a;
 }
 
 int utils::least_common_multiple(int a, int b)
 {
+	int c;
+	int answer;
+	c = a < b ? a : b;
+	
+	answer = c;
+	while( ((answer % a) != 0) || ((answer % b) != 0))
+	{
+		answer += c;
+	}
+	return a * b / utils::greatest_common_divider(a, b);
+}
+
+int utils::least_common_multiple_array(std::vector<std::shared_ptr<Task>> *task_set)
+{
+	
 	return 0;
 }
 
-int utils::calculate_hyper_period()
+int utils::calculate_hyper_period(std::vector<std::shared_ptr<Task>> *task_set)
 {
-
+	return 0;
 }
 
 /**

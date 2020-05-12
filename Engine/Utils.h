@@ -25,15 +25,18 @@
 
 namespace utils
 {
+    inline std::string file_path = "/home/";
     inline int hyper_period = 0;
     inline int current_time = 0; //simulation time(us)
+    inline int number_of_ECUs = 0;
+    inline int number_of_tasks = 0;
     inline int simulatorPC_performance = 3000;
     inline unsigned int ecu_counter = 0;
 
     int greatest_common_divider(int a, int b);
     int least_common_multiple(int a, int b);
-    int least_common_multiple_array(int argc, int* args);
-    int calculate_hyper_period();
+    int least_common_multiple_array(std::vector<std::shared_ptr<Task>> *task_set);
+    int calculate_hyper_period(std::vector<std::shared_ptr<Task>> *task_set);
     
     void exit_simulation(int signo);
     void insert_can_msg(std::shared_ptr<CAN_message> input);

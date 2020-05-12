@@ -423,6 +423,33 @@ Engine/ScheduleSimulator.cpp.s:
 	$(MAKE) -f CMakeFiles/CPSim-0.1.out.dir/build.make CMakeFiles/CPSim-0.1.out.dir/Engine/ScheduleSimulator.cpp.s
 .PHONY : Engine/ScheduleSimulator.cpp.s
 
+Engine/Specifier.o: Engine/Specifier.cpp.o
+
+.PHONY : Engine/Specifier.o
+
+# target to build an object file
+Engine/Specifier.cpp.o:
+	$(MAKE) -f CMakeFiles/CPSim-0.1.out.dir/build.make CMakeFiles/CPSim-0.1.out.dir/Engine/Specifier.cpp.o
+.PHONY : Engine/Specifier.cpp.o
+
+Engine/Specifier.i: Engine/Specifier.cpp.i
+
+.PHONY : Engine/Specifier.i
+
+# target to preprocess a source file
+Engine/Specifier.cpp.i:
+	$(MAKE) -f CMakeFiles/CPSim-0.1.out.dir/build.make CMakeFiles/CPSim-0.1.out.dir/Engine/Specifier.cpp.i
+.PHONY : Engine/Specifier.cpp.i
+
+Engine/Specifier.s: Engine/Specifier.cpp.s
+
+.PHONY : Engine/Specifier.s
+
+# target to generate assembly for a file
+Engine/Specifier.cpp.s:
+	$(MAKE) -f CMakeFiles/CPSim-0.1.out.dir/build.make CMakeFiles/CPSim-0.1.out.dir/Engine/Specifier.cpp.s
+.PHONY : Engine/Specifier.cpp.s
+
 Engine/Task.o: Engine/Task.cpp.o
 
 .PHONY : Engine/Task.o
@@ -546,6 +573,9 @@ help:
 	@echo "... Engine/ScheduleSimulator.o"
 	@echo "... Engine/ScheduleSimulator.i"
 	@echo "... Engine/ScheduleSimulator.s"
+	@echo "... Engine/Specifier.o"
+	@echo "... Engine/Specifier.i"
+	@echo "... Engine/Specifier.s"
 	@echo "... Engine/Task.o"
 	@echo "... Engine/Task.i"
 	@echo "... Engine/Task.s"

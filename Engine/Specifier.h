@@ -1,5 +1,6 @@
 #ifndef SPECIFIER_H__
 #define SPECIFIER_H__
+#include "Utils.h"
 
 /**
  *  @file Specifier.h
@@ -16,9 +17,9 @@ public:
     Specifier();
     ~Specifier();
 
-    int specify_number_of_tasks();
-    int specify_number_of_ECUs();
-    void specify_the_system();
+    int specify_number_of_tasks(std::string file_path);
+    int specify_number_of_ECUs(std::string file_path);
+    void specify_the_system(std::string file_path);
 };
 
 #endif
