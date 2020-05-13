@@ -36,6 +36,20 @@ int utils::greatest_common_divider(int a, int b)
 	return a;
 }
 
+/**
+ * @fn int least_common_multiple
+ * @brief get the greatest common divider of two numbers
+ * @author Seonghyeon Park
+ * @date 2020-05-12
+ * @details 
+ *  - None
+ * @param int a
+ * @param int b
+ * @return a
+ * @bug none
+ * @warning none
+ * @todo none
+ */
 int utils::least_common_multiple(int a, int b)
 {
 	int c;
