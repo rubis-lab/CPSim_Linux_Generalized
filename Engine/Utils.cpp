@@ -52,20 +52,31 @@ int utils::greatest_common_divider(int a, int b)
  */
 int utils::least_common_multiple(int a, int b)
 {
-	int c;
-	int answer;
-	c = a < b ? a : b;
-	
-	answer = c;
-	while( ((answer % a) != 0) || ((answer % b) != 0))
-	{
-		answer += c;
-	}
 	return a * b / utils::greatest_common_divider(a, b);
 }
 
 int utils::least_common_multiple_array(std::vector<std::shared_ptr<Task>> *task_set)
 {
+	/**
+	To be deleted code 
+	Just for test
+	std::cout << task_set->size() << std::endl;
+	task_set->pop_back();
+	std::cout << task_set->size() << std::endl;
+	*/
+	int minimal_period_of_taskset = 0;
+	int 
+	std::vector<std::shared_ptr<Task>>::iterator iter;
+	for (iter = task_set->begin(); iter != task_set->end(); iter ++)
+	{
+		
+		/**
+		To be deleted code
+		std::cout << iter->get()->get_task_name() << std::endl;
+		*/
+
+		iter->get()->get_period();
+	}
 	
 	return 0;
 }

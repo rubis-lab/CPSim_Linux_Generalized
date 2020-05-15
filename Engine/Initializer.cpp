@@ -138,7 +138,11 @@ void Initializer::initialize(std::string location)
     task1 = std::make_shared<Task>("LK", 0, 10, 10, 4, 2, 0, 1, 0, "SENSING", "DM");
     vectors::task_vector.push_back(std::move(task1));
     utils::least_common_multiple_array(&vectors::task_vector);
+    
+    /**
+    To be deleted code 
     std::cout << "test task_vector size is " << vectors::task_vector.size() << std::endl;
+     */
 
     /**
      * Logger Thread Initialized
@@ -146,5 +150,8 @@ void Initializer::initialize(std::string location)
     global_object::logger = std::make_shared<Logger>();
     global_object::logger_thread = std::make_shared<std::thread>(&Logger::start_logging, global_object::logger);
 
+    /**
+    To be deleted code 
     std::cout << "Initialized, Performance: " << utils::simulatorPC_performance << std::endl;
+    */
 }
