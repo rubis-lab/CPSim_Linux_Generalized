@@ -64,8 +64,9 @@ int utils::least_common_multiple_array(std::vector<std::shared_ptr<Task>> *task_
 	task_set->pop_back();
 	std::cout << task_set->size() << std::endl;
 	*/
-	int minimal_period_of_taskset = 0;
-	int 
+	
+	int lcm_of_array = 0;
+
 	std::vector<std::shared_ptr<Task>>::iterator iter;
 	for (iter = task_set->begin(); iter != task_set->end(); iter ++)
 	{
@@ -75,15 +76,39 @@ int utils::least_common_multiple_array(std::vector<std::shared_ptr<Task>> *task_
 		std::cout << iter->get()->get_task_name() << std::endl;
 		*/
 
-		iter->get()->get_period();
+		
+		if (lcm_of_array == 0)
+		{
+			/**
+			 * To be delete code for testing
+			 * std::cout << iter->get()->get_period() << std::endl; 
+			 */
+			
+			lcm_of_array = iter->get()->get_period();
+		}
+		else
+		{
+			/**
+			 * To be delete code for testing
+			 * std::cout << iter->get()->get_period() << std::endl;
+			 */ 
+			lcm_of_array = utils::least_common_multiple(lcm_of_array, iter->get()->get_period());
+		}
 	}
-	
-	return 0;
+
+	/**
+	 * To be delete code for testing
+	 * std::cout << "the last output is : " << lcm_of_array << std::endl;
+	 */
+	return lcm_of_array;
 }
 
 int utils::calculate_hyper_period(std::vector<std::shared_ptr<Task>> *task_set)
 {
-	return 0;
+	int hyper_period = 0;
+	hyper_period = utils::least_common_multiple_array(task_set);
+	std::cout << "Hyper Period is : " << hyper_period << std::endl;
+	return hyper_period;
 }
 
 /**

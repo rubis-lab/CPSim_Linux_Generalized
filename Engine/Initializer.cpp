@@ -136,14 +136,28 @@ void Initializer::initialize(std::string location)
      */
     std::shared_ptr<Task> task1(nullptr);
     task1 = std::make_shared<Task>("LK", 0, 10, 10, 4, 2, 0, 1, 0, "SENSING", "DM");
+    std::shared_ptr<Task> task2 = std::make_shared<Task>("LK", 0, 20, 20, 4, 2, 0, 1, 0, "SENSING", "DM");
+    std::shared_ptr<Task> task3 = std::make_shared<Task>("LK", 0, 30, 30, 4, 2, 0, 1, 0, "SENSING", "DM");
+    std::shared_ptr<Task> task4 = std::make_shared<Task>("LK", 0, 5, 5, 4, 2, 0, 1, 0, "SENSING", "DM");
+    std::shared_ptr<Task> task5 = std::make_shared<Task>("LK", 0, 40, 40, 4, 2, 0, 1, 0, "SENSING", "DM");
+    std::shared_ptr<Task> task6 = std::make_shared<Task>("LK", 0, 50, 50, 4, 2, 0, 1, 0, "SENSING", "DM");
+    std::shared_ptr<Task> task7 = std::make_shared<Task>("LK", 0, 60, 60, 4, 2, 0, 1, 0, "SENSING", "DM");
+
     vectors::task_vector.push_back(std::move(task1));
-    utils::least_common_multiple_array(&vectors::task_vector);
+    vectors::task_vector.push_back(std::move(task2));
+    vectors::task_vector.push_back(std::move(task3));
+    vectors::task_vector.push_back(std::move(task4));
+    vectors::task_vector.push_back(std::move(task5));
+    vectors::task_vector.push_back(std::move(task6));
+    vectors::task_vector.push_back(std::move(task7));
+    
+    utils::hyper_period = utils::calculate_hyper_period(&vectors::task_vector);
     
     /**
-    To be deleted code 
-    std::cout << "test task_vector size is " << vectors::task_vector.size() << std::endl;
+     * To be deleted code for testing
+     * std::cout << "test task_vector size is " << vectors::task_vector.size() << std::endl;
      */
-
+    
     /**
      * Logger Thread Initialized
      */
@@ -151,7 +165,8 @@ void Initializer::initialize(std::string location)
     global_object::logger_thread = std::make_shared<std::thread>(&Logger::start_logging, global_object::logger);
 
     /**
-    To be deleted code 
-    std::cout << "Initialized, Performance: " << utils::simulatorPC_performance << std::endl;
-    */
+     * To be deleted code for testing
+     * std::cout << "Initialized, Performance: " << utils::simulatorPC_performance << std::endl;
+     */
+
 }
