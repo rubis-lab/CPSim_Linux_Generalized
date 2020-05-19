@@ -56,6 +56,23 @@ Executor::~Executor(){
  * @warning none
  * @todo implement this today's night
  */
-void Executor::run_simulation(){
+void Executor::run_simulation()
+{
+    /** Alex approach
+     *
+    for(Job job : jobs)
+    {
+        if(job.shouldWeExecute(...))
+            job.update(...);
+    }
+    */
 
+   /** SH approach 
+    * for(job_vector )
+    * {
+    *   check constraints
+    *   run()
+    *   update(Precedence Graph and next hyper period jobs, non-det ege in PG)
+    */ 
+   
 }

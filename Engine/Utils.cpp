@@ -52,23 +52,43 @@ int utils::greatest_common_divider(int a, int b)
  */
 int utils::least_common_multiple(int a, int b)
 {
-	return a * b / utils::greatest_common_divider(a, b);
+	return (a * b) / utils::greatest_common_divider(a, b);
 }
 
-int utils::least_common_multiple_array(std::vector<std::shared_ptr<Task>> *task_set)
+/**
+ * @fn int least_common_multiple_array(std::vector<std::shared_ptr<Task> >& task_set)
+ * @brief get the greatest common divider of number of arrays
+ * @author Alex
+ * @date 2020-05-19
+ * @details 
+ *  - None
+ * @param std::vector<std::shared_ptr<Task> >& task_set
+ * @return least common multiple
+ * @bug none
+ * @warning none
+ * @todo none
+ */
+int utils::least_common_multiple_array(std::vector<std::shared_ptr<Task> >& task_set)
 {
+	// IF CODE IS USING SMART POINTERS
+	// NEVER USE RAW POINTERS
 	/**
 	To be deleted code 
 	Just for test
 	std::cout << task_set->size() << std::endl;
 	task_set->pop_back();
 	std::cout << task_set->size() << std::endl;
-	*/
 	
+	void* ptr = &task_vector;
+
+	task_vector->INNER ARRAY
+
+	(CAST)ptr->pop_back()
+	*/
+
 	int lcm_of_array = 0;
 
-	std::vector<std::shared_ptr<Task>>::iterator iter;
-	for (iter = task_set->begin(); iter != task_set->end(); iter ++)
+	for (auto iter = task_set.begin(); iter != task_set.end(); iter++)
 	{
 		
 		/**
@@ -100,10 +120,11 @@ int utils::least_common_multiple_array(std::vector<std::shared_ptr<Task>> *task_
 	 * To be delete code for testing
 	 * std::cout << "the last output is : " << lcm_of_array << std::endl;
 	 */
+
 	return lcm_of_array;
 }
 
-int utils::calculate_hyper_period(std::vector<std::shared_ptr<Task>> *task_set)
+int utils::calculate_hyper_period(std::vector<std::shared_ptr<Task>>& task_set)
 {
 	int hyper_period = 0;
 	hyper_period = utils::least_common_multiple_array(task_set);

@@ -37,18 +37,18 @@ namespace utils
 
     int greatest_common_divider(int a, int b);
     int least_common_multiple(int a, int b);
-    int least_common_multiple_array(std::vector<std::shared_ptr<Task>> *task_set);
-    int calculate_hyper_period(std::vector<std::shared_ptr<Task>> *task_set);
+    int least_common_multiple_array(std::vector<std::shared_ptr<Task>>& task_set);
+    int calculate_hyper_period(std::vector<std::shared_ptr<Task>>& task_set);
     
     void exit_simulation(int signo);
     void insert_can_msg(std::shared_ptr<CAN_message> input);
 }
 
 namespace vectors
-{
-    inline std::vector<std::shared_ptr<ECU>> ecu_vector;
-    inline std::vector<std::shared_ptr<Task>> task_vector;
-    inline std::vector<std::shared_ptr<CAN_message>> can_msg_vector;
+{// std::cout >> "hello";
+    inline std::vector<std::shared_ptr<ECU> > ecu_vector;
+    inline std::vector<std::shared_ptr<Task> > task_vector;
+    inline std::vector<std::shared_ptr<CAN_message> > can_msg_vector;
 }
 
 namespace global_object

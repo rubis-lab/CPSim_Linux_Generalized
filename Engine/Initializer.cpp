@@ -151,13 +151,13 @@ void Initializer::initialize(std::string location)
     vectors::task_vector.push_back(std::move(task6));
     vectors::task_vector.push_back(std::move(task7));
     
-    utils::hyper_period = utils::calculate_hyper_period(&vectors::task_vector);
+    utils::hyper_period = utils::calculate_hyper_period(vectors::task_vector);
     
     /**
      * To be deleted code for testing
      * std::cout << "test task_vector size is " << vectors::task_vector.size() << std::endl;
      */
-    
+
     /**
      * Logger Thread Initialized
      */

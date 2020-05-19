@@ -22,6 +22,7 @@ class Job : public Task
 {
 private:
     int job_id;
+    //ECU* ecu;
 public: 
     Job();
     ~Job();

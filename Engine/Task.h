@@ -33,8 +33,8 @@ private:
 	int _wcet;
 	int _bcet;
 	int _offset;
-	int _is_read;
-	int _is_write;
+	bool _is_read;
+	bool _is_write;
 	Task* _producer;
 	Task* _consumer;
 
