@@ -142,7 +142,7 @@ void Initializer::initialize(std::string location)
     vectors::task_vector.push_back(std::move(task1));
     std::shared_ptr<Task> task2 = std::make_shared<Task>("LK", 20, 20, 4, 2, 0, false, true, 0);
     vectors::task_vector.push_back(std::move(task2));
-    std::shared_ptr<Task> task3 = std::make_shared<Task>("CC", 30, 30, 4, 2, 0, false, true, 1);
+    std::shared_ptr<Task> task3 = std::make_shared<Task>("CC", 30, 30, 4, 2, 0, false, true, 0);
     vectors::task_vector.push_back(std::move(task3));
 
     /**

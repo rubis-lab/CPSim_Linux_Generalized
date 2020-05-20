@@ -171,3 +171,21 @@ void utils::exit_simulation(int signo)
 	global_object::logger_thread->join();
 	std::cout << "Simulation End\n" << SIGINT;
 }
+
+bool utils::compare(std::shared_ptr<Job> pred, std::shared_ptr<Job> succ)
+{
+    //if two jobs priority are same, then choose job id first.
+    if(pred->get_priority() == succ->get_priority())
+    {
+        return pred->get_job_id() < succ->get_job_id();
+    }
+    else if(pred->get_priority() < succ->get_priority()) //if not, then inverted order of priority values
+    {
+        return pred->get_priority() < succ->get_priority();
+    }
+    else
+    {
+        return pred->get_priority() > succ->get_priority();
+    }
+    
+}

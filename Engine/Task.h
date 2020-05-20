@@ -35,6 +35,7 @@ private:
 	int m_wcet;
 	int m_bcet;
 	int m_offset;
+	int m_priority;
 	bool m_is_read;
 	bool m_is_write;
 	std::shared_ptr<ECU> m_ecu;
@@ -59,6 +60,7 @@ public:
 	int get_wcet();
 	int get_bcet();
 	int get_offset();
+	int get_priority();
 	bool get_is_read();
 	bool get_is_write();
 
@@ -82,6 +84,7 @@ public:
 	void set_producers(std::vector<std::shared_ptr<Task>> producers);
 	void set_consumers(std::vector<std::shared_ptr<Task>> consumers);
 	void set_ECU(std::shared_ptr<ECU> ecu);
+	void set_priority(int);
 
 	void synchronize_producer_consumer_relation();
 };

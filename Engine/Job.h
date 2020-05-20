@@ -25,6 +25,7 @@
 class Job : public Task
 {
 private:
+    bool m_is_preemptable; // true means originally CPU job, false means abstracted GPU job.
     int m_job_id;
     int m_release_time;
     int m_absolute_deadline;

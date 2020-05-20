@@ -127,6 +127,22 @@ int Job::get_actual_finish_time()
     return m_actual_finish_time;
 }  
 
+void Job::set_est(int est)
+{
+    m_est = est;
+}
+void Job::set_lst(int lst)
+{
+    m_lst = lst;
+}
+void Job::set_eft(int eft)
+{
+    m_eft = eft;
+}
+void Job::set_lft(int lft)
+{
+    m_lft = lft;
+}
 void Job::set_release_time(int release_time)
 {
     m_release_time = release_time;

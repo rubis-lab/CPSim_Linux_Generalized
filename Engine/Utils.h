@@ -8,6 +8,8 @@
 #include <memory>
 #include <signal.h>
 #include <thread>
+#include <algorithm>
+
 #include "Task.h"
 #include "Job.h"
 #include "ECU.h"
@@ -40,7 +42,7 @@ namespace utils
     int least_common_multiple(int a, int b);
     int least_common_multiple_array(std::vector<std::shared_ptr<Task>>& task_set);
     int calculate_hyper_period(std::vector<std::shared_ptr<Task>>& task_set);
-    
+    bool compare(std::shared_ptr<Job> pred, std::shared_ptr<Job> succ);
     void exit_simulation(int signo);
     void insert_can_msg(std::shared_ptr<CAN_message> input);
 }

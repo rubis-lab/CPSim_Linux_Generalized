@@ -108,13 +108,36 @@ void ScheduleSimulator::simulate_scheduling_on_Real(int global_hyper_period_star
          std::cout << std::endl;
      }
      */   
-    for(int ecu_id = 0; ecu_id < vectors::job_vectors_for_each_ECU.size(); ecu_id++)
-     {
-         for(auto job : vectors::job_vectors_for_each_ECU.at(ecu_id))
-             std::cout << "J"<<job->get_task_id()<< job->get_job_id()<<"'s release time is" <<job->get_release_time()<<std::endl;
- 
-         std::cout << std::endl;
-     }
+
+    /**
+     * Assigning priorities for each ECU's tasks
+     */
+    for(int ecu_id = 0; ecu_id < vectors::job_vectors_for_each_ECU.size(); ++ecu_id) 
+        for(auto job : vectors::job_vectors_for_each_ECU.at(ecu_id))
+            job->set_priority(0);
+
+    for(int ecu_id = 0; ecu_id < vectors::job_vectors_for_each_ECU.size(); ++ecu_id)
+    {
+        for(auto job : vectors::job_vectors_for_each_ECU.at(ecu_id))
+        {
+            for(auto job_to_look : vectors::job_vectors_for_each_ECU.at(ecu_id))
+            {
+                if(job == job_to_look) continue; 
+                if((job->get_period() > job_to_look->get_period()) && (job->get_priority() == job_to_look->get_priority()))
+                {
+                    // We have higher priority.
+                    job->set_priority(job->get_priority() + 1); // Increment our priority by one.
+                }
+            }
+        }
+    }   
+    /**
+     * For test  
+     for(int ecu_id = 0; ecu_id < vectors::job_vectors_for_each_ECU.size(); ++ecu_id) 
+        for(auto job : vectors::job_vectors_for_each_ECU.at(ecu_id))
+            std::cout << "J"<<job->get_task_id() << job->get_job_id() << "'s priority is " << job->get_priority() << std::endl;
+     */ 
+    
     /** 
      * Make schedule and simulate the schedule.
      * then all the job's time ranges[EST-LST], [EFT, LFT] become deterministic.
@@ -128,15 +151,67 @@ void ScheduleSimulator::simulate_scheduling_on_Real(int global_hyper_period_star
      * Then, we start with the highest priority job which 
      *
      */
-
     for(int ecu_id = 0; ecu_id < vectors::job_vectors_for_each_ECU.size(); ++ecu_id)
     {
-        for(auto job : vectors::job_vectors_for_each_ECU.at(ecu_id))
-        {
-            std::map<bool, int> wcbp; 
-            wcbp.insert(std::make_pair(0, global_hyper_period_start_point));
+        int current_time_point = global_hyper_period_start_point;
+        int busy_period_start_point = 0;
 
-            //wcbp.insert(std::make_pair(1, lft));
+        bool is_idle = true;
+
+        //check_released_jobs_at_the_time_point
+        while(current_time_point <= global_hyper_period_start_point + _hyper_period)
+        {
+            std::vector<std::shared_ptr<Job>> job_queue; 
+            int sum_of_bcet = 0;
+
+            for(auto job : vectors::job_vectors_for_each_ECU.at(ecu_id))
+            {
+                /*
+                 * if released job exist, then put it in the job_queue.
+                 * and, set busy_period_start as job's release time.
+                 */
+                
+                if(job->get_release_time() == current_time_point)
+                {
+                    job_queue.push_back(job);
+                }
+            }
+
+            std::sort(job_queue.begin(), job_queue.end(), utils::compare);
+            /**
+             * for test
+            for(auto job : job_queue)
+            {
+                std::cout << job->get_task_id() << job->get_job_id() << "'s priority is : " << job->get_priority() << std::endl;
+            }
+            while(1);
+             */
+            if(is_idle)
+            {
+                is_idle = false;
+                busy_period_start_point = job_queue.at(job_queue.size()-1)->get_release_time();
+                sum_of_bcet = 0;
+            }
+
+            while(!job_queue.empty())
+            {
+                job_queue.at(job_queue.size()-1)->set_est(busy_period_start_point + sum_of_bcet);
+                sum_of_bcet += job_queue.at(job_queue.size()-1)->get_bcet();
+                for(auto job_h : vectors::job_vectors_for_each_ECU.at(ecu_id))
+                {
+                    if((busy_period_start_point < job_h->get_release_time()) && (job_h->get_release_time() < busy_period_start_point + sum_of_bcet))
+                    {
+                        sum_of_bcet = sum_of_bcet + job_h->get_bcet();
+                    }
+                }
+                job_queue.at(job_queue.size()-1)->set_eft(job_queue.at(job_queue.size()-1)->get_est() + sum_of_bcet);
+                job_queue.pop_back();
+            }
+            //std::cout << job_queue.at(job_queue.size()-1)->get_task_id()<< job_queue.at(job_queue.size()-1)->get_job_id()<<job_queue.at(job_queue.size()-1)->get_est()<< std::endl;
+            //std::cout << vectors::job_vectors_for_each_ECU.at(ecu_id).at(0)->get_task_id() << vectors::job_vectors_for_each_ECU.at(ecu_id).at(0)->get_job_id() << vectors::job_vectors_for_each_ECU.at(ecu_id).at(0)->get_est() << std::endl;
+            //job_queue.pop_back();
+            
         }
+    
     }
 }

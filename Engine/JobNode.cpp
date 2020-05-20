@@ -5,11 +5,12 @@ JobNode::JobNode(std::shared_ptr<Job> job)
 	this->_job = job;
 }
 
-void JobNode::insertEdge(std::shared_ptr<JobNode> dest, bool isDeterministic)
+std::shared_ptr<JobNode> JobNode::insertEdge(std::shared_ptr<JobNode> dest, bool isDeterministic)
 {
 	EdgeInfo info;
 	info.isDeterministic = isDeterministic;
 	this->_edges.push_back(std::make_pair(dest, info));
+	return dest;
 }
 
 std::vector<std::shared_ptr<JobNode>> JobNode::getDeterministicEdges()

@@ -219,6 +219,10 @@ int Task::get_offset()
     return m_offset;
 }
 
+int Task::get_priority()
+{
+    return m_priority;    
+}
 /**
  * @fn int get_is_read()
  * @brief Getter for task's read constraint
@@ -309,7 +313,10 @@ void Task::set_is_write(bool is_write)
 {
     m_is_write = is_write;
 }
-
+void Task::set_priority(int priority)
+{
+    m_priority = priority;
+}
 
 void Task::set_producers(std::vector<std::shared_ptr<Task>> producers)
 {

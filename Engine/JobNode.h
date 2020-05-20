@@ -14,7 +14,7 @@ class JobNode
 	std::vector<std::pair<std::shared_ptr<JobNode>, EdgeInfo>> _edges;
 	std::shared_ptr<Job> _job = nullptr; // Actual job we represent.
 public:
-	void insertEdge(std::shared_ptr<JobNode> dest, bool isDeterministic);
+	std::shared_ptr<JobNode> insertEdge(std::shared_ptr<JobNode> dest, bool isDeterministic);
 	JobNode(std::shared_ptr<Job> job);
 	std::vector<std::shared_ptr<JobNode>> getDeterministicEdges();
 	std::vector<std::shared_ptr<JobNode>> getNonDeterministicEdges();
