@@ -92,6 +92,18 @@ map
 iostream
 -
 
+/home/park/git_base/Re-implemented-CPSim/Engine/JobNode.cpp
+JobNode.h
+/home/park/git_base/Re-implemented-CPSim/Engine/JobNode.h
+
+/home/park/git_base/Re-implemented-CPSim/Engine/JobNode.h
+vector
+-
+memory
+-
+Job.h
+/home/park/git_base/Re-implemented-CPSim/Engine/Job.h
+
 /home/park/git_base/Re-implemented-CPSim/Engine/Logger.cpp
 Logger.h
 /home/park/git_base/Re-implemented-CPSim/Engine/Logger.h
@@ -111,6 +123,10 @@ string.h
 /home/park/git_base/Re-implemented-CPSim/Engine/OfflineGuider.cpp
 OfflineGuider.h
 /home/park/git_base/Re-implemented-CPSim/Engine/OfflineGuider.h
+JobNode.h
+/home/park/git_base/Re-implemented-CPSim/Engine/JobNode.h
+memory
+-
 
 /home/park/git_base/Re-implemented-CPSim/Engine/OfflineGuider.h
 

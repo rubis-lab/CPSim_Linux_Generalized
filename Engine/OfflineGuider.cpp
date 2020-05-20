@@ -77,6 +77,6 @@ void OfflineGuider::construct_job_precedence_graph()
     std::shared_ptr<Job> someNonDeterministicDependance = nullptr;
     std::shared_ptr<JobNode> other2 = std::make_shared<JobNode>(someNonDeterministicDependance);
 
-    start->insertEdge(other, true); // Insert Deterministic Edge.
-    start->insertEdge(other2, false); // Insert Non-Deterministic Edge.
+    //start->insertEdge(other, true); // Insert Deterministic Edge.
+    //start->insertEdge(other2, false); // Insert Non-Deterministic Edge.
 }

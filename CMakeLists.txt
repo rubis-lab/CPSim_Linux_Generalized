@@ -45,6 +45,8 @@ SET ( SRC_FILES
         Engine/CAN_message.h Engine/CAN_message.cpp
         # set Utils files
         Engine/Utils.h Engine/Utils.cpp
+        # set JobNode files
+        Engine/JobNode.h Engine/JobNode.cpp
         )
 
 # Compiler Information

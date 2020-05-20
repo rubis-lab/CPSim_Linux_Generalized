@@ -73,5 +73,10 @@
   "directory": "/home/park/git_base/Re-implemented-CPSim/build",
   "command": "/usr/bin/g++-7    -g   -std=c++1z -o CMakeFiles/CPSim-0.1.out.dir/Engine/Utils.cpp.o -c /home/park/git_base/Re-implemented-CPSim/Engine/Utils.cpp",
   "file": "/home/park/git_base/Re-implemented-CPSim/Engine/Utils.cpp"
+},
+{
+  "directory": "/home/park/git_base/Re-implemented-CPSim/build",
+  "command": "/usr/bin/g++-7    -g   -std=c++1z -o CMakeFiles/CPSim-0.1.out.dir/Engine/JobNode.cpp.o -c /home/park/git_base/Re-implemented-CPSim/Engine/JobNode.cpp",
+  "file": "/home/park/git_base/Re-implemented-CPSim/Engine/JobNode.cpp"
 }
 ]

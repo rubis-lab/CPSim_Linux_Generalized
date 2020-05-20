@@ -94,7 +94,9 @@ void ScheduleSimulator::simulate_scheduling_on_Real(int global_hyper_period_star
           std::cout << vectors::job_vectors_for_each_task.at(task_idx).at(job_id-1).get()->get_absolute_deadline() << " , ";
         }
         std::cout << std::endl;
+        std::cout << std::endl;
          */
+
     }
     /**
      * This is for printing each jobs of each ECUs
@@ -106,7 +108,13 @@ void ScheduleSimulator::simulate_scheduling_on_Real(int global_hyper_period_star
          std::cout << std::endl;
      }
      */   
-    
+    for(int ecu_id = 0; ecu_id < vectors::job_vectors_for_each_ECU.size(); ecu_id++)
+     {
+         for(auto job : vectors::job_vectors_for_each_ECU.at(ecu_id))
+             std::cout << "J"<<job->get_task_id()<< job->get_job_id()<<"'s release time is" <<job->get_release_time()<<std::endl;
+ 
+         std::cout << std::endl;
+     }
     /** 
      * Make schedule and simulate the schedule.
      * then all the job's time ranges[EST-LST], [EFT, LFT] become deterministic.
@@ -121,7 +129,7 @@ void ScheduleSimulator::simulate_scheduling_on_Real(int global_hyper_period_star
      *
      */
 
-    for(int ecu_id = 0; ecu_id < vectors::job_vectors_for_each_ECU.size(); ecu_id ++)
+    for(int ecu_id = 0; ecu_id < vectors::job_vectors_for_each_ECU.size(); ++ecu_id)
     {
         for(auto job : vectors::job_vectors_for_each_ECU.at(ecu_id))
         {
