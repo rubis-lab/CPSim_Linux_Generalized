@@ -9,6 +9,7 @@
 #include <signal.h>
 #include <thread>
 #include "Task.h"
+#include "Job.h"
 #include "ECU.h"
 #include "CAN_message.h"
 #include "Logger.h"
@@ -45,9 +46,12 @@ namespace utils
 }
 
 namespace vectors
-{// std::cout >> "hello";
+{
+    inline std::vector<std::shared_ptr<Job> > job_vector_of_simulator;
+    inline std::vector<std::vector<std::shared_ptr<Job>>> job_vectors_for_each_task;
+    inline std::vector<std::vector<std::shared_ptr<Job>>> job_vectors_for_each_ECU;
     inline std::vector<std::shared_ptr<ECU> > ecu_vector;
-    inline std::vector<std::shared_ptr<Task> > task_vector;
+    inline std::vector<std::shared_ptr<Task>> task_vector;
     inline std::vector<std::shared_ptr<CAN_message> > can_msg_vector;
 }
 

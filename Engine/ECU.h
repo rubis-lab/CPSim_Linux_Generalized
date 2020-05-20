@@ -24,7 +24,7 @@ public:
      * Constructors and Destructors
      */
     ECU();
-    ECU(int, int, std::string);
+    ECU(int, std::string);
     ~ECU();
 
     /**

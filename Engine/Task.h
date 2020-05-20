@@ -4,6 +4,8 @@
 #include <string.h>
 #include <string>
 #include <vector>
+#include <memory>
+#include "ECU.h"
 
 /** This file is engine code of CPSim-Re engine
  * @file Task.h
@@ -26,24 +28,25 @@
 class Task
 {
 private:
-	std::string _task_name;
-	int _task_id;
-	int _period;
-	int _deadline;
-	int _wcet;
-	int _bcet;
-	int _offset;
-	bool _is_read;
-	bool _is_write;
-	Task* _producer;
-	Task* _consumer;
+	std::string m_task_name;
+	int m_task_id;
+	int m_period;
+	int m_deadline;
+	int m_wcet;
+	int m_bcet;
+	int m_offset;
+	bool m_is_read;
+	bool m_is_write;
+	std::shared_ptr<ECU> m_ecu;
+	std::vector<std::shared_ptr<Task>> m_producers;
+	std::vector<std::shared_ptr<Task>> m_consumers;
 
 public:
     /**
      * Constructors and Destructors
      */
 	Task();
-	Task(std::string, int, int, int, int, int, int, int, int, std::string, std::string);
+	Task(std::string, int, int, int, int, int, bool, bool, int);
 	~Task();
 
     /**
@@ -56,14 +59,31 @@ public:
 	int get_wcet();
 	int get_bcet();
 	int get_offset();
-	int get_is_read();
-	int get_is_write();
-	Task* get_producer();
-	Task* get_consumer();
-	
+	bool get_is_read();
+	bool get_is_write();
+
+	std::vector<std::shared_ptr<Task>> get_producers();
+	std::vector<std::shared_ptr<Task>> get_consumers();
+	std::shared_ptr<ECU> get_ECU();
     /**
      * Setter member functions
      */
+
+	void set_task_name(std::string task_name);
+	void set_task_id(int task_id);
+	void set_period(int period);
+	void set_deadline(int deadline);
+	void set_wcet(int wcet);
+	void set_bcet(int bcet);
+	void set_offset(int offset);
+	void set_is_read(bool is_read);
+	void set_is_write(bool is_write);
+
+	void set_producers(std::vector<std::shared_ptr<Task>> producers);
+	void set_consumers(std::vector<std::shared_ptr<Task>> consumers);
+	void set_ECU(std::shared_ptr<ECU> ecu);
+
+	void synchronize_producer_consumer_relation();
 };
 
 #endif

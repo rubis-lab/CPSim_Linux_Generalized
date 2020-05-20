@@ -102,13 +102,7 @@ int Initializer::parsing_specificated_information()
  * @todo none
  */
 void Initializer::initialize(std::string location)
-{
-    /**
-     * For initialization of simulator engine, we need below steps.
-     * 1. CAN Network initialization
-     * 2. 
-     */
-    
+{    
     /**
      * Speicification Initialization
      */
@@ -127,37 +121,35 @@ void Initializer::initialize(std::string location)
 
     /**
      * ECU Vector Initialization
-     */
-    std::shared_ptr<ECU> ecu1 = std::make_shared<ECU>(1,1,"RM");
+     */                         
+    std::shared_ptr<ECU> ecu1 = std::make_shared<ECU>(100,"RM"); // Change 2nd arg to ENUM.
     vectors::ecu_vector.push_back(std::move(ecu1));
+    std::shared_ptr<ECU> ecu2 = std::make_shared<ECU>(100,"RM");
+    vectors::ecu_vector.push_back(std::move(ecu2));
+    std::vector<std::shared_ptr<Job>> v_job_of_ecu1;
+    vectors::job_vectors_for_each_ECU.push_back(v_job_of_ecu1);
+    std::vector<std::shared_ptr<Job>> v_job_of_ecu2;
+    vectors::job_vectors_for_each_ECU.push_back(v_job_of_ecu2);
 
     /**
      * Task Vector Initialization
      */
-    std::shared_ptr<Task> task1(nullptr);
-    task1 = std::make_shared<Task>("LK", 0, 10, 10, 4, 2, 0, 1, 0, "SENSING", "DM");
-    std::shared_ptr<Task> task2 = std::make_shared<Task>("LK", 0, 20, 20, 4, 2, 0, 1, 0, "SENSING", "DM");
-    std::shared_ptr<Task> task3 = std::make_shared<Task>("LK", 0, 30, 30, 4, 2, 0, 1, 0, "SENSING", "DM");
-    std::shared_ptr<Task> task4 = std::make_shared<Task>("LK", 0, 5, 5, 4, 2, 0, 1, 0, "SENSING", "DM");
-    std::shared_ptr<Task> task5 = std::make_shared<Task>("LK", 0, 40, 40, 4, 2, 0, 1, 0, "SENSING", "DM");
-    std::shared_ptr<Task> task6 = std::make_shared<Task>("LK", 0, 50, 50, 4, 2, 0, 1, 0, "SENSING", "DM");
-    std::shared_ptr<Task> task7 = std::make_shared<Task>("LK", 0, 60, 60, 4, 2, 0, 1, 0, "SENSING", "DM");
+    // Implement GPU / CPU job...
 
+    // My thesis pdf submission deadline is june 12 11 am.
+
+    std::shared_ptr<Task> task1 = std::make_shared<Task>("SENSING", 10, 10, 4, 2, 0, true, false, 0);
     vectors::task_vector.push_back(std::move(task1));
+    std::shared_ptr<Task> task2 = std::make_shared<Task>("LK", 20, 20, 4, 2, 0, false, true, 0);
     vectors::task_vector.push_back(std::move(task2));
+    std::shared_ptr<Task> task3 = std::make_shared<Task>("CC", 30, 30, 4, 2, 0, false, true, 1);
     vectors::task_vector.push_back(std::move(task3));
-    vectors::task_vector.push_back(std::move(task4));
-    vectors::task_vector.push_back(std::move(task5));
-    vectors::task_vector.push_back(std::move(task6));
-    vectors::task_vector.push_back(std::move(task7));
-    
+
+    /**
+     * Global Hyper Period Initialization
+     */
     utils::hyper_period = utils::calculate_hyper_period(vectors::task_vector);
     
-    /**
-     * To be deleted code for testing
-     * std::cout << "test task_vector size is " << vectors::task_vector.size() << std::endl;
-     */
-
     /**
      * Logger Thread Initialized
      */
@@ -166,6 +158,7 @@ void Initializer::initialize(std::string location)
 
     /**
      * To be deleted code for testing
+     * std::cout << "test task_vector size is " << vectors::task_vector.size() << std::endl;
      * std::cout << "Initialized, Performance: " << utils::simulatorPC_performance << std::endl;
      */
 

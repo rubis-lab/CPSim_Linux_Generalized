@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
      * For this, we simulate those ECUs' job scheduling scenario with the specificated informations.
      */
     ScheduleSimulator schedule_simulator_on_Real;
-    schedule_simulator_on_Real.simulate_scheduling_on_Real();
+    schedule_simulator_on_Real.simulate_scheduling_on_Real(0);
     
     /** [Construction of Job Precedence Graph(Offline Guider)]
      * To run simulator, 

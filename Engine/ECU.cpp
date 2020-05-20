@@ -1,4 +1,5 @@
 #include "ECU.h"
+#include "Utils.h"
 
 /**
  *  This file is the cpp file for the ECU class.
@@ -43,11 +44,11 @@ ECU::ECU()
  * @warning none
  * @todo none
  */
-ECU::ECU(int performance, int ecu_id, std::string scheduling_policy)
+ECU::ECU(int performance, std::string scheduling_policy)
 {
     _performance = performance;
     _scheduling_policy = scheduling_policy;
-    _ecu_id = ecu_id;
+    _ecu_id = vectors::ecu_vector.size();
 }
 
 /**

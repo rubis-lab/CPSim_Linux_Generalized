@@ -1,4 +1,5 @@
 #include "Task.h"
+#include "Utils.h"
 
 /**
  *  This file is the cpp file for the Task class.
@@ -49,28 +50,29 @@ Task::Task()
  * @warning none
  * @todo none
  */
-Task::Task(std::string task_name, int task_id, int period, int deadline, int wcet,
-            int bcet, int offset, int is_read, int is_write, std::string producer,
-            std::string consumer)
+Task::Task(std::string task_name, int period, int deadline, int wcet,
+            int bcet, int offset, bool is_read, bool is_write, int ecu_id)
 {
     /**
      * Member variable initializaion
      */
-    _task_name = task_name;
-    _task_id = task_id;
-    _period = period;
-    _deadline = deadline;
-    _wcet = wcet;
-    _bcet = bcet;
-    _offset = offset;
-    _is_read = is_read;
-    _is_write = is_write;
-    /**
-     * At here, we need to define producer, consumer if there are exist.
-     * If there are null, so they are not exist, then nothing happen.
-     * If there are exist, it passes if-statement then connects with other task 
-     * ...
-     */
+    m_task_name = task_name;
+    m_task_id = vectors::task_vector.size();
+    m_period = period;
+    m_deadline = deadline;
+    m_wcet = wcet;
+    m_bcet = bcet;
+    m_offset = offset;
+    m_is_read = is_read;
+    m_is_write = is_write;
+
+    for(auto iter = vectors::ecu_vector.begin(); iter != vectors::ecu_vector.end(); iter++)
+    {
+        if(ecu_id == iter->get()->get_ECU_id())
+        {
+            m_ecu = *iter;
+        }
+    }
 }
 
 /**
@@ -106,7 +108,7 @@ Task::~Task()
  */
 std::string Task::get_task_name()
 {
-    return _task_name;
+    return m_task_name;
 }
 
 /**
@@ -124,7 +126,7 @@ std::string Task::get_task_name()
  */
 int Task::get_task_id()
 {
-    return _task_id;
+    return m_task_id;
 }
 
 /**
@@ -142,7 +144,7 @@ int Task::get_task_id()
  */
 int Task::get_period()
 {
-    return _period;
+    return m_period;
 }
 
 /**
@@ -160,7 +162,7 @@ int Task::get_period()
  */
 int Task::get_deadline()
 {
-    return _deadline;
+    return m_deadline;
 }
 
 /**
@@ -178,7 +180,7 @@ int Task::get_deadline()
  */
 int Task::get_wcet()
 {
-    return _wcet;
+    return m_wcet;
 }
 
 /**
@@ -196,7 +198,7 @@ int Task::get_wcet()
  */
 int Task::get_bcet()
 {
-    return _bcet;
+    return m_bcet;
 }
 
 /**
@@ -214,7 +216,7 @@ int Task::get_bcet()
  */
 int Task::get_offset()
 {
-    return _offset;
+    return m_offset;
 }
 
 /**
@@ -230,9 +232,9 @@ int Task::get_offset()
  * @warning none
  * @todo none
  */
-int Task::get_is_read()
+bool Task::get_is_read()
 {
-    return _is_read;
+    return m_is_read;
 }
 
 /**
@@ -248,7 +250,89 @@ int Task::get_is_read()
  * @warning none
  * @todo none
  */
-int Task::get_is_write()
+bool Task::get_is_write()
 {
-    return _is_write;
+    return m_is_write;
+}
+
+std::shared_ptr<ECU> Task::get_ECU()
+{
+    return m_ecu;
+}
+
+std::vector<std::shared_ptr<Task>> Task::get_producers()
+{
+    return m_producers;
+}
+
+std::vector<std::shared_ptr<Task>> Task::get_consumers()
+{
+    return m_consumers;
+}
+/**
+ * Setter member functions
+ */
+void Task::set_task_name(std::string task_name)
+{
+    m_task_name = task_name;
+}
+
+void Task::set_task_id(int task_id)
+{
+    m_task_id = task_id;
+}
+void Task::set_period(int period)
+{
+    m_period = period;
+}
+void Task::set_deadline(int deadline)
+{
+    m_deadline = deadline;
+}
+void Task::set_wcet(int wcet)
+{
+    m_wcet = wcet;
+}
+void Task::set_bcet(int bcet)
+{
+    m_bcet = bcet;
+}
+void Task::set_offset(int offset)
+{
+    m_offset = offset;
+}
+void Task::set_is_read(bool is_read)
+{
+    m_is_read = is_read;
+}
+void Task::set_is_write(bool is_write)
+{
+    m_is_write = is_write;
+}
+
+
+void Task::set_producers(std::vector<std::shared_ptr<Task>> producers)
+{
+    m_producers = producers;
+}
+void Task::set_consumers(std::vector<std::shared_ptr<Task>> consumers)
+{
+    m_consumers = consumers;
+}
+void Task::set_ECU(std::shared_ptr<ECU> ecu)
+{
+    m_ecu = ecu;
+}
+
+void Task::synchronize_producer_consumer_relation()
+{
+    /*
+    for(auto iter = vectors::task_vector.begin(); iter != vectors::task_vector.end(); iter++)
+    {
+        if(iter->get)
+        {
+            _producers.push_back(); 
+        }
+    }
+    */
 }

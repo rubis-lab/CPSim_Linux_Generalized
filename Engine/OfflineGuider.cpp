@@ -1,4 +1,6 @@
 #include "OfflineGuider.h"
+#include "JobNode.h"
+#include <memory>
 
 /**
  *  This file is the cpp file for the OfflineGuider class.
@@ -64,5 +66,17 @@ OfflineGuider::~OfflineGuider()
  */
 void OfflineGuider::construct_job_precedence_graph()
 {
+    std::shared_ptr<Job> someJob = nullptr;
+    std::shared_ptr<JobNode> start = std::make_shared<JobNode>(someJob);
+
+    std::shared_ptr<Job> someJobDependingOnPreviousJob = nullptr;
+    std::shared_ptr<JobNode> other = std::make_shared<JobNode>(someJobDependingOnPreviousJob);
+
     
+
+    std::shared_ptr<Job> someNonDeterministicDependance = nullptr;
+    std::shared_ptr<JobNode> other2 = std::make_shared<JobNode>(someNonDeterministicDependance);
+
+    start->insertEdge(other, true); // Insert Deterministic Edge.
+    start->insertEdge(other2, false); // Insert Non-Deterministic Edge.
 }
