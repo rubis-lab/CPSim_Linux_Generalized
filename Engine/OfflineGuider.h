@@ -1,6 +1,8 @@
 #ifndef OFFLINEGUIDER_H__
 #define OFFLINEGUIDER_H__
 
+#include "Utils.h"
+
 /** This file is engine code of CPSim-Re engine
  * @file OfflineGuider.h
  * @class OfflineGuider
@@ -13,14 +15,18 @@ class OfflineGuider {
 private:
 public:
     /**
-     * Constructor & Destroyer
+     * Constructor & Destructor
     */
     OfflineGuider();
     ~OfflineGuider();
     /**
-     * 
-    */
-    void construct_job_precedence_graph();
+     * Getter & Setter
+     */
+
+    /**
+     * Generate Offline Guider
+     */
+    void construct_job_precedence_graph(std::vector<std::shared_ptr<Job>>&);
 };
 
 #endif

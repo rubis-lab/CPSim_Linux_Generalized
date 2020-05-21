@@ -64,7 +64,7 @@ OfflineGuider::~OfflineGuider()
  * @warning none
  * @todo to be implemented tonight.
  */
-void OfflineGuider::construct_job_precedence_graph()
+void OfflineGuider::void construct_job_precedence_graph(std::vector<std::shared_ptr<Job>>&);
 {
     std::shared_ptr<Job> someJob = nullptr;
     std::shared_ptr<JobNode> start = std::make_shared<JobNode>(someJob);

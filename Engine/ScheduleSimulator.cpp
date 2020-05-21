@@ -249,7 +249,7 @@ void ScheduleSimulator::best_case_busy_period_analysis(std::vector<std::shared_p
                     if(job->get_priority() < job_queue.back()->get_priority())
                     {
                         job_queue.back()->set_is_preempted(true);
-                        job_queue.back()->set_bpet(job_queue.back()->get_est() +);
+                        job_queue.back()->set_bpet(job_queue.back()->get_est() + job_queue.back()->get_bcet() - job->get_release_time());
                         job->set_is_released(true);
                         job->set_is_started(true);
                         job->set_est(job->get_release_time());
@@ -257,7 +257,6 @@ void ScheduleSimulator::best_case_busy_period_analysis(std::vector<std::shared_p
                         is_higher_job = true;
                         last_start = job_queue.back()->get_est(); 
                         end =  last_start;
-
                     }
                     else
                     {
@@ -284,5 +283,85 @@ void ScheduleSimulator::best_case_busy_period_analysis(std::vector<std::shared_p
 }
 void ScheduleSimulator::worst_case_busy_period_analysis(std::vector<std::shared_ptr<Job>>& job_queue, int start, int& end, int ecu_id) 
 {
+    std::sort(job_queue.begin(), job_queue.end(), utils::compare);
+    start = job_queue.back()->get_release_time(); //set busy period start point as the highest priority job's release time.
+    int last_start = 0;
+    int last_execution_time = 0;
 
+    while(job_queue.size() != 0)
+    {
+        bool is_idle = true;
+        bool is_higher_job = false;
+
+        for(auto job : vectors::job_vectors_for_each_ECU.at(ecu_id))
+        {
+            if(job->get_is_started())
+            {
+                is_idle = false;
+            }
+        }
+
+        if(is_idle)
+        {
+            job_queue.back()->set_is_started(true);
+            job_queue.back()->set_lst(start + end);
+            last_start = job_queue.back()->get_lst();
+        }
+        
+        if(job_queue.back()->get_is_preempted())
+        {
+            job_queue.back()->set_is_preempted(false);
+            job_queue.back()->set_is_resumed(true);
+            end += job_queue.back()->get_wpet(); // subtract preempted time amount
+        }
+        else
+        {
+            last_execution_time = job_queue.back()->get_wcet(); 
+            end += last_execution_time;
+        }
+    
+        for(auto job : vectors::job_vectors_for_each_ECU.at(ecu_id))
+        {
+            if((start <= job->get_release_time()) && (job->get_release_time() < end))
+            {
+                if(job->get_is_released() == true)
+                {
+                    continue;
+                }
+                else
+                {
+                    if(job->get_priority() < job_queue.back()->get_priority())
+                    {
+                        job_queue.back()->set_is_preempted(true);
+                        job_queue.back()->set_wpet(job_queue.back()->get_lst() + job_queue.back()->get_wcet() - job->get_release_time());
+                        job->set_is_released(true);
+                        job->set_is_started(true);
+                        job->set_lst(job->get_release_time());
+                        job_queue.push_back(job);
+                        is_higher_job = true;
+                        last_start = job_queue.back()->get_lst(); 
+                        end =  last_start;
+                    }
+                    else
+                    {
+                        job->set_is_released(true);
+                        job_queue.push_back(job);
+                        std::sort(job_queue.begin(), job_queue.end(), utils::compare);
+                    }   
+                }
+            }
+        }
+
+        if(is_higher_job)
+        {
+            continue;
+        }
+        else
+        {
+            job_queue.back()->set_is_finished(true);
+            job_queue.back()->set_lft(start + end);
+            job_queue.pop_back();
+        }
+    }   
+    std::cout << "last end :  "<< end << std::endl;    
 }
