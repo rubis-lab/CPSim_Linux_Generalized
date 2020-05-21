@@ -26,6 +26,12 @@ class Job : public Task
 {
 private:
     bool m_is_preemptable; // true means originally CPU job, false means abstracted GPU job.
+    bool m_is_started;
+    bool m_is_finished;
+    bool m_is_preempted;
+    bool m_is_resumed;
+    bool m_is_released;
+
     int m_job_id;
     int m_release_time;
     int m_absolute_deadline;
@@ -33,10 +39,15 @@ private:
     int m_lst;
     int m_eft;
     int m_lft;
+    int m_bpet;
+    int m_wpet;
     int m_actual_start_time;
     int m_actual_finish_time;
     std::array<int, 2> m_worst_case_busy_period;
-    
+    std::vector<std::shared_ptr<Job>> m_job_set_start;
+    std::vector<std::shared_ptr<Job>> m_job_set_finish;
+    std::vector<std::shared_ptr<Job>> m_job_set_pro_con;
+        
 public:
     /**
      * Constructor & Destructor
@@ -47,6 +58,12 @@ public:
     /**
      * Getter & Setter
      */
+    bool get_is_started();
+    bool get_is_finished();
+    bool get_is_preempted();
+    bool get_is_resumed();
+    bool get_is_released();
+
     int get_job_id();
     int get_release_time();
     int get_absolute_deadline();
@@ -54,20 +71,37 @@ public:
     int get_lst();
     int get_eft();
     int get_lft();
-    std::array<int, 2>& get_wcbp();
+    int get_bpet();
+    int get_wpet();    
     int get_actual_start_time();
     int get_actual_finish_time();
 
-    void set_job_id();
+    std::array<int, 2>& get_wcbp();
+    std::vector<std::shared_ptr<Job>>& get_job_set_start();
+    std::vector<std::shared_ptr<Job>>& get_job_set_finish();
+    std::vector<std::shared_ptr<Job>>& get_job_set_pro_con();
+
+    void set_is_started(bool);
+    void set_is_finished(bool);
+    void set_is_preempted(bool);
+    void set_is_resumed(bool);
+    void set_is_released(bool);
+
+    void set_job_id(int);
     void set_release_time(int);
     void set_absolute_deadline(int);
     void set_est(int);
     void set_lst(int);
     void set_eft(int);
     void set_lft(int);
-    void set_wcbp(std::array<int, 2>);
-    void set_actual_start_time();
-    void set_actual_finish_time();
+    void set_bpet(int);
+    void set_wpet(int);
+    void set_actual_start_time(int);
+    void set_actual_finish_time(int);
+    void set_wcbp(std::array<int, 2>&);
+    void set_job_set_start(std::vector<std::shared_ptr<Job>>&);
+    void set_job_set_finish(std::vector<std::shared_ptr<Job>>&);
+    void set_job_set_pro_con(std::vector<std::shared_ptr<Job>>&);
 
     int calculate_release_time(int, int);
     int calculate_absolute_deadline(int, int);

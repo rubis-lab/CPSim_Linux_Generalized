@@ -77,6 +77,26 @@ Job::~Job()
 {
     
 }
+bool Job::get_is_started()
+{
+    return m_is_started;
+}
+bool Job::get_is_finished()
+{
+    return m_is_finished;
+}
+bool Job::get_is_preempted()
+{
+    return m_is_preempted;
+}
+bool Job::get_is_resumed()
+{
+    return m_is_resumed;
+}
+bool Job::get_is_released()
+{
+    return m_is_released;
+}
 int Job::get_job_id()
 {
     return m_job_id;
@@ -127,6 +147,26 @@ int Job::get_actual_finish_time()
     return m_actual_finish_time;
 }  
 
+void Job::set_is_started(bool is_started)
+{
+    m_is_started = is_started;
+}
+void Job::set_is_finished(bool is_finished)
+{
+    m_is_finished = is_finished;
+}
+void Job::set_is_preempted(bool is_preempted)
+{
+    m_is_preempted = is_preempted;
+}
+void Job::set_is_resumed(bool is_resumed)
+{
+    m_is_resumed = is_resumed;
+}
+void Job::set_is_released(bool is_released)
+{
+    m_is_released = is_released;
+}
 void Job::set_est(int est)
 {
     m_est = est;
