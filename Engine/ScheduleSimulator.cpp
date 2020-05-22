@@ -143,17 +143,28 @@ void ScheduleSimulator::simulate_scheduling_on_Real(int global_hyper_period_star
      */
     for(int ecu_id = 0; ecu_id < vectors::job_vectors_for_each_ECU.size(); ++ecu_id)
     {
-        int current_time_point = global_hyper_period_start_point;
         bool is_idle = true;
         bool is_best = true;
         for(int i = 0; i < 2; i++)
-        {
+        {   
+            for(int ecu_id = 0; ecu_id < vectors::job_vectors_for_each_ECU.size(); ++ecu_id) 
+                for(auto job : vectors::job_vectors_for_each_ECU.at(ecu_id))
+                {
+                    job->set_is_started(false);
+                    job->set_is_finished(false);
+                    job->set_is_preempted(false);
+                    job->set_is_resumed(false);
+                }
+                    
+            int current_time_point = global_hyper_period_start_point;
             int busy_period_start_point = 0;
+            std::cout << "bool " << is_best << current_time_point <<std::endl;
             //check_released_jobs_at_the_time_point
             while(current_time_point < (global_hyper_period_start_point + _hyper_period))
             {
-                    
+                
                 busy_period_start_point = current_time_point;
+                
                 int sum_of_execution = 0;
                 std::vector<std::shared_ptr<Job>> job_queue; 
                 
@@ -175,30 +186,36 @@ void ScheduleSimulator::simulate_scheduling_on_Real(int global_hyper_period_star
                 {
                     current_time_point += 1;
                 }
-                else if(is_best)
-                {
-                    //... some analysis and add sum of bcet to the current_time_point.
-                    best_case_busy_period_analysis(job_queue, busy_period_start_point, sum_of_execution, ecu_id);
-                    current_time_point += 1;
-                    
-                    is_idle = true;
-                }
                 else
                 {
-                    //... some analysis and add sum of bcet to the current_time_point.
-                    worst_case_busy_period_analysis(job_queue, busy_period_start_point, sum_of_execution, ecu_id);
-                    current_time_point += 1;
-                    
-                    is_idle = true;
-                }         
+                    std::cout<< "while loop inside" << std::endl;
+                    if(is_best)
+                    {
+                        //... some analysis and add sum of bcet to the current_time_point.
+                        best_case_busy_period_analysis(job_queue, busy_period_start_point, sum_of_execution, ecu_id);
+                        current_time_point += sum_of_execution;
+                        std::cout << "best" << std::endl;
+                        is_idle = true;
+                    }
+                    else
+                    {
+                        std::cout << "worst" << std::endl;
+                        //... some analysis and add sum of bcet to the current_time_point.
+                        worst_case_busy_period_analysis(job_queue, busy_period_start_point, sum_of_execution, ecu_id);
+                        current_time_point += sum_of_execution;
+                        is_idle = true;
+                    }  
+                }       
             }
-            is_best = ~is_best;
+            
+            is_best = !is_best;
         }
     }
 }
 
 void ScheduleSimulator::best_case_busy_period_analysis(std::vector<std::shared_ptr<Job>>& job_queue, int start, int& end, int ecu_id) 
 {
+    
     std::sort(job_queue.begin(), job_queue.end(), utils::compare);
     start = job_queue.back()->get_release_time(); //set busy period start point as the highest priority job's release time.
     int last_start = 0;
@@ -278,8 +295,7 @@ void ScheduleSimulator::best_case_busy_period_analysis(std::vector<std::shared_p
             job_queue.back()->set_eft(start + end);
             job_queue.pop_back();
         }
-    }   
-    std::cout << "last end :  "<< end << std::endl;                      
+    }             
 }
 void ScheduleSimulator::worst_case_busy_period_analysis(std::vector<std::shared_ptr<Job>>& job_queue, int start, int& end, int ecu_id) 
 {
@@ -354,6 +370,7 @@ void ScheduleSimulator::worst_case_busy_period_analysis(std::vector<std::shared_
 
         if(is_higher_job)
         {
+            std::cout << "High " << start << std::endl;
             continue;
         }
         else
@@ -361,11 +378,12 @@ void ScheduleSimulator::worst_case_busy_period_analysis(std::vector<std::shared_
             std::array<int, 2> wcbp;
             wcbp[0] = start;
             wcbp[1] = start + end;
+            std::cout << "Busy period : " << start << std::endl;
+            
             job_queue.back()->set_is_finished(true);
             job_queue.back()->set_lft(start + end);
             job_queue.back()->set_wcbp(wcbp);
             job_queue.pop_back();
         }
     }   
-    std::cout << "last end :  "<< end << std::endl;    
 }
