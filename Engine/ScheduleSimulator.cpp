@@ -158,7 +158,6 @@ void ScheduleSimulator::simulate_scheduling_on_Real(int global_hyper_period_star
                     
             int current_time_point = global_hyper_period_start_point;
             int busy_period_start_point = 0;
-            std::cout << "bool " << is_best << current_time_point <<std::endl;
             //check_released_jobs_at_the_time_point
             while(current_time_point < (global_hyper_period_start_point + _hyper_period))
             {
@@ -188,18 +187,15 @@ void ScheduleSimulator::simulate_scheduling_on_Real(int global_hyper_period_star
                 }
                 else
                 {
-                    std::cout<< "while loop inside" << std::endl;
                     if(is_best)
                     {
                         //... some analysis and add sum of bcet to the current_time_point.
                         best_case_busy_period_analysis(job_queue, busy_period_start_point, sum_of_execution, ecu_id);
                         current_time_point += sum_of_execution;
-                        std::cout << "best" << std::endl;
                         is_idle = true;
                     }
                     else
                     {
-                        std::cout << "worst" << std::endl;
                         //... some analysis and add sum of bcet to the current_time_point.
                         worst_case_busy_period_analysis(job_queue, busy_period_start_point, sum_of_execution, ecu_id);
                         current_time_point += sum_of_execution;
@@ -370,7 +366,7 @@ void ScheduleSimulator::worst_case_busy_period_analysis(std::vector<std::shared_
 
         if(is_higher_job)
         {
-            std::cout << "High " << start << std::endl;
+            
             continue;
         }
         else
@@ -378,8 +374,7 @@ void ScheduleSimulator::worst_case_busy_period_analysis(std::vector<std::shared_
             std::array<int, 2> wcbp;
             wcbp[0] = start;
             wcbp[1] = start + end;
-            std::cout << "Busy period : " << start << std::endl;
-            
+        
             job_queue.back()->set_is_finished(true);
             job_queue.back()->set_lft(start + end);
             job_queue.back()->set_wcbp(wcbp);
