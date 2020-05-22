@@ -31,6 +31,7 @@ private:
     bool m_is_preempted;
     bool m_is_resumed;
     bool m_is_released;
+    bool m_is_running;
 
     int m_job_id;
     int m_release_time;
@@ -43,10 +44,15 @@ private:
     int m_wpet;
     int m_actual_start_time;
     int m_actual_finish_time;
+
     std::array<int, 2> m_worst_case_busy_period;
-    std::vector<std::shared_ptr<Job>> m_job_set_start;
-    std::vector<std::shared_ptr<Job>> m_job_set_finish;
-    std::vector<std::shared_ptr<Job>> m_job_set_pro_con;
+    
+    std::vector<std::shared_ptr<Job>> m_job_set_start_det;
+    std::vector<std::shared_ptr<Job>> m_job_set_start_non_det;
+    std::vector<std::shared_ptr<Job>> m_job_set_finish_det;
+    std::vector<std::shared_ptr<Job>> m_job_set_finish_non_det;
+    std::vector<std::shared_ptr<Job>> m_job_set_pro_con_det;
+    std::vector<std::shared_ptr<Job>> m_job_set_pro_con_non_det;
         
 public:
     /**
@@ -63,6 +69,7 @@ public:
     bool get_is_preempted();
     bool get_is_resumed();
     bool get_is_released();
+    bool get_is_running();
 
     int get_job_id();
     int get_release_time();
@@ -77,15 +84,20 @@ public:
     int get_actual_finish_time();
 
     std::array<int, 2>& get_wcbp();
-    std::vector<std::shared_ptr<Job>>& get_job_set_start();
-    std::vector<std::shared_ptr<Job>>& get_job_set_finish();
-    std::vector<std::shared_ptr<Job>>& get_job_set_pro_con();
+    
+    std::vector<std::shared_ptr<Job>>& get_job_set_start_det();
+    std::vector<std::shared_ptr<Job>>& get_job_set_start_non_det();
+    std::vector<std::shared_ptr<Job>>& get_job_set_finish_det();
+    std::vector<std::shared_ptr<Job>>& get_job_set_finish_non_det();
+    std::vector<std::shared_ptr<Job>>& get_job_set_pro_con_det();
+    std::vector<std::shared_ptr<Job>>& get_job_set_pro_con_non_det();
 
     void set_is_started(bool);
     void set_is_finished(bool);
     void set_is_preempted(bool);
     void set_is_resumed(bool);
     void set_is_released(bool);
+    void set_is_running(bool);
 
     void set_job_id(int);
     void set_release_time(int);
@@ -99,10 +111,13 @@ public:
     void set_actual_start_time(int);
     void set_actual_finish_time(int);
     void set_wcbp(std::array<int, 2>&);
-    void set_job_set_start(std::vector<std::shared_ptr<Job>>&);
-    void set_job_set_finish(std::vector<std::shared_ptr<Job>>&);
-    void set_job_set_pro_con(std::vector<std::shared_ptr<Job>>&);
-
+    void set_job_set_start_det(std::vector<std::shared_ptr<Job>>&);
+    void set_job_set_start_non_det(std::vector<std::shared_ptr<Job>>&);
+    void set_job_set_finish_det(std::vector<std::shared_ptr<Job>>&);
+    void set_job_set_finish_non_det(std::vector<std::shared_ptr<Job>>&);
+    void set_job_set_pro_con_det(std::vector<std::shared_ptr<Job>>&);
+    void set_job_set_pro_con_non_det(std::vector<std::shared_ptr<Job>>&);
+    
     int calculate_release_time(int, int);
     int calculate_absolute_deadline(int, int);
     std::array<int, 2> calculate_wcbp();

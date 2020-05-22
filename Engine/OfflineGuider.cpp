@@ -81,9 +81,8 @@ void OfflineGuider::construct_job_precedence_graph()
     {
         for(auto job : vectors::job_vectors_for_each_ECU.at(ecu_id))
         {
-            std::cout << "J"<< job->get_task_id()<< job->get_job_id()<<"'s wcbp start is : "<< job->get_wcbp().front()<< std::endl;
+            
         }
-
     }
 
     

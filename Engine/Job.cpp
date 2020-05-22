@@ -97,6 +97,10 @@ bool Job::get_is_released()
 {
     return m_is_released;
 }
+bool Job::get_is_running()
+{
+    return m_is_running;
+}
 int Job::get_job_id()
 {
     return m_job_id;
@@ -154,6 +158,34 @@ int Job::get_actual_finish_time()
     return m_actual_finish_time;
 }  
 
+std::vector<std::shared_ptr<Job>>& Job::get_job_set_start_det()
+{
+    return m_job_set_start_det;
+}
+
+std::vector<std::shared_ptr<Job>>& Job::get_job_set_start_non_det()
+{
+    return m_job_set_start_non_det;
+}
+std::vector<std::shared_ptr<Job>>& Job::get_job_set_finish_det()
+{
+    return m_job_set_finish_det;
+}
+
+std::vector<std::shared_ptr<Job>>& Job::get_job_set_finish_non_det()
+{
+    return m_job_set_finish_non_det;
+}
+std::vector<std::shared_ptr<Job>>& Job::get_job_set_pro_con_det()
+{
+    return m_job_set_pro_con_det;
+}
+
+std::vector<std::shared_ptr<Job>>& Job::get_job_set_pro_con_non_det()
+{
+    return m_job_set_pro_con_non_det;
+}
+
 void Job::set_is_started(bool is_started)
 {
     m_is_started = is_started;
@@ -173,6 +205,10 @@ void Job::set_is_resumed(bool is_resumed)
 void Job::set_is_released(bool is_released)
 {
     m_is_released = is_released;
+}
+void Job::set_is_running(bool is_running)
+{
+    m_is_running = is_running;
 }
 void Job::set_est(int est)
 {
@@ -212,6 +248,32 @@ void Job::set_wcbp(std::array<int, 2>& wcbp)
 {
     m_worst_case_busy_period = wcbp;
 }
+
+void Job::set_job_set_start_det(std::vector<std::shared_ptr<Job>>& job_set_start_det)
+{
+    m_job_set_start_det = job_set_start_det;
+}
+void Job::set_job_set_start_non_det(std::vector<std::shared_ptr<Job>>& job_set_start_non_det)
+{
+    m_job_set_start_non_det = job_set_start_non_det;
+}
+void Job::set_job_set_finish_det(std::vector<std::shared_ptr<Job>>& job_set_finish_det)
+{
+    m_job_set_finish_det = job_set_finish_det;
+}
+void Job::set_job_set_finish_non_det(std::vector<std::shared_ptr<Job>>& job_set_finish_non_det)
+{
+    m_job_set_finish_non_det = job_set_finish_non_det;
+}
+void Job::set_job_set_pro_con_det(std::vector<std::shared_ptr<Job>>& job_set_pro_con_det)
+{
+    m_job_set_pro_con_det = job_set_pro_con_det;
+}
+void Job::set_job_set_pro_con_non_det(std::vector<std::shared_ptr<Job>>& job_set_pro_con_non_det)
+{
+    m_job_set_pro_con_non_det = job_set_pro_con_non_det;
+}
+
 
 int Job::calculate_release_time(int period, int offset)
 {
