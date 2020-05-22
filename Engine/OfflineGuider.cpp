@@ -64,7 +64,7 @@ OfflineGuider::~OfflineGuider()
  * @warning none
  * @todo to be implemented tonight.
  */
-void OfflineGuider::void construct_job_precedence_graph(std::vector<std::shared_ptr<Job>>&);
+void OfflineGuider::construct_job_precedence_graph()
 {
     std::shared_ptr<Job> someJob = nullptr;
     std::shared_ptr<JobNode> start = std::make_shared<JobNode>(someJob);
@@ -77,6 +77,14 @@ void OfflineGuider::void construct_job_precedence_graph(std::vector<std::shared_
     std::shared_ptr<Job> someNonDeterministicDependance = nullptr;
     std::shared_ptr<JobNode> other2 = std::make_shared<JobNode>(someNonDeterministicDependance);
 
+    for(int ecu_id = 0; ecu_id < vectors::job_vectors_for_each_ECU.size(); ++ ecu_id )
+    {
+        for(auto job : vectors::job_vectors_for_each_ECU.at(ecu_id))
+        {
+            std::cout << "J"<< job->get_task_id()<< job->get_job_id()<<"'s wcbp start is : "<< job->get_wcbp().front()<< std::endl;
+        }
+
+    }
     //start->insertEdge(other, true); // Insert Deterministic Edge.
     //start->insertEdge(other2, false); // Insert Non-Deterministic Edge.
     //start->insertEdge(other, true)->insertEdge(other2, true);

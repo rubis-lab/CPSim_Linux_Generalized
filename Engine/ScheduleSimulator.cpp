@@ -358,8 +358,12 @@ void ScheduleSimulator::worst_case_busy_period_analysis(std::vector<std::shared_
         }
         else
         {
+            std::array<int, 2> wcbp;
+            wcbp[0] = start;
+            wcbp[1] = start + end;
             job_queue.back()->set_is_finished(true);
             job_queue.back()->set_lft(start + end);
+            job_queue.back()->set_wcbp(wcbp);
             job_queue.pop_back();
         }
     }   

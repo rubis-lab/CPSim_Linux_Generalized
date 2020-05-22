@@ -26,7 +26,7 @@ public:
     /**
      * Generate Offline Guider
      */
-    void construct_job_precedence_graph(std::vector<std::shared_ptr<Job>>&);
+    void construct_job_precedence_graph();
 };
 
 #endif

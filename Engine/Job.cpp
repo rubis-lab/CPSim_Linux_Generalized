@@ -131,7 +131,14 @@ int Job::get_lft()
 {
     return m_lft;
 }
-
+int Job::get_bpet()
+{
+    return m_bpet;
+}
+int Job::get_wpet()
+{
+    return m_wpet;
+}
 std::array<int, 2>& Job::get_wcbp()
 {
     return m_worst_case_busy_period;
@@ -183,6 +190,14 @@ void Job::set_lft(int lft)
 {
     m_lft = lft;
 }
+void Job::set_bpet(int bpet)
+{
+    m_bpet = bpet;
+}
+void Job::set_wpet(int wpet)
+{
+    m_wpet = wpet;
+}
 void Job::set_release_time(int release_time)
 {
     m_release_time = release_time;
@@ -193,7 +208,7 @@ void Job::set_absolute_deadline(int a_deadline)
     m_absolute_deadline = a_deadline;
 }
 
-void Job::set_wcbp(std::array<int, 2> wcbp)
+void Job::set_wcbp(std::array<int, 2>& wcbp)
 {
     m_worst_case_busy_period = wcbp;
 }
