@@ -27,6 +27,12 @@ public:
      * Generate Offline Guider
      */
     void construct_job_precedence_graph();
+    std::vector<std::shared_ptr<Job>>& make_job_set_start_det();
+    std::vector<std::shared_ptr<Job>>& make_job_set_start_non_det();
+    std::vector<std::shared_ptr<Job>>& make_job_set_finish_det();
+    std::vector<std::shared_ptr<Job>>& make_job_set_finish_non_det();
+    std::vector<std::shared_ptr<Job>>& make_job_set_pro_con_det();
+    std::vector<std::shared_ptr<Job>>& make_job_set_pro_con_non_det();
 };
 
 #endif

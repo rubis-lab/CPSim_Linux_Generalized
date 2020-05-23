@@ -81,7 +81,30 @@ void OfflineGuider::construct_job_precedence_graph()
     {
         for(auto job : vectors::job_vectors_for_each_ECU.at(ecu_id))
         {
-            
+            std::vector<std::shared_ptr<Job>> job_set_start;
+            job_set_start = make_job_set_start_det();
+            job->set_job_set_start_det(job_set_start);      
+            job_set_start.clear();
+            //job_set_start = ;
+            job->set_job_set_start_non_det(job_set_start);
+        }
+        for(auto job : vectors::job_vectors_for_each_ECU.at(ecu_id))
+        {
+            std::vector<std::shared_ptr<Job>> job_set_finish;
+            //job_set_finish = ;
+            job->set_job_set_finish_det(job_set_finish);  
+            job_set_finish.clear();
+            //job_set_finish = ;
+            job->set_job_set_finish_non_det(job_set_finish);    
+        }
+        for(auto job : vectors::job_vectors_for_each_ECU.at(ecu_id))
+        {
+            std::vector<std::shared_ptr<Job>> job_set_pro_con;
+            //job_set_pro_con = ;
+            job->set_job_set_pro_con_det(job_set_pro_con);
+            job_set_pro_con.clear();
+            //job_set_pro_con = ; 
+            job->set_job_set_pro_con_non_det(job_set_pro_con);     
         }
     }
 
@@ -89,4 +112,29 @@ void OfflineGuider::construct_job_precedence_graph()
     //start->insertEdge(other, true); // Insert Deterministic Edge.
     //start->insertEdge(other2, false); // Insert Non-Deterministic Edge.
     //start->insertEdge(other, true)->insertEdge(other2, true);
+}
+
+std::vector<std::shared_ptr<Job>>& make_job_set_start_det()
+{
+    
+}
+std::vector<std::shared_ptr<Job>> make_job_set_start_non_det()
+{
+
+}
+std::vector<std::shared_ptr<Job>> make_job_set_finish_det()
+{
+
+}
+std::vector<std::shared_ptr<Job>> make_job_set_finish_non_det()
+{
+
+}
+std::vector<std::shared_ptr<Job>> make_job_set_pro_con_det()
+{
+
+}
+std::vector<std::shared_ptr<Job>> make_job_set_pro_con_non_det()
+{
+
 }
