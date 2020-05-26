@@ -65,7 +65,10 @@ int main(int argc, char *argv[])
      */
     ScheduleSimulator schedule_simulator_on_Real;
     schedule_simulator_on_Real.simulate_scheduling_on_Real(0);
-    
+    // for( auto job : vectors::job_vectors_for_each_ECU.at(0))
+    // {
+    //     std::cout << job->get_release_time() <<" "<< job->get_est() << " " << job->get_lst() << " " << job->get_eft() << " " << job->get_lft() << std::endl;
+    // }
     /** [Construction of Job Precedence Graph(Offline Guider)]
      * To run simulator, 
      * third, we need to consider those constraints(Physical Read Constraint, Physical Write Constraint, Producer-Consumer Constraint)
