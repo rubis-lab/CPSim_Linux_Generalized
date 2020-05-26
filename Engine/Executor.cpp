@@ -74,5 +74,17 @@ void Executor::run_simulation()
     *   run()
     *   update(Precedence Graph and next hyper period jobs, non-det ege in PG)
     */ 
-   
+}
+
+void change_execution_time()
+{
+
+}
+void assign_deadline_for_simulated_jobs()
+{
+
+}
+void reschedule_all_jobs()
+{
+    
 }

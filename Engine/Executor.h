@@ -17,6 +17,9 @@ public:
     Executor();
     ~Executor();
     void run_simulation();
+    void change_execution_time();
+    void assign_deadline_for_simulated_jobs();
+    void reschedule_all_jobs();
 };
 
 #endif
