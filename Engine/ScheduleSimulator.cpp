@@ -211,7 +211,6 @@ void ScheduleSimulator::simulate_scheduling_on_Real(int global_hyper_period_star
 
 void ScheduleSimulator::best_case_busy_period_analysis(std::vector<std::shared_ptr<Job>>& job_queue, int start, int& end, int ecu_id) 
 {
-    
     std::sort(job_queue.begin(), job_queue.end(), utils::compare);
     start = job_queue.back()->get_release_time(); //set busy period start point as the highest priority job's release time.
     int last_start = 0;
@@ -234,6 +233,7 @@ void ScheduleSimulator::best_case_busy_period_analysis(std::vector<std::shared_p
         {
             job_queue.back()->set_is_started(true);
             job_queue.back()->set_est(start + end);
+            //std::cout << "job queue back est : " << job_queue.back()->get_est() << std::endl;
             last_start = job_queue.back()->get_est();
         }
         
@@ -287,6 +287,7 @@ void ScheduleSimulator::best_case_busy_period_analysis(std::vector<std::shared_p
         }
         else
         {
+            job_queue.back()->set_is_started(false);
             job_queue.back()->set_is_finished(true);
             job_queue.back()->set_eft(start + end);
             job_queue.pop_back();
@@ -317,6 +318,7 @@ void ScheduleSimulator::worst_case_busy_period_analysis(std::vector<std::shared_
         {
             job_queue.back()->set_is_started(true);
             job_queue.back()->set_lst(start + end);
+            //std::cout << "job queue back lst : " << job_queue.back()->get_est() << std::endl;
             last_start = job_queue.back()->get_lst();
         }
         
@@ -375,6 +377,7 @@ void ScheduleSimulator::worst_case_busy_period_analysis(std::vector<std::shared_
             wcbp[0] = start;
             wcbp[1] = start + end;
         
+            job_queue.back()->set_is_started(false);
             job_queue.back()->set_is_finished(true);
             job_queue.back()->set_lft(start + end);
             job_queue.back()->set_wcbp(wcbp);
