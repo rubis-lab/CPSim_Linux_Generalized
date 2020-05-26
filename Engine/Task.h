@@ -39,6 +39,8 @@ private:
 	bool m_is_read;
 	bool m_is_write;
 	std::shared_ptr<ECU> m_ecu;
+	std::vector<std::string> m_producers_info;
+	std::vector<std::string> m_consumers_info;
 	std::vector<std::shared_ptr<Task>> m_producers;
 	std::vector<std::shared_ptr<Task>> m_consumers;
 
@@ -48,6 +50,8 @@ public:
      */
 	Task();
 	Task(std::string, int, int, int, int, int, bool, bool, int);
+	Task(std::string, int, int, int, int, int, bool, bool, int, std::vector<std::string>, std::vector<std::string>);
+	Task(std::string, int, int, int, int, int, bool, bool, int, std::vector<std::shared_ptr<Task>>, std::vector<std::shared_ptr<Task>>);
 	~Task();
 
     /**

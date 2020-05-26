@@ -137,13 +137,31 @@ void Initializer::initialize(std::string location)
     // Implement GPU / CPU job...
 
     // My thesis pdf submission deadline is june 12 11 am.
-
-    std::shared_ptr<Task> task1 = std::make_shared<Task>("SENSING", 10, 10, 4, 2, 0, true, false, 0);
+    std::vector<std::string> producers;
+    std::vector<std::string> consumers;
+    consumers.push_back("CC");
+    consumers.push_back("LK");
+    
+    std::shared_ptr<Task> task1 = std::make_shared<Task>("SENSING", 10, 10, 4, 2, 0, true, false, 0, producers, consumers);
     vectors::task_vector.push_back(std::move(task1));
-    std::shared_ptr<Task> task2 = std::make_shared<Task>("LK", 20, 20, 4, 2, 0, false, true, 0);
+    producers.clear();
+    consumers.clear();
+    producers.push_back("SENSING");
+    std::shared_ptr<Task> task2 = std::make_shared<Task>("LK", 20, 20, 4, 2, 0, false, true, 0, producers, consumers);
     vectors::task_vector.push_back(std::move(task2));
-    std::shared_ptr<Task> task3 = std::make_shared<Task>("CC", 30, 30, 4, 2, 0, false, true, 0);
+    producers.clear();
+    consumers.clear();
+    producers.push_back("SENSING");
+    std::shared_ptr<Task> task3 = std::make_shared<Task>("CC", 30, 30, 4, 2, 0, false, true, 0, producers, consumers);
     vectors::task_vector.push_back(std::move(task3));
+
+    for(auto task : vectors::task_vector)
+    {
+        task->synchronize_producer_consumer_relation();
+        std::cout << task->get_task_name() << "'s producer size " << task->get_producers().size() << " consumers size : " <<
+        task->get_consumers().size() << std::endl;
+
+    }
 
     /**
      * Global Hyper Period Initialization

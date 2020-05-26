@@ -75,6 +75,61 @@ Task::Task(std::string task_name, int period, int deadline, int wcet,
     }
 }
 
+Task::Task(std::string task_name, int period, int deadline, int wcet,
+            int bcet, int offset, bool is_read, bool is_write, int ecu_id,
+            std::vector<std::string> prodcuers, std::vector<std::string> consumers)
+{
+    /**
+     * Member variable initializaion
+     */
+    m_task_name = task_name;
+    m_task_id = vectors::task_vector.size();
+    m_period = period;
+    m_deadline = deadline;
+    m_wcet = wcet;
+    m_bcet = bcet;
+    m_offset = offset;
+    m_is_read = is_read;
+    m_is_write = is_write;
+    m_producers_info = prodcuers;
+    m_consumers_info = consumers;
+    
+    for(auto iter = vectors::ecu_vector.begin(); iter != vectors::ecu_vector.end(); iter++)
+    {
+        if(ecu_id == iter->get()->get_ECU_id())
+        {
+            m_ecu = *iter;
+        }
+    }
+}
+Task::Task(std::string task_name, int period, int deadline, int wcet,
+            int bcet, int offset, bool is_read, bool is_write, int ecu_id,
+            std::vector<std::shared_ptr<Task>> prodcuers, std::vector<std::shared_ptr<Task>> consumers)
+{
+    /**
+     * Member variable initializaion
+     */
+    m_task_name = task_name;
+    m_task_id = vectors::task_vector.size();
+    m_period = period;
+    m_deadline = deadline;
+    m_wcet = wcet;
+    m_bcet = bcet;
+    m_offset = offset;
+    m_is_read = is_read;
+    m_is_write = is_write;
+    m_producers = prodcuers;
+    m_consumers = consumers;
+    
+    for(auto iter = vectors::ecu_vector.begin(); iter != vectors::ecu_vector.end(); iter++)
+    {
+        if(ecu_id == iter->get()->get_ECU_id())
+        {
+            m_ecu = *iter;
+        }
+    }
+}
+
 /**
  * @fn Task::~Task()
  * @brief the function of basic destructor of Task
@@ -333,13 +388,27 @@ void Task::set_ECU(std::shared_ptr<ECU> ecu)
 
 void Task::synchronize_producer_consumer_relation()
 {
-    /*
-    for(auto iter = vectors::task_vector.begin(); iter != vectors::task_vector.end(); iter++)
-    {
-        if(iter->get)
+    if(m_producers_info.size() != 0)
+        for(auto producer : m_producers_info)
         {
-            _producers.push_back(); 
+            for(auto task : vectors::task_vector)
+            {
+                if(task->get_task_name() == producer)
+                {
+                    m_producers.push_back(task); 
+                }
+            }
         }
-    }
-    */
+        
+    if(m_consumers_info.size() != 0)
+        for(auto consumer : m_consumers_info)
+        {
+            for(auto task : vectors::task_vector)
+            {
+                if(task->get_task_name() == consumer)
+                {
+                    m_consumers.push_back(task); 
+                }
+            }
+        }
 }
