@@ -42,6 +42,8 @@ private:
     int m_lft;
     int m_bpet;
     int m_wpet;
+    int m_original_execution_time;
+    double m_simulated_execution_time;
     int m_actual_start_time;
     int m_actual_finish_time;
 
@@ -53,6 +55,8 @@ private:
     std::vector<std::shared_ptr<Job>> m_job_set_finish_non_det;
     std::vector<std::shared_ptr<Job>> m_job_set_pro_con_det;
     std::vector<std::shared_ptr<Job>> m_job_set_pro_con_non_det;
+    std::vector<std::shared_ptr<Job>> m_predecessors;
+    std::vector<std::shared_ptr<Job>> m_successors;
         
 public:
     /**
@@ -82,6 +86,8 @@ public:
     int get_wpet();    
     int get_actual_start_time();
     int get_actual_finish_time();
+    int get_original_execution_time();
+    double get_simulated_execution_time();
 
     std::array<int, 2>& get_wcbp();
     
@@ -110,6 +116,8 @@ public:
     void set_wpet(int);
     void set_actual_start_time(int);
     void set_actual_finish_time(int);
+    void set_original_execution_time(int);
+    void set_simulated_execution_time(double);
     void set_wcbp(std::array<int, 2>&);
     void set_job_set_start_det(std::vector<std::shared_ptr<Job>>&);
     void set_job_set_start_non_det(std::vector<std::shared_ptr<Job>>&);

@@ -158,6 +158,16 @@ int Job::get_actual_finish_time()
     return m_actual_finish_time;
 }  
 
+int Job::get_original_execution_time()
+{
+    return m_original_execution_time;
+}
+
+double Job::get_simulated_execution_time()
+{
+    return m_simulated_execution_time;
+}
+
 std::vector<std::shared_ptr<Job>>& Job::get_job_set_start_det()
 {
     return m_job_set_start_det;
@@ -242,6 +252,16 @@ void Job::set_release_time(int release_time)
 void Job::set_absolute_deadline(int a_deadline)
 {
     m_absolute_deadline = a_deadline;
+}
+
+void Job::set_original_execution_time(int original_execution_time)
+{
+    m_original_execution_time = original_execution_time;
+}
+
+void Job::set_simulated_execution_time(double simulated_execution_time)
+{
+    m_simulated_execution_time = simulated_execution_time;
 }
 
 void Job::set_wcbp(std::array<int, 2>& wcbp)

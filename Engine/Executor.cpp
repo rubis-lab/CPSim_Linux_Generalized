@@ -1,4 +1,7 @@
 #include "Executor.h"
+#include "Utils.h"
+#include <ctime>
+#include <cstdlib>
 
 /**
  *  This file is the cpp file for the Executor class.
@@ -58,33 +61,56 @@ Executor::~Executor(){
  */
 void Executor::run_simulation()
 {
-    /** Alex approach
-     *
-    for(Job job : jobs)
+    move_ecus_jobs_to_simulator();
+    /**
+     * For test
+     */
+    random_execution_time_generator();
+    
+    change_execution_time();
+    for (auto job : vectors::job_vector_of_simulator)
     {
-        if(job.shouldWeExecute(...))
-            job.update(...);
+        
+    }    
+}
+
+void Executor::change_execution_time()
+{
+    for (auto job : vectors::job_vector_of_simulator)
+    {
+        double execution_time_mapping_factor = (double)job->get_ECU()->get_performance()/utils::simulatorPC_performance;
+        job->set_simulated_execution_time(job->get_original_execution_time() * execution_time_mapping_factor);
+        std::cout << job->get_simulated_execution_time() * utils::simulatorPC_performance / job->get_ECU()->get_performance() << " " << job->get_simulated_execution_time() << std::endl;
     }
-    */
-
-   /** SH approach 
-    * for(job_vector )
-    * {
-    *   check constraints
-    *   run()
-    *   update(Precedence Graph and next hyper period jobs, non-det ege in PG)
-    */ 
 }
-
-void change_execution_time()
-{
-
-}
-void assign_deadline_for_simulated_jobs()
-{
-
-}
-void reschedule_all_jobs()
+void Executor::assign_deadline_for_simulated_jobs()
 {
     
+}
+void Executor::reschedule_all_jobs()
+{
+    for (auto job : vectors::job_vector_of_simulator)
+    {
+        
+    }    
+}
+
+void Executor::random_execution_time_generator()
+{
+    srand((unsigned int)time(NULL));
+    for(auto job : vectors::job_vector_of_simulator)
+    {
+        job->set_original_execution_time((rand() % (job->get_wcet()-job->get_bcet()+1) + job->get_bcet()));
+        //std::cout << job->get_original_execution_time() << std::endl;
+    }
+}
+
+void Executor::move_ecus_jobs_to_simulator()
+{
+    vectors::job_vector_of_simulator.clear();
+    for(int i = 0; i < vectors::job_vectors_for_each_ECU.size(); i++ )
+    {
+        vectors::job_vector_of_simulator.insert(vectors::job_vector_of_simulator.end(), vectors::job_vectors_for_each_ECU.at(i).begin(), vectors::job_vectors_for_each_ECU.at(i).end());
+        vectors::job_vectors_for_each_ECU.at(i).clear();
+    } 
 }

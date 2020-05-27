@@ -152,7 +152,7 @@ void Initializer::initialize(std::string location)
     producers.clear();
     consumers.clear();
     producers.push_back("SENSING");
-    std::shared_ptr<Task> task3 = std::make_shared<Task>("CC", 30, 30, 4, 2, 0, false, true, 0, producers, consumers);
+    std::shared_ptr<Task> task3 = std::make_shared<Task>("CC", 30, 30, 4, 2, 0, false, true, 1, producers, consumers);
     vectors::task_vector.push_back(std::move(task3));
 
     for(auto task : vectors::task_vector)
