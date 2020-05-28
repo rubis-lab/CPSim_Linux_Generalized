@@ -199,7 +199,6 @@ std::vector<std::shared_ptr<Job>>& Job::get_job_set_pro_con_non_det()
 {
     return m_job_set_pro_con_non_det;
 }
-
 std::vector<std::shared_ptr<Job>>& Job::get_det_prdecessors()
 {
     return m_det_predecessors;
