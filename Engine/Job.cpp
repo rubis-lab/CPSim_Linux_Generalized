@@ -195,6 +195,15 @@ std::vector<std::shared_ptr<Job>>& Job::get_job_set_pro_con_non_det()
 {
     return m_job_set_pro_con_non_det;
 }
+std::vector<std::shared_ptr<Job>>& Job::get_predecessors()
+{
+    return m_predecessors;
+}
+
+std::vector<std::shared_ptr<Job>>& Job::get_successors()
+{
+    return m_successors;
+}
 
 void Job::set_is_started(bool is_started)
 {
@@ -292,6 +301,15 @@ void Job::set_job_set_pro_con_det(std::vector<std::shared_ptr<Job>>& job_set_pro
 void Job::set_job_set_pro_con_non_det(std::vector<std::shared_ptr<Job>>& job_set_pro_con_non_det)
 {
     m_job_set_pro_con_non_det = job_set_pro_con_non_det;
+}
+void Job::set_predecessors(std::vector<std::shared_ptr<Job>>& predecessors)
+{
+    m_predecessors = predecessors;
+}
+
+void Job::set_successors(std::vector<std::shared_ptr<Job>>& successors)
+{
+    m_successors = successors;
 }
 
 
