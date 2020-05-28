@@ -36,6 +36,7 @@ private:
     int m_job_id;
     int m_release_time;
     int m_absolute_deadline;
+    int m_simulated_deadline;
     int m_est;
     int m_lst;
     int m_eft;
@@ -55,8 +56,10 @@ private:
     std::vector<std::shared_ptr<Job>> m_job_set_finish_non_det;
     std::vector<std::shared_ptr<Job>> m_job_set_pro_con_det;
     std::vector<std::shared_ptr<Job>> m_job_set_pro_con_non_det;
-    std::vector<std::shared_ptr<Job>> m_predecessors;
-    std::vector<std::shared_ptr<Job>> m_successors;
+    std::vector<std::shared_ptr<Job>> m_det_predecessors;
+    std::vector<std::shared_ptr<Job>> m_det_successors;
+    std::vector<std::shared_ptr<Job>> m_non_det_predecessors;
+    std::vector<std::shared_ptr<Job>> m_non_det_successors;
         
 public:
     /**
@@ -78,6 +81,7 @@ public:
     int get_job_id();
     int get_release_time();
     int get_absolute_deadline();
+    int get_simulated_deadline();
     int get_est();
     int get_lst();
     int get_eft();
@@ -97,6 +101,10 @@ public:
     std::vector<std::shared_ptr<Job>>& get_job_set_finish_non_det();
     std::vector<std::shared_ptr<Job>>& get_job_set_pro_con_det();
     std::vector<std::shared_ptr<Job>>& get_job_set_pro_con_non_det();
+    std::vector<std::shared_ptr<Job>>& get_det_prdecessors();
+    std::vector<std::shared_ptr<Job>>& get_det_successors();
+    std::vector<std::shared_ptr<Job>>& get_non_det_prdecessors();
+    std::vector<std::shared_ptr<Job>>& get_non_det_successors();
 
     void set_is_started(bool);
     void set_is_finished(bool);
@@ -108,6 +116,7 @@ public:
     void set_job_id(int);
     void set_release_time(int);
     void set_absolute_deadline(int);
+    void set_simulated_deadline(int);
     void set_est(int);
     void set_lst(int);
     void set_eft(int);
@@ -125,7 +134,10 @@ public:
     void set_job_set_finish_non_det(std::vector<std::shared_ptr<Job>>&);
     void set_job_set_pro_con_det(std::vector<std::shared_ptr<Job>>&);
     void set_job_set_pro_con_non_det(std::vector<std::shared_ptr<Job>>&);
-    
+    void set_det_predecessors(std::vector<std::shared_ptr<Job>>&);
+    void set_det_successors(std::vector<std::shared_ptr<Job>>&);
+    void set_non_det_predecessors(std::vector<std::shared_ptr<Job>>&);
+    void set_non_det_successors(std::vector<std::shared_ptr<Job>>&);
     int calculate_release_time(int, int);
     int calculate_absolute_deadline(int, int);
     std::array<int, 2> calculate_wcbp();

@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
          * second, we need to calculate all of the ECUs' behavior.
          * For this, we simulate those ECUs' job scheduling scenario with the specificated informations.
          */
-        schedule_simulator_on_Real.simulate_scheduling_on_Real(utils::current_time);
+        schedule_simulator_on_Real.simulate_scheduling_on_real(utils::current_time);
 
         /** [Construction of Job Precedence Graph(Offline Guider)]
          * To run simulator, 
@@ -86,7 +86,7 @@ int main(int argc, char *argv[])
          * forth, we need to schedule those jobs' that is already inserted in the Job Precedence Graph.
          * For this, we create executor which is responsible for 
         */
-        executor.run_simulation();
+        executor.run_simulation(utils::current_time);
     }
     return 0;
 }

@@ -33,7 +33,7 @@ public:
      * Generator for scheduling simulation
      */
     
-    void simulate_scheduling_on_Real(int);
+    void simulate_scheduling_on_real(int);
     void best_case_busy_period_analysis(std::vector<std::shared_ptr<Job>>&, int, int&, int);
     void worst_case_busy_period_analysis(std::vector<std::shared_ptr<Job>>&, int, int&, int);
 

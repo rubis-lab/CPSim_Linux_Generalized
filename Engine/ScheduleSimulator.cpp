@@ -57,7 +57,7 @@ ScheduleSimulator::~ScheduleSimulator()
  * @warning none
  * @todo will be implemented tonight.
  */
-void ScheduleSimulator::simulate_scheduling_on_Real(int global_hyper_period_start_point)
+void ScheduleSimulator::simulate_scheduling_on_real(int global_hyper_period_start_point)
 {
     /**
      *  Generate scheduling simulation to refer to.
@@ -136,6 +136,14 @@ void ScheduleSimulator::simulate_scheduling_on_Real(int global_hyper_period_star
                 }
             }
         }
+        // ON USER TYPES, ++ecu_id WILL:
+        // INCREMENT ORIGINAL
+        // COMPARE ORIGINAL WITH WHATEVER YOU HAVE
+        
+        // ONLY ON USER TYPES: ecu_id++; WILL:
+        // MAKE COPY OF VARIABLE
+        // INCREMENT ORIGINAL
+        // DO CONDITION CHECK ON COPY OF OLD
     }   
 
     /**

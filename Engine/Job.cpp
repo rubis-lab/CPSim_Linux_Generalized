@@ -115,6 +115,10 @@ int Job::get_absolute_deadline()
 {
     return m_absolute_deadline;
 }
+int Job::get_simulated_deadline()
+{
+    return m_simulated_deadline;
+}
 
 int Job::get_est()
 {
@@ -196,6 +200,25 @@ std::vector<std::shared_ptr<Job>>& Job::get_job_set_pro_con_non_det()
     return m_job_set_pro_con_non_det;
 }
 
+std::vector<std::shared_ptr<Job>>& Job::get_det_prdecessors()
+{
+    return m_det_predecessors;
+}
+
+std::vector<std::shared_ptr<Job>>& Job::get_det_successors()
+{
+    return m_det_successors;
+}
+std::vector<std::shared_ptr<Job>>& Job::get_non_det_prdecessors()
+{
+    return m_non_det_predecessors;
+}
+
+std::vector<std::shared_ptr<Job>>& Job::get_non_det_successors()
+{
+    return m_non_det_successors;
+}
+
 void Job::set_is_started(bool is_started)
 {
     m_is_started = is_started;
@@ -253,7 +276,10 @@ void Job::set_absolute_deadline(int a_deadline)
 {
     m_absolute_deadline = a_deadline;
 }
-
+void Job::set_simulated_deadline(int s_deadline)
+{
+    m_simulated_deadline = s_deadline;
+}
 void Job::set_original_execution_time(int original_execution_time)
 {
     m_original_execution_time = original_execution_time;
@@ -292,6 +318,22 @@ void Job::set_job_set_pro_con_det(std::vector<std::shared_ptr<Job>>& job_set_pro
 void Job::set_job_set_pro_con_non_det(std::vector<std::shared_ptr<Job>>& job_set_pro_con_non_det)
 {
     m_job_set_pro_con_non_det = job_set_pro_con_non_det;
+}
+void Job::set_det_predecessors(std::vector<std::shared_ptr<Job>>& predecessors)
+{
+    m_det_predecessors = predecessors;
+}
+void Job::set_det_successors(std::vector<std::shared_ptr<Job>>& successors)
+{
+    m_det_successors = successors;
+}
+void Job::set_non_det_predecessors(std::vector<std::shared_ptr<Job>>& predecessors)
+{
+    m_non_det_predecessors = predecessors;
+}
+void Job::set_non_det_successors(std::vector<std::shared_ptr<Job>>& successors)
+{
+    m_non_det_successors = successors;
 }
 
 

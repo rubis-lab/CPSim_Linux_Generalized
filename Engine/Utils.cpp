@@ -187,5 +187,16 @@ bool utils::compare(std::shared_ptr<Job> pred, std::shared_ptr<Job> succ)
     {
         return pred->get_priority() > succ->get_priority();
     }
-    
+}
+
+bool utils::first_release(std::shared_ptr<Job> pred, std::shared_ptr<Job> succ)
+{
+	if(pred->get_release_time() == succ->get_release_time())
+	{
+		return pred->get_priority() < succ->get_priority();
+	}
+	else 
+	{
+		return pred->get_release_time() < succ->get_release_time();
+	}	
 }
