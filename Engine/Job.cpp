@@ -101,6 +101,10 @@ bool Job::get_is_running()
 {
     return m_is_running;
 }
+bool Job::get_is_simulated()
+{
+    return m_is_simulated;
+}
 int Job::get_job_id()
 {
     return m_job_id;
@@ -162,11 +166,18 @@ int Job::get_actual_finish_time()
     return m_actual_finish_time;
 }  
 
-int Job::get_original_execution_time()
+int Job::get_actual_execution_time()
 {
-    return m_original_execution_time;
+    return m_actual_execution_time;
 }
-
+int Job::get_simulated_start_time()
+{
+    return m_simulated_start_time;
+}
+int Job::get_simulated_finish_time()
+{
+    return m_simulated_start_time;
+}
 double Job::get_simulated_execution_time()
 {
     return m_simulated_execution_time;
@@ -242,6 +253,10 @@ void Job::set_is_running(bool is_running)
 {
     m_is_running = is_running;
 }
+void Job::set_is_simulated(bool is_simulated)
+{
+    m_is_simulated = is_simulated;
+}
 void Job::set_est(int est)
 {
     m_est = est;
@@ -279,11 +294,26 @@ void Job::set_simulated_deadline(int s_deadline)
 {
     m_simulated_deadline = s_deadline;
 }
-void Job::set_original_execution_time(int original_execution_time)
+void Job::set_actual_start_time(int actual_start_time)
 {
-    m_original_execution_time = original_execution_time;
+    m_actual_start_time = actual_start_time;
 }
-
+void Job::set_actual_finish_time(int actual_finish_time)
+{
+    m_actual_finish_time = actual_finish_time;
+}
+void Job::set_actual_execution_time(int original_execution_time)
+{
+    m_actual_execution_time = original_execution_time;
+}
+void Job::set_simulated_start_time(int simulated_start_time)
+{
+    m_simulated_start_time = simulated_start_time;
+}
+void Job::set_simulated_finish_time(int simulated_finish_time)
+{
+    m_simulated_finish_time = simulated_finish_time;
+}
 void Job::set_simulated_execution_time(double simulated_execution_time)
 {
     m_simulated_execution_time = simulated_execution_time;

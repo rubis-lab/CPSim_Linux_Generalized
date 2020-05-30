@@ -90,34 +90,41 @@ void OfflineGuider::construct_job_precedence_graph()
             {
                 if(job->get_is_read())
                 {
-                    std::vector<std::shared_ptr<Job>> job_set_start;
-                    job_set_start = make_job_set_start_det(ecu_id, job);
-                    job->set_job_set_start_det(job_set_start);      
-                    job_set_start.clear();
-                    job_set_start = make_job_set_start_non_det(ecu_id, job);;
-                    job->set_job_set_start_non_det(job_set_start);
+                    std::vector<std::shared_ptr<Job>> job_set_start_det;
+                    std::vector<std::shared_ptr<Job>> job_set_start_non_det;
+
+                    job_set_start_det = make_job_set_start_det(ecu_id, job);
+                    job->set_job_set_start_det(job_set_start_det);      
+
+                    job_set_start_non_det = make_job_set_start_non_det(ecu_id, job);;
+                    job->set_job_set_start_non_det(job_set_start_non_det);
                 }
             }
             for(auto job : vectors::job_vectors_for_each_ECU.at(ecu_id))
             {
                 if(job->get_is_write())
                 {
-                    std::vector<std::shared_ptr<Job>> job_set_finish;
-                    job_set_finish = make_job_set_finish_det(ecu_id, job);
-                    job->set_job_set_finish_det(job_set_finish);  
-                    job_set_finish.clear();
-                    job_set_finish = make_job_set_finish_non_det(ecu_id, job);;
-                    job->set_job_set_finish_non_det(job_set_finish);  
+                    std::vector<std::shared_ptr<Job>> job_set_finish_det;
+                    std::vector<std::shared_ptr<Job>> job_set_finish_non_det;
+
+                    job_set_finish_det = make_job_set_finish_det(ecu_id, job);
+                    job->set_job_set_finish_det(job_set_finish_det);  
+
+                    job_set_finish_non_det = make_job_set_finish_non_det(ecu_id, job);;
+                    job->set_job_set_finish_non_det(job_set_finish_non_det);  
                 }  
             }
             for(auto job : vectors::job_vectors_for_each_ECU.at(ecu_id))
             {
-                std::vector<std::shared_ptr<Job>> job_set_pro_con;
-                job_set_pro_con = make_job_set_pro_con_det(ecu_id, job);
-                job->set_job_set_pro_con_det(job_set_pro_con);
-                job_set_pro_con.clear();
-                job_set_pro_con = make_job_set_pro_con_non_det(ecu_id, job); 
-                job->set_job_set_pro_con_non_det(job_set_pro_con);     
+                std::vector<std::shared_ptr<Job>> job_set_pro_con_det;
+                std::vector<std::shared_ptr<Job>> job_set_pro_con_non_det;
+         
+                job_set_pro_con_det = make_job_set_pro_con_det(ecu_id, job);
+                job->set_job_set_pro_con_det(job_set_pro_con_det);
+
+                job_set_pro_con_non_det = make_job_set_pro_con_non_det(ecu_id, job); 
+                job->set_job_set_pro_con_non_det(job_set_pro_con_non_det);    
+                
             }
             
         }
@@ -128,6 +135,7 @@ void OfflineGuider::construct_job_precedence_graph()
         }
         
     }
+
 }
 
 std::vector<std::shared_ptr<Job>> OfflineGuider::make_job_set_start_det(int ecu_id, std::shared_ptr<Job>& current_job)
@@ -284,7 +292,7 @@ std::vector<std::shared_ptr<Job>> OfflineGuider::make_job_set_pro_con_det(int ec
         }
     }
     std::vector<std::shared_ptr<Job>> potential_producer;
-    std::shared_ptr<Job> deterministic_producer;
+    std::shared_ptr<Job> deterministic_producer = nullptr;
     for(int i = 0; i < vectors::job_vectors_for_each_ECU.size(); i++)
     {
         if(vectors::job_vectors_for_each_ECU.at(i).size() != 0)
@@ -317,7 +325,22 @@ std::vector<std::shared_ptr<Job>> OfflineGuider::make_job_set_pro_con_det(int ec
             whole_job_set.push_back(job);
         }
     }
-    whole_job_set.push_back(deterministic_producer);
+    for(auto job : job_set_start)
+    {
+        if(job->get_lst() < current_job->get_est())
+        {
+            whole_job_set.push_back(job);
+        }
+    }
+    if(deterministic_producer == nullptr)
+    {
+
+    }
+    else
+    {
+        whole_job_set.push_back(deterministic_producer);
+    }
+
     return whole_job_set;
 }
 std::vector<std::shared_ptr<Job>> OfflineGuider::make_job_set_pro_con_non_det(int ecu_id, std::shared_ptr<Job>& current_job)
@@ -380,5 +403,18 @@ std::vector<std::shared_ptr<Job>> OfflineGuider::make_job_set_pro_con_non_det(in
         }
         
     }
+    for(auto job : job_set_start)
+    {
+        if(job->get_lst() < current_job->get_est())
+        {
+           continue;
+        }
+        else
+        {
+            whole_job_set.push_back(job);
+        }
+        
+    }
+
     return whole_job_set;
 }

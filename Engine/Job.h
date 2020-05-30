@@ -32,6 +32,7 @@ private:
     bool m_is_resumed;
     bool m_is_released;
     bool m_is_running;
+    bool m_is_simulated;
 
     int m_job_id;
     int m_release_time;
@@ -43,10 +44,12 @@ private:
     int m_lft;
     int m_bpet;
     int m_wpet;
-    int m_original_execution_time;
+    int m_actual_execution_time;
     double m_simulated_execution_time;
     int m_actual_start_time;
+    int m_simulated_start_time;
     int m_actual_finish_time;
+    int m_simulated_finish_time;
 
     std::array<int, 2> m_worst_case_busy_period;
     
@@ -77,6 +80,7 @@ public:
     bool get_is_resumed();
     bool get_is_released();
     bool get_is_running();
+    bool get_is_simulated();
 
     int get_job_id();
     int get_release_time();
@@ -90,7 +94,9 @@ public:
     int get_wpet();    
     int get_actual_start_time();
     int get_actual_finish_time();
-    int get_original_execution_time();
+    int get_actual_execution_time();
+    int get_simulated_start_time();
+    int get_simulated_finish_time();
     double get_simulated_execution_time();
 
     std::array<int, 2>& get_wcbp();
@@ -112,7 +118,8 @@ public:
     void set_is_resumed(bool);
     void set_is_released(bool);
     void set_is_running(bool);
-
+    void set_is_simulated(bool);
+    
     void set_job_id(int);
     void set_release_time(int);
     void set_absolute_deadline(int);
@@ -125,7 +132,9 @@ public:
     void set_wpet(int);
     void set_actual_start_time(int);
     void set_actual_finish_time(int);
-    void set_original_execution_time(int);
+    void set_actual_execution_time(int);
+    void set_simulated_start_time(int);
+    void set_simulated_finish_time(int);
     void set_simulated_execution_time(double);
     void set_wcbp(std::array<int, 2>&);
     void set_job_set_start_det(std::vector<std::shared_ptr<Job>>&);

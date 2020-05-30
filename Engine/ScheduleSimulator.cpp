@@ -57,7 +57,7 @@ ScheduleSimulator::~ScheduleSimulator()
  * @warning none
  * @todo will be implemented tonight.
  */
-void ScheduleSimulator::simulate_scheduling_on_real(int global_hyper_period_start_point)
+void ScheduleSimulator::simulate_scheduling_on_real(double global_hyper_period_start_point)
 {
     /**
      *  Generate scheduling simulation to refer to.

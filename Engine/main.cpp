@@ -79,6 +79,7 @@ int main(int argc, char *argv[])
          * third, we need to consider those constraints(Physical Read Constraint, Physical Write Constraint, Producer-Consumer Constraint)
          * For this, we create offline guider, and make a graph data structure for representing all of the jobs' precedence relationship.
         */  
+
         offline_guider.construct_job_precedence_graph();
 
         /** [Execute Jobs and Update the graph]

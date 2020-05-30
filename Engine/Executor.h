@@ -20,7 +20,8 @@ public:
     
     void random_execution_time_generator();
     void move_ecus_jobs_to_simulator();
-    void run_simulation(int);
+    void update_jobset(std::shared_ptr<Job> , std::shared_ptr<Job>);
+    void run_simulation(double);
     void change_execution_time();
     void assign_deadline_for_simulated_jobs();
     void reschedule_all_jobs_in_this_HP();

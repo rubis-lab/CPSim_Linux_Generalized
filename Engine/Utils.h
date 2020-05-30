@@ -31,7 +31,7 @@ namespace utils
     inline std::string file_path = "/home/";
     inline std::string null_path = "";
     inline int hyper_period = 0;
-    inline int current_time = 0; //simulation time(us)
+    inline double current_time = 0; //simulation time(us)
     inline int number_of_ECUs = 0;
     inline int number_of_tasks = 0;
     inline int simulatorPC_performance = 3000;
