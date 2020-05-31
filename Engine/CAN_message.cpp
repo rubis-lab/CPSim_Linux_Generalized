@@ -11,7 +11,7 @@
  */
 
 //pthread_mutex_t section_for_can_sending = PTHREAD_MUTEX_INITIALIZER;
-std::mutex ourMutex; // Any lock_guard can use this.
+std::mutex ourMutex; // Any lock_guard can use this
 
 
 CAN_message::CAN_message()

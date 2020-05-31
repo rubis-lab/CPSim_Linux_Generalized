@@ -22,6 +22,7 @@
  *  5. Finish time ranges[EFT, LFT]
  *  6. Priority
  */
+
 class Job : public Task
 {
 private:

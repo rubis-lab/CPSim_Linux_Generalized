@@ -143,7 +143,7 @@ std::vector<std::shared_ptr<Job>> OfflineGuider::make_job_set_start_det(int ecu_
     std::vector<std::shared_ptr<Job>> high_jobs;
     for(auto job : vectors::job_vectors_for_each_ECU.at(ecu_id))
     {
-        if((job->get_priority() < current_job->get_priority() ) && (job->get_task_id()!=current_job->get_task_id()))
+        if((job->get_priority() < current_job->get_priority()) && (job->get_task_id()!=current_job->get_task_id()))
         {
             //std::cout << "this job is: " <<job->get_task_name() << " current job is: " << current_job->get_task_name() << std::endl;
             high_jobs.push_back(job);

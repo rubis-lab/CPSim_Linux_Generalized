@@ -1,4 +1,7 @@
+#include <climits>
 #include "ScheduleSimulator.h"
+#include "PriorityPolicy.h"
+
 
 /**
  *  This file is the cpp file for the ScheduleSimulator class.
@@ -122,29 +125,43 @@ void ScheduleSimulator::simulate_scheduling_on_real(double global_hyper_period_s
             job->set_is_resumed(false);
         }    
 
+    int highest_cpu_priority = INT_MIN;
+    // Assign priorities for CPU jobs.
     for(int ecu_id = 0; ecu_id < vectors::job_vectors_for_each_ECU.size(); ++ecu_id)
     {
         for(auto job : vectors::job_vectors_for_each_ECU.at(ecu_id))
         {
+            if(job->get_priority_policy() == PriorityPolicy::GPU) continue; // Skip tasks following GPU priority policy.
             for(auto job_to_look : vectors::job_vectors_for_each_ECU.at(ecu_id))
             {
-                if(job == job_to_look) continue; 
-                if((job->get_period() > job_to_look->get_period()) && (job->get_priority() == job_to_look->get_priority()))
+                if(job == job_to_look) continue;
+                if(job_to_look->get_priority_policy() == PriorityPolicy::GPU) continue; // Don't let GPU Priority Policy task influence CPU task priority.
+                if((job->get_period() > job_to_look->get_period()))
                 {
                     // We have higher priority.
                     job->set_priority(job->get_priority() + 1); // Increment our priority by one.
+                    if(job->get_priority() > highest_cpu_priority)
+                        highest_cpu_priority = job->get_priority();
                 }
             }
         }
-        // ON USER TYPES, ++ecu_id WILL:
-        // INCREMENT ORIGINAL
-        // COMPARE ORIGINAL WITH WHATEVER YOU HAVE
-        
-        // ONLY ON USER TYPES: ecu_id++; WILL:
-        // MAKE COPY OF VARIABLE
-        // INCREMENT ORIGINAL
-        // DO CONDITION CHECK ON COPY OF OLD
-    }   
+    }
+
+    // Assign priorities for GPU jobs.
+    for(int ecu_id = 0; ecu_id < vectors::job_vectors_for_each_ECU.size(); ++ecu_id)
+    {
+        for(auto job : vectors::job_vectors_for_each_ECU.at(ecu_id))
+        {
+            if(job->get_priority_policy() == PriorityPolicy::CPU) continue; // Skip tasks following CPU priority policy.
+            for(auto job_to_look : vectors::job_vectors_for_each_ECU.at(ecu_id))
+            {
+                if(job == job_to_look) continue;
+                if(job_to_look->get_priority_policy() == PriorityPolicy::CPU) continue; // We already have variable highest_cpu_priority, don't need to account for CPU tasks.
+                if((job->get_period() > job_to_look->get_period())) // Check for higher priority
+                    job->set_priority(job->get_priority() + 1 + highest_cpu_priority); // Make sure all GPU priorities are higher than CPU.
+            }
+        }
+    }
 
     /**
      * Generate schedule each ECUs
@@ -153,7 +170,7 @@ void ScheduleSimulator::simulate_scheduling_on_real(double global_hyper_period_s
     {
         bool is_idle = true;
         bool is_best = true;
-        for(int i = 0; i < 2; i++)
+        for(int i = 0; i < 2; i++) // First BCET, then WCET.
         {   
             for(int ecu_id = 0; ecu_id < vectors::job_vectors_for_each_ECU.size(); ++ecu_id) 
                 for(auto job : vectors::job_vectors_for_each_ECU.at(ecu_id))
@@ -302,6 +319,7 @@ void ScheduleSimulator::best_case_busy_period_analysis(std::vector<std::shared_p
         }
     }             
 }
+
 void ScheduleSimulator::worst_case_busy_period_analysis(std::vector<std::shared_ptr<Job>>& job_queue, int start, int& end, int ecu_id) 
 {
     std::sort(job_queue.begin(), job_queue.end(), utils::compare);

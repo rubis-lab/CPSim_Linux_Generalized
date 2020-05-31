@@ -61,6 +61,7 @@ Initializer::~Initializer()
 int Initializer::execution_time_mapping_function()
 {
     //ECU to Simulator PC
+    return 0;
 }
 
 /**

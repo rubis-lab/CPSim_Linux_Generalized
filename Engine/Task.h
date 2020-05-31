@@ -6,6 +6,7 @@
 #include <vector>
 #include <memory>
 #include "ECU.h"
+#include "PriorityPolicy.h"
 
 /** This file is engine code of CPSim-Re engine
  * @file Task.h
@@ -43,15 +44,18 @@ private:
 	std::vector<std::string> m_consumers_info;
 	std::vector<std::shared_ptr<Task>> m_producers;
 	std::vector<std::shared_ptr<Task>> m_consumers;
+	PriorityPolicy m_priority_policy;
 
 public:
     /**
      * Constructors and Destructors
      */
 	Task();
-	Task(std::string, int, int, int, int, int, bool, bool, int);
-	Task(std::string, int, int, int, int, int, bool, bool, int, std::vector<std::string>, std::vector<std::string>);
-	Task(std::string, int, int, int, int, int, bool, bool, int, std::vector<std::shared_ptr<Task>>, std::vector<std::shared_ptr<Task>>);
+	// name, period, deadline, wcet, bcet, offset, isRead, isWrite, ecuId
+	Task(std::string, int, int, int, int, int, bool, bool, int, PriorityPolicy policy = PriorityPolicy::CPU);
+
+	Task(std::string, int, int, int, int, int, bool, bool, int, std::vector<std::string>, std::vector<std::string>, PriorityPolicy policy = PriorityPolicy::CPU);
+	Task(std::string, int, int, int, int, int, bool, bool, int, std::vector<std::shared_ptr<Task>>, std::vector<std::shared_ptr<Task>>, PriorityPolicy policy = PriorityPolicy::CPU);
 	~Task();
 
     /**
@@ -67,6 +71,7 @@ public:
 	int get_priority();
 	bool get_is_read();
 	bool get_is_write();
+	PriorityPolicy get_priority_policy();
 
 	std::vector<std::shared_ptr<Task>> get_producers();
 	std::vector<std::shared_ptr<Task>> get_consumers();

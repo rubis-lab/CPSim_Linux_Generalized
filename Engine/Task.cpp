@@ -51,7 +51,7 @@ Task::Task()
  * @todo none
  */
 Task::Task(std::string task_name, int period, int deadline, int wcet,
-            int bcet, int offset, bool is_read, bool is_write, int ecu_id)
+            int bcet, int offset, bool is_read, bool is_write, int ecu_id, PriorityPolicy policy)
 {
     /**
      * Member variable initializaion
@@ -77,7 +77,7 @@ Task::Task(std::string task_name, int period, int deadline, int wcet,
 
 Task::Task(std::string task_name, int period, int deadline, int wcet,
             int bcet, int offset, bool is_read, bool is_write, int ecu_id,
-            std::vector<std::string> prodcuers, std::vector<std::string> consumers)
+            std::vector<std::string> prodcuers, std::vector<std::string> consumers, PriorityPolicy policy)
 {
     /**
      * Member variable initializaion
@@ -104,7 +104,7 @@ Task::Task(std::string task_name, int period, int deadline, int wcet,
 }
 Task::Task(std::string task_name, int period, int deadline, int wcet,
             int bcet, int offset, bool is_read, bool is_write, int ecu_id,
-            std::vector<std::shared_ptr<Task>> prodcuers, std::vector<std::shared_ptr<Task>> consumers)
+            std::vector<std::shared_ptr<Task>> prodcuers, std::vector<std::shared_ptr<Task>> consumers, PriorityPolicy policy)
 {
     /**
      * Member variable initializaion
@@ -218,6 +218,11 @@ int Task::get_period()
 int Task::get_deadline()
 {
     return m_deadline;
+}
+
+PriorityPolicy Task::get_priority_policy()
+{
+    return m_priority_policy;
 }
 
 /**
