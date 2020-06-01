@@ -163,6 +163,21 @@ void ScheduleSimulator::simulate_scheduling_on_real(double global_hyper_period_s
         }
     }
 
+
+    // ACCOUNT FOR GPU JOBS.
+    // Schedule GPU JOBS.
+    
+    
+    
+    
+    // CHANGE RELEASE TIME TO NOT AFFECT EACHOTHER EVER...
+
+
+
+
+    // MAKE ALL GPU JOBS HAVE SAME PRIORITY TO PREVENT PREEMPTION FROM BELOW CODE...
+
+
     /**
      * Generate schedule each ECUs
      */
@@ -180,7 +195,7 @@ void ScheduleSimulator::simulate_scheduling_on_real(double global_hyper_period_s
                     job->set_is_preempted(false);
                     job->set_is_resumed(false);
                 }
-                    
+            
             int current_time_point = global_hyper_period_start_point;
             int busy_period_start_point = 0;
             //check_released_jobs_at_the_time_point
@@ -198,6 +213,7 @@ void ScheduleSimulator::simulate_scheduling_on_real(double global_hyper_period_s
                     */    
                 for(auto job : vectors::job_vectors_for_each_ECU.at(ecu_id))
                 {
+                    if(job->get_priority_policy() != PriorityPolicy::CPU) continue; // Only account for CPU jobs, maintain backwards compatability.
                     if((!job->get_is_finished()) && (job->get_release_time() <= current_time_point))
                     {
                         job->set_is_released(true);
@@ -206,23 +222,23 @@ void ScheduleSimulator::simulate_scheduling_on_real(double global_hyper_period_s
                     }
                 }
                     
-                if(is_idle)
+                if(is_idle) // Might need to add check for sync / init or something...
                 {
-                    current_time_point += 1;
+                    current_time_point += 1; // Skip to next iteration of loop.
                 }
                 else
                 {
                     if(is_best)
                     {
                         //... some analysis and add sum of bcet to the current_time_point.
-                        best_case_busy_period_analysis(job_queue, busy_period_start_point, sum_of_execution, ecu_id);
+                        best_case_busy_period_analysis(job_queue, busy_period_start_point, sum_of_execution, ecu_id); // Outputs sum of exec
                         current_time_point += sum_of_execution;
                         is_idle = true;
                     }
                     else
                     {
                         //... some analysis and add sum of bcet to the current_time_point.
-                        worst_case_busy_period_analysis(job_queue, busy_period_start_point, sum_of_execution, ecu_id);
+                        worst_case_busy_period_analysis(job_queue, busy_period_start_point, sum_of_execution, ecu_id); // Outputs sum of exec
                         current_time_point += sum_of_execution;
                         is_idle = true;
                     }  
@@ -234,6 +250,7 @@ void ScheduleSimulator::simulate_scheduling_on_real(double global_hyper_period_s
     }
 }
 
+// Outputs end
 void ScheduleSimulator::best_case_busy_period_analysis(std::vector<std::shared_ptr<Job>>& job_queue, int start, int& end, int ecu_id) 
 {
     std::sort(job_queue.begin(), job_queue.end(), utils::compare);
@@ -246,11 +263,12 @@ void ScheduleSimulator::best_case_busy_period_analysis(std::vector<std::shared_p
         bool is_idle = true;
         bool is_higher_job = false;
 
-        for(auto job : vectors::job_vectors_for_each_ECU.at(ecu_id))
+        for(auto job : job_queue)
         {
             if(job->get_is_started())
             {
                 is_idle = false;
+                break;
             }
         }
 
@@ -262,7 +280,8 @@ void ScheduleSimulator::best_case_busy_period_analysis(std::vector<std::shared_p
             last_start = job_queue.back()->get_est();
         }
         
-        if(job_queue.back()->get_is_preempted())
+        // Is this possible?
+        if(job_queue.back()->get_is_preempted()) // Can only happen if we just finished a higher prio job that is no longer in job queue that preempted this guy.
         {
             job_queue.back()->set_is_preempted(false);
             job_queue.back()->set_is_resumed(true);
@@ -270,7 +289,7 @@ void ScheduleSimulator::best_case_busy_period_analysis(std::vector<std::shared_p
         }
         else
         {
-            last_execution_time = job_queue.back()->get_bcet(); 
+            last_execution_time = job_queue.back()->get_bcet();
             end += last_execution_time;
         }
     

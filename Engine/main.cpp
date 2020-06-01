@@ -43,9 +43,6 @@
 */
 int main(int argc, char *argv[])
 {
-    std::cout << "hello";
-    int asd;
-    std::cin >> asd;
     signal(SIGINT, utils::exit_simulation);  
     /** [Initialization with Specification]
      *  To run simulator, 

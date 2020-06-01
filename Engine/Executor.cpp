@@ -87,7 +87,7 @@ void Executor::run_simulation(double start_time)
             {
                 if(job->get_is_read())
                 {
-                    if(utils::current_time < job->get_release_time())
+                    if(utils::current_time < job->get_release_time()) // FIX RELEASE TIME TO ACCOUNT FOR SIMULATOR PERFORMANCE
                     {
                         continue;
                     }
@@ -110,23 +110,34 @@ void Executor::run_simulation(double start_time)
 
         if(is_idle && simulation_ready_queue.empty())
         {
-            utils::current_time += 0.1;
+            double smallest = INT64_MAX;
+            for(auto job : vectors::job_vector_of_simulator)
+            {
+                if(job->get_release_time() < utils::current_time) continue; // Skip..This job is already started and finished..Not relevant.
+                if(job->get_release_time() < smallest)
+                    smallest = job->get_release_time();
+            }
+            if(smallest == INT64_MAX) // There are no jobs left, skip to end of HP.
+            {
+                utils::current_time = end_time;
+            }
+            else utils::current_time = smallest;
+            //utils::current_time += 0.1;
         }
         else
         {
             std::shared_ptr<Job> run_job = simulation_ready_queue.front();
-            int task_id = run_job->get_task_id();
-            int job_id = run_job->get_job_id();
-
+            
             for(auto job : simulation_ready_queue)
             {
                 if(job->get_simulated_deadline() < run_job->get_simulated_deadline())
                 {
                     run_job = job;
-                    task_id = run_job->get_task_id();
-                    job_id = run_job->get_job_id();
                 }
             }
+
+            int task_id = run_job->get_task_id();
+            int job_id = run_job->get_job_id();
 
             /**
              * If, this is a real mode simulator, use actual function code of task
@@ -152,6 +163,7 @@ void Executor::run_simulation(double start_time)
                     }
                 }
             }
+
             if(run_job->get_det_successors().size() != 0 || run_job->get_non_det_successors().size() != 0)
             {
                 for(auto job : vectors::job_vector_of_simulator)
@@ -207,7 +219,7 @@ void Executor::reschedule_all_jobs_in_this_HP()
 
     for(auto job : vectors::job_vector_of_simulator)
     {
-        job->set_is_simulated(false);
+        job->set_is_simulated(false); // is_simulated true means is finished in sim.
         job->set_is_released(false);
         std::vector<std::shared_ptr<Job>> det_predecessors;
         std::vector<std::shared_ptr<Job>> det_successors;
@@ -229,7 +241,10 @@ void Executor::reschedule_all_jobs_in_this_HP()
                 for(auto job_set : job->get_job_set_start_det())
                 {
                     if((job_set->get_task_id() == job_p->get_task_id()) && (job_set->get_job_id()==job_p->get_job_id()))
+                    {
                         det_predecessors.push_back(job_p);
+
+                    }
                 }
                 for(auto job_set : job->get_job_set_start_non_det())
                 {
@@ -325,7 +340,7 @@ void Executor::reschedule_all_jobs_in_this_HP()
 void Executor::random_execution_time_generator()
 {
     // s == seed...
-    srand((unsigned int)time(NULL));
+    srand((unsigned int)time(NULL)); // only ever seed once, not in func that is executed many times
     for(auto job : vectors::job_vector_of_simulator)
     {
         job->set_actual_execution_time((rand() % (job->get_wcet()-job->get_bcet()+1) + job->get_bcet()));
@@ -358,14 +373,13 @@ int Executor::find_minimum_of_det_successor(std::shared_ptr<Job> job)
 
 void Executor::update_jobset(std::shared_ptr<Job> simulated_job, std::shared_ptr<Job> succ_job)
 {
-    std::vector<std::shared_ptr<Job>> updated_jobset_det;
-    std::vector<std::shared_ptr<Job>> updated_jobset_non_det;
+    // These vars are for succ_job.
+    std::vector<std::shared_ptr<Job>> updated_jobset_det; // Deterministic predecessors of succ_job
+    std::vector<std::shared_ptr<Job>> updated_jobset_non_det; // Non-deterministic predeccessors of succ_job
     for (auto job : succ_job->get_det_prdecessors())
     {
-        if((simulated_job->get_task_id()==job->get_task_id()) && (simulated_job->get_job_id() == job->get_job_id()))   
-        {
-            continue;
-        }     
+        if(job->get_is_simulated()) continue;
+        if(simulated_job == job) continue;
         else
         {
             updated_jobset_det.push_back(job);
@@ -373,10 +387,8 @@ void Executor::update_jobset(std::shared_ptr<Job> simulated_job, std::shared_ptr
     }
     for (auto job : succ_job->get_non_det_prdecessors())
     {
-        if((simulated_job->get_task_id()==job->get_task_id()) && (simulated_job->get_job_id() == job->get_job_id()))   
-        {
-            continue;
-        }     
+        if(job->get_is_simulated()) continue;
+        if(simulated_job == job) continue;
         else
         {
             updated_jobset_non_det.push_back(job);

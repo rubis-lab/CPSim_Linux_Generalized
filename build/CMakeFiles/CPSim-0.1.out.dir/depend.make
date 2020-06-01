@@ -9,6 +9,7 @@ CMakeFiles/CPSim-0.1.out.dir/Engine/ECU.cpp.o: ../Engine/ECU.cpp
 CMakeFiles/CPSim-0.1.out.dir/Engine/ECU.cpp.o: ../Engine/ECU.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/ECU.cpp.o: ../Engine/Job.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/ECU.cpp.o: ../Engine/Logger.h
+CMakeFiles/CPSim-0.1.out.dir/Engine/ECU.cpp.o: ../Engine/PriorityPolicy.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/ECU.cpp.o: ../Engine/Task.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/ECU.cpp.o: ../Engine/Utils.h
 
@@ -18,6 +19,7 @@ CMakeFiles/CPSim-0.1.out.dir/Engine/Executor.cpp.o: ../Engine/Executor.cpp
 CMakeFiles/CPSim-0.1.out.dir/Engine/Executor.cpp.o: ../Engine/Executor.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/Executor.cpp.o: ../Engine/Job.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/Executor.cpp.o: ../Engine/Logger.h
+CMakeFiles/CPSim-0.1.out.dir/Engine/Executor.cpp.o: ../Engine/PriorityPolicy.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/Executor.cpp.o: ../Engine/Task.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/Executor.cpp.o: ../Engine/Utils.h
 
@@ -27,6 +29,7 @@ CMakeFiles/CPSim-0.1.out.dir/Engine/Initializer.cpp.o: ../Engine/Initializer.cpp
 CMakeFiles/CPSim-0.1.out.dir/Engine/Initializer.cpp.o: ../Engine/Initializer.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/Initializer.cpp.o: ../Engine/Job.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/Initializer.cpp.o: ../Engine/Logger.h
+CMakeFiles/CPSim-0.1.out.dir/Engine/Initializer.cpp.o: ../Engine/PriorityPolicy.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/Initializer.cpp.o: ../Engine/Specifier.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/Initializer.cpp.o: ../Engine/Task.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/Initializer.cpp.o: ../Engine/Utils.h
@@ -34,12 +37,14 @@ CMakeFiles/CPSim-0.1.out.dir/Engine/Initializer.cpp.o: ../Engine/Utils.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/Job.cpp.o: ../Engine/ECU.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/Job.cpp.o: ../Engine/Job.cpp
 CMakeFiles/CPSim-0.1.out.dir/Engine/Job.cpp.o: ../Engine/Job.h
+CMakeFiles/CPSim-0.1.out.dir/Engine/Job.cpp.o: ../Engine/PriorityPolicy.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/Job.cpp.o: ../Engine/Task.h
 
 CMakeFiles/CPSim-0.1.out.dir/Engine/JobNode.cpp.o: ../Engine/ECU.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/JobNode.cpp.o: ../Engine/Job.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/JobNode.cpp.o: ../Engine/JobNode.cpp
 CMakeFiles/CPSim-0.1.out.dir/Engine/JobNode.cpp.o: ../Engine/JobNode.h
+CMakeFiles/CPSim-0.1.out.dir/Engine/JobNode.cpp.o: ../Engine/PriorityPolicy.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/JobNode.cpp.o: ../Engine/Task.h
 
 CMakeFiles/CPSim-0.1.out.dir/Engine/Logger.cpp.o: ../Engine/Logger.cpp
@@ -55,6 +60,7 @@ CMakeFiles/CPSim-0.1.out.dir/Engine/OfflineGuider.cpp.o: ../Engine/JobNode.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/OfflineGuider.cpp.o: ../Engine/Logger.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/OfflineGuider.cpp.o: ../Engine/OfflineGuider.cpp
 CMakeFiles/CPSim-0.1.out.dir/Engine/OfflineGuider.cpp.o: ../Engine/OfflineGuider.h
+CMakeFiles/CPSim-0.1.out.dir/Engine/OfflineGuider.cpp.o: ../Engine/PriorityPolicy.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/OfflineGuider.cpp.o: ../Engine/Task.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/OfflineGuider.cpp.o: ../Engine/Utils.h
 
@@ -68,6 +74,7 @@ CMakeFiles/CPSim-0.1.out.dir/Engine/ScheduleSimulator.cpp.o: ../Engine/CAN_messa
 CMakeFiles/CPSim-0.1.out.dir/Engine/ScheduleSimulator.cpp.o: ../Engine/ECU.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/ScheduleSimulator.cpp.o: ../Engine/Job.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/ScheduleSimulator.cpp.o: ../Engine/Logger.h
+CMakeFiles/CPSim-0.1.out.dir/Engine/ScheduleSimulator.cpp.o: ../Engine/PriorityPolicy.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/ScheduleSimulator.cpp.o: ../Engine/ScheduleSimulator.cpp
 CMakeFiles/CPSim-0.1.out.dir/Engine/ScheduleSimulator.cpp.o: ../Engine/ScheduleSimulator.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/ScheduleSimulator.cpp.o: ../Engine/Task.h
@@ -77,6 +84,7 @@ CMakeFiles/CPSim-0.1.out.dir/Engine/Specifier.cpp.o: ../Engine/CAN_message.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/Specifier.cpp.o: ../Engine/ECU.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/Specifier.cpp.o: ../Engine/Job.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/Specifier.cpp.o: ../Engine/Logger.h
+CMakeFiles/CPSim-0.1.out.dir/Engine/Specifier.cpp.o: ../Engine/PriorityPolicy.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/Specifier.cpp.o: ../Engine/Specifier.cpp
 CMakeFiles/CPSim-0.1.out.dir/Engine/Specifier.cpp.o: ../Engine/Specifier.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/Specifier.cpp.o: ../Engine/Task.h
@@ -86,6 +94,7 @@ CMakeFiles/CPSim-0.1.out.dir/Engine/Task.cpp.o: ../Engine/CAN_message.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/Task.cpp.o: ../Engine/ECU.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/Task.cpp.o: ../Engine/Job.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/Task.cpp.o: ../Engine/Logger.h
+CMakeFiles/CPSim-0.1.out.dir/Engine/Task.cpp.o: ../Engine/PriorityPolicy.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/Task.cpp.o: ../Engine/Task.cpp
 CMakeFiles/CPSim-0.1.out.dir/Engine/Task.cpp.o: ../Engine/Task.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/Task.cpp.o: ../Engine/Utils.h
@@ -94,6 +103,7 @@ CMakeFiles/CPSim-0.1.out.dir/Engine/Utils.cpp.o: ../Engine/CAN_message.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/Utils.cpp.o: ../Engine/ECU.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/Utils.cpp.o: ../Engine/Job.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/Utils.cpp.o: ../Engine/Logger.h
+CMakeFiles/CPSim-0.1.out.dir/Engine/Utils.cpp.o: ../Engine/PriorityPolicy.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/Utils.cpp.o: ../Engine/Task.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/Utils.cpp.o: ../Engine/Utils.cpp
 CMakeFiles/CPSim-0.1.out.dir/Engine/Utils.cpp.o: ../Engine/Utils.h
@@ -105,6 +115,7 @@ CMakeFiles/CPSim-0.1.out.dir/Engine/main.cpp.o: ../Engine/Initializer.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/main.cpp.o: ../Engine/Job.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/main.cpp.o: ../Engine/Logger.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/main.cpp.o: ../Engine/OfflineGuider.h
+CMakeFiles/CPSim-0.1.out.dir/Engine/main.cpp.o: ../Engine/PriorityPolicy.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/main.cpp.o: ../Engine/ScheduleSimulator.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/main.cpp.o: ../Engine/Specifier.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/main.cpp.o: ../Engine/Task.h

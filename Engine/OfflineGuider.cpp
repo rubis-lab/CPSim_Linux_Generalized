@@ -96,7 +96,7 @@ void OfflineGuider::construct_job_precedence_graph()
                     job_set_start_det = make_job_set_start_det(ecu_id, job);
                     job->set_job_set_start_det(job_set_start_det);      
 
-                    job_set_start_non_det = make_job_set_start_non_det(ecu_id, job);;
+                    job_set_start_non_det = make_job_set_start_non_det(ecu_id, job);
                     job->set_job_set_start_non_det(job_set_start_non_det);
                 }
             }
