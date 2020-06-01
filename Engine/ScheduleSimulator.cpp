@@ -236,7 +236,7 @@ void ScheduleSimulator::simulate_scheduling_on_real(double global_hyper_period_s
                     busy_period_analysis(job_queue, busy_period_start_point, sum_of_execution, ecu_id, !is_best);
                     current_time_point += sum_of_execution;
                     is_idle = true;
-                }       
+                }
             }
             is_best = !is_best;
         }

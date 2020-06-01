@@ -333,9 +333,31 @@ std::vector<std::shared_ptr<Task>> Task::get_consumers()
 {
     return m_consumers;
 }
+
+bool Task::get_is_gpu_init()
+{
+    return m_is_gpu_init;
+}
+
+bool Task::get_is_gpu_sync()
+{
+    return m_is_gpu_sync;
+}
+
 /**
  * Setter member functions
  */
+
+void Task::set_is_gpu_init(bool is_init)
+{
+    this->m_is_gpu_init = is_init;
+}
+
+void Task::set_is_gpu_sync(bool is_sync)
+{
+    this->m_is_gpu_sync = is_sync;
+}
+
 void Task::set_task_name(std::string task_name)
 {
     m_task_name = task_name;

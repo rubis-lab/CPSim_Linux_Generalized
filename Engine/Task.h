@@ -39,6 +39,8 @@ private:
 	int m_priority;
 	bool m_is_read;
 	bool m_is_write;
+	bool m_is_gpu_init;
+	bool m_is_gpu_sync;
 	std::shared_ptr<ECU> m_ecu;
 	std::vector<std::string> m_producers_info;
 	std::vector<std::string> m_consumers_info;
@@ -71,6 +73,8 @@ public:
 	int get_priority();
 	bool get_is_read();
 	bool get_is_write();
+	bool get_is_gpu_init();
+	bool get_is_gpu_sync();
 	PriorityPolicy get_priority_policy();
 
 	std::vector<std::shared_ptr<Task>> get_producers();
@@ -89,6 +93,8 @@ public:
 	void set_offset(int offset);
 	void set_is_read(bool is_read);
 	void set_is_write(bool is_write);
+	void set_is_gpu_init(bool is_init);
+	void set_is_gpu_sync(bool is_sync);
 
 	void set_producers(std::vector<std::shared_ptr<Task>> producers);
 	void set_consumers(std::vector<std::shared_ptr<Task>> consumers);
