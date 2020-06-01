@@ -34,9 +34,7 @@ public:
      */
     
     void simulate_scheduling_on_real(double);
-    void best_case_busy_period_analysis(std::vector<std::shared_ptr<Job>>&, int, int&, int);
-    void worst_case_busy_period_analysis(std::vector<std::shared_ptr<Job>>&, int, int&, int);
-
+    void busy_period_analysis(std::vector<std::shared_ptr<Job>>& job_queue, int start, int& end, int ecu_id, bool setWorstCase)
 };
 
 #endif
