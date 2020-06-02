@@ -59,6 +59,7 @@
         "typeinfo": "cpp",
         "condition_variable": "cpp",
         "set": "cpp",
-        "mutex": "cpp"
+        "mutex": "cpp",
+        "random": "cpp"
     }
 }

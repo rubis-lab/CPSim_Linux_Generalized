@@ -36,6 +36,7 @@ namespace utils
     inline int number_of_tasks = 0;
     inline int simulatorPC_performance = 3000;
     inline unsigned int ecu_counter = 0;
+    inline bool is_experimental = true;
     
 
     int greatest_common_divider(int a, int b);

@@ -16,9 +16,10 @@
 class ECU
 {
 private:
-    int _performance;
-    std::string _scheduling_policy;
-    int _ecu_id;
+    std::string m_scheduling_policy;
+    int m_performance;
+    int m_ecu_id;
+    int m_num_of_task;
 public:
     /**
      * Constructors and Destructors
@@ -32,13 +33,15 @@ public:
      */
     int get_ECU_id();
     int get_performance();
+    int get_num_of_task();
     std::string get_scheduling_policy();
 
     /**
      * Setter member functions
      */
-    void set_ECU_id();
-    void set_performance();
-    void set_scheduling_policy();
+    void set_ECU_id(int);
+    void set_performance(int);
+    void set_num_of_task(int);
+    void set_scheduling_policy(std::string);
 };
 #endif

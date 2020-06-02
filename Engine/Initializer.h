@@ -33,6 +33,10 @@ public:
     int can_interface_initalizer(int num_channel);
     int parsing_specificated_information();
     
+    void random_task_generator(double, double, int); // this function is for experiments.
+    void random_ecu_generator(int); // this function is for experiments.
+    void random_producer_consumer_generator();
+
     void set_simulatorPC_performance();
     void initialize(std::string location);
 };

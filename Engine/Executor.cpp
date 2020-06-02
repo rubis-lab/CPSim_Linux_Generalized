@@ -340,7 +340,7 @@ void Executor::reschedule_all_jobs_in_this_HP()
 void Executor::random_execution_time_generator()
 {
     // s == seed...
-    srand((unsigned int)time(NULL)); // only ever seed once, not in func that is executed many times
+    
     for(auto job : vectors::job_vector_of_simulator)
     {
         job->set_actual_execution_time((rand() % (job->get_wcet()-job->get_bcet()+1) + job->get_bcet()));

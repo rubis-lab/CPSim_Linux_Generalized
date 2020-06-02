@@ -333,6 +333,14 @@ std::vector<std::shared_ptr<Task>> Task::get_consumers()
 {
     return m_consumers;
 }
+std::vector<std::string> Task::get_producers_info()
+{
+    return m_producers_info;
+}
+std::vector<std::string> Task::get_consumers_info()
+{
+    return m_consumers_info;
+}
 /**
  * Setter member functions
  */
@@ -386,6 +394,14 @@ void Task::set_consumers(std::vector<std::shared_ptr<Task>> consumers)
 {
     m_consumers = consumers;
 }
+void Task::set_producers_info(std::vector<std::string> producers_info)
+{
+    m_producers_info = producers_info;
+}
+void Task::set_consumers_info(std::vector<std::string> consumers_info)
+{
+    m_consumers_info = consumers_info;
+}
 void Task::set_ECU(std::shared_ptr<ECU> ecu)
 {
     m_ecu = ecu;
@@ -393,6 +409,7 @@ void Task::set_ECU(std::shared_ptr<ECU> ecu)
 
 void Task::synchronize_producer_consumer_relation()
 {
+    
     if(m_producers_info.size() != 0)
         for(auto producer : m_producers_info)
         {
@@ -411,9 +428,39 @@ void Task::synchronize_producer_consumer_relation()
             for(auto task : vectors::task_vector)
             {
                 if(task->get_task_name() == consumer)
-                {
-                    m_consumers.push_back(task); 
+                {       
+                    m_consumers.push_back(task);
+                    break; 
                 }
             }
         }
+}
+
+void Task::add_task_to_consumers(std::shared_ptr<Task> task)
+{
+    bool is_overlapped = false;
+    for(auto consumer : m_consumers)
+    {
+        if(consumer == task)
+        {
+            is_overlapped = true;
+            break;
+        }
+    }
+    if(is_overlapped == false)
+        m_consumers.push_back(task);
+}
+void Task::add_task_to_producers(std::shared_ptr<Task> task)
+{
+    bool is_overlapped = false;
+    for(auto producer : m_producers)
+    {
+        if(producer == task)
+        {
+            is_overlapped = true;
+            break;
+        }
+    }
+    if(is_overlapped == false)
+        m_producers.push_back(task);
 }

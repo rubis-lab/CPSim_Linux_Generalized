@@ -75,6 +75,8 @@ public:
 
 	std::vector<std::shared_ptr<Task>> get_producers();
 	std::vector<std::shared_ptr<Task>> get_consumers();
+	std::vector<std::string> get_producers_info();
+	std::vector<std::string> get_consumers_info();
 	std::shared_ptr<ECU> get_ECU();
     /**
      * Setter member functions
@@ -90,11 +92,15 @@ public:
 	void set_is_read(bool is_read);
 	void set_is_write(bool is_write);
 
-	void set_producers(std::vector<std::shared_ptr<Task>> producers);
-	void set_consumers(std::vector<std::shared_ptr<Task>> consumers);
-	void set_ECU(std::shared_ptr<ECU> ecu);
+	void set_producers(std::vector<std::shared_ptr<Task>>);
+	void set_consumers(std::vector<std::shared_ptr<Task>>);
+	void set_producers_info(std::vector<std::string>);
+	void set_consumers_info(std::vector<std::string>);
+	void set_ECU(std::shared_ptr<ECU>);
 	void set_priority(int);
-
+	
+	void add_task_to_consumers(std::shared_ptr<Task>);
+	void add_task_to_producers(std::shared_ptr<Task>);
 	void synchronize_producer_consumer_relation();
 };
 

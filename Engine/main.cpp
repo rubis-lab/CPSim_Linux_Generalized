@@ -24,6 +24,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <dlfcn.h>
+#include <random>
 
 /**
     Header file lists.. in our simulator
@@ -43,6 +44,7 @@
 */
 int main(int argc, char *argv[])
 {
+    srand((unsigned int)time(NULL)); // only ever seed once, not in func that is executed many times
     signal(SIGINT, utils::exit_simulation);  
     /** [Initialization with Specification]
      *  To run simulator, 
@@ -64,7 +66,7 @@ int main(int argc, char *argv[])
     Executor executor;
 
     int i = 0;
-    while(1)
+    while(0)
     {
         std::cout << i++ << "th Hyper_period" << std::endl;
         /** [Generation of Real-Cyber System's Scheduling]

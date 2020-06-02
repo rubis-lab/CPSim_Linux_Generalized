@@ -46,9 +46,10 @@ ECU::ECU()
  */
 ECU::ECU(int performance, std::string scheduling_policy)
 {
-    _performance = performance;
-    _scheduling_policy = scheduling_policy;
-    _ecu_id = vectors::ecu_vector.size();
+    m_performance = performance;
+    m_scheduling_policy = scheduling_policy;
+    m_ecu_id = vectors::ecu_vector.size();
+    m_num_of_task = 0;
 }
 
 /**
@@ -86,7 +87,7 @@ ECU::~ECU()
  */
 int ECU::get_ECU_id()
 {
-    return _ecu_id;
+    return m_ecu_id;
 }
 
 /**
@@ -104,7 +105,12 @@ int ECU::get_ECU_id()
  */
 int ECU::get_performance()
 {
-    return _performance;
+    return m_performance;
+}
+
+int ECU::get_num_of_task()
+{
+    return m_num_of_task;
 }
 
 /**
@@ -122,5 +128,10 @@ int ECU::get_performance()
  */
 std::string ECU::get_scheduling_policy()
 {
-    return _scheduling_policy;
+    return m_scheduling_policy;
+}
+
+void ECU::set_num_of_task(int num)
+{
+    m_num_of_task = num;
 }
