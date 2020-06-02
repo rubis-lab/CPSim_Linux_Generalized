@@ -178,18 +178,82 @@ void ScheduleSimulator::simulate_scheduling_on_real(double global_hyper_period_s
         for (auto job : vectors::job_vectors_for_each_ECU.at(ecu_id))
         {
             if (job->get_is_gpu_init()) initJobs.push_back(job);
-            if (job->get_is_gpu_sync()) syncJobs.push_back(job);
+            else if (job->get_is_gpu_sync()) syncJobs.push_back(job);
+            else continue;
+            job->set_is_started(false);
+            job->set_is_finished(false);
+            job->set_is_preempted(false);
+            job->set_is_resumed(false);
         }
+
+        int current_time_point = global_hyper_period_start_point;
+        bool existsUnfinished = false;
+        std::shared_ptr<Job> last_init = nullptr;
+        bool last_job_was_init = false;
+        do
+        {
+            std::shared_ptr<Job> running_job;
+            if (last_job_was_init)
+            {
+                // Find the corresponding sync job.
+                for(auto job : syncJobs)
+                    if (job->get_task_id() == last_init->get_task_id() && job->get_job_id() == last_init->get_job_id())
+                    {
+                        running_job = job; // We found the matching sync job for the last init job.
+                        last_job_was_init = false;
+                        break;
+                    }
+            }
+            else
+            {
+                
+                for (auto job : initJobs)
+                {
+                    if (job->get_is_finished()) continue;
+                    if (running_job == nullptr) // running_job will always be nullptr in first iteration.
+                    {
+                        running_job = job;
+                        last_init = job;
+                    }
+                    else
+                    {
+                        if (running_job->get_priority() > job->get_priority())
+                        {
+                            running_job = job;
+                            last_init = job;
+                        }
+                    }
+                }
+            }
+            // Running job now contains the job we want to run.
+            running_job->set_is_released(true);
+            running_job->set_bpet(0);
+            running_job->set_wpet(0);
+            running_job->set_est(current_time_point);
+            running_job->set_lst(current_time_point);
+            running_job->set_wcbp({current_time_point, current_time_point + running_job->get_wcet()});
+
+            current_time_point += running_job->get_wcet();
+            running_job->set_is_finished(true);
+
+            running_job = nullptr;
+            // Check if we should continue looping.
+            existsUnfinished = false;
+            for (auto job : initJobs)
+                if (!job->get_is_finished())
+                {
+                    existsUnfinished = true;
+                    break;
+                }
+            if (!existsUnfinished)
+                for (auto job : syncJobs)
+                    if (!job->get_is_finished())
+                    {
+                        existsUnfinished = true;
+                        break;
+                    }
+        } while (existsUnfinished);
     }
-    
-    
-    // CHANGE RELEASE TIME TO NOT AFFECT EACHOTHER EVER...
-
-
-
-
-    // MAKE ALL GPU JOBS HAVE SAME PRIORITY TO PREVENT PREEMPTION FROM BELOW CODE...
-
 
     // Effectively, the result of this function is:
     // set_is_released(true)
