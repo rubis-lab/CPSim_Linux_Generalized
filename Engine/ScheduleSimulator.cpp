@@ -171,8 +171,16 @@ void ScheduleSimulator::simulate_scheduling_on_real(double global_hyper_period_s
 
     // ACCOUNT FOR GPU JOBS.
     // Schedule GPU JOBS.
-    
-    
+    for (int ecu_id = 0; ecu_id < vectors::job_vectors_for_each_ECU)
+    {
+        std::vector<std::shared_ptr<Job>> initJobs;
+        std::vector<std::shared_ptr<Job>> syncJobs;
+        for (auto job : vectors::job_vectors_for_each_ECU.at(ecu_id))
+        {
+            if (job->get_is_gpu_init()) initJobs.push_back(job);
+            if (job->get_is_gpu_sync()) syncJobs.push_back(job);
+        }
+    }
     
     
     // CHANGE RELEASE TIME TO NOT AFFECT EACHOTHER EVER...
@@ -183,6 +191,13 @@ void ScheduleSimulator::simulate_scheduling_on_real(double global_hyper_period_s
     // MAKE ALL GPU JOBS HAVE SAME PRIORITY TO PREVENT PREEMPTION FROM BELOW CODE...
 
 
+    // Effectively, the result of this function is:
+    // set_is_released(true)
+    // bpet
+    // wpet
+    // est
+    // lst
+    // wcbp
     /**
      * Generate schedule each ECUs
      */
