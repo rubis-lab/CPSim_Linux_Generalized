@@ -281,16 +281,16 @@ void Job::set_wpet(int wpet)
 {
     m_wpet = wpet;
 }
-void Job::set_release_time(int release_time)
+void Job::set_actual_release_time(int release_time)
 {
-    m_release_time = release_time;
+    m_actual_release_time = release_time;
 }
 
-void Job::set_absolute_deadline(int a_deadline)
+void Job::set_actual_deadline(int a_deadline)
 {
-    m_absolute_deadline = a_deadline;
+    m_actual_deadline = a_deadline;
 }
-void Job::set_simulated_deadline(int s_deadline)
+void Job::set_simulated_deadline(double s_deadline)
 {
     m_simulated_deadline = s_deadline;
 }
@@ -306,11 +306,11 @@ void Job::set_actual_execution_time(int original_execution_time)
 {
     m_actual_execution_time = original_execution_time;
 }
-void Job::set_simulated_start_time(int simulated_start_time)
+void Job::set_simulated_start_time(double simulated_start_time)
 {
     m_simulated_start_time = simulated_start_time;
 }
-void Job::set_simulated_finish_time(int simulated_finish_time)
+void Job::set_simulated_finish_time(double simulated_finish_time)
 {
     m_simulated_finish_time = simulated_finish_time;
 }

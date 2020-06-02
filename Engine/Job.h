@@ -36,21 +36,24 @@ private:
     bool m_is_simulated;
 
     int m_job_id;
-    int m_release_time;
-    int m_absolute_deadline;
-    int m_simulated_deadline;
+    int m_actual_release_time;
+    int m_actual_deadline;
+    int m_actual_execution_time;
+    int m_actual_start_time;
+    int m_actual_finish_time;
+
+    double m_simulated_release_time;
+    double m_simulated_deadline;
+    double m_simulated_execution_time;
+    double m_simulated_start_time;
+    double m_simulated_finish_time;
+
     int m_est;
     int m_lst;
     int m_eft;
     int m_lft;
     int m_bpet;
     int m_wpet;
-    int m_actual_execution_time;
-    double m_simulated_execution_time;
-    int m_actual_start_time;
-    int m_simulated_start_time;
-    int m_actual_finish_time;
-    int m_simulated_finish_time;
 
     std::array<int, 2> m_worst_case_busy_period;
     
@@ -84,21 +87,24 @@ public:
     bool get_is_simulated();
 
     int get_job_id();
-    int get_release_time();
-    int get_absolute_deadline();
-    int get_simulated_deadline();
+    int get_actual_release_time();
+    int get_actual_deadline();
+    int get_actual_start_time();
+    int get_actual_finish_time();
+    int get_actual_execution_time();
+
+    double get_simulated_release_time();
+    double get_simulated_deadline();
+    double get_simulated_start_time();
+    double get_simulated_finish_time();
+    double get_simulated_execution_time();
+
     int get_est();
     int get_lst();
     int get_eft();
     int get_lft();
     int get_bpet();
     int get_wpet();    
-    int get_actual_start_time();
-    int get_actual_finish_time();
-    int get_actual_execution_time();
-    int get_simulated_start_time();
-    int get_simulated_finish_time();
-    double get_simulated_execution_time();
 
     std::array<int, 2>& get_wcbp();
     
@@ -122,21 +128,25 @@ public:
     void set_is_simulated(bool);
     
     void set_job_id(int);
-    void set_release_time(int);
-    void set_absolute_deadline(int);
-    void set_simulated_deadline(int);
+    void set_actual_release_time(int);
+    void set_actual_deadline(int);
+    void set_actual_start_time(int);
+    void set_actual_finish_time(int);
+    void set_actual_execution_time(int);
+
+    void set_simulated_release_time(double);
+    void set_simulated_deadline(double);
+    void set_simulated_start_time(double);
+    void set_simulated_finish_time(double);
+    void set_simulated_execution_time(double);
+    
     void set_est(int);
     void set_lst(int);
     void set_eft(int);
     void set_lft(int);
     void set_bpet(int);
     void set_wpet(int);
-    void set_actual_start_time(int);
-    void set_actual_finish_time(int);
-    void set_actual_execution_time(int);
-    void set_simulated_start_time(int);
-    void set_simulated_finish_time(int);
-    void set_simulated_execution_time(double);
+    
     void set_wcbp(std::array<int, 2>&);
     void set_job_set_start_det(std::vector<std::shared_ptr<Job>>&);
     void set_job_set_start_non_det(std::vector<std::shared_ptr<Job>>&);
