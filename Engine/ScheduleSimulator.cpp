@@ -106,7 +106,7 @@ void ScheduleSimulator::simulate_scheduling_on_real(double global_hyper_period_s
      for(int ecu_id = 0; ecu_id < vectors::job_vectors_for_each_ECU.size(); ecu_id++)
      {
          for(auto job : vectors::job_vectors_for_each_ECU.at(ecu_id))
-             std::cout << "J"<<job.get()->get_task_id()<< job.get()->get_job_id()<<"'s release time is" <<job.get()->get_release_time()<<std::endl;
+             std::cout << "J"<<job.get()->get_task_id()<< job.get()->get_job_id()<<"'s release time is" <<job.get()->get_actual_release_time()<<std::endl;
  
          std::cout << std::endl;
      }
@@ -219,7 +219,7 @@ void ScheduleSimulator::simulate_scheduling_on_real(double global_hyper_period_s
                 for(auto job : vectors::job_vectors_for_each_ECU.at(ecu_id))
                 {
                     if(job->get_priority_policy() != PriorityPolicy::CPU) continue; // Only account for CPU jobs, maintain backwards compatability.
-                    if((!job->get_is_finished()) && (job->get_release_time() <= current_time_point))
+                    if((!job->get_is_finished()) && (job->get_actual_release_time() <= current_time_point))
                     {
                         job->set_is_released(true);
                         job_queue.push_back(job);
@@ -246,7 +246,7 @@ void ScheduleSimulator::simulate_scheduling_on_real(double global_hyper_period_s
 void ScheduleSimulator::busy_period_analysis(std::vector<std::shared_ptr<Job>>& job_queue, int start, int& end, int ecu_id, bool setWorstCase)
 {
     std::sort(job_queue.begin(), job_queue.end(), utils::compare);
-    start = job_queue.back()->get_release_time(); //set busy period start point as the highest priority job's release time.
+    start = job_queue.back()->get_actual_release_time(); //set busy period start point as the highest priority job's release time.
     int last_start = 0;
     int last_execution_time = 0;
 
@@ -301,7 +301,7 @@ void ScheduleSimulator::busy_period_analysis(std::vector<std::shared_ptr<Job>>& 
 
         for (auto job : vectors::job_vectors_for_each_ECU.at(ecu_id))
         {
-            if ((start <= job->get_release_time()) && (job->get_release_time() < end))
+            if ((start <= job->get_actual_release_time()) && (job->get_actual_release_time() < end))
             {
                 if (job->get_is_released() == true)
                 {
@@ -313,15 +313,15 @@ void ScheduleSimulator::busy_period_analysis(std::vector<std::shared_ptr<Job>>& 
                     {
                         job_queue.back()->set_is_preempted(true);
                         if(!setWorstCase)
-                            job_queue.back()->set_bpet(job_queue.back()->get_est() + job_queue.back()->get_bcet() - job->get_release_time());
+                            job_queue.back()->set_bpet(job_queue.back()->get_est() + job_queue.back()->get_bcet() - job->get_actual_release_time());
                         else
-                            job_queue.back()->set_wpet(job_queue.back()->get_lst() + job_queue.back()->get_wcet() - job->get_release_time());
+                            job_queue.back()->set_wpet(job_queue.back()->get_lst() + job_queue.back()->get_wcet() - job->get_actual_release_time());
                         job->set_is_released(true);
                         job->set_is_started(true);
                         if (!setWorstCase)
-                            job->set_est(job->get_release_time());
+                            job->set_est(job->get_actual_release_time());
                         else
-                            job->set_lst(job->get_release_time());
+                            job->set_lst(job->get_actual_release_time());
                         job_queue.push_back(job);
                         is_higher_job = true;
                         if (!setWorstCase)
