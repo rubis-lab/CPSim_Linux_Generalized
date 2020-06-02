@@ -1,5 +1,8 @@
 #include "Job.h"
-
+#include "Utils.h"
+#include <ctime>
+#include <cstdlib>
+#include <climits>
 /** 
  *  This file is the cpp file for the Job class.
  *  @file Job.cpp
@@ -391,5 +394,37 @@ int Job::calculate_absolute_deadline(int release_time, int r_deadline)
     return release_time + r_deadline;
 }
 
-
-
+void Job::initialize_simulated_deadline()
+{
+    if(this->get_is_write())
+    {
+        m_simulated_deadline = static_cast<double>(m_eft);
+    }
+    else
+    {
+        m_simulated_deadline = INT64_MAX;
+    }
+}
+void Job::update_simulated_deadline()
+{
+    if(this->get_is_write())
+    {
+        m_simulated_deadline = static_cast<double>(m_eft);
+    }
+    else
+    {
+        m_simulated_deadline = min_simulated_deadline_det_successor();
+    }
+}
+double Job::min_simulated_deadline_det_successor()
+{
+    double min_value = INT_MAX;
+    for(auto succ : m_det_successors)
+    {
+        if(succ->get_simulated_deadline() < min_value)
+        {
+            min_value = succ->get_simulated_deadline();
+        }
+    }
+    return min_value;
+}

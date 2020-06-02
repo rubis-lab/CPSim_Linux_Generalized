@@ -70,14 +70,14 @@ int main(int argc, char *argv[])
 
     while(1)
     {
-        std::cout << i++ << "th Hyper_period" << std::endl;
+        //std::cout << i++ << "th Hyper_period" << std::endl;
         /** [Generation of Real-Cyber System's Scheduling]
          * To run simulator, 
          * second, we need to calculate all of the ECUs' behavior.
          * For this, we simulate those ECUs' job scheduling scenario with the specificated informations.
          */
         schedule_simulator_on_Real.simulate_scheduling_on_real(utils::current_time);
-
+        //std::cout << "SCHEDULE SIMULATION DONE" << std::endl;
         /** [Construction of Job Precedence Graph(Offline Guider)]
          * To run simulator, 
          * third, we need to consider those constraints(Physical Read Constraint, Physical Write Constraint, Producer-Consumer Constraint)
@@ -103,6 +103,3 @@ int main(int argc, char *argv[])
     }
     return 0;
 }
-
-/**
-*/

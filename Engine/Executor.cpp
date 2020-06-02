@@ -46,6 +46,32 @@ Executor::~Executor(){
 
 }
 
+int Executor::get_current_hyper_period_index()
+{
+    return m_current_hyper_period_index;
+}
+int Executor::get_current_hyper_period_start()
+{
+    return m_current_hyper_period_start;
+}
+int Executor::get_current_hyper_period_end()
+{
+    return m_current_hyper_period_end;
+}
+
+void Executor::set_current_hyper_period_index(int current_hyper_period_index)
+{
+    m_current_hyper_period_index = current_hyper_period_index;
+}
+void Executor::set_current_hyper_period_start(int current_hyper_period_start)
+{
+    m_current_hyper_period_start = current_hyper_period_start;
+}
+void Executor::set_current_hyper_period_end(int current_hyper_period_end)
+{
+    m_current_hyper_period_end = current_hyper_period_end;
+}
+
 /**
  * @fn void Executor::run_simulation()
  * @brief the function for running simulation engine
@@ -64,12 +90,10 @@ void Executor::run_simulation(double start_time)
 {
     double end_time = start_time + utils::hyper_period;
     move_ecus_jobs_to_simulator();
-    /**
-     * For test, we create random execution time generator.
-     */
     random_execution_time_generator();
     change_execution_time();
-    reschedule_all_jobs_in_this_HP();
+    assign_predecessors_successors();
+    std::cout << "Here" << std::endl;
     /**
      * Iterating Loop for running jobs in one HP
      */
@@ -79,10 +103,6 @@ void Executor::run_simulation(double start_time)
         bool is_idle = true;
         for (auto job : vectors::job_vector_of_simulator)
         {
-            /**
-             * For experimental
-             * 
-             */
             if((job->get_det_prdecessors().size() == 0) && ( job->get_is_simulated() == false) && (job->get_is_released() == false))
             {
                 if(job->get_is_read())
@@ -122,13 +142,18 @@ void Executor::run_simulation(double start_time)
             {
                 utils::current_time = end_time;
             }
-            else utils::current_time = smallest;
-            //utils::current_time += 0.1;
+            else 
+            {
+                utils::current_time = smallest;
+            }
         }
         else
         {
+
+            /**
+             * Choose a job to run with EDF policy (eariest deadline first)
+             */
             std::shared_ptr<Job> run_job = simulation_ready_queue.front();
-            
             for(auto job : simulation_ready_queue)
             {
                 if(job->get_simulated_deadline() < run_job->get_simulated_deadline())
@@ -137,42 +162,23 @@ void Executor::run_simulation(double start_time)
                 }
             }
 
-            int task_id = run_job->get_task_id();
-            int job_id = run_job->get_job_id();
-
             /**
              * If, this is a real mode simulator, use actual function code of task
              * Else, this is synthetic workload, so that we just add simulated execution time to current time;
              */
-            run_job->set_simulated_start_time(utils::current_time);
-            utils::current_time += run_job->get_simulated_execution_time();
-            run_job->set_simulated_finish_time(utils::current_time);
+            run_job->set_simulated_start_time(utils::current_time); 
+            run_job->set_simulated_finish_time(utils::current_time + run_job->get_simulated_execution_time());
             run_job->set_is_simulated(true);
-            std::vector<std::shared_ptr<Job>>::iterator iter =  simulation_ready_queue.begin();
-           
-            if(simulation_ready_queue.size() == 1)
+            utils::current_time += run_job->get_simulated_execution_time();
+            for(int i = 0; i < simulation_ready_queue.size(); i++)
             {
-                simulation_ready_queue.pop_back();
-            }
-            else
-            {
-                for (iter = simulation_ready_queue.begin(); iter != simulation_ready_queue.end(); ++iter)
+                if(simulation_ready_queue.at(i) == run_job)
                 {
-                    if((iter->get()->get_task_id() == task_id) && (iter->get()->get_job_id()))
-                    {
-                        simulation_ready_queue.erase(iter);
-                    }
+                    simulation_ready_queue.erase(simulation_ready_queue.begin() + i);
+                    break;
                 }
             }
-
-            if(run_job->get_det_successors().size() != 0 || run_job->get_non_det_successors().size() != 0)
-            {
-                for(auto job : vectors::job_vector_of_simulator)
-                {
-                    update_jobset(run_job, job);
-                }
-            }
-            std::cout << "job"<<run_job->get_task_id()<<run_job->get_job_id()<<" is finished" << std::endl;
+            update_all(run_job);
         }
     }
     utils::current_time = end_time;
@@ -188,33 +194,16 @@ void Executor::change_execution_time()
 }
 void Executor::assign_deadline_for_simulated_jobs()
 {
-    /*
-     * For write constrainted jobs first
-     */
     for (auto job : vectors::job_vector_of_simulator)
     {
-        if(job->get_is_write() == true)
-        {
-            job->set_simulated_deadline(job->get_eft()); 
-        }
-        else
-        {
-            job->set_simulated_deadline(job->get_simulated_release_time() + 999999);
-        }
+        job->initialize_simulated_deadline();
     }
     for (auto job : vectors::job_vector_of_simulator)
     {
-        if(job->get_is_write() == true)
-        {
-            continue;
-        }
-        else
-        {
-            job->set_simulated_deadline(find_minimum_of_det_successor(job));
-        }
+        job->update_simulated_deadline();
     }
 }
-void Executor::reschedule_all_jobs_in_this_HP()
+void Executor::assign_predecessors_successors()
 {
     std::sort(vectors::job_vector_of_simulator.begin(), vectors::job_vector_of_simulator.end(), utils::first_release);
 
@@ -337,7 +326,6 @@ void Executor::reschedule_all_jobs_in_this_HP()
   
     }
 }
-
 void Executor::random_execution_time_generator()
 {
     // s == seed...
@@ -347,31 +335,73 @@ void Executor::random_execution_time_generator()
         job->set_actual_execution_time((rand() % (job->get_wcet()-job->get_bcet()+1) + job->get_bcet()));
     }
 }
-
 void Executor::move_ecus_jobs_to_simulator()
 {
     vectors::job_vector_of_simulator.clear();
     for(int i = 0; i < vectors::job_vectors_for_each_ECU.size(); i++ )
     {
         vectors::job_vector_of_simulator.insert(vectors::job_vector_of_simulator.end(), vectors::job_vectors_for_each_ECU.at(i).begin(), vectors::job_vectors_for_each_ECU.at(i).end());
-        vectors::job_vectors_for_each_ECU.at(i).clear();
     } 
 }
 
-int Executor::find_minimum_of_det_successor(std::shared_ptr<Job> job)
+void Executor::update_all(std::shared_ptr<Job> last_simulated_job)
 {
-    int min_value = INT_MAX;
-    for(auto job_pointer : job->get_det_successors())
+    /**
+     * UPDATE THE SUCCESSORS' PREDECESSORS JOB SET
+     * Last simulated job must be removed from all job's predecessor queue;
+     */
+    if(last_simulated_job->get_det_successors().size() != 0 || last_simulated_job->get_non_det_successors().size() != 0)
     {
-        if(job_pointer->get_simulated_deadline() < min_value)
+        for(auto job : vectors::job_vector_of_simulator)
         {
-            min_value = job_pointer->get_simulated_deadline();
+            update_jobset(last_simulated_job, job);
         }
     }
-    
-    return min_value;
+    /**
+     * UPDATE EACH ECU'S SCHEDULE WITH THE CURRENT TIME (SET THEIR ACTUAL START/FINISH TIME UNTIL CURRENT TIME)
+     */
+    for(int i = 0; i < vectors::ecu_vector.size(); i++)
+    {
+        update_ecu_schedule(i);
+    }
+    /**
+     * UPDATE SIMULATED DEADLINE FOR BEING SIMULATED JOBS
+     */
+    for(int i = 0; i < vectors::job_vector_of_simulator.size(); i++)
+    {
+        update_simulated_deadlines(i);
+    }
 }
-
+void Executor::update_ecu_schedule(int ecu_id)
+{
+    /**
+     * update CPU jobs' schedule 
+     */
+    std::vector<std::shared_ptr<Job>> job_queue;
+    for(auto job : vectors::job_vectors_for_each_ECU.at(ecu_id))
+    {
+        /**
+         * IF, current time(simulated job's finish time) is passed, put them all to the job_queue 
+         */
+        if(static_cast<int>(utils::current_time) >= job->get_actual_release_time())
+        {
+            /**
+             * FIRST JOB OF ITS BUSY PERIOD IS ALWAYS  START TIME == RELEASE TIME
+             */
+            if(job->get_actual_start_time() == job->get_actual_release_time())
+            {
+                job->set_actual_finish_time(job->get_actual_start_time()+job->get_actual_execution_time());
+            }
+        }
+    }
+}
+void Executor::update_simulated_deadlines(int job_index)
+{
+    /**
+     * EVERY JOB'S SUCCESSORS CHANGED, WHENEVER A JOB IS SIMULATED, SO THAT SIMULATED DEADLINE CAN BE CHAGNED
+     */
+    vectors::job_vector_of_simulator.at(job_index)->update_simulated_deadline();
+}
 void Executor::update_jobset(std::shared_ptr<Job> simulated_job, std::shared_ptr<Job> succ_job)
 {
     // These vars are for succ_job.
@@ -398,7 +428,6 @@ void Executor::update_jobset(std::shared_ptr<Job> simulated_job, std::shared_ptr
     succ_job->set_det_predecessors(updated_jobset_det);
     succ_job->set_non_det_predecessors(updated_jobset_non_det);
 }
-
 bool Executor::check_deadline_miss()
 {
     for(auto job : vectors::job_vector_of_simulator)
@@ -411,7 +440,6 @@ bool Executor::check_deadline_miss()
 
     return true;
 }
-
 bool Executor::simulatability_analysis()
 {
     bool is_simulatable = check_deadline_miss();

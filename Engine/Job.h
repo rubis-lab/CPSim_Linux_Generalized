@@ -158,9 +158,16 @@ public:
     void set_det_successors(std::vector<std::shared_ptr<Job>>&);
     void set_non_det_predecessors(std::vector<std::shared_ptr<Job>>&);
     void set_non_det_successors(std::vector<std::shared_ptr<Job>>&);
+
+    /**
+     * SPECIFIC FUNCTIONS OF JOB CLASS
+     */
     int calculate_release_time(int, int);
     int calculate_absolute_deadline(int, int);
     std::array<int, 2> calculate_wcbp();
+    void initialize_simulated_deadline();
+    void update_simulated_deadline();
+    double min_simulated_deadline_det_successor();
 };
 
 #endif
