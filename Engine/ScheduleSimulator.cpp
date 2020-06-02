@@ -206,7 +206,7 @@ void ScheduleSimulator::simulate_scheduling_on_real(double global_hyper_period_s
             }
             else
             {
-                
+                last_job_was_init = true;
                 for (auto job : initJobs)
                 {
                     if (job->get_is_finished()) continue;
@@ -231,9 +231,14 @@ void ScheduleSimulator::simulate_scheduling_on_real(double global_hyper_period_s
             running_job->set_wpet(0);
             running_job->set_est(current_time_point);
             running_job->set_lst(current_time_point);
+            running_job->set_eft(current_time_point + running_job->get_wcet());
+            running_job->set_lft(running_job->get_eft());
             running_job->set_wcbp({current_time_point, current_time_point + running_job->get_wcet()});
 
-            current_time_point += running_job->get_wcet();
+            current_time_point += running_job->get_wcet(); // time needed to execute the init or sync portion.
+            if (last_job_was_init) // is running_job an init job?
+                current_time_point += running_job->get_gpu_wait_time(); // add the gpu time portion wait before sync can start.
+
             running_job->set_is_finished(true);
 
             running_job = nullptr;
@@ -262,6 +267,8 @@ void ScheduleSimulator::simulate_scheduling_on_real(double global_hyper_period_s
     // est
     // lst
     // wcbp
+    // eft
+    // lft
     /**
      * Generate schedule each ECUs
      */

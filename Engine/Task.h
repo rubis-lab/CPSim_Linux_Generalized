@@ -39,6 +39,8 @@ private:
 	int m_priority;
 	bool m_is_read;
 	bool m_is_write;
+
+	int m_gpu_wait_time; // TIME RESERVED FOR EXECUTION ON GPU SIDE (WCET) .... (WAIT TIME BETWEEN INIT AND SYNC.)
 	bool m_is_gpu_init;
 	bool m_is_gpu_sync;
 	std::shared_ptr<ECU> m_ecu;
@@ -71,6 +73,7 @@ public:
 	int get_bcet();
 	int get_offset();
 	int get_priority();
+	int get_gpu_wait_time();
 	bool get_is_read();
 	bool get_is_write();
 	bool get_is_gpu_init();
@@ -97,6 +100,7 @@ public:
 	void set_is_write(bool is_write);
 	void set_is_gpu_init(bool is_init);
 	void set_is_gpu_sync(bool is_sync);
+	void set_gpu_wait_time(int time);
 
 	void set_producers(std::vector<std::shared_ptr<Task>>);
 	void set_consumers(std::vector<std::shared_ptr<Task>>);

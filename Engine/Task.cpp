@@ -184,6 +184,11 @@ int Task::get_task_id()
     return m_task_id;
 }
 
+int Task::get_gpu_wait_time()
+{
+    return m_gpu_wait_time;
+}
+
 /**
  * @fn int get_period()
  * @brief Getter for task period
@@ -379,6 +384,12 @@ void Task::set_period(int period)
 {
     m_period = period;
 }
+
+void Task::set_gpu_wait_time(int time)
+{
+    m_gpu_wait_time = time;
+}
+
 void Task::set_deadline(int deadline)
 {
     m_deadline = deadline;
