@@ -399,13 +399,21 @@ void Executor::update_jobset(std::shared_ptr<Job> simulated_job, std::shared_ptr
     succ_job->set_non_det_predecessors(updated_jobset_non_det);
 }
 
-void Executor::check_deadline_miss()
+bool Executor::check_deadline_miss()
 {
     for(auto job : vectors::job_vector_of_simulator)
     {
         if(job->get_simulated_finish_time() > job->get_simulated_deadline())
         {
-
+            return false;
         } 
     }
+
+    return true;
+}
+
+bool Executor::simulatability_analysis()
+{
+    bool is_simulatable = check_deadline_miss();
+    return is_simulatable;
 }
