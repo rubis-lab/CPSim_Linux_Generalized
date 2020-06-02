@@ -166,12 +166,14 @@ void ScheduleSimulator::simulate_scheduling_on_real(double global_hyper_period_s
         }
     }
 
-
-
+    int offset = global_hyper_period_start_point;
+    std::vector<bool> freeTimeSlots;
+    freeTimeSlots.capacity(_hyper_period);
+    for (int i = 0; i < _hyper_period; i++) freeTimeSlots.push_back(true);
 
     // ACCOUNT FOR GPU JOBS.
     // Schedule GPU JOBS.
-    for (int ecu_id = 0; ecu_id < vectors::job_vectors_for_each_ECU)
+    for (int ecu_id = 0; ecu_id < vectors::job_vectors_for_each_ECU.size(); ++ecu_id)
     {
         std::vector<std::shared_ptr<Job>> initJobs;
         std::vector<std::shared_ptr<Job>> syncJobs;
@@ -187,12 +189,13 @@ void ScheduleSimulator::simulate_scheduling_on_real(double global_hyper_period_s
         }
 
         int current_time_point = global_hyper_period_start_point;
+        
         bool existsUnfinished = false;
         std::shared_ptr<Job> last_init = nullptr;
         bool last_job_was_init = false;
         do
         {
-            std::shared_ptr<Job> running_job;
+            std::shared_ptr<Job> running_job = nullptr;
             if (last_job_was_init)
             {
                 // Find the corresponding sync job.
@@ -225,6 +228,11 @@ void ScheduleSimulator::simulate_scheduling_on_real(double global_hyper_period_s
                     }
                 }
             }
+            if (running_job == nullptr)
+            {
+                std::cout << "There are no GPU Jobs." << std::endl;
+                break;
+            }
             // Running job now contains the job we want to run.
             running_job->set_is_released(true);
             running_job->set_bpet(0);
@@ -233,12 +241,19 @@ void ScheduleSimulator::simulate_scheduling_on_real(double global_hyper_period_s
             running_job->set_lst(current_time_point);
             running_job->set_eft(current_time_point + running_job->get_wcet());
             running_job->set_lft(running_job->get_eft());
-            running_job->set_wcbp({current_time_point, current_time_point + running_job->get_wcet()});
+            std::array<int, 2> wcbp{current_time_point, current_time_point + running_job->get_wcet()};
+            running_job->set_wcbp(wcbp);
+
+            int prev_time = current_time_point;
 
             current_time_point += running_job->get_wcet(); // time needed to execute the init or sync portion.
             if (last_job_was_init) // is running_job an init job?
                 current_time_point += running_job->get_gpu_wait_time(); // add the gpu time portion wait before sync can start.
 
+            for (int i = prev_time - offset; i < (current_time_point - offset); ++i)
+                freeTimeSlots[i] = false; // Mark this time slot as occupied..
+
+            running_job->set_is_started(true);
             running_job->set_is_finished(true);
 
             running_job = nullptr;
@@ -276,18 +291,32 @@ void ScheduleSimulator::simulate_scheduling_on_real(double global_hyper_period_s
     {
         bool is_idle = true;
         bool is_best = true;
-        for(int i = 0; i < 2; i++) // First BCET, then WCET.
-        {   
-            for(int ecu_id = 0; ecu_id < vectors::job_vectors_for_each_ECU.size(); ++ecu_id) 
-                for(auto job : vectors::job_vectors_for_each_ECU.at(ecu_id))
+        for (int i = 0; i < 2; i++) // First BCET, then WCET.
+        {
+            for (int ecu_id = 0; ecu_id < vectors::job_vectors_for_each_ECU.size(); ++ecu_id)
+                for (auto job : vectors::job_vectors_for_each_ECU.at(ecu_id))
                 {
+                    if (job->get_is_gpu_init() || job->get_is_gpu_sync()) continue; // Init and Syncs are already scheduled.
                     job->set_is_started(false);
                     job->set_is_finished(false);
                     job->set_is_preempted(false);
                     job->set_is_resumed(false);
                 }
-            
-            int current_time_point = global_hyper_period_start_point;
+
+            //int current_time_point = global_hyper_period_start_point;
+            int current_time_point = -1;
+            // Find first free time slot.
+            for (int i = 0; i < _hyper_period; i++)
+                if (freeTimeSlots[i])
+                {
+                    current_time_point = global_hypper_period_start_point + i;
+                    break;
+                }
+            if (current_time_point == -1)
+            {
+                std::cout << "COULD NOT FIND A TIME SLOT FOR CPU JOBS.\nEXITING FUNCTION." << std::endl;
+                return;
+            }
             int busy_period_start_point = 0;
             //check_released_jobs_at_the_time_point
             while(current_time_point < (global_hyper_period_start_point + _hyper_period))
