@@ -56,8 +56,8 @@ Job::Job(std::shared_ptr<Task> task, int job_id)
     this->set_consumers(task->get_consumers());
     
     m_job_id = job_id;
-    m_release_time = calculate_release_time(task->get_period(), task->get_offset());
-    m_absolute_deadline = calculate_absolute_deadline(m_release_time, task->get_deadline());
+    m_actual_release_time = calculate_release_time(task->get_period(), task->get_offset());
+    m_actual_deadline = calculate_absolute_deadline(m_actual_release_time, task->get_deadline());
 }
 
 /**
@@ -110,18 +110,27 @@ int Job::get_job_id()
     return m_job_id;
 }
 
-int Job::get_release_time()
+int Job::get_actual_release_time()
 {
-    return m_release_time;
+    return m_actual_release_time;
+}
+int Job::get_actual_deadline()
+{
+    return m_actual_deadline;
+}
+int Job::get_actual_start_time()
+{
+    return m_actual_start_time;
 }
 
-int Job::get_absolute_deadline()
+int Job::get_actual_finish_time()
 {
-    return m_absolute_deadline;
-}
-int Job::get_simulated_deadline()
+    return m_actual_finish_time;
+}  
+
+int Job::get_actual_execution_time()
 {
-    return m_simulated_deadline;
+    return m_actual_execution_time;
 }
 
 int Job::get_est()
@@ -151,30 +160,20 @@ int Job::get_wpet()
 {
     return m_wpet;
 }
-std::array<int, 2>& Job::get_wcbp()
-{
-    return m_worst_case_busy_period;
-}
 
-int Job::get_actual_start_time()
+double Job::get_simulated_release_time()
 {
-    return m_actual_start_time;
+    return m_simulated_release_time;
 }
-
-int Job::get_actual_finish_time()
+double Job::get_simulated_deadline()
 {
-    return m_actual_finish_time;
-}  
-
-int Job::get_actual_execution_time()
-{
-    return m_actual_execution_time;
+    return m_simulated_deadline;
 }
-int Job::get_simulated_start_time()
+double Job::get_simulated_start_time()
 {
     return m_simulated_start_time;
 }
-int Job::get_simulated_finish_time()
+double Job::get_simulated_finish_time()
 {
     return m_simulated_start_time;
 }
@@ -182,6 +181,12 @@ double Job::get_simulated_execution_time()
 {
     return m_simulated_execution_time;
 }
+
+std::array<int, 2>& Job::get_wcbp()
+{
+    return m_worst_case_busy_period;
+}
+
 
 std::vector<std::shared_ptr<Job>>& Job::get_job_set_start_det()
 {
@@ -281,19 +286,16 @@ void Job::set_wpet(int wpet)
 {
     m_wpet = wpet;
 }
+
 void Job::set_actual_release_time(int release_time)
 {
     m_actual_release_time = release_time;
 }
-
 void Job::set_actual_deadline(int a_deadline)
 {
     m_actual_deadline = a_deadline;
 }
-void Job::set_simulated_deadline(double s_deadline)
-{
-    m_simulated_deadline = s_deadline;
-}
+
 void Job::set_actual_start_time(int actual_start_time)
 {
     m_actual_start_time = actual_start_time;
@@ -305,6 +307,15 @@ void Job::set_actual_finish_time(int actual_finish_time)
 void Job::set_actual_execution_time(int original_execution_time)
 {
     m_actual_execution_time = original_execution_time;
+}
+
+void Job::set_simulated_release_time(double simulated_release_time)
+{
+    m_simulated_release_time = simulated_release_time;
+}
+void Job::set_simulated_deadline(double simulated_deadline)
+{
+    m_simulated_deadline = simulated_deadline;
 }
 void Job::set_simulated_start_time(double simulated_start_time)
 {
@@ -318,6 +329,7 @@ void Job::set_simulated_execution_time(double simulated_execution_time)
 {
     m_simulated_execution_time = simulated_execution_time;
 }
+
 
 void Job::set_wcbp(std::array<int, 2>& wcbp)
 {

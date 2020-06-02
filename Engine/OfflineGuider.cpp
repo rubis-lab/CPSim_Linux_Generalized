@@ -153,7 +153,7 @@ std::vector<std::shared_ptr<Job>> OfflineGuider::make_job_set_start_det(int ecu_
     for(auto job : high_jobs)
     {
         //std::cout << current_job->get_wcbp().front() << " " << job->get_release_time() << " "<< current_job->get_lst() << std::endl;
-        if((current_job->get_wcbp().front() <= job->get_release_time()) && (job->get_release_time() < current_job->get_lst()))
+        if((current_job->get_wcbp().front() <= job->get_actual_release_time()) && (job->get_actual_release_time() < current_job->get_lst()))
         {
             job_set.push_back(job);
         }
@@ -181,7 +181,7 @@ std::vector<std::shared_ptr<Job>> OfflineGuider::make_job_set_start_non_det(int 
     std::vector<std::shared_ptr<Job>> job_set;
     for(auto job : high_jobs)
     {
-        if((current_job->get_wcbp().front() <= job->get_release_time()) && (job->get_release_time() < current_job->get_lst()))
+        if((current_job->get_wcbp().front() <= job->get_actual_release_time()) && (job->get_actual_release_time() < current_job->get_lst()))
         {
             job_set.push_back(job);
         }
@@ -216,7 +216,7 @@ std::vector<std::shared_ptr<Job>> OfflineGuider::make_job_set_finish_det(int ecu
     for(auto job : high_jobs)
     {
         //std::cout << current_job->get_wcbp().front() << " " << job->get_release_time() << " "<< current_job->get_lst() << std::endl;
-        if((current_job->get_wcbp().front() <= job->get_release_time()) && (job->get_release_time() < current_job->get_lft()))
+        if((current_job->get_wcbp().front() <= job->get_actual_release_time()) && (job->get_actual_release_time() < current_job->get_lft()))
         {
             job_set.push_back(job);
         }
@@ -248,7 +248,7 @@ std::vector<std::shared_ptr<Job>> OfflineGuider::make_job_set_finish_non_det(int
     for(auto job : high_jobs)
     {
         //std::cout << current_job->get_wcbp().front() << " " << job->get_release_time() << " "<< current_job->get_lst() << std::endl;
-        if((current_job->get_wcbp().front() <= job->get_release_time()) && (job->get_release_time() < current_job->get_lft()))
+        if((current_job->get_wcbp().front() <= job->get_actual_release_time()) && (job->get_actual_release_time() < current_job->get_lft()))
         {
             job_set.push_back(job);
         }
@@ -286,7 +286,7 @@ std::vector<std::shared_ptr<Job>> OfflineGuider::make_job_set_pro_con_det(int ec
     for(auto job : high_jobs)
     {
         //std::cout << current_job->get_wcbp().front() << " " << job->get_release_time() << " "<< current_job->get_lst() << std::endl;
-        if((current_job->get_wcbp().front() <= job->get_release_time()) && (job->get_release_time() < current_job->get_lft()))
+        if((current_job->get_wcbp().front() <= job->get_actual_release_time()) && (job->get_actual_release_time() < current_job->get_lft()))
         {
             job_set_start.push_back(job);
         }
@@ -359,7 +359,7 @@ std::vector<std::shared_ptr<Job>> OfflineGuider::make_job_set_pro_con_non_det(in
     for(auto job : high_jobs)
     {
         //std::cout << current_job->get_wcbp().front() << " " << job->get_release_time() << " "<< current_job->get_lst() << std::endl;
-        if((current_job->get_wcbp().front() <= job->get_release_time()) && (job->get_release_time() < current_job->get_lft()))
+        if((current_job->get_wcbp().front() <= job->get_actual_release_time()) && (job->get_actual_release_time() < current_job->get_lft()))
         {
             job_set_start.push_back(job);
         }

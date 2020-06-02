@@ -87,13 +87,14 @@ void Executor::run_simulation(double start_time)
             {
                 if(job->get_is_read())
                 {
-                    if(utils::current_time < job->get_release_time()) // FIX RELEASE TIME TO ACCOUNT FOR SIMULATOR PERFORMANCE
+                    if(utils::current_time < job->get_actual_release_time()) // This is right actual release time is the factor of read constraint check
                     {
                         continue;
                     }
                     else
                     {
                         job->set_is_released(true);
+                        job->set_simulated_release_time(utils::current_time);
                         simulation_ready_queue.push_back(job);
                         is_idle = false;   
                     }
@@ -113,9 +114,9 @@ void Executor::run_simulation(double start_time)
             double smallest = INT64_MAX;
             for(auto job : vectors::job_vector_of_simulator)
             {
-                if(job->get_release_time() < utils::current_time) continue; // Skip..This job is already started and finished..Not relevant.
-                if(job->get_release_time() < smallest)
-                    smallest = job->get_release_time();
+                if(job->get_simulated_release_time() < utils::current_time) continue; // Skip..This job is already started and finished..Not relevant.
+                if(job->get_simulated_release_time() < smallest)
+                    smallest = job->get_simulated_release_time();
             }
             if(smallest == INT64_MAX) // There are no jobs left, skip to end of HP.
             {
@@ -198,7 +199,7 @@ void Executor::assign_deadline_for_simulated_jobs()
         }
         else
         {
-            job->set_simulated_deadline(job->get_release_time() + 999999);
+            job->set_simulated_deadline(job->get_simulated_release_time() + 999999);
         }
     }
     for (auto job : vectors::job_vector_of_simulator)
@@ -404,7 +405,7 @@ void Executor::check_deadline_miss()
     {
         if(job->get_simulated_finish_time() > job->get_simulated_deadline())
         {
-            
+
         } 
     }
 }
