@@ -66,7 +66,9 @@ int main(int argc, char *argv[])
     Executor executor;
 
     int i = 0;
-    while(0)
+    bool is_simulatable = true;
+
+    while(1)
     {
         std::cout << i++ << "th Hyper_period" << std::endl;
         /** [Generation of Real-Cyber System's Scheduling]
@@ -90,6 +92,14 @@ int main(int argc, char *argv[])
          * For this, we create executor which is responsible for 
         */
         executor.run_simulation(utils::current_time);
+        is_simulatable = executor.simulatability_analysis();
+        if(is_simulatable)
+            continue;
+        else
+        {
+            std::cout << "Not Simulatable" << std::endl;
+            break;
+        }
     }
     return 0;
 }
