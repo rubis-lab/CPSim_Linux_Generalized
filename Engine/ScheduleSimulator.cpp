@@ -213,9 +213,9 @@ void ScheduleSimulator::simulate_scheduling_on_real(double global_hyper_period_s
                 std::vector<std::shared_ptr<Job>> job_queue; 
                 
                 /*
-                    * if released job exist, then put it in the job_queue.
-                    * and, set busy_period_start as job's release time.
-                    */    
+                * if released job exist, then put it in the job_queue.
+                * and, set busy_period_start as job's release time.
+                */    
                 for(auto job : vectors::job_vectors_for_each_ECU.at(ecu_id))
                 {
                     if(job->get_priority_policy() != PriorityPolicy::CPU) continue; // Only account for CPU jobs, maintain backwards compatability.
