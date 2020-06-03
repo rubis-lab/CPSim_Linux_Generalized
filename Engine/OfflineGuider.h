@@ -6,8 +6,8 @@
 /** This file is engine code of CPSim-Re engine
  * @file OfflineGuider.h
  * @class OfflineGuider
- * @author Seonghyeon Park
- * @date 2020-03-31
+ * @author Alex Noble
+ * @date 2020-06-03
  * @brief Codes for Engine-OfflineGuider 
 */
 
@@ -20,15 +20,11 @@ public:
     OfflineGuider();
     ~OfflineGuider();
     /**
-     * Getter & Setter
-     */
-
-    /**
      * Generate Offline Guider
      */
     void construct_job_precedence_graph();
-    std::vector<std::shared_ptr<Job>> make_job_set_start_det(int, std::shared_ptr<Job>&);
-    std::vector<std::shared_ptr<Job>> make_job_set_start_non_det(int, std::shared_ptr<Job>&);
+    void construct_start_job_sets(int ecu_id, std::shared_ptr<Job>& current_job);
+    void construct_finish_job_sets(int ecu_id, std::shared_ptr<Job>& current_job);
     std::vector<std::shared_ptr<Job>> make_job_set_finish_det(int, std::shared_ptr<Job>&);
     std::vector<std::shared_ptr<Job>> make_job_set_finish_non_det(int, std::shared_ptr<Job>&);
     std::vector<std::shared_ptr<Job>> make_job_set_pro_con_det(int, std::shared_ptr<Job>&);
