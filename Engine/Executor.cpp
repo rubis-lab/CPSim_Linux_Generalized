@@ -3,13 +3,14 @@
 #include <ctime>
 #include <cstdlib>
 #include <climits>
+#include <unordered_map>
 
 /**
  *  This file is the cpp file for the Executor class.
  *  @file Executor.cpp
  *  @brief cpp file for Engine-Executor
- *  @author Seonghyeon Park
- *  @date 2020-03-31
+ *  @author Alex Noble
+ *  @date 2020-06-04
  */
 
 /**
@@ -25,7 +26,8 @@
  * @warning none
  * @todo none
  */
-Executor::Executor(){
+Executor::Executor()
+{
 
 }
 
@@ -42,7 +44,8 @@ Executor::Executor(){
  * @warning none
  * @todo none
  */
-Executor::~Executor(){
+Executor::~Executor()
+{
 
 }
 
@@ -50,10 +53,12 @@ int Executor::get_current_hyper_period_index()
 {
     return m_current_hyper_period_index;
 }
+
 int Executor::get_current_hyper_period_start()
 {
     return m_current_hyper_period_start;
 }
+
 int Executor::get_current_hyper_period_end()
 {
     return m_current_hyper_period_end;
@@ -63,10 +68,12 @@ void Executor::set_current_hyper_period_index(int current_hyper_period_index)
 {
     m_current_hyper_period_index = current_hyper_period_index;
 }
+
 void Executor::set_current_hyper_period_start(int current_hyper_period_start)
 {
     m_current_hyper_period_start = current_hyper_period_start;
 }
+
 void Executor::set_current_hyper_period_end(int current_hyper_period_end)
 {
     m_current_hyper_period_end = current_hyper_period_end;
@@ -89,9 +96,9 @@ void Executor::set_current_hyper_period_end(int current_hyper_period_end)
 void Executor::run_simulation(double start_time)
 {
     double end_time = start_time + utils::hyper_period;
-    move_ecus_jobs_to_simulator();
-    random_execution_time_generator();
-    change_execution_time();
+    move_ecus_jobs_to_simulator(); // Copies job vectors from ECUs to Sim.
+    random_execution_time_generator(); // Sets actual exec time on jobs in the Sim's job vectors.
+    change_execution_time(); // Sets the simulated exec time. Warning: Need to adapt for GPU by changing Init job's GPU WAIT TIME variable. Do we need to change the sync job aswell to accord for this..?
     assign_predecessors_successors();
     std::cout << "Here" << std::endl;
     /**
@@ -192,6 +199,7 @@ void Executor::change_execution_time()
         job->set_simulated_execution_time(job->get_actual_execution_time() * execution_time_mapping_factor);
     }
 }
+
 void Executor::assign_deadline_for_simulated_jobs()
 {
     for (auto job : vectors::job_vector_of_simulator)
@@ -203,138 +211,142 @@ void Executor::assign_deadline_for_simulated_jobs()
         job->update_simulated_deadline();
     }
 }
-void Executor::assign_predecessors_successors()
-{
-    std::sort(vectors::job_vector_of_simulator.begin(), vectors::job_vector_of_simulator.end(), utils::first_release);
-
-    for(auto job : vectors::job_vector_of_simulator)
-    {
-        job->set_is_simulated(false); // is_simulated true means is finished in sim.
-        job->set_is_released(false);
-        std::vector<std::shared_ptr<Job>> det_predecessors;
-        std::vector<std::shared_ptr<Job>> det_successors;
-        std::vector<std::shared_ptr<Job>> non_det_predecessors;
-        std::vector<std::shared_ptr<Job>> non_det_successors;
-        
-        for(auto job_p : vectors::job_vector_of_simulator)
-        {
-            if((job->get_task_id() == job_p->get_task_id()) && (job->get_job_id() > job_p->get_job_id()))
-            {
-                det_predecessors.push_back(job_p);
-            }   
-        }
-        
-        for(auto job_p : vectors::job_vector_of_simulator)
-        {
-            if(job->get_is_read())
-            {
-                for(auto job_set : job->get_job_set_start_det())
-                {
-                    if((job_set->get_task_id() == job_p->get_task_id()) && (job_set->get_job_id()==job_p->get_job_id()))
-                    {
-                        det_predecessors.push_back(job_p);
-
-                    }
-                }
-                for(auto job_set : job->get_job_set_start_non_det())
-                {
-                    if((job_set->get_task_id() == job_p->get_task_id()) && (job_set->get_job_id()==job_p->get_job_id()))
-                        non_det_predecessors.push_back(job_p);
-                }
-                   
-            }
-            else if(job->get_is_write())
-            {
-                for(auto job_set : job->get_job_set_finish_det())
-                {
-                    if((job_set->get_task_id() == job_p->get_task_id()) && (job_set->get_job_id()==job_p->get_job_id()))
-                    {
-                        if((job_set->get_task_id() == job->get_task_id()) && (job_set->get_job_id()==job->get_job_id()))
-                        {
-                            continue;
-                        }
-                        else
-                        {
-                            det_predecessors.push_back(job_p);
-                        }
-                    }
-                }
-                for(auto job_set : job->get_job_set_finish_non_det())
-                {
-                    if((job_set->get_task_id() == job_p->get_task_id()) && (job_set->get_job_id()==job_p->get_job_id()))
-                        non_det_predecessors.push_back(job_p);
-                }
-                for(auto job_set : job->get_job_set_pro_con_det())
-                {
-                    if((job_set->get_task_id() == job_p->get_task_id()) && (job_set->get_job_id()==job_p->get_job_id()))
-                        det_predecessors.push_back(job_p);
-                }
-                for(auto job_set : job->get_job_set_pro_con_non_det())
-                {
-                    if((job_set->get_task_id() == job_p->get_task_id()) && (job_set->get_job_id()==job_p->get_job_id()))
-                        non_det_predecessors.push_back(job_p);
-                }
-            }
-            else
-            {
-                if(job->get_job_set_pro_con_det().size() != 0)
-                {
-                    for(auto job_set : job->get_job_set_pro_con_det())
-                    {
-                        std::cout << job_set->get_task_name() << std::endl;
-                        if((job_set->get_task_id() == job_p->get_task_id()) && (job_set->get_job_id()==job_p->get_job_id()))
-                        {
-                            det_predecessors.push_back(job_p);
-                        }
-                    }
-                }
-                else if(job->get_job_set_pro_con_non_det().size() != 0)
-                {
-                    for(auto job_set : job->get_job_set_pro_con_non_det())
-                    {
-                        if((job_set->get_task_id() == job_p->get_task_id()) && (job_set->get_job_id()==job_p->get_job_id()))
-                        {
-                            non_det_predecessors.push_back(job_p);
-                        }
-                    }                    
-                }
-            }
-        } 
-    
-        for(auto job_s : vectors::job_vector_of_simulator)
-        {
-            if((job->get_task_id() == job_s->get_task_id()) && (job->get_job_id() < job_s->get_job_id()))
-            {
-                det_successors.push_back(job_s);
-            }
-            for(auto job_det_suc : job_s->get_det_prdecessors())
-            {
-                if((job->get_task_id()==job_det_suc->get_task_id()) && (job->get_job_id() == job_det_suc->get_job_id()))
-                    det_successors.push_back(job_s);
-            }
-            for(auto job_non_det_suc : job_s->get_non_det_prdecessors())
-            {
-                if((job->get_task_id()==job_non_det_suc->get_task_id()) && (job->get_job_id() == job_non_det_suc->get_job_id()))
-                    non_det_successors.push_back(job_s);
-            }
-        }
-        
+/*
         job->set_det_predecessors(det_predecessors);
         job->set_non_det_predecessors(non_det_predecessors);
         job->set_det_successors(det_successors);
-        job->set_non_det_successors(non_det_successors); 
-  
-    }
-}
-void Executor::random_execution_time_generator()
+        job->set_non_det_successors(non_det_successors); */
+void Executor::assign_predecessors_successors()
 {
-    // s == seed...
-    
+    std::sort(vectors::job_vector_of_simulator.begin(), vectors::job_vector_of_simulator.end(), utils::first_release);
+    std::unordered_map<std::string, bool> duplication_check_det_pred;
+    std::unordered_map<std::string, bool> duplication_check_non_det_pred;
+    std::unordered_map<std::string, bool> duplication_check_det_succ;
+    std::unordered_map<std::string, bool> duplication_check_non_det_succ;
+
+    for (auto job : vectors::job_vector_of_simulator)
+    {
+        job->set_is_simulated(false); // is_simulated true means is finished in sim.
+        job->set_is_released(false);
+        job->get_det_prdecessors().clear();
+        job->get_non_det_prdecessors().clear();
+        job->get_det_successors().clear();
+        job->get_non_det_successors().clear();
+    }
+
     for(auto job : vectors::job_vector_of_simulator)
     {
-        job->set_actual_execution_time((rand() % (job->get_wcet()-job->get_bcet()+1) + job->get_bcet()));
+        duplication_check_det_pred.clear();
+        duplication_check_det_pred[std::to_string(job->get_task_id()) + ":" + std::to_string(job->get_job_id())] = true;
+        for (auto other_job : vectors::job_vector_of_simulator)
+        {
+            if (job == other_job) continue;
+            std::string identifier = std::to_string(other_job->get_task_id()) + ":" + std::to_string(other_job->get_job_id());
+            if (job->get_task_id() == other_job->get_task_id() && other_job->get_job_id() < job->get_job_id())
+            {
+                job->get_det_prdecessors().push_back(other_job);
+                other_job->get_det_successors().push_back(job);
+                duplication_check_det_pred[identifier] = true;
+            }
+        }
+        // det_predecessors are:
+        // 1. Jobs with same task ID and Earlier job id.
+        // 2. If our job is a Read job, then all jobs that affect our start time deterministically are det_predecessors.
+        // 3. If our job is a Write job, then all jobs that affect our finish time deterministically are det_predecessors.
+        // 4. All jobs in get_job_set_pro_con_det are det_predecessors.
+        // Get all deterministic predecessors and deterministic successors:
+        if (job->get_is_read())
+        {
+            for (auto other_job : job->get_job_set_start_det())
+            {
+                std::string identifier = std::to_string(other_job->get_task_id()) + ":" + std::to_string(other_job->get_job_id());
+                if (!duplication_check_det_pred[identifier])
+                {
+                    job->get_det_prdecessors.push_back(other_job);
+                    other_job->get_det_successors.push_back(job);
+                    duplication_check_det_pred[identifier] = true;
+                }
+            }
+        }
+        else if (job->get_is_write())
+        {
+            for (auto other_job : job->get_job_set_finish_det())
+            {
+                std::string identifier = std::to_string(other_job->get_task_id()) + ":" + std::to_string(other_job->get_job_id());
+                if (!duplication_check_det_pred[identifier])
+                {
+                    job->get_det_prdecessors.push_back(other_job);
+                    other_job->get_det_successors.push_back(job);
+                    duplication_check_det_pred[identifier] = true;
+                }
+            }
+        }
+        for (auto other_job : job->get_job_set_pro_con_det())
+        {
+            std::string identifier = std::to_string(other_job->get_task_id()) + ":" + std::to_string(other_job->get_job_id());
+            if (!duplication_check_det_pred[identifier])
+            {
+                job->get_det_prdecessors.push_back(other_job);
+                other_job->get_det_successors().push_back(job);
+                duplication_check_det_pred[identifier] = true;
+            }
+        }
+
+        // non_det_predecessors are:
+        // 1. If our job is read: then all jobs in get_job_set_start_non_det()
+        // 2. If our job is write: then all jobs in get_job_set_finish_non_det()
+        // 3. All jobs in get_job_set_pro_con_non_det().
+        // Get all non-deterministic predecessors and non-deterministic successors:
+        if (job->get_is_read())
+        {
+            for (auto other_job : job->get_job_set_start_non_det())
+            {
+                std::string identifier = std::to_string(other_job->get_task_id()) + ":" + std::to_string(other_job->get_job_id());
+                if (!duplication_check_det_pred[identifier] && !duplication_check_non_det_pred[identifier])
+                {
+                    job->get_non_det_prdecessors.push_back(other_job);
+                    other_job->get_non_det_successors.push_back(job);
+                    duplication_check_non_det_pred[identifier] = true;
+                }
+            }
+        }
+        else if (job->get_is_write())
+        {
+            for (auto other_job : job->get_job_set_finish_non_det())
+            {
+                std::string identifier = std::to_string(other_job->get_task_id()) + ":" + std::to_string(other_job->get_job_id());
+                if (!duplication_check_det_pred[identifier] && !duplication_check_non_det_pred[identifier])
+                {
+                    job->get_non_det_prdecessors.push_back(other_job);
+                    other_job->get_non_det_successors.push_back(job);
+                    duplication_check_non_det_pred[identifier] = true;
+                }
+            }
+        }
+        for (auto other_job : job->get_job_set_pro_con_non_det())
+        {
+            std::string identifier = std::to_string(other_job->get_task_id()) + ":" + std::to_string(other_job->get_job_id());
+            if (!duplication_check_det_pred[identifier] && !duplication_check_non_det_pred[identifier])
+            {
+                job->get_det_prdecessors.push_back(other_job);
+                other_job->get_non_det_successors.push_back(job);
+                duplication_check_non_det_pred[identifier] = true;
+            }
+        }
     }
 }
+
+void Executor::random_execution_time_generator()
+{
+    for(auto job : vectors::job_vector_of_simulator)
+    {
+        if (job->get_priority_policy() == PriorityPolicy::GPU)
+            job->set_actual_execution_time(job->get_wcet());
+        else
+            job->set_actual_execution_time((rand() % (job->get_wcet()-job->get_bcet()+1) + job->get_bcet()));
+    }
+}
+
 void Executor::move_ecus_jobs_to_simulator()
 {
     vectors::job_vector_of_simulator.clear();
