@@ -25,10 +25,7 @@ public:
     void construct_job_precedence_graph();
     void construct_start_job_sets(int ecu_id, std::shared_ptr<Job>& current_job);
     void construct_finish_job_sets(int ecu_id, std::shared_ptr<Job>& current_job);
-    std::vector<std::shared_ptr<Job>> make_job_set_finish_det(int, std::shared_ptr<Job>&);
-    std::vector<std::shared_ptr<Job>> make_job_set_finish_non_det(int, std::shared_ptr<Job>&);
-    std::vector<std::shared_ptr<Job>> make_job_set_pro_con_det(int, std::shared_ptr<Job>&);
-    std::vector<std::shared_ptr<Job>> make_job_set_pro_con_non_det(int, std::shared_ptr<Job>&);
+    void construct_producer_job_sets(int ecu_id, std::shared_ptr<Job>& current_job);
 };
 
 #endif

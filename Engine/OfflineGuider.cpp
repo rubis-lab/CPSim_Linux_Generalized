@@ -66,50 +66,17 @@ OfflineGuider::~OfflineGuider()
  */
 void OfflineGuider::construct_job_precedence_graph()
 {
-    std::shared_ptr<Job> someJob = nullptr;
-    std::shared_ptr<JobNode> start = std::make_shared<JobNode>(someJob);
-
-    std::shared_ptr<Job> someJobDependingOnPreviousJob = nullptr;
-    std::shared_ptr<JobNode> other = std::make_shared<JobNode>(someJobDependingOnPreviousJob);
-
-    
-
-    std::shared_ptr<Job> someNonDeterministicDependance = nullptr;
-    std::shared_ptr<JobNode> other2 = std::make_shared<JobNode>(someNonDeterministicDependance);
-
-    
-    //start->insertEdge(other, true); // Insert Deterministic Edge.
-    //start->insertEdge(other2, false); // Insert Non-Deterministic Edge.
-    //start->insertEdge(other, true)->insertEdge(other2, true);
-    
-    // For all ecus..
     for(int ecu_id = 0; ecu_id < vectors::job_vectors_for_each_ECU.size(); ++ ecu_id )
     {
         if(vectors::job_vectors_for_each_ECU.at(ecu_id).size() != 0)
         {
-            // Handle read constraints for all jobs in ECU.
-            for(auto job : vectors::job_vectors_for_each_ECU.at(ecu_id))
-                if(job->get_is_read())
-                    construct_start_job_sets(ecu_id, job);
-
-            // Handle write constraints for all jobs in ECU.
             for (auto job : vectors::job_vectors_for_each_ECU.at(ecu_id))
+            {
+                construct_start_job_sets(ecu_id, job); // no is_read() condition, because construct_producer_job_sets needs this info aswell.
                 if (job->get_is_write())
                     construct_finish_job_sets(ecu_id, job);
-            // Handle producer consumer constraints for all jobs in ECU.
-            for(auto job : vectors::job_vectors_for_each_ECU.at(ecu_id))
-            {
-                std::vector<std::shared_ptr<Job>> job_set_pro_con_det;
-                std::vector<std::shared_ptr<Job>> job_set_pro_con_non_det;
-         
-                job_set_pro_con_det = make_job_set_pro_con_det(ecu_id, job);
-                job->set_job_set_pro_con_det(job_set_pro_con_det);
-
-                job_set_pro_con_non_det = make_job_set_pro_con_non_det(ecu_id, job); 
-                job->set_job_set_pro_con_non_det(job_set_pro_con_non_det);    
-                
+                construct_producer_job_sets(ecu_id, job);
             }
-            
         }
     }
 }
@@ -152,154 +119,45 @@ void OfflineGuider::construct_finish_job_sets(int ecu_id, std::shared_ptr<Job>& 
     }
 }
 
+// Constructs the job set that represents all the jobs that produce us.
+// Make sure that start time job sets are constructed before calling this.
+// Push back potential_producer items into deterministic set.
+// if his lst < current job's est
+// Otherwise push back into non-deterministic.
 
-
-std::vector<std::shared_ptr<Job>> OfflineGuider::make_job_set_pro_con_det(int ecu_id, std::shared_ptr<Job>& current_job)
+// Push back job_set start items into deterministic set.
+// if his lst < current job's est.
+// Otherwise push back into non-deterministic.
+// Push back deterministic into deterministic if he isn't nullptr.
+void OfflineGuider::construct_producer_job_sets(int ecu_id, std::shared_ptr<Job>& current_job)
 {
-    std::vector<std::shared_ptr<Job>> whole_job_set;
-    std::vector<std::shared_ptr<Job>> high_jobs;
-    for(auto job : vectors::job_vectors_for_each_ECU.at(ecu_id))
-    {
-        if((job->get_priority() < current_job->get_priority() ) && (job->get_task_id()!=current_job->get_task_id()))
-        {
-            //std::cout << "this job is: " <<job->get_task_name() << " current job is: " << current_job->get_task_name() << std::endl;
-            high_jobs.push_back(job);
-        }
-    }
-    std::vector<std::shared_ptr<Job>> job_set_start;
-    for(auto job : high_jobs)
-    {
-        //std::cout << current_job->get_wcbp().front() << " " << job->get_release_time() << " "<< current_job->get_lst() << std::endl;
-        if((current_job->get_wcbp().front() <= job->get_actual_release_time()) && (job->get_actual_release_time() < current_job->get_lft()))
-        {
-            job_set_start.push_back(job);
-        }
-    }
-    std::vector<std::shared_ptr<Job>> potential_producer;
+    current_job->get_job_set_pro_con_det().clear();
+    current_job->get_job_set_pro_con_non_det().clear();
     std::shared_ptr<Job> deterministic_producer = nullptr;
-    for(int i = 0; i < vectors::job_vectors_for_each_ECU.size(); i++)
-    {
+    for (int i = 0; i < vectors::job_vectors_for_each_ECU.size(); i++)
         if(vectors::job_vectors_for_each_ECU.at(i).size() != 0)
-            for(auto job : vectors::job_vectors_for_each_ECU.at(i))
-            {
-                for(auto producer : current_job->get_producers())
-                {
-                    if(job->get_task_name() == producer->get_task_name())
+            for (auto producer : current_job->get_producers())
+                for (auto job : vectors::job_vectors_for_each_ECU.at(i))
+                    if (job->get_task_name() == producer->get_task_name()) // In Control System Design, this producer job is a producer of job.
                     {
-                        if((job->get_lft() <= current_job->get_est()))
+                        if ((job->get_lft() <= current_job->get_est())) // where max(tFreali') < min < max
                         {
-                            deterministic_producer = job;
+                            if (deterministic_producer == nullptr)
+                                deterministic_producer = job;
+                            else if (deterministic_producer->get_job_id() < job->get_job_id())
+                                deterministic_producer = job;
                         }
-                        else if(job->get_eft() > current_job->get_lst())
+                        else if (!(job->get_eft() > current_job->get_lst()))
                         {
-                            continue;
-                        }
-                        else
-                        {
-                            potential_producer.push_back(job);
+                            if (job->get_lst() < current_job->get_est())
+                                current_job->get_job_set_pro_con_det().push_back(job);
+                            else current_job->get_job_set_pro_con_non_det().push_back(job);
                         }
                     }
-                }
-            }
-    }
-    for(auto job : potential_producer)
-    {
-        if(job->get_lst() < current_job->get_est())
-        {
-            whole_job_set.push_back(job);
-        }
-    }
-    for(auto job : job_set_start)
-    {
-        if(job->get_lst() < current_job->get_est())
-        {
-            whole_job_set.push_back(job);
-        }
-    }
-    if(deterministic_producer == nullptr)
-    {
-
-    }
-    else
-    {
-        whole_job_set.push_back(deterministic_producer);
-    }
-
-    return whole_job_set;
-}
-
-std::vector<std::shared_ptr<Job>> OfflineGuider::make_job_set_pro_con_non_det(int ecu_id, std::shared_ptr<Job>& current_job)
-{
-    std::vector<std::shared_ptr<Job>> whole_job_set;
-    std::vector<std::shared_ptr<Job>> high_jobs;
-    for(auto job : vectors::job_vectors_for_each_ECU.at(ecu_id))
-    {
-        if((job->get_priority() < current_job->get_priority() ) && (job->get_task_id()!=current_job->get_task_id()))
-        {
-            //std::cout << "this job is: " <<job->get_task_name() << " current job is: " << current_job->get_task_name() << std::endl;
-            high_jobs.push_back(job);
-        }
-    }
-    std::vector<std::shared_ptr<Job>> job_set_start;
-    for(auto job : high_jobs)
-    {
-        //std::cout << current_job->get_wcbp().front() << " " << job->get_release_time() << " "<< current_job->get_lst() << std::endl;
-        if((current_job->get_wcbp().front() <= job->get_actual_release_time()) && (job->get_actual_release_time() < current_job->get_lft()))
-        {
-            job_set_start.push_back(job);
-        }
-    }
-    std::vector<std::shared_ptr<Job>> potential_producer;
-    std::shared_ptr<Job> deterministic_producer;
-    for(int i = 0; i < vectors::job_vectors_for_each_ECU.size(); i++)
-    {
-        if(vectors::job_vectors_for_each_ECU.at(i).size() != 0)
-            for(auto job : vectors::job_vectors_for_each_ECU.at(i))
-            {
-                for(auto producer : current_job->get_producers())
-                {
-                    if(job->get_task_name() == producer->get_task_name())
-                    {
-                        if((job->get_lft() <= current_job->get_est()))
-                        {
-                            deterministic_producer = job;
-                        }
-                        else if(job->get_eft() > current_job->get_lst())
-                        {
-                            continue;
-                        }
-                        else
-                        {
-                            potential_producer.push_back(job);
-                        }
-                    }
-                }
-            }
-    }
-    for(auto job : potential_producer)
-    {
-        if(job->get_lst() < current_job->get_est())
-        {
-           continue;
-        }
-        else
-        {
-            whole_job_set.push_back(job);
-        }
-        
-    }
-    for(auto job : job_set_start)
-    {
-        if(job->get_lst() < current_job->get_est())
-        {
-           continue;
-        }
-        else
-        {
-            whole_job_set.push_back(job);
-        }
-        
-    }
-
-    return whole_job_set;
+    for (auto job : current_job->get_job_set_start_det())
+        current_job->get_job_set_pro_con_det().push_back(job);
+    for (auto job : current_job->get_job_set_start_non_det())
+        current_job->get_job_set_pro_con_non_det().push_back(job);
+    if (deterministic_producer != nullptr)
+        current_job->get_job_set_pro_con_det().push_back(deterministic_producer);
 }
