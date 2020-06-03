@@ -11,7 +11,7 @@
 */
 class ScheduleSimulator {
 private:
-    int _hyper_period;
+    int m_hyper_period;
 
 public:
     /**

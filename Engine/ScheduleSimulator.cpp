@@ -66,7 +66,7 @@ void ScheduleSimulator::simulate_scheduling_on_real(double global_hyper_period_s
      *  Generate scheduling simulation to refer to.
      *  Generated Scheduling Simulation Result will be stored to the utils:: 
      */
-    _hyper_period = utils::hyper_period;
+    m_hyper_period = utils::hyper_period;
     
     /** 
      * Job instances generation for one HP
@@ -80,41 +80,17 @@ void ScheduleSimulator::simulate_scheduling_on_real(double global_hyper_period_s
         /**
          * number_of_jobs of this task in this hyper_period if offset is 0
          */
-        int num_of_jobs = _hyper_period / iter->get()->get_period();
+        int num_of_jobs = m_hyper_period / iter->get()->get_period();
         for(int job_id = 1; job_id <= num_of_jobs; job_id++)
         {
             std::shared_ptr<Job> job = std::make_shared<Job>(*iter, job_id);
             vectors::job_vectors_for_each_task.at(task_idx).push_back(job);
             vectors::job_vectors_for_each_ECU.at(iter->get()->get_ECU()->get_ECU_id()).push_back(std::move(job));
         }
-    
-        /**
-         * This is for printing each jobs of each tasks
-        std::cout << "Task ID : " << task_idx << ", Task Name : " << iter->get()->get_task_name() << std::endl;
-        std::cout << vectors::job_vectors_for_each_task.at(task_idx).size() << std::endl;
-        for(int job_id = 1; job_id <= num_of_jobs; job_id++)
-        {
-          std::cout << vectors::job_vectors_for_each_task.at(task_idx).at(job_id-1).get()->get_absolute_deadline() << " , ";
-        }
-        std::cout << std::endl;
-        std::cout << std::endl;
-         */
 
     }
-    /**
-     * This is for printing each jobs of each ECUs
-     for(int ecu_id = 0; ecu_id < vectors::job_vectors_for_each_ECU.size(); ecu_id++)
-     {
-         for(auto job : vectors::job_vectors_for_each_ECU.at(ecu_id))
-             std::cout << "J"<<job.get()->get_task_id()<< job.get()->get_job_id()<<"'s release time is" <<job.get()->get_actual_release_time()<<std::endl;
- 
-         std::cout << std::endl;
-     }
-     */   
 
-    /**
-     * Assigning priorities for each ECU's tasks
-     */
+
     for(int ecu_id = 0; ecu_id < vectors::job_vectors_for_each_ECU.size(); ++ecu_id) 
         for(auto job : vectors::job_vectors_for_each_ECU.at(ecu_id))
         {
@@ -168,8 +144,8 @@ void ScheduleSimulator::simulate_scheduling_on_real(double global_hyper_period_s
 
     int offset = global_hyper_period_start_point;
     std::vector<bool> freeTimeSlots;
-    freeTimeSlots.capacity(_hyper_period);
-    for (int i = 0; i < _hyper_period; i++) freeTimeSlots.push_back(true);
+    freeTimeSlots.reserve(m_hyper_period);
+    for (int i = 0; i < m_hyper_period; i++) freeTimeSlots.push_back(true);
 
     // ACCOUNT FOR GPU JOBS.
     // Schedule GPU JOBS.
@@ -230,7 +206,7 @@ void ScheduleSimulator::simulate_scheduling_on_real(double global_hyper_period_s
             }
             if (running_job == nullptr)
             {
-                std::cout << "There are no GPU Jobs." << std::endl;
+                //std::cout << "There are no GPU Jobs." << std::endl;
                 break;
             }
             // Running job now contains the job we want to run.
@@ -322,20 +298,20 @@ void ScheduleSimulator::simulate_scheduling_on_real(double global_hyper_period_s
             //int current_time_point = global_hyper_period_start_point;
             int current_time_point = -1;
             // Find first free time slot.
-            for (int i = 0; i < _hyper_period; i++)
+            for (int i = 0; i < m_hyper_period; i++)
                 if (freeTimeSlots[i])
                 {
-                    current_time_point = global_hypper_period_start_point + i;
+                    current_time_point = global_hyper_period_start_point + i;
                     break;
                 }
             if (current_time_point == -1)
             {
-                std::cout << "COULD NOT FIND A TIME SLOT FOR CPU JOBS.\nSKIPPING ITERATION OF THIS FOR LOOP." << std::endl;
+                //std::cout << "COULD NOT FIND A TIME SLOT FOR CPU JOBS.\nSKIPPING ITERATION OF THIS FOR LOOP." << std::endl;
                 continue;
             }
             int busy_period_start_point = 0;
             //check_released_jobs_at_the_time_point
-            while(current_time_point < (global_hyper_period_start_point + _hyper_period))
+            while(current_time_point < (global_hyper_period_start_point + m_hyper_period))
             {
                 
                 busy_period_start_point = current_time_point;
@@ -370,7 +346,7 @@ void ScheduleSimulator::simulate_scheduling_on_real(double global_hyper_period_s
                 }
                 // Skip to next available timeslot (not blocked by GPU).
                 bool found = false;
-                for (int i = (current_time_point - offset); i < _hyper_period; i++)
+                for (int i = (current_time_point - offset); i < m_hyper_period; i++)
                     if (freeTimeSlots[i])
                     {
                         current_time_point = global_hyper_period_start_point + i;
@@ -379,7 +355,7 @@ void ScheduleSimulator::simulate_scheduling_on_real(double global_hyper_period_s
                     }
                 if (!found)
                 {
-                    std::cout << "Could not find available time slot to continue execution.\nBreaking out of while loop." << std::endl;
+                    //std::cout << "Could not find available time slot to continue execution.\nBreaking out of while loop." << std::endl;
                     break;
                 }
             }
@@ -418,13 +394,13 @@ void ScheduleSimulator::busy_period_analysis(std::vector<std::shared_ptr<Job>>& 
             job_queue.back()->set_is_started(true);
             if (!setWorstCase)
             {
-                if(job_queue.back()->get_priority() == PriorityPolicy::CPU)
+                if(job_queue.back()->get_priority_policy() == PriorityPolicy::CPU)
                     job_queue.back()->set_est(start + end);
                 last_start = job_queue.back()->get_est();
             }
             else
             {
-                if (job_queue.back()->get_priority() == PriorityPolicy::CPU)
+                if (job_queue.back()->get_priority_policy() == PriorityPolicy::CPU)
                     job_queue.back()->set_lst(start + end);
                 last_start = job_queue.back()->get_lst();
             }
@@ -433,7 +409,7 @@ void ScheduleSimulator::busy_period_analysis(std::vector<std::shared_ptr<Job>>& 
         // Can only happen if we just finished a higher prio job that is no longer in job queue that preempted this guy.
         if (job_queue.back()->get_is_preempted()) 
         {
-            if (job_queue.back()->get_priority_policy == PriorityPolicy::GPU)
+            if (job_queue.back()->get_priority_policy() == PriorityPolicy::GPU)
             {
                 std::cout << "ERROR! A GPU JOB WAS PREEMPTED (1)!" << std::endl;
                 int pause;
@@ -466,7 +442,7 @@ void ScheduleSimulator::busy_period_analysis(std::vector<std::shared_ptr<Job>>& 
                     // See if newly discovered job has higher priority than us, in that case, pre-empty us.
                     if (job->get_priority() < job_queue.back()->get_priority())
                     {
-                        if (job_queue.back()->get_priority() == PriorityPolicy::GPU)
+                        if (job_queue.back()->get_priority_policy() == PriorityPolicy::GPU)
                         {
                             std::cout << "ERROR! ATTEMPT TO PREEMPT GPU WAS MADE (2)!" << std::endl;
                             int pause;
@@ -508,7 +484,7 @@ void ScheduleSimulator::busy_period_analysis(std::vector<std::shared_ptr<Job>>& 
         else
         {
             // GPU Jobs already has all these things set properly..Let's not mess them up.
-            if (job_queue.back()->get_priority_policy == PriorityPolicy::CPU)
+            if (job_queue.back()->get_priority_policy() == PriorityPolicy::CPU)
             {
                 if (setWorstCase)
                 {

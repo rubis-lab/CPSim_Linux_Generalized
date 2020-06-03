@@ -34,11 +34,14 @@ CMakeFiles/CPSim-0.1.out.dir/Engine/Initializer.cpp.o: ../Engine/Specifier.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/Initializer.cpp.o: ../Engine/Task.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/Initializer.cpp.o: ../Engine/Utils.h
 
+CMakeFiles/CPSim-0.1.out.dir/Engine/Job.cpp.o: ../Engine/CAN_message.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/Job.cpp.o: ../Engine/ECU.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/Job.cpp.o: ../Engine/Job.cpp
 CMakeFiles/CPSim-0.1.out.dir/Engine/Job.cpp.o: ../Engine/Job.h
+CMakeFiles/CPSim-0.1.out.dir/Engine/Job.cpp.o: ../Engine/Logger.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/Job.cpp.o: ../Engine/PriorityPolicy.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/Job.cpp.o: ../Engine/Task.h
+CMakeFiles/CPSim-0.1.out.dir/Engine/Job.cpp.o: ../Engine/Utils.h
 
 CMakeFiles/CPSim-0.1.out.dir/Engine/JobNode.cpp.o: ../Engine/ECU.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/JobNode.cpp.o: ../Engine/Job.h
