@@ -211,18 +211,13 @@ void Executor::assign_deadline_for_simulated_jobs()
         job->update_simulated_deadline();
     }
 }
-/*
-        job->set_det_predecessors(det_predecessors);
-        job->set_non_det_predecessors(non_det_predecessors);
-        job->set_det_successors(det_successors);
-        job->set_non_det_successors(non_det_successors); */
+
 void Executor::assign_predecessors_successors()
 {
+    // Does this sort have any purpose? Pls let me know :)
     std::sort(vectors::job_vector_of_simulator.begin(), vectors::job_vector_of_simulator.end(), utils::first_release);
     std::unordered_map<std::string, bool> duplication_check_det_pred;
     std::unordered_map<std::string, bool> duplication_check_non_det_pred;
-    std::unordered_map<std::string, bool> duplication_check_det_succ;
-    std::unordered_map<std::string, bool> duplication_check_non_det_succ;
 
     for (auto job : vectors::job_vector_of_simulator)
     {
