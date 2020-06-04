@@ -82,8 +82,8 @@ void Executor::set_current_hyper_period_end(int current_hyper_period_end)
 /**
  * @fn void Executor::run_simulation()
  * @brief the function for running simulation engine
- * @author Seonghyeon Park
- * @date 2020-03-31
+ * @author Alex Noble
+ * @date 2020-06-04
  * @details 
  *  This function is essential function for running simulation.\n
  *  It has a loop that iterately runs a process for the simulation steps.\n
@@ -357,13 +357,7 @@ void Executor::update_all(std::shared_ptr<Job> last_simulated_job)
      * UPDATE THE SUCCESSORS' PREDECESSORS JOB SET
      * Last simulated job must be removed from all job's predecessor queue;
      */
-    if(last_simulated_job->get_det_successors().size() != 0 || last_simulated_job->get_non_det_successors().size() != 0)
-    {
-        for(auto job : vectors::job_vector_of_simulator)
-        {
-            update_jobset(last_simulated_job, job);
-        }
-    }
+    update_jobset(last_simulated_job);
     /**
      * UPDATE EACH ECU'S SCHEDULE WITH THE CURRENT TIME (SET THEIR ACTUAL START/FINISH TIME UNTIL CURRENT TIME)
      */
@@ -379,6 +373,7 @@ void Executor::update_all(std::shared_ptr<Job> last_simulated_job)
         update_simulated_deadlines(i);
     }
 }
+
 void Executor::update_ecu_schedule(int ecu_id)
 {
     /**
@@ -402,6 +397,7 @@ void Executor::update_ecu_schedule(int ecu_id)
         }
     }
 }
+
 void Executor::update_simulated_deadlines(int job_index)
 {
     /**
@@ -409,32 +405,38 @@ void Executor::update_simulated_deadlines(int job_index)
      */
     vectors::job_vector_of_simulator.at(job_index)->update_simulated_deadline();
 }
-void Executor::update_jobset(std::shared_ptr<Job> simulated_job, std::shared_ptr<Job> succ_job)
+
+void Executor::update_jobset(std::shared_ptr<Job> simulated_job)
 {
-    // These vars are for succ_job.
-    std::vector<std::shared_ptr<Job>> updated_jobset_det; // Deterministic predecessors of succ_job
-    std::vector<std::shared_ptr<Job>> updated_jobset_non_det; // Non-deterministic predeccessors of succ_job
-    for (auto job : succ_job->get_det_prdecessors())
+    for (int i = 0; i < simulated_job->get_det_successors().size(); i++)
     {
-        if(job->get_is_simulated()) continue;
-        if(simulated_job == job) continue;
-        else
+        for (int j = 0; j < simulated_job->get_det_successors().at(i)->get_det_prdecessors().size(); j++)
         {
-            updated_jobset_det.push_back(job);
+            if (simulated_job->get_det_successors().at(i)->get_det_prdecessors().at(j) == simulated_job)
+            {
+                // Remove simulated_job from the successor's deterministic predecessor list.
+                simulated_job->get_det_successors().at(i)->get_det_prdecessors().at(j) = std::move(simulated_job->get_det_successors().at(i)->get_det_prdecessors().back());
+                simulated_job->get_det_successors().at(i)->get_det_prdecessors().pop_back();
+                break;
+            }
         }
     }
-    for (auto job : succ_job->get_non_det_prdecessors())
+
+    for (int i = 0; i < simulated_job->get_non_det_successors().size(); i++)
     {
-        if(job->get_is_simulated()) continue;
-        if(simulated_job == job) continue;
-        else
+        for (int j = 0; j < simulated_job->get_non_det_successors().at(i)->get_non_det_prdecessors().size(); j++)
         {
-            updated_jobset_non_det.push_back(job);
+            if (simulated_job->get_non_det_successors().at(i)->get_non_det_prdecessors().at(j) == simulated_job)
+            {
+                // Remove simulated_job from the successor's non-deterministic predecessor list.
+                simulated_job->get_non_det_successors().at(i)->get_non_det_prdecessors().at(j) = std::move(simulated_job->get_non_det_successors().at(i)->get_non_det_prdecessors().back());
+                simulated_job->get_non_det_successors().at(i)->get_non_det_prdecessors().pop_back();
+                break;
+            }
         }
     }
-    succ_job->set_det_predecessors(updated_jobset_det);
-    succ_job->set_non_det_predecessors(updated_jobset_non_det);
 }
+
 bool Executor::check_deadline_miss()
 {
     for(auto job : vectors::job_vector_of_simulator)
@@ -447,6 +449,7 @@ bool Executor::check_deadline_miss()
 
     return true;
 }
+
 bool Executor::simulatability_analysis()
 {
     bool is_simulatable = check_deadline_miss();

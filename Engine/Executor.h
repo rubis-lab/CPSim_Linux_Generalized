@@ -42,7 +42,7 @@ public:
     void update_all(std::shared_ptr<Job>);
     void update_ecu_schedule(int);
     void update_simulated_deadlines(int);
-    void update_jobset(std::shared_ptr<Job> , std::shared_ptr<Job>);
+    void update_jobset(std::shared_ptr<Job>);
     void run_simulation(double);
     void change_execution_time();
 
