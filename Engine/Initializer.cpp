@@ -315,11 +315,8 @@ void Initializer::random_producer_consumer_generator()
             {
                 if(consumer->get_task_name() == to_be_consumer)
                 {
-                    if(!consumer->get_is_read() && consumer != task)
-                    {
-                        task->add_task_to_consumers(consumer);
-                        consumer->add_task_to_producers(task);
-                    }
+                    task->add_task_to_consumers(consumer);
+                    consumer->add_task_to_producers(task);
                 }
             }
         }    
