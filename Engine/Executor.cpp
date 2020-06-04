@@ -413,25 +413,9 @@ void Executor::update_all(std::shared_ptr<Job> last_simulated_job)
 void Executor::update_ecu_schedule(int ecu_id)
 {
     /**
-     * update CPU jobs' schedule 
+     * UPDATE ALL JOB'S EST, LST, EFT, LFT with
      */
-    std::vector<std::shared_ptr<Job>> job_queue;
-    for(auto job : vectors::job_vectors_for_each_ECU.at(ecu_id))
-    {
-        /**
-         * IF, current time(simulated job's finish time) is passed, put them all to the job_queue 
-         */
-        if(static_cast<int>(utils::current_time) >= job->get_actual_release_time())
-        {
-            /**
-             * FIRST JOB OF ITS BUSY PERIOD IS ALWAYS  START TIME == RELEASE TIME
-             */
-            if(job->get_actual_start_time() == job->get_actual_release_time())
-            {
-                job->set_actual_finish_time(job->get_actual_start_time()+job->get_actual_execution_time());
-            }
-        }
-    }
+    
 }
 
 void Executor::update_simulated_deadlines(int job_index)

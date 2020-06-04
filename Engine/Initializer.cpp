@@ -165,7 +165,10 @@ void Initializer::initialize(std::string location)
         global_object::logger_thread = std::make_shared<std::thread>(&Logger::start_logging, global_object::logger);
     }
 }
-
+void Initializer::random_gpu_task_generator(int task_num)
+{
+    
+}
 void Initializer::random_task_generator(int task_num)
 {
     for(int i = 0; i < task_num; i++)
