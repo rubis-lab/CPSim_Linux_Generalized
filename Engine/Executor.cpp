@@ -195,8 +195,7 @@ void Executor::change_execution_time()
 {
     for (auto job : vectors::job_vector_of_simulator)
     {
-        double execution_time_mapping_factor = (double)job->get_ECU()->get_performance()/utils::simulatorPC_performance;
-        job->set_simulated_execution_time(job->get_actual_execution_time() * execution_time_mapping_factor);
+        job->set_simulated_execution_time(job->get_actual_execution_time() * 0.3);
     }
 }
 

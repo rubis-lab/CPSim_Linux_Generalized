@@ -136,7 +136,7 @@ void Initializer::initialize(std::string location)
      * Implement GPU / CPU job...
      */
     //random_task_generator(0.3, 0.3, (rand() % 5 + 1) * vectors::ecu_vector.size());
-    random_task_generator(0.3, 0.3, 3);
+    random_task_generator(5);
     if(utils::is_experimental == false)
         for(auto task : vectors::task_vector)
         {
@@ -147,6 +147,7 @@ void Initializer::initialize(std::string location)
         /**
          * Each task can be [0-2] data producer of random selected job.
          */
+        random_constraint_selector(0.3, 0.3);
         random_producer_consumer_generator();
     }
     
@@ -165,14 +166,8 @@ void Initializer::initialize(std::string location)
     }
 }
 
-void Initializer::random_task_generator(double read_ratio, double write_ratio, int task_num)
+void Initializer::random_task_generator(int task_num)
 {
-    int number_of_read = std::ceil(read_ratio * task_num); //read ratio is 30%
-    int number_of_write = std::ceil(write_ratio * task_num); //write ratio is 30%
-
-    bool was_read = false;
-    bool was_write = false;
-    bool is_init = true;
     for(int i = 0; i < task_num; i++)
     {
         std::string task_name = "TASK" + std::to_string(i);
@@ -198,50 +193,12 @@ void Initializer::random_task_generator(double read_ratio, double write_ratio, i
         bool is_write = false;
         int ecu_id = rand() % vectors::ecu_vector.size();
         
-        if(is_init)
-        {
-            was_read = true;
-            is_read = true;
-            is_init = false;
-            number_of_read--;
-        }
-        else if((number_of_read > 0) && (was_read == false) && (was_write == true))
-        {
-            was_read = true;
-            was_write = false;
-            is_read = true;
-            is_write = false;
-            number_of_read--;
-        }
-        else if((number_of_write > 0) && (was_read == true) && (was_write == false))
-        {
-            was_write = true;
-            was_read = false;
-            is_read = false;
-            is_write = true;
-            number_of_write--;
-        }
-        else if(number_of_write == 0 && number_of_read == 0)
-        {
-            is_read = false;
-            is_write = false;
-        }
-        else
-        {
-            was_read = !was_read;
-            was_write = !was_write;
-        }
         //each task can be data producer of [0-2] randomly selected task.
         std::vector<std::string> producers;
         std::vector<std::string> consumers;
         int num_of_consumer = rand() % 3;
         bool is_overlapped = false;
-        if(is_write)
-            num_of_consumer = 0;
-        else if(is_read){
-            if(num_of_consumer ==0)
-                num_of_consumer++;
-        }
+
         while(num_of_consumer != 0)
         {
             int random_select_taskID = rand() % (task_num + 1);
@@ -321,4 +278,41 @@ void Initializer::random_producer_consumer_generator()
             }
         }    
     }    
+}
+
+void Initializer::random_constraint_selector(double read_ratio, double write_ratio)
+{
+    int task_num = vectors::task_vector.size();
+    int number_of_read = std::ceil(read_ratio * task_num); //read ratio is 30%
+    int number_of_write = std::ceil(write_ratio * task_num); //write ratio is 30%
+    
+    int selector = 0;
+    while(number_of_read != 0)
+    {
+        selector = rand() % vectors::task_vector.size();
+        if(vectors::task_vector.at(selector)->get_is_read() == true )
+        {
+            continue;
+        }
+        else
+        {
+            vectors::task_vector.at(selector)->set_is_read(true);
+            number_of_read--;
+        }
+        
+    }
+
+    while(number_of_write != 0)
+    {
+        selector = rand() % vectors::task_vector.size();
+        if(vectors::task_vector.at(rand() % vectors::task_vector.size())->get_is_write() == true )
+        {
+            continue;
+        }
+        else
+        {
+            vectors::task_vector.at(selector)->set_is_write(true);
+            number_of_write--;
+        }
+    }
 }

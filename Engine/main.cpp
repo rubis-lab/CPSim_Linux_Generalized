@@ -61,18 +61,14 @@ int main(int argc, char *argv[])
     {
         initializer_module.initialize(utils::null_path);
     }
+    
     ScheduleSimulator schedule_simulator_on_Real;
     OfflineGuider offline_guider;
     Executor executor;
 
     int i = 0;
     bool is_simulatable = true;
-    for(auto task : vectors::task_vector)
-    {
-        std::cout << task->get_task_name() << "is " << task->get_is_read() << ", " << task->get_is_write()<< ", " << task->get_producers().size() <<", " << task->get_consumers().size() << std::endl;
-    }
-    schedule_simulator_on_Real.simulate_scheduling_on_real(utils::current_time);
-    offline_guider.construct_job_precedence_graph();
+
     // for(auto job : vectors::job_vectors_for_each_ECU.at(0))
     // {
     //     std::cout << job->get_task_name() <<job->get_job_id() << ", "<<job->get_is_read() << ", "<<job->get_is_write() <<", "<< job->get_consumers().size() <<std::endl;
@@ -82,9 +78,9 @@ int main(int argc, char *argv[])
     //             std::cout << con->get_task_name() << std::endl;
     //         }    
     // }
-    while(0)
+    int simulation_termination_time = utils::hyper_period;
+    while(utils::current_time < simulation_termination_time)
     {
-        std::cout << i++ << "th Hyper_period" << std::endl;
         /** [Generation of Real-Cyber System's Scheduling]
          * To run simulator, 
          * second, we need to calculate all of the ECUs' behavior.
