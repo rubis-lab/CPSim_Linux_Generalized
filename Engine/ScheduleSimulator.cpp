@@ -354,11 +354,9 @@ void ScheduleSimulator::busy_period_analysis(std::vector<std::shared_ptr<Job>>& 
     std::sort(job_queue.begin(), job_queue.end(), utils::compare);
     if(job_queue.empty())
         std::cout << "WARNING! JOB QUEUE IS EMPTY!" << std::endl;
-    
     start = job_queue.back()->get_actual_release_time(); //set busy period start point as the highest priority job's release time.
     int last_start = 0;
     int last_execution_time = 0;
-
     // initial value of parameter "start" will always be at a location that is NOT occupied by GPU / Sync job.
 
     // job_queue only contains jobs with CPU priority policy.

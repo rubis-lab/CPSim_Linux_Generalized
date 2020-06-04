@@ -176,8 +176,8 @@ bool utils::compare(std::shared_ptr<Job> pred, std::shared_ptr<Job> succ)
 {
     //if two jobs priority are same, then choose job id first.
     if(pred->get_priority() == succ->get_priority())
-		return pred->get_job_id() < succ->get_job_id();
-	return pred->get_priority() < succ->get_priority();
+		return pred->get_job_id() > succ->get_job_id();
+	return pred->get_priority() > succ->get_priority();
 }
 
 bool utils::first_release(std::shared_ptr<Job> pred, std::shared_ptr<Job> succ)

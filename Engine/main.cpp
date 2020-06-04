@@ -67,17 +67,21 @@ int main(int argc, char *argv[])
 
     int i = 0;
     bool is_simulatable = true;
-    schedule_simulator_on_Real.simulate_scheduling_on_real(utils::current_time);
-    for(i=0; i<vectors::job_vectors_for_each_ECU.size(); i++)
+    for(auto task : vectors::task_vector)
     {
-        std::cout << i << "th ECU \n";
-        for(auto job : vectors::job_vectors_for_each_ECU.at(i))
-        {
-            std::cout << job->get_task_name() <<","<< job->get_period()<< "," << job->get_priority() << ","<<job->get_actual_release_time() <<"," << job->get_est() << ", "<< job->get_eft()<< std::endl;
-        }
+        std::cout << task->get_task_name() << "is " << task->get_is_read() << ", " << task->get_is_write()<< ", " << task->get_producers().size() <<", " << task->get_consumers().size() << std::endl;
     }
-
-
+    schedule_simulator_on_Real.simulate_scheduling_on_real(utils::current_time);
+    offline_guider.construct_job_precedence_graph();
+    // for(auto job : vectors::job_vectors_for_each_ECU.at(0))
+    // {
+    //     std::cout << job->get_task_name() <<job->get_job_id() << ", "<<job->get_is_read() << ", "<<job->get_is_write() <<", "<< job->get_consumers().size() <<std::endl;
+    //     if(job->get_consumers().size()!= 0)
+    //         for(auto con : job->get_consumers())
+    //         {
+    //             std::cout << con->get_task_name() << std::endl;
+    //         }    
+    // }
     while(0)
     {
         std::cout << i++ << "th Hyper_period" << std::endl;
@@ -87,7 +91,6 @@ int main(int argc, char *argv[])
          * For this, we simulate those ECUs' job scheduling scenario with the specificated informations.
          */
         schedule_simulator_on_Real.simulate_scheduling_on_real(utils::current_time);
-        //std::cout << "SCHEDULE SIMULATION DONE" << std::endl;
         /** [Construction of Job Precedence Graph(Offline Guider)]
          * To run simulator, 
          * third, we need to consider those constraints(Physical Read Constraint, Physical Write Constraint, Producer-Consumer Constraint)
