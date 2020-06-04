@@ -196,6 +196,12 @@ void Executor::change_execution_time()
     for (auto job : vectors::job_vector_of_simulator)
     {
         job->set_simulated_execution_time(job->get_actual_execution_time() * 0.3);
+        if (job->get_priority_policy() == PriorityPolicy::GPU)
+        {
+            double execution_time_mapping_factor = (double)job->get_ECU()->get_gpu_performance() / utils::simulatorGPU_performance;
+            job->set_simulated_execution_time(job->get_actual_execution_time() * execution_time_mapping_factor);
+            job->set_simulated_gpu_wait_time(job->get_gpu_wait_time() * execution_time_mapping_factor);
+        }
     }
 }
 
@@ -231,8 +237,9 @@ void Executor::assign_predecessors_successors()
     for(auto job : vectors::job_vector_of_simulator)
     {
         duplication_check_det_pred.clear();
+
         duplication_check_det_pred[std::to_string(job->get_task_id()) + ":" + std::to_string(job->get_job_id())] = true;
-        for (auto other_job : vectors::job_vector_of_simulator)
+        for (auto other_job : vectors::job_vector_of_simulator) // For both CPU and GPU jobs.
         {
             if (job == other_job) continue;
             std::string identifier = std::to_string(other_job->get_task_id()) + ":" + std::to_string(other_job->get_job_id());
@@ -249,9 +256,9 @@ void Executor::assign_predecessors_successors()
         // 3. If our job is a Write job, then all jobs that affect our finish time deterministically are det_predecessors.
         // 4. All jobs in get_job_set_pro_con_det are det_predecessors.
         // Get all deterministic predecessors and deterministic successors:
-        if (job->get_is_read())
+        if (job->get_is_read()) // Technically only affects CPU jobs.
         {
-            for (auto other_job : job->get_job_set_start_det())
+            for (auto other_job : job->get_job_set_start_det()) // This job set is empty on GPU Policy Jobs, don't worry.
             {
                 std::string identifier = std::to_string(other_job->get_task_id()) + ":" + std::to_string(other_job->get_job_id());
                 if (!duplication_check_det_pred[identifier])
@@ -262,9 +269,9 @@ void Executor::assign_predecessors_successors()
                 }
             }
         }
-        else if (job->get_is_write())
+        else if (job->get_is_write()) // Technically only affects CPU jobs.
         {
-            for (auto other_job : job->get_job_set_finish_det())
+            for (auto other_job : job->get_job_set_finish_det()) // This job set is empty on GPU Policy Jobs, don't worry.
             {
                 std::string identifier = std::to_string(other_job->get_task_id()) + ":" + std::to_string(other_job->get_job_id());
                 if (!duplication_check_det_pred[identifier])
@@ -275,7 +282,8 @@ void Executor::assign_predecessors_successors()
                 }
             }
         }
-        for (auto other_job : job->get_job_set_pro_con_det())
+
+        for (auto other_job : job->get_job_set_pro_con_det()) // For GPU Sync, this should be the init. For GPU Init, same as normal CPU job.
         {
             std::string identifier = std::to_string(other_job->get_task_id()) + ":" + std::to_string(other_job->get_job_id());
             if (!duplication_check_det_pred[identifier])
@@ -293,7 +301,7 @@ void Executor::assign_predecessors_successors()
         // Get all non-deterministic predecessors and non-deterministic successors:
         if (job->get_is_read())
         {
-            for (auto other_job : job->get_job_set_start_non_det())
+            for (auto other_job : job->get_job_set_start_non_det()) // Empty on GPU.
             {
                 std::string identifier = std::to_string(other_job->get_task_id()) + ":" + std::to_string(other_job->get_job_id());
                 if (!duplication_check_det_pred[identifier] && !duplication_check_non_det_pred[identifier])
@@ -306,7 +314,7 @@ void Executor::assign_predecessors_successors()
         }
         else if (job->get_is_write())
         {
-            for (auto other_job : job->get_job_set_finish_non_det())
+            for (auto other_job : job->get_job_set_finish_non_det()) // Empty on GPU.
             {
                 std::string identifier = std::to_string(other_job->get_task_id()) + ":" + std::to_string(other_job->get_job_id());
                 if (!duplication_check_det_pred[identifier] && !duplication_check_non_det_pred[identifier])
@@ -317,7 +325,8 @@ void Executor::assign_predecessors_successors()
                 }
             }
         }
-        for (auto other_job : job->get_job_set_pro_con_non_det())
+
+        for (auto other_job : job->get_job_set_pro_con_non_det()) // For GPU Sync, empty. For GPU Init..Same as normal CPU job..
         {
             std::string identifier = std::to_string(other_job->get_task_id()) + ":" + std::to_string(other_job->get_job_id());
             if (!duplication_check_det_pred[identifier] && !duplication_check_non_det_pred[identifier])
@@ -326,6 +335,33 @@ void Executor::assign_predecessors_successors()
                 other_job->get_non_det_successors().push_back(job);
                 duplication_check_non_det_pred[identifier] = true;
             }
+        }
+    }
+
+    // Make sure Sync job's dont start too fast. (Add Virtual GPU Job).
+    for (auto job : vectors::job_vector_of_simulator)
+    {
+        if (!job->get_is_gpu_sync()) continue;
+        if (job->get_det_prdecessors().size() > 0) continue;
+        // We are a sync job with no predecessors left.
+        // Make sure that we can't be released until GPU Wait Time has occured.
+
+        // Get the simulated finish time of our corresponding Init job.
+        double init_finish_time; // Left uninitialized to catch if there is a logic error somewhere in task construction.
+        for (auto init : vectors::job_vector_of_simulator)
+        {
+            if (!init->get_is_gpu_init()) continue;
+            if (init->get_task_id() && job->get_task_id() && init->get_job_id() == job->get_job_id())
+            {
+                init_finish_time = init->get_simulated_finish_time();
+                break;
+            }
+        }
+        double essta = init_finish_time + job->get_simulated_gpu_wait_time(); // earliest simulated start time allowed
+        if (utils::current_time < essta)
+        {
+            job->get_det_prdecessors().push_back(std::make_shared<Job>()); // Add virtual job to prevent sync from starting.
+            job->set_simulated_release_time(essta);
         }
     }
 }

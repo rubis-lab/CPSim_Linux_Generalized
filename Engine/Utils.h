@@ -35,7 +35,7 @@ namespace utils
     inline int number_of_ECUs = 0;
     inline int number_of_tasks = 0;
     inline int simulatorPC_performance = 3000;
-    inline double simple_mapping_function = 0.3;
+    inline int simulatorGPU_performance = 12000;
     inline unsigned int ecu_counter = 0;
     inline bool is_experimental = true;
     

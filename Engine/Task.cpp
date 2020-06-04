@@ -189,6 +189,16 @@ int Task::get_gpu_wait_time()
     return m_gpu_wait_time;
 }
 
+void Task::set_simulated_gpu_wait_time(double time)
+{
+    this->m_simulated_gpu_wait_time = time;
+}
+
+double Task::get_simulated_gpu_wait_time()
+{
+    return this->m_simulated_gpu_wait_time;
+}
+
 /**
  * @fn int get_period()
  * @brief Getter for task period
