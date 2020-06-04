@@ -44,12 +44,13 @@ ECU::ECU()
  * @warning none
  * @todo none
  */
-ECU::ECU(int performance, std::string scheduling_policy)
+ECU::ECU(int performance, std::string scheduling_policy, int gpu_performance)
 {
     m_performance = performance;
     m_scheduling_policy = scheduling_policy;
     m_ecu_id = vectors::ecu_vector.size();
     m_num_of_task = 0;
+    m_gpu_performance = gpu_performance;
 }
 
 /**
@@ -106,6 +107,11 @@ int ECU::get_ECU_id()
 int ECU::get_performance()
 {
     return m_performance;
+}
+
+int ECU::get_gpu_performance()
+{
+    return m_gpu_performance;
 }
 
 int ECU::get_num_of_task()

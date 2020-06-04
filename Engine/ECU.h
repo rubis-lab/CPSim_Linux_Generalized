@@ -18,6 +18,7 @@ class ECU
 private:
     std::string m_scheduling_policy;
     int m_performance;
+    int m_gpu_performance;
     int m_ecu_id;
     int m_num_of_task;
 public:
@@ -25,7 +26,7 @@ public:
      * Constructors and Destructors
      */
     ECU();
-    ECU(int, std::string);
+    ECU(int, std::string, int gpu_performance = 6000);
     ~ECU();
 
     /**
@@ -33,6 +34,7 @@ public:
      */
     int get_ECU_id();
     int get_performance();
+    int get_gpu_performance();
     int get_num_of_task();
     std::string get_scheduling_policy();
 
@@ -41,6 +43,7 @@ public:
      */
     void set_ECU_id(int);
     void set_performance(int);
+    void set_gpu_performance(int);
     void set_num_of_task(int);
     void set_scheduling_policy(std::string);
 };
