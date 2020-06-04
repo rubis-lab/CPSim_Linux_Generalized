@@ -141,8 +141,6 @@ void Initializer::initialize(std::string location)
         for(auto task : vectors::task_vector)
         {
             task->synchronize_producer_consumer_relation();
-            std::cout << task->get_task_name() << "'s producer size " << task->get_producers().size() << " consumers size : " <<
-            task->get_consumers().size() << std::endl;
         }
     else
     {
@@ -187,7 +185,6 @@ void Initializer::random_task_generator(double read_ratio, double write_ratio, i
             period = 40;
         else period = 80;
         //int period = (rand() % 10 + 1) * 10; //[10-100] milli sec.
-        //std::cout << period << std::endl;
         // if(period < 40)
         //     period = 20;
         // else if(period < 70)
@@ -241,9 +238,10 @@ void Initializer::random_task_generator(double read_ratio, double write_ratio, i
         bool is_overlapped = false;
         if(is_write)
             num_of_consumer = 0;
-        if(is_read)
-            if(num_of_consumer==0)
+        else if(is_read){
+            if(num_of_consumer ==0)
                 num_of_consumer++;
+        }
         while(num_of_consumer != 0)
         {
             int random_select_taskID = rand() % (task_num + 1);

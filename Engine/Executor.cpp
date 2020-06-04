@@ -219,10 +219,6 @@ void Executor::assign_deadline_for_simulated_jobs()
     {
         job->update_simulated_deadline();
     }
-    for (auto job : vectors::job_vector_of_simulator)
-    {
-        std::cout << "SM: " << job->get_simulated_deadline() << std::endl;
-    }
 }
 
 void Executor::assign_predecessors_successors()
