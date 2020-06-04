@@ -100,7 +100,7 @@ void Executor::run_simulation(double start_time)
     random_execution_time_generator(); // Sets actual exec time on jobs in the Sim's job vectors.
     change_execution_time(); // Sets the simulated exec time. Warning: Need to adapt for GPU by changing Init job's GPU WAIT TIME variable. Do we need to change the sync job aswell to accord for this..?
     assign_predecessors_successors();
-    std::cout << "Here" << std::endl;
+    assign_deadline_for_simulated_jobs();
     /**
      * Iterating Loop for running jobs in one HP
      */
@@ -210,6 +210,10 @@ void Executor::assign_deadline_for_simulated_jobs()
     {
         job->update_simulated_deadline();
     }
+    for (auto job : vectors::job_vector_of_simulator)
+    {
+        std::cout << "SM: " << job->get_simulated_deadline() << std::endl;
+    }
 }
 
 void Executor::assign_predecessors_successors()
@@ -257,8 +261,8 @@ void Executor::assign_predecessors_successors()
                 std::string identifier = std::to_string(other_job->get_task_id()) + ":" + std::to_string(other_job->get_job_id());
                 if (!duplication_check_det_pred[identifier])
                 {
-                    job->get_det_prdecessors.push_back(other_job);
-                    other_job->get_det_successors.push_back(job);
+                    job->get_det_prdecessors().push_back(other_job);
+                    other_job->get_det_successors().push_back(job);
                     duplication_check_det_pred[identifier] = true;
                 }
             }
@@ -270,8 +274,8 @@ void Executor::assign_predecessors_successors()
                 std::string identifier = std::to_string(other_job->get_task_id()) + ":" + std::to_string(other_job->get_job_id());
                 if (!duplication_check_det_pred[identifier])
                 {
-                    job->get_det_prdecessors.push_back(other_job);
-                    other_job->get_det_successors.push_back(job);
+                    job->get_det_prdecessors().push_back(other_job);
+                    other_job->get_det_successors().push_back(job);
                     duplication_check_det_pred[identifier] = true;
                 }
             }
@@ -281,7 +285,7 @@ void Executor::assign_predecessors_successors()
             std::string identifier = std::to_string(other_job->get_task_id()) + ":" + std::to_string(other_job->get_job_id());
             if (!duplication_check_det_pred[identifier])
             {
-                job->get_det_prdecessors.push_back(other_job);
+                job->get_det_prdecessors().push_back(other_job);
                 other_job->get_det_successors().push_back(job);
                 duplication_check_det_pred[identifier] = true;
             }
@@ -299,8 +303,8 @@ void Executor::assign_predecessors_successors()
                 std::string identifier = std::to_string(other_job->get_task_id()) + ":" + std::to_string(other_job->get_job_id());
                 if (!duplication_check_det_pred[identifier] && !duplication_check_non_det_pred[identifier])
                 {
-                    job->get_non_det_prdecessors.push_back(other_job);
-                    other_job->get_non_det_successors.push_back(job);
+                    job->get_non_det_prdecessors().push_back(other_job);
+                    other_job->get_non_det_successors().push_back(job);
                     duplication_check_non_det_pred[identifier] = true;
                 }
             }
@@ -312,8 +316,8 @@ void Executor::assign_predecessors_successors()
                 std::string identifier = std::to_string(other_job->get_task_id()) + ":" + std::to_string(other_job->get_job_id());
                 if (!duplication_check_det_pred[identifier] && !duplication_check_non_det_pred[identifier])
                 {
-                    job->get_non_det_prdecessors.push_back(other_job);
-                    other_job->get_non_det_successors.push_back(job);
+                    job->get_non_det_prdecessors().push_back(other_job);
+                    other_job->get_non_det_successors().push_back(job);
                     duplication_check_non_det_pred[identifier] = true;
                 }
             }
@@ -323,8 +327,8 @@ void Executor::assign_predecessors_successors()
             std::string identifier = std::to_string(other_job->get_task_id()) + ":" + std::to_string(other_job->get_job_id());
             if (!duplication_check_det_pred[identifier] && !duplication_check_non_det_pred[identifier])
             {
-                job->get_det_prdecessors.push_back(other_job);
-                other_job->get_non_det_successors.push_back(job);
+                job->get_det_prdecessors().push_back(other_job);
+                other_job->get_non_det_successors().push_back(job);
                 duplication_check_non_det_pred[identifier] = true;
             }
         }
@@ -348,7 +352,8 @@ void Executor::move_ecus_jobs_to_simulator()
     for(int i = 0; i < vectors::job_vectors_for_each_ECU.size(); i++ )
     {
         vectors::job_vector_of_simulator.insert(vectors::job_vector_of_simulator.end(), vectors::job_vectors_for_each_ECU.at(i).begin(), vectors::job_vectors_for_each_ECU.at(i).end());
-    } 
+        vectors::job_vectors_for_each_ECU.at(i).clear();
+    }
 }
 
 void Executor::update_all(std::shared_ptr<Job> last_simulated_job)
@@ -442,7 +447,7 @@ bool Executor::check_deadline_miss()
     for(auto job : vectors::job_vector_of_simulator)
     {
         if(job->get_simulated_finish_time() > job->get_simulated_deadline())
-        {
+        { 
             return false;
         } 
     }

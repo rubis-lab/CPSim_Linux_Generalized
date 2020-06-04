@@ -92,7 +92,7 @@ void OfflineGuider::construct_start_job_sets(int ecu_id, std::shared_ptr<Job>& c
     if (current_job->get_priority_policy() == PriorityPolicy::GPU) return; // GPU Jobs have enforced determinism.
     for (auto job : vectors::job_vectors_for_each_ECU.at(ecu_id))
     {
-        if (job->get_priority() >= current_job->get_priority || job->get_task_id() == current_job->get_task_id()) continue; // Job is a lower or equal priority job.
+        if (job->get_priority() >= current_job->get_priority() || job->get_task_id() == current_job->get_task_id()) continue; // Job is a lower or equal priority job.
         if (!((current_job->get_wcbp().front() <= job->get_actual_release_time()) && (job->get_actual_release_time() <= current_job->get_lst()))) continue; // Job doesn't satisfy the requirements to be part of the job set.
         // Job is either a deterministic or non-deterministic affecter of our start time.
         // Determine which.
@@ -109,7 +109,7 @@ void OfflineGuider::construct_finish_job_sets(int ecu_id, std::shared_ptr<Job>& 
     if (current_job->get_priority_policy() == PriorityPolicy::GPU) return; // GPU Jobs have enforced determinism.
     for (auto job : vectors::job_vectors_for_each_ECU.at(ecu_id))
     {
-        if (job->get_priority() >= current_job->get_priority || job->get_task_id() == current_job->get_task_id()) continue; // Job is a lower or equal priority job.
+        if (job->get_priority() >= current_job->get_priority() || job->get_task_id() == current_job->get_task_id()) continue; // Job is a lower or equal priority job.
         if (!((current_job->get_wcbp().front() <= job->get_actual_release_time()) && (job->get_actual_release_time() < current_job->get_lft()))) continue; // Job doesn't satisfy the requirements to be part of the job set.
         // Job is either a deterministic or non-deterministic affecter of our finish time.
         // Determine which.

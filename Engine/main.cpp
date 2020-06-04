@@ -67,10 +67,20 @@ int main(int argc, char *argv[])
 
     int i = 0;
     bool is_simulatable = true;
-
-    while(1)
+    schedule_simulator_on_Real.simulate_scheduling_on_real(utils::current_time);
+    for(i=0; i<vectors::job_vectors_for_each_ECU.size(); i++)
     {
-        //std::cout << i++ << "th Hyper_period" << std::endl;
+        std::cout << i << "th ECU \n";
+        for(auto job : vectors::job_vectors_for_each_ECU.at(i))
+        {
+            std::cout << job->get_task_name() <<","<< job->get_period()<< "," << job->get_priority() << ","<<job->get_actual_release_time() <<"," << job->get_est() << ", "<< job->get_eft()<< std::endl;
+        }
+    }
+
+
+    while(0)
+    {
+        std::cout << i++ << "th Hyper_period" << std::endl;
         /** [Generation of Real-Cyber System's Scheduling]
          * To run simulator, 
          * second, we need to calculate all of the ECUs' behavior.
@@ -83,9 +93,9 @@ int main(int argc, char *argv[])
          * third, we need to consider those constraints(Physical Read Constraint, Physical Write Constraint, Producer-Consumer Constraint)
          * For this, we create offline guider, and make a graph data structure for representing all of the jobs' precedence relationship.
         */  
-
+        
         offline_guider.construct_job_precedence_graph();
-
+        
         /** [Execute Jobs and Update the graph]
          * To start simulator,
          * forth, we need to schedule those jobs' that is already inserted in the Job Precedence Graph.

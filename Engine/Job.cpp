@@ -57,6 +57,8 @@ Job::Job(std::shared_ptr<Task> task, int job_id)
     this->set_ECU(task->get_ECU());
     this->set_producers(task->get_producers());
     this->set_consumers(task->get_consumers());
+    this->set_priority(task->get_priority());
+    this->set_priority_policy(task->get_priority_policy());
     
     m_job_id = job_id;
     m_actual_release_time = calculate_release_time(task->get_period(), task->get_offset());

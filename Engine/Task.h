@@ -88,7 +88,7 @@ public:
     /**
      * Setter member functions
      */
-
+	void set_priority_policy(PriorityPolicy priority_policy);
 	void set_task_name(std::string task_name);
 	void set_task_id(int task_id);
 	void set_period(int period);

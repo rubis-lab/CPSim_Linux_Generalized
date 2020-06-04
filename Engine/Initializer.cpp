@@ -2,6 +2,7 @@
 #include <ctime>
 #include <cstdlib>
 #include <climits>
+#include <cmath>
 
 /** 
  *  This file is the cpp file for the Initializer class.
@@ -127,14 +128,15 @@ void Initializer::initialize(std::string location)
      * ECU Vector Initialization
      * number of ECU is [3-10]
      */                         
-    random_ecu_generator((rand() % 8) + 3);
+    //random_ecu_generator((rand() % 8) + 3);
+    random_ecu_generator(1);
     
     /**
      * Task Vector Initialization
      * Implement GPU / CPU job...
      */
-    random_task_generator(0.3, 0.3, rand() % (vectors::ecu_vector.size() * 5));
-
+    //random_task_generator(0.3, 0.3, (rand() % 5 + 1) * vectors::ecu_vector.size());
+    random_task_generator(0.3, 0.3, 3);
     if(utils::is_experimental == false)
         for(auto task : vectors::task_vector)
         {
@@ -167,52 +169,81 @@ void Initializer::initialize(std::string location)
 
 void Initializer::random_task_generator(double read_ratio, double write_ratio, int task_num)
 {
-    int number_of_read = read_ratio * task_num; //read ratio is 30%
-    int number_of_write = write_ratio * task_num; //write ratio is 30%
+    int number_of_read = std::ceil(read_ratio * task_num); //read ratio is 30%
+    int number_of_write = std::ceil(write_ratio * task_num); //write ratio is 30%
 
+    bool was_read = false;
+    bool was_write = false;
+    bool is_init = true;
     for(int i = 0; i < task_num; i++)
     {
         std::string task_name = "TASK" + std::to_string(i);
-        int period = (rand() % 10 + 1) * 10; //[10-100] milli sec.
-        int bcet = (rand() % 6 + 5) * period; // [5-10] percent of period.
-        int wcet = ((rand() % 1) + 1) * bcet;// [1.0-2.0] random variation factor multiply bcet
+        int period = rand() % 100; //[10-100] milli sec.
+        if(period < 25)
+            period = 10;
+        else if(period < 50)
+            period = 20;
+        else if(period < 75)
+            period = 40;
+        else period = 80;
+        //int period = (rand() % 10 + 1) * 10; //[10-100] milli sec.
+        //std::cout << period << std::endl;
+        // if(period < 40)
+        //     period = 20;
+        // else if(period < 70)
+        //     period = 40;
+        // else period = 80;
+        
+        int bcet = std::ceil(period * ((rand() % 6 + 5) * 0.01)); // [5-10] percent of period.
+        int wcet = ((rand() % 2) + 1) * (double)bcet;// [1.0-2.0] random variation factor multiply bcet
         int offset = 0; //RTSS paper sets offset as 0.
         bool is_read = false;
         bool is_write = false;
         int ecu_id = rand() % vectors::ecu_vector.size();
-
-        if((number_of_read != 0) || number_of_write != 0)
+        
+        if(is_init)
         {
-            if((number_of_read > number_of_write) && (number_of_read !=0))
-            {
-                is_read = true;
-                number_of_read--;
-            }
-            else if((number_of_read < number_of_write) && (number_of_write !=0))
-            {
-                is_write = true;
-                number_of_write--;
-            }
-            else
-            {
-                if(number_of_write != 0)
-                {
-                    is_write = true;
-                    number_of_write--;
-                }
-                else if(number_of_read != 0)
-                {
-                    is_read = true;
-                    number_of_read--;
-                }
-            }
+            was_read = true;
+            is_read = true;
+            is_init = false;
+            number_of_read--;
+        }
+        else if((number_of_read > 0) && (was_read == false) && (was_write == true))
+        {
+            was_read = true;
+            was_write = false;
+            is_read = true;
+            is_write = false;
+            number_of_read--;
+        }
+        else if((number_of_write > 0) && (was_read == true) && (was_write == false))
+        {
+            was_write = true;
+            was_read = false;
+            is_read = false;
+            is_write = true;
+            number_of_write--;
+        }
+        else if(number_of_write == 0 && number_of_read == 0)
+        {
+            is_read = false;
+            is_write = false;
+        }
+        else
+        {
+            was_read = !was_read;
+            was_write = !was_write;
         }
         //each task can be data producer of [0-2] randomly selected task.
         std::vector<std::string> producers;
         std::vector<std::string> consumers;
         int num_of_consumer = rand() % 3;
         bool is_overlapped = false;
-
+        if(is_write)
+            num_of_consumer = 0;
+        if(is_read)
+            if(num_of_consumer==0)
+                num_of_consumer++;
         while(num_of_consumer != 0)
         {
             int random_select_taskID = rand() % (task_num + 1);
@@ -239,7 +270,6 @@ void Initializer::random_task_generator(double read_ratio, double write_ratio, i
             {
                 is_overlapped = false;
             }
-            
         }
 
         //each ecu can have [1-5] task.

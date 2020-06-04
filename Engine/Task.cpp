@@ -230,6 +230,11 @@ PriorityPolicy Task::get_priority_policy()
     return m_priority_policy;
 }
 
+void Task::set_priority_policy(PriorityPolicy priority_policy)
+{
+    this->m_priority_policy = priority_policy;
+}
+
 /**
  * @fn int get_wcet()
  * @brief Getter for task's worst case execution time
