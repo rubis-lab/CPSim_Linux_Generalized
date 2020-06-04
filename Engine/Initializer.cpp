@@ -165,15 +165,28 @@ void Initializer::initialize(std::string location)
         global_object::logger_thread = std::make_shared<std::thread>(&Logger::start_logging, global_object::logger);
     }
 }
-void Initializer::random_gpu_task_generator(int task_num)
-{
-    
-}
+
 void Initializer::random_task_generator(int task_num)
 {
     for(int i = 0; i < task_num; i++)
     {
         std::string task_name = "TASK" + std::to_string(i);
+        bool is_gpu_task = false;
+        bool execute_gpu_on_cpu = false;
+        if (utils::enable_gpu_scheduling)
+        {
+            int chance = rand() % 100;
+            if (chance < utils::gpu_task_percentage)
+                is_gpu_task = true;
+        }
+        else if (utils::execute_gpu_jobs_on_cpu)
+        {
+            int chance = rand() % 100;
+            if (chance < utils::gpu_task_percentage)
+                execute_gpu_on_cpu = true; // We are running CPU only, but we treat this as an originally GPU task. So we will increase its execution time.
+        }
+
+
         int period = rand() % 100; //[10-100] milli sec.
         if(period < 25)
             period = 10;
@@ -182,14 +195,12 @@ void Initializer::random_task_generator(int task_num)
         else if(period < 75)
             period = 40;
         else period = 80;
-        //int period = (rand() % 10 + 1) * 10; //[10-100] milli sec.
-        // if(period < 40)
-        //     period = 20;
-        // else if(period < 70)
-        //     period = 40;
-        // else period = 80;
+        // Make sure period is large enough for GPU jobs so that we can have discrete sync / init execution times...
+        if (period != 40 && is_gpu_task) period = 80;
         
         int bcet = std::ceil(period * ((rand() % 6 + 5) * 0.01)); // [5-10] percent of period.
+        if (execute_gpu_on_cpu)
+            bcet = bcet / utils::simple_gpu_mapping_function;
         int wcet = ((rand() % 2) + 1) * (double)bcet;// [1.0-2.0] random variation factor multiply bcet
         int offset = 0; //RTSS paper sets offset as 0.
         bool is_read = false;
@@ -245,8 +256,41 @@ void Initializer::random_task_generator(int task_num)
         vectors::ecu_vector.at(ecu_id)->set_num_of_task(min_num + 1);
 
         //Task Name(id), period, deadline, wcet, bcet, offset, read, write, ecu, producer, consumers
-        std::shared_ptr<Task> task = std::make_shared<Task>(task_name, period, period, wcet, bcet, offset, is_read, is_write, ecu_id, producers, consumers);
-        vectors::task_vector.push_back(std::move(task));
+        if (!is_gpu_task)
+        {
+            std::shared_ptr<Task> task = std::make_shared<Task>(task_name, period, period, wcet, bcet, offset, is_read, is_write, ecu_id, producers, consumers);
+            vectors::task_vector.push_back(std::move(task));
+        }
+        else
+        {
+            std::shared_ptr<Task> init;
+            std::shared_ptr<Task> sync;
+            // Possible periods were set to 40 and 80
+            // if period == 40:
+            // bcet: 2
+            // wcet: 4
+            // if period == 80:
+            // bcet: 4
+            // wcet: 8
+            // Hard to use percentage as real schedule only works with integers...
+            int exec = 1; // Just put 1..
+            int gpu_wait_time = wcet - (exec * 2); // When sync job can start..init's end (wcet) 
+            // period = old period
+            // deadline = exec time
+            // init has sync as consumer.
+            // sync has init as producer.
+
+            init = std::make_shared<Task>(task_name, period, exec, exec, exec, offset, is_read, is_write, ecu_id, producers, consumers);
+            init->set_is_gpu_init(true);
+            init->set_gpu_wait_time(gpu_wait_time);
+
+            sync = std::make_shared<Task>(task_name, period, (exec * 2) + gpu_wait_time, exec, exec, offset, is_read, is_write, ecu_id, producers, consumers);
+            sync->set_is_gpu_sync(true);
+            sync->set_gpu_wait_time(gpu_wait_time);
+
+            vectors::task_vector.push_back(std::move(init));
+            vectors::task_vector.push_back(std::move(sync));
+        }
     }
 }
 

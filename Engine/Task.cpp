@@ -457,7 +457,7 @@ void Task::set_ECU(std::shared_ptr<ECU> ecu)
 
 void Task::synchronize_producer_consumer_relation()
 {
-    
+    if (this->get_is_gpu_sync()) return;
     if(m_producers_info.size() != 0)
         for(auto producer : m_producers_info)
         {
