@@ -79,7 +79,11 @@ void ScheduleSimulator::simulate_scheduling_on_real(double global_hyper_period_s
             if(task == other_task) continue;
             if(other_task->get_priority_policy() != PriorityPolicy::GPU) continue;
             if(task->get_period() > other_task->get_period())
+            {
                 task->set_priority(task->get_priority() + 1);
+                if(task->get_priority() > highest_gpu_priority)
+                    highest_gpu_priority = task->get_priority();
+            }
         }
     }
     // Assign CPU Task Priorities
@@ -431,6 +435,27 @@ void ScheduleSimulator::busy_period_analysis(std::vector<std::shared_ptr<Job>>& 
                         if (job_queue.back()->get_priority_policy() == PriorityPolicy::GPU)
                         {
                             int pause;
+                            std::cout << "FATAL ERROR, WE ARE TRYING TO PREEMPT A GPU JOB!" << std::endl;
+                            std::cout << "Current running GPU job is: " << job_queue.back()->get_task_name() << " J" << job_queue.back()->get_job_id() << std::endl;
+                            if(job_queue.back()->get_is_gpu_init())
+                                std::cout << "Our job is a init job." << std::endl;
+                            else if(job_queue.back()->get_is_gpu_sync())
+                                std::cout << "Our job is a sync job." << std::endl;
+                            else
+                                std::cout << "Our job is neither." << std::endl;
+                            std::cout <<  "OUR PRIORITY IS " << job_queue.back()->get_priority() << std::endl;
+                            std::cout <<  "OUR ECU IS " << job_queue.back()->get_ECU()->get_ECU_id() << std::endl;
+                            std::cout << "The job trying to preempt us is: " << job->get_task_name() << " J" << job->get_job_id() << std::endl;
+                            if(job->get_is_gpu_init())
+                                std::cout << "and job is a init job." << std::endl;
+                            else if(job->get_is_gpu_sync())
+                                std::cout << "and job is a sync job." << std::endl;
+                            else
+                                std::cout << "and job is neither." << std::endl;
+                            std::string policy = job->get_priority_policy() == PriorityPolicy::CPU ? "CPU POLICY" : "GPU POLICY";
+                            std::cout << "and their priority policy is " << policy << std::endl;
+                            std::cout <<  "THEIR PRIORITY IS " << job->get_priority();
+                            std::cout <<  "THEIR ECU IS " << job->get_ECU()->get_ECU_id() << std::endl;
                             std::cin >> pause;
                         }
                         job_queue.back()->set_is_preempted(true);

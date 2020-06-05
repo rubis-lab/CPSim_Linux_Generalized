@@ -136,7 +136,7 @@ void Initializer::initialize(std::string location)
      * Implement GPU / CPU job...
      */
     //random_task_generator(0.3, 0.3, (rand() % 5 + 1) * vectors::ecu_vector.size());
-    random_task_generator(20);
+    random_task_generator(10);
     if(utils::is_experimental == false)
         for(auto task : vectors::task_vector)
         {
@@ -283,10 +283,12 @@ void Initializer::random_task_generator(int task_num)
             init = std::make_shared<Task>(task_name, period, exec, exec, exec, offset, is_read, is_write, ecu_id, producers, consumers);
             init->set_is_gpu_init(true);
             init->set_gpu_wait_time(gpu_wait_time);
+            init->set_priority_policy(PriorityPolicy::GPU);
 
             sync = std::make_shared<Task>(task_name, period, (exec * 2) + gpu_wait_time, exec, exec, offset, is_read, is_write, ecu_id, producers, consumers);
             sync->set_is_gpu_sync(true);
             sync->set_gpu_wait_time(gpu_wait_time);
+            sync->set_priority_policy(PriorityPolicy::GPU);
 
             vectors::task_vector.push_back(std::move(init));
             vectors::task_vector.push_back(std::move(sync));

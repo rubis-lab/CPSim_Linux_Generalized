@@ -67,8 +67,8 @@ int main(int argc, char *argv[])
     Executor executor;
 
     int i = 0;
-    bool is_simulatable = true;
-
+    int is_simulatable = -1; // -1 for success, other numbers represent failing ECU.
+   
     // for(auto job : vectors::job_vectors_for_each_ECU.at(0))
     // {
     //     std::cout << job->get_task_name() <<job->get_job_id() << ", "<<job->get_is_read() << ", "<<job->get_is_write() <<", "<< job->get_consumers().size() <<std::endl;
@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
         */  
         
         offline_guider.construct_job_precedence_graph();
-        
+ 
         /** [Execute Jobs and Update the graph]
          * To start simulator,
          * forth, we need to schedule those jobs' that is already inserted in the Job Precedence Graph.
@@ -103,11 +103,20 @@ int main(int argc, char *argv[])
         
         executor.run_simulation(utils::current_time);
         is_simulatable = executor.simulatability_analysis();
-        if(is_simulatable)
+        if(is_simulatable == -1)
             continue;
         else
         {
-            std::cout << "Not Simulatable" << std::endl;
+            std::cout << "-----------------Not Simulatable Start--------" << std::endl;
+            std::cout << "The Task Set Was:" << std::endl;
+            for(auto task : vectors::task_vector)
+            {
+                std::cout << task->get_ECU()->get_ECU_id() << ", " << task->get_task_name() << " : P: " << task->get_period() << ", BCET: " << task->get_bcet() << ", WCET: " << task->get_wcet();
+                std::cout << std::endl;
+                std::cout << std::endl;
+            }
+            std::cout << "First violation was detected in ECU " << is_simulatable << std::endl;
+            std::cout << "-----------------Not Simulatable End----------" << std::endl;
             break;
         }
     }

@@ -59,6 +59,9 @@ Job::Job(std::shared_ptr<Task> task, int job_id)
     this->set_consumers(task->get_consumers());
     this->set_priority(task->get_priority());
     this->set_priority_policy(task->get_priority_policy());
+    this->set_is_gpu_init(task->get_is_gpu_init());
+    this->set_is_gpu_sync(task->get_is_gpu_sync());
+    this->set_gpu_wait_time(task->get_gpu_wait_time());
     
     m_job_id = job_id;
     m_actual_release_time = calculate_release_time(task->get_period(), task->get_offset());
@@ -180,7 +183,7 @@ double Job::get_simulated_start_time()
 }
 double Job::get_simulated_finish_time()
 {
-    return m_simulated_start_time;
+    return m_simulated_finish_time;
 }
 double Job::get_simulated_execution_time()
 {
@@ -401,6 +404,10 @@ void Job::initialize_simulated_deadline()
     if(this->get_is_write())
     {
         m_simulated_deadline = static_cast<double>(m_eft);
+        if(m_simulated_deadline == 0)
+        {
+            std::cout << "WE GOT A ZERO VALUE DEADLINE INSIDE THE INITIALIZE SIMULATED DEADLINE FUNCTION!" << std::endl;
+        }
     }
     else
     {
@@ -411,7 +418,16 @@ void Job::update_simulated_deadline()
 {
     if(this->get_is_write())
     {
+        //std::cout << "EFT: " << m_eft << std::endl;
         m_simulated_deadline = static_cast<double>(m_eft);
+        if(m_simulated_deadline == 0)
+        {
+            std::cout << "WE GOT A ZERO VALUE DEADLINE INSIDE THE UPDATE SIMULATED DEADLINE FUNCTION!" << std::endl;
+        }
+        else
+        {
+            //std::cout << "WE GOT A NON ZERO VALUE INSIDE THE UPDATE SIMULATED DEADLINE FUNCTION!" << std::endl;
+        }
     }
     else
     {
@@ -429,4 +445,4 @@ double Job::min_simulated_deadline_det_successor()
         }
     }
     return min_value;
-}
+} 
