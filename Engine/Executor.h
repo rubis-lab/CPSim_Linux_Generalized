@@ -11,7 +11,16 @@
  *  
 */
 
-class Executor{
+typedef struct OldData
+{
+    int est;
+    int lst;
+    int eft;
+    int lft;
+} OldData;
+
+class Executor
+{
 private:
     int m_current_hyper_period_index;
     int m_current_hyper_period_start;
@@ -40,7 +49,7 @@ public:
     void random_execution_time_generator();
     void move_ecus_jobs_to_simulator();
     void update_all(std::shared_ptr<Job>);
-    void update_ecu_schedule(int);
+    void update_ecu_schedule(std::shared_ptr<Job>, OldData);
     void update_simulated_deadlines(int);
     void update_jobset(std::shared_ptr<Job>);
     void run_simulation(double);

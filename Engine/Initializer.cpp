@@ -136,7 +136,7 @@ void Initializer::initialize(std::string location)
      * Implement GPU / CPU job...
      */
     //random_task_generator(0.3, 0.3, (rand() % 5 + 1) * vectors::ecu_vector.size());
-    random_task_generator(5);
+    random_task_generator(2);
     if(utils::is_experimental == false)
         for(auto task : vectors::task_vector)
         {

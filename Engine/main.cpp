@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
     //             std::cout << con->get_task_name() << std::endl;
     //         }    
     // }
-    int simulation_termination_time = utils::hyper_period;
+    int simulation_termination_time = utils::hyper_period * 1;
     while(utils::current_time < simulation_termination_time)
     {
         /** [Generation of Real-Cyber System's Scheduling]
