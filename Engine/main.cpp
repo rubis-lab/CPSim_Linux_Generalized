@@ -100,6 +100,7 @@ int main(int argc, char *argv[])
          * forth, we need to schedule those jobs' that is already inserted in the Job Precedence Graph.
          * For this, we create executor which is responsible for 
         */
+        
         executor.run_simulation(utils::current_time);
         is_simulatable = executor.simulatability_analysis();
         if(is_simulatable)

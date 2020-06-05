@@ -128,15 +128,15 @@ void Initializer::initialize(std::string location)
      * ECU Vector Initialization
      * number of ECU is [3-10]
      */                         
-    //random_ecu_generator((rand() % 8) + 3);
-    random_ecu_generator(1);
+    random_ecu_generator((rand() % 8) + 3);
+    //random_ecu_generator(1);
     
     /**
      * Task Vector Initialization
      * Implement GPU / CPU job...
      */
     //random_task_generator(0.3, 0.3, (rand() % 5 + 1) * vectors::ecu_vector.size());
-    random_task_generator(2);
+    random_task_generator(20);
     if(utils::is_experimental == false)
         for(auto task : vectors::task_vector)
         {
