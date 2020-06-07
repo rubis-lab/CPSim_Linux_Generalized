@@ -351,6 +351,7 @@ void ScheduleSimulator::simulate_scheduling_on_real(double global_hyper_period_s
         }
         
     }
+    global_object::logger->log_job_vector_of_each_ECU_status();
 }
 
 void ScheduleSimulator::busy_period_analysis(std::vector<std::shared_ptr<Job>>& job_queue, int start, int& end, int ecu_id, bool setWorstCase)

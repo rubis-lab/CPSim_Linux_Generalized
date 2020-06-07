@@ -103,22 +103,6 @@ int main(int argc, char *argv[])
         
         executor.run_simulation(utils::current_time);
         is_simulatable = executor.simulatability_analysis();
-        if(is_simulatable == -1)
-            continue;
-        else
-        {
-            std::cout << "-----------------Not Simulatable Start--------" << std::endl;
-            std::cout << "The Task Set Was:" << std::endl;
-            for(auto task : vectors::task_vector)
-            {
-                std::cout << task->get_ECU()->get_ECU_id() << ", " << task->get_task_name() << " : P: " << task->get_period() << ", BCET: " << task->get_bcet() << ", WCET: " << task->get_wcet();
-                std::cout << std::endl;
-                std::cout << std::endl;
-            }
-            std::cout << "First violation was detected in ECU " << is_simulatable << std::endl;
-            std::cout << "-----------------Not Simulatable End----------" << std::endl;
-            break;
-        }
     }
     return 0;
 }

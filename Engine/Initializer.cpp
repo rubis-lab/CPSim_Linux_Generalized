@@ -136,7 +136,7 @@ void Initializer::initialize(std::string location)
      * Implement GPU / CPU job...
      */
     //random_task_generator(0.3, 0.3, (rand() % 5 + 1) * vectors::ecu_vector.size());
-    random_task_generator(10);
+    random_task_generator(20);
     if(utils::is_experimental == false)
         for(auto task : vectors::task_vector)
         {
@@ -161,9 +161,10 @@ void Initializer::initialize(std::string location)
      */
     if(utils::is_experimental == false)
     {
-        global_object::logger = std::make_shared<Logger>();
         global_object::logger_thread = std::make_shared<std::thread>(&Logger::start_logging, global_object::logger);
     }
+    global_object::logger = std::make_shared<Logger>();
+    global_object::logger->log_task_vector_status();
 }
 
 void Initializer::random_task_generator(int task_num)

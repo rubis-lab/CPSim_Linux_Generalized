@@ -99,18 +99,13 @@ void Executor::run_simulation(double start_time)
     move_ecus_jobs_to_simulator(); // Copies job vectors from ECUs to Sim.
     random_execution_time_generator(); // Sets actual exec time on jobs in the Sim's job vectors.
     change_execution_time(); // Sets the simulated exec time. Warning: Need to adapt for GPU by changing Init job's GPU WAIT TIME variable. Do we need to change the sync job aswell to accord for this..?
-    
     assign_predecessors_successors();
     assign_deadline_for_simulated_jobs();
+    global_object::logger->log_job_vector_of_simulator_status();
     /**
      * Iterating Loop for running jobs in one HP
      */
-    std::cout << std::endl;
-    for(auto job : vectors::job_vector_of_simulator)
-    {
-        std::cout << job->get_task_name() << job->get_job_id() <<job->get_ECU()->get_ECU_id() <<"'s pre suc : "<<job->get_det_prdecessors().size() << ","<< job->get_det_successors().size()<< std::endl;
-    }
-    std::cout << std::endl;
+
     std::vector<std::shared_ptr<Job>> simulation_ready_queue;
     while(utils::current_time < end_time)
     {
@@ -136,6 +131,7 @@ void Executor::run_simulation(double start_time)
                 else
                 {
                     job->set_is_released(true);
+                    job->set_simulated_release_time(utils::current_time);
                     simulation_ready_queue.push_back(job);    
                     is_idle = false; 
                 }
@@ -160,7 +156,8 @@ void Executor::run_simulation(double start_time)
                     run_job = job;
                 }
             }
-            std::cout << "Running job is : " << run_job->get_task_name() << run_job->get_job_id() << std::endl;
+
+            global_object::logger->add_current_simulated_job(run_job);
 
             /**
              * If, this is a real mode simulator, use actual function code of task
@@ -184,6 +181,7 @@ void Executor::run_simulation(double start_time)
         }
     }
     utils::current_time = end_time;
+    global_object::logger->print_job_execution_schedule();
 }
 
 void Executor::change_execution_time()
@@ -425,7 +423,6 @@ void Executor::update_ecu_schedule(std::shared_ptr<Job> source_job, OldData old_
         all_succers.push_back(job);
     for(auto job : source_job->get_non_det_successors())
         all_succers.push_back(job);
-    std::cout << all_succers.size() << std::endl;
     for(auto job : all_succers)
     {
         if(source_job->get_ECU()->get_ECU_id() != job->get_ECU()->get_ECU_id())

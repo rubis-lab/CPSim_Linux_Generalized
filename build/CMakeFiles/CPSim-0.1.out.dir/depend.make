@@ -50,8 +50,14 @@ CMakeFiles/CPSim-0.1.out.dir/Engine/JobNode.cpp.o: ../Engine/JobNode.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/JobNode.cpp.o: ../Engine/PriorityPolicy.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/JobNode.cpp.o: ../Engine/Task.h
 
+CMakeFiles/CPSim-0.1.out.dir/Engine/Logger.cpp.o: ../Engine/CAN_message.h
+CMakeFiles/CPSim-0.1.out.dir/Engine/Logger.cpp.o: ../Engine/ECU.h
+CMakeFiles/CPSim-0.1.out.dir/Engine/Logger.cpp.o: ../Engine/Job.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/Logger.cpp.o: ../Engine/Logger.cpp
 CMakeFiles/CPSim-0.1.out.dir/Engine/Logger.cpp.o: ../Engine/Logger.h
+CMakeFiles/CPSim-0.1.out.dir/Engine/Logger.cpp.o: ../Engine/PriorityPolicy.h
+CMakeFiles/CPSim-0.1.out.dir/Engine/Logger.cpp.o: ../Engine/Task.h
+CMakeFiles/CPSim-0.1.out.dir/Engine/Logger.cpp.o: ../Engine/Utils.h
 
 CMakeFiles/CPSim-0.1.out.dir/Engine/Network.cpp.o: ../Engine/Network.cpp
 CMakeFiles/CPSim-0.1.out.dir/Engine/Network.cpp.o: ../Engine/Network.h
