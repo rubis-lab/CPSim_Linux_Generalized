@@ -193,6 +193,18 @@ void Logger::print_job_execution_schedule()
         contents += std::to_string(job->get_task_id()) + std::to_string(job->get_job_id()) + "\t\t\t\t\t\t";
     }
     contents += "\n";
+    for(auto job : m_execution_order_buffer)
+    {
+        std::string constraint;
+        if(job->get_is_read())
+            constraint += "READ";
+        if(job->get_is_write())
+            constraint += "WRITE";
+        std::stringstream stream;
+        stream << std::setw(8) << constraint;
+        contents += "THIS JOB IS: "+ stream.str() + "\t";
+    }
+    contents += "\n";
     for(auto cut_time : m_current_time_buffer)
     {
         std::stringstream stream;
@@ -235,10 +247,57 @@ void Logger::print_job_execution_schedule()
         stream << std::fixed << std::setprecision(2) << std::setw (10) << job->get_simulated_finish_time();
         contents += "SIM_FINIS: "+ stream.str() + "\t";
     }
+    contents += "\n";
+    for(auto job : m_execution_order_buffer)
+    {
+        std::stringstream stream;
+        stream << std::fixed << std::setprecision(2) << std::setw (10) << job->get_simulated_execution_time();
+        contents += "SIM_EXECU: "+ stream.str() + "\t";
+    }
     write_execution_order.write(contents.c_str(), contents.size());
     write_execution_order.close();
 }
-void log_which_job_was_deadline_miss()
+void Logger::log_which_job_was_deadline_miss(std::shared_ptr<Job> deadline_job)
 {
+    std::ofstream write_deadline_miss;
+    write_deadline_miss.open("deadline_miss.txt");
+    std::string contents = "DEADLINE MISS\n";
+    contents += "JOB" +  std::to_string(deadline_job->get_task_id()) + std::to_string(deadline_job->get_job_id()) + "\n";
+    contents += "JOB's Constraints R/W: " + std::to_string(deadline_job->get_is_read()) + std::to_string(deadline_job->get_is_write());
+    {
+        std::stringstream stream;
+        stream << std::fixed << std::setprecision(2) << std::setw (10) << deadline_job->get_simulated_deadline();
+        contents += "\nSIM_DEAD: " + stream.str() + "\n";
+    }
+    {
+        std::stringstream stream;
+        stream << std::fixed << std::setprecision(2) << std::setw (10) << deadline_job->get_simulated_release_time();
+        contents += "SIM_RELE: " + stream.str() + "\n";
+    }
+    {
+        std::stringstream stream;
+        stream << std::fixed << std::setprecision(2) << std::setw (10) << deadline_job->get_simulated_start_time();
+        contents += "SIM_STAR: " + stream.str() + "\n";
+    }
+    {
+        std::stringstream stream;
+        stream << std::fixed << std::setprecision(2) << std::setw (10) << deadline_job->get_simulated_execution_time();
+        contents += "SIM_EXEC: " + stream.str() + "\n";
+    }
+    {
+        std::stringstream stream;
+        stream << std::fixed << std::setprecision(2) << std::setw (10) << deadline_job->get_simulated_finish_time();
+        contents += "SIM_FINI: " + stream.str() + "\n";
+    }
+     contents += "\n";
+    for(auto job : deadline_job->get_det_successors())
+    {
+        contents += "JOB" + std::to_string(job->get_task_id()) + std::to_string(job->get_job_id()) + "\n";
+        contents += "EFT: " + std::to_string(job->get_eft()) + "\n";
+        contents += "\n";
+    }
+
     
+    write_deadline_miss.write(contents.c_str(), contents.size());
+    write_deadline_miss.close();
 }

@@ -103,6 +103,13 @@ int main(int argc, char *argv[])
         
         executor.run_simulation(utils::current_time);
         is_simulatable = executor.simulatability_analysis();
+        if(is_simulatable)
+            std::cout << "SIMULATABLE" << std::endl;
+        else
+        {
+            std::cout << "NOT SIMULATABLE" << std::endl;
+        }
+        
     }
     return 0;
 }

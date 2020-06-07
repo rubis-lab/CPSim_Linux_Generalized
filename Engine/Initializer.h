@@ -1,7 +1,9 @@
 #ifndef INITIALIZER_H__
 #include <stdio.h>
+#ifdef CANMODE
 #include <pcan.h>
 #include <libpcan.h>
+#endif
 #include <thread>
 
 #include "Specifier.h"

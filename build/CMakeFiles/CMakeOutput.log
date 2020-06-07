@@ -1,6 +1,6 @@
-The system is: Linux - 5.3.0-53-generic - x86_64
+The system is: Darwin - 19.4.0 - x86_64
 Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
-Compiler: /usr/bin/gcc-7 
+Compiler: /usr/local/bin/gcc 
 Build flags: 
 Id flags:  
 
@@ -10,10 +10,10 @@ The output was:
 
 Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
 
-The C compiler identification is GNU, found in "/home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/3.10.2/CompilerIdC/a.out"
+The C compiler identification is GNU, found in "/Users/bagseonghyeon/Documents/GitHub/Re-implemented-CPSim/build/CMakeFiles/3.10.1/CompilerIdC/a.out"
 
 Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
-Compiler: /usr/bin/g++-7 
+Compiler: /usr/local/bin/g++ 
 Build flags: 
 Id flags:  
 
@@ -23,150 +23,130 @@ The output was:
 
 Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
 
-The CXX compiler identification is GNU, found in "/home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/3.10.2/CompilerIdCXX/a.out"
+The CXX compiler identification is GNU, found in "/Users/bagseonghyeon/Documents/GitHub/Re-implemented-CPSim/build/CMakeFiles/3.10.1/CompilerIdCXX/a.out"
 
 Determining if the C compiler works passed with the following output:
-Change Dir: /home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp
+Change Dir: /Users/bagseonghyeon/Documents/GitHub/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_f3da3/fast"
-/usr/bin/make -f CMakeFiles/cmTC_f3da3.dir/build.make CMakeFiles/cmTC_f3da3.dir/build
-make[1]: Entering directory '/home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_f3da3.dir/testCCompiler.c.o
-/usr/bin/gcc-7    -o CMakeFiles/cmTC_f3da3.dir/testCCompiler.c.o   -c /home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp/testCCompiler.c
-Linking C executable cmTC_f3da3
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f3da3.dir/link.txt --verbose=1
-/usr/bin/gcc-7      CMakeFiles/cmTC_f3da3.dir/testCCompiler.c.o  -o cmTC_f3da3 
-make[1]: Leaving directory '/home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/make" "cmTC_b6c86/fast"
+/Library/Developer/CommandLineTools/usr/bin/make -f CMakeFiles/cmTC_b6c86.dir/build.make CMakeFiles/cmTC_b6c86.dir/build
+Building C object CMakeFiles/cmTC_b6c86.dir/testCCompiler.c.o
+/usr/local/bin/gcc   -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk   -o CMakeFiles/cmTC_b6c86.dir/testCCompiler.c.o   -c /Users/bagseonghyeon/Documents/GitHub/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp/testCCompiler.c
+Linking C executable cmTC_b6c86
+/usr/local/Cellar/cmake/3.10.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b6c86.dir/link.txt --verbose=1
+/usr/local/bin/gcc   -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names   CMakeFiles/cmTC_b6c86.dir/testCCompiler.c.o  -o cmTC_b6c86 
 
 
 Detecting C compiler ABI info compiled with the following output:
-Change Dir: /home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp
+Change Dir: /Users/bagseonghyeon/Documents/GitHub/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_e05c4/fast"
-/usr/bin/make -f CMakeFiles/cmTC_e05c4.dir/build.make CMakeFiles/cmTC_e05c4.dir/build
-make[1]: Entering directory '/home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_e05c4.dir/CMakeCCompilerABI.c.o
-/usr/bin/gcc-7    -o CMakeFiles/cmTC_e05c4.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake-3.10/Modules/CMakeCCompilerABI.c
-Linking C executable cmTC_e05c4
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e05c4.dir/link.txt --verbose=1
-/usr/bin/gcc-7     -v CMakeFiles/cmTC_e05c4.dir/CMakeCCompilerABI.c.o  -o cmTC_e05c4 
+Run Build Command:"/usr/bin/make" "cmTC_28bdf/fast"
+/Library/Developer/CommandLineTools/usr/bin/make -f CMakeFiles/cmTC_28bdf.dir/build.make CMakeFiles/cmTC_28bdf.dir/build
+Building C object CMakeFiles/cmTC_28bdf.dir/CMakeCCompilerABI.c.o
+/usr/local/bin/gcc   -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk   -o CMakeFiles/cmTC_28bdf.dir/CMakeCCompilerABI.c.o   -c /usr/local/Cellar/cmake/3.10.1/share/cmake/Modules/CMakeCCompilerABI.c
+Linking C executable cmTC_28bdf
+/usr/local/Cellar/cmake/3.10.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_28bdf.dir/link.txt --verbose=1
+/usr/local/bin/gcc   -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names  -v -Wl,-v CMakeFiles/cmTC_28bdf.dir/CMakeCCompilerABI.c.o  -o cmTC_28bdf 
 Using built-in specs.
-COLLECT_GCC=/usr/bin/gcc-7
-COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper
-OFFLOAD_TARGET_NAMES=nvptx-none
-OFFLOAD_TARGET_DEFAULT=1
-Target: x86_64-linux-gnu
-Configured with: ../src/configure -v --with-pkgversion='Ubuntu 7.5.0-3ubuntu1~18.04' --with-bugurl=file:///usr/share/doc/gcc-7/README.Bugs --enable-languages=c,ada,c++,go,brig,d,fortran,objc,obj-c++ --prefix=/usr --with-gcc-major-version-only --program-suffix=-7 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-bootstrap --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-gnu-unique-object --disable-vtable-verify --enable-libmpx --enable-plugin --enable-default-pie --with-system-zlib --with-target-system-zlib --enable-objc-gc=auto --enable-multiarch --disable-werror --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu
+COLLECT_GCC=/usr/local/bin/gcc
+COLLECT_LTO_WRAPPER=/usr/local/libexec/gcc/x86_64-apple-darwin19/9.2.0/lto-wrapper
+Target: x86_64-apple-darwin19
+Configured with: ../gcc-9.2.0/configure --build=x86_64-apple-darwin19 --disable-nls --enable-checking=release --with-system-zlib --disable-multilib --with-sysroot=/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk --enable-languages=c,c++,fortran --with-gmp=/usr/local --with-mpc=/usr/local --with-mpfr=/usr/local
 Thread model: posix
-gcc version 7.5.0 (Ubuntu 7.5.0-3ubuntu1~18.04) 
-COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/
-LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../:/lib/:/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_e05c4' '-mtune=generic' '-march=x86-64'
- /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/ccBMaAS7.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_e05c4 /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. CMakeFiles/cmTC_e05c4.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_e05c4' '-mtune=generic' '-march=x86-64'
-make[1]: Leaving directory '/home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp'
+gcc version 9.2.0 (GCC) 
+COMPILER_PATH=/usr/local/libexec/gcc/x86_64-apple-darwin19/9.2.0/:/usr/local/libexec/gcc/x86_64-apple-darwin19/9.2.0/:/usr/local/libexec/gcc/x86_64-apple-darwin19/:/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0/:/usr/local/lib/gcc/x86_64-apple-darwin19/
+LIBRARY_PATH=/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0/:/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0/../../../
+COLLECT_GCC_OPTIONS='-isysroot' '/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk' '-v' '-o' 'cmTC_28bdf' '-mmacosx-version-min=10.15.0' '-asm_macosx_version_min=10.15' '-mtune=core2'
+ /usr/local/libexec/gcc/x86_64-apple-darwin19/9.2.0/collect2 -dynamic -arch x86_64 -macosx_version_min 10.15.0 -syslibroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk -weak_reference_mismatches non-weak -o cmTC_28bdf -L/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0 -L/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0/../../.. -search_paths_first -headerpad_max_install_names -v CMakeFiles/cmTC_28bdf.dir/CMakeCCompilerABI.c.o -no_compact_unwind -lSystem -lgcc_ext.10.5 -lgcc -lSystem -v
+collect2 version 9.2.0
+/usr/bin/ld -dynamic -arch x86_64 -macosx_version_min 10.15.0 -syslibroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk -weak_reference_mismatches non-weak -o cmTC_28bdf -L/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0 -L/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0/../../.. -search_paths_first -headerpad_max_install_names -v CMakeFiles/cmTC_28bdf.dir/CMakeCCompilerABI.c.o -no_compact_unwind -lSystem -lgcc_ext.10.5 -lgcc -lSystem -v
+@(#)PROGRAM:ld  PROJECT:ld64-556.6
+BUILD 13:10:29 Apr  7 2020
+configured to support archs: armv6 armv7 armv7s arm64 arm64e arm64_32 i386 x86_64 x86_64h armv6m armv7k armv7m armv7em
+@(#)PROGRAM:ld  PROJECT:ld64-556.6
+BUILD 13:10:29 Apr  7 2020
+configured to support archs: armv6 armv7 armv7s arm64 arm64e arm64_32 i386 x86_64 x86_64h armv6m armv7k armv7m armv7em
+Library search paths:
+	/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0
+	/usr/local/lib
+	/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/lib
+Framework search paths:
+	/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/
 
 
 Parsed C implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
-  ignore line: [Change Dir: /home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp]
+  ignore line: [Change Dir: /Users/bagseonghyeon/Documents/GitHub/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command:"/usr/bin/make" "cmTC_e05c4/fast"]
-  ignore line: [/usr/bin/make -f CMakeFiles/cmTC_e05c4.dir/build.make CMakeFiles/cmTC_e05c4.dir/build]
-  ignore line: [make[1]: Entering directory '/home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp']
-  ignore line: [Building C object CMakeFiles/cmTC_e05c4.dir/CMakeCCompilerABI.c.o]
-  ignore line: [/usr/bin/gcc-7    -o CMakeFiles/cmTC_e05c4.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake-3.10/Modules/CMakeCCompilerABI.c]
-  ignore line: [Linking C executable cmTC_e05c4]
-  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e05c4.dir/link.txt --verbose=1]
-  ignore line: [/usr/bin/gcc-7     -v CMakeFiles/cmTC_e05c4.dir/CMakeCCompilerABI.c.o  -o cmTC_e05c4 ]
+  ignore line: [Run Build Command:"/usr/bin/make" "cmTC_28bdf/fast"]
+  ignore line: [/Library/Developer/CommandLineTools/usr/bin/make -f CMakeFiles/cmTC_28bdf.dir/build.make CMakeFiles/cmTC_28bdf.dir/build]
+  ignore line: [Building C object CMakeFiles/cmTC_28bdf.dir/CMakeCCompilerABI.c.o]
+  ignore line: [/usr/local/bin/gcc   -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk   -o CMakeFiles/cmTC_28bdf.dir/CMakeCCompilerABI.c.o   -c /usr/local/Cellar/cmake/3.10.1/share/cmake/Modules/CMakeCCompilerABI.c]
+  ignore line: [Linking C executable cmTC_28bdf]
+  ignore line: [/usr/local/Cellar/cmake/3.10.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_28bdf.dir/link.txt --verbose=1]
+  ignore line: [/usr/local/bin/gcc   -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names  -v -Wl,-v CMakeFiles/cmTC_28bdf.dir/CMakeCCompilerABI.c.o  -o cmTC_28bdf ]
   ignore line: [Using built-in specs.]
-  ignore line: [COLLECT_GCC=/usr/bin/gcc-7]
-  ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper]
-  ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none]
-  ignore line: [OFFLOAD_TARGET_DEFAULT=1]
-  ignore line: [Target: x86_64-linux-gnu]
-  ignore line: [Configured with: ../src/configure -v --with-pkgversion='Ubuntu 7.5.0-3ubuntu1~18.04' --with-bugurl=file:///usr/share/doc/gcc-7/README.Bugs --enable-languages=c,ada,c++,go,brig,d,fortran,objc,obj-c++ --prefix=/usr --with-gcc-major-version-only --program-suffix=-7 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-bootstrap --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-gnu-unique-object --disable-vtable-verify --enable-libmpx --enable-plugin --enable-default-pie --with-system-zlib --with-target-system-zlib --enable-objc-gc=auto --enable-multiarch --disable-werror --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu]
+  ignore line: [COLLECT_GCC=/usr/local/bin/gcc]
+  ignore line: [COLLECT_LTO_WRAPPER=/usr/local/libexec/gcc/x86_64-apple-darwin19/9.2.0/lto-wrapper]
+  ignore line: [Target: x86_64-apple-darwin19]
+  ignore line: [Configured with: ../gcc-9.2.0/configure --build=x86_64-apple-darwin19 --disable-nls --enable-checking=release --with-system-zlib --disable-multilib --with-sysroot=/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk --enable-languages=c,c++,fortran --with-gmp=/usr/local --with-mpc=/usr/local --with-mpfr=/usr/local]
   ignore line: [Thread model: posix]
-  ignore line: [gcc version 7.5.0 (Ubuntu 7.5.0-3ubuntu1~18.04) ]
-  ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/]
-  ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../:/lib/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_e05c4' '-mtune=generic' '-march=x86-64']
-  link line: [ /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/ccBMaAS7.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_e05c4 /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. CMakeFiles/cmTC_e05c4.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o]
-    arg [/usr/lib/gcc/x86_64-linux-gnu/7/collect2] ==> ignore
-    arg [-plugin] ==> ignore
-    arg [/usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so] ==> ignore
-    arg [-plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper] ==> ignore
-    arg [-plugin-opt=-fresolution=/tmp/ccBMaAS7.res] ==> ignore
-    arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
-    arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
-    arg [-plugin-opt=-pass-through=-lc] ==> ignore
-    arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
-    arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
-    arg [--build-id] ==> ignore
-    arg [--eh-frame-hdr] ==> ignore
-    arg [-m] ==> ignore
-    arg [elf_x86_64] ==> ignore
-    arg [--hash-style=gnu] ==> ignore
-    arg [--as-needed] ==> ignore
-    arg [-dynamic-linker] ==> ignore
-    arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
-    arg [-pie] ==> ignore
-    arg [-znow] ==> ignore
-    arg [-zrelro] ==> ignore
+  ignore line: [gcc version 9.2.0 (GCC) ]
+  ignore line: [COMPILER_PATH=/usr/local/libexec/gcc/x86_64-apple-darwin19/9.2.0/:/usr/local/libexec/gcc/x86_64-apple-darwin19/9.2.0/:/usr/local/libexec/gcc/x86_64-apple-darwin19/:/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0/:/usr/local/lib/gcc/x86_64-apple-darwin19/]
+  ignore line: [LIBRARY_PATH=/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0/:/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0/../../../]
+  ignore line: [COLLECT_GCC_OPTIONS='-isysroot' '/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk' '-v' '-o' 'cmTC_28bdf' '-mmacosx-version-min=10.15.0' '-asm_macosx_version_min=10.15' '-mtune=core2']
+  link line: [ /usr/local/libexec/gcc/x86_64-apple-darwin19/9.2.0/collect2 -dynamic -arch x86_64 -macosx_version_min 10.15.0 -syslibroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk -weak_reference_mismatches non-weak -o cmTC_28bdf -L/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0 -L/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0/../../.. -search_paths_first -headerpad_max_install_names -v CMakeFiles/cmTC_28bdf.dir/CMakeCCompilerABI.c.o -no_compact_unwind -lSystem -lgcc_ext.10.5 -lgcc -lSystem -v]
+    arg [/usr/local/libexec/gcc/x86_64-apple-darwin19/9.2.0/collect2] ==> ignore
+    arg [-dynamic] ==> ignore
+    arg [-arch] ==> ignore
+    arg [x86_64] ==> ignore
+    arg [-macosx_version_min] ==> ignore
+    arg [10.15.0] ==> ignore
+    arg [-syslibroot] ==> ignore
+    arg [/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk] ==> ignore
+    arg [-weak_reference_mismatches] ==> ignore
+    arg [non-weak] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_e05c4] ==> ignore
-    arg [/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o] ==> ignore
-    arg [/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o] ==> ignore
-    arg [/usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o] ==> ignore
-    arg [-L/usr/lib/gcc/x86_64-linux-gnu/7] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/7]
-    arg [-L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu]
-    arg [-L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib]
-    arg [-L/lib/x86_64-linux-gnu] ==> dir [/lib/x86_64-linux-gnu]
-    arg [-L/lib/../lib] ==> dir [/lib/../lib]
-    arg [-L/usr/lib/x86_64-linux-gnu] ==> dir [/usr/lib/x86_64-linux-gnu]
-    arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
-    arg [-L/usr/lib/gcc/x86_64-linux-gnu/7/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/7/../../..]
-    arg [CMakeFiles/cmTC_e05c4.dir/CMakeCCompilerABI.c.o] ==> ignore
+    arg [cmTC_28bdf] ==> ignore
+    arg [-L/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0] ==> dir [/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0]
+    arg [-L/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0/../../..] ==> dir [/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0/../../..]
+    arg [-search_paths_first] ==> ignore
+    arg [-headerpad_max_install_names] ==> ignore
+    arg [-v] ==> ignore
+    arg [CMakeFiles/cmTC_28bdf.dir/CMakeCCompilerABI.c.o] ==> ignore
+    arg [-no_compact_unwind] ==> ignore
+    arg [-lSystem] ==> lib [System]
+    arg [-lgcc_ext.10.5] ==> lib [gcc_ext.10.5]
     arg [-lgcc] ==> lib [gcc]
-    arg [--push-state] ==> ignore
-    arg [--as-needed] ==> ignore
-    arg [-lgcc_s] ==> lib [gcc_s]
-    arg [--pop-state] ==> ignore
-    arg [-lc] ==> lib [c]
-    arg [-lgcc] ==> lib [gcc]
-    arg [--push-state] ==> ignore
-    arg [--as-needed] ==> ignore
-    arg [-lgcc_s] ==> lib [gcc_s]
-    arg [--pop-state] ==> ignore
-    arg [/usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o] ==> ignore
-    arg [/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o] ==> ignore
-  collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/7] ==> [/usr/lib/gcc/x86_64-linux-gnu/7]
-  collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu] ==> [/usr/lib/x86_64-linux-gnu]
-  collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib] ==> [/usr/lib]
-  collapse library dir [/lib/x86_64-linux-gnu] ==> [/lib/x86_64-linux-gnu]
-  collapse library dir [/lib/../lib] ==> [/lib]
-  collapse library dir [/usr/lib/x86_64-linux-gnu] ==> [/usr/lib/x86_64-linux-gnu]
-  collapse library dir [/usr/lib/../lib] ==> [/usr/lib]
-  collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/7/../../..] ==> [/usr/lib]
-  implicit libs: [gcc;gcc_s;c;gcc;gcc_s]
-  implicit dirs: [/usr/lib/gcc/x86_64-linux-gnu/7;/usr/lib/x86_64-linux-gnu;/usr/lib;/lib/x86_64-linux-gnu;/lib]
-  implicit fwks: []
+    arg [-lSystem] ==> lib [System]
+    arg [-v] ==> ignore
+  Library search paths: [;/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0;/usr/local/lib;/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/lib]
+  Framework search paths: [;/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/]
+  remove lib [System]
+  remove lib [System]
+  collapse library dir [/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0] ==> [/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0]
+  collapse library dir [/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0/../../..] ==> [/usr/local/lib]
+  collapse library dir [/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0] ==> [/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0]
+  collapse library dir [/usr/local/lib] ==> [/usr/local/lib]
+  collapse library dir [/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/lib] ==> [/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/lib]
+  collapse framework dir [/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/] ==> [/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks]
+  implicit libs: [gcc_ext.10.5;gcc]
+  implicit dirs: [/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0;/usr/local/lib;/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/lib]
+  implicit fwks: [/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks]
 
 
 
 
 Detecting C [-std=c11] compiler features compiled with the following output:
-Change Dir: /home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp
+Change Dir: /Users/bagseonghyeon/Documents/GitHub/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_79e35/fast"
-/usr/bin/make -f CMakeFiles/cmTC_79e35.dir/build.make CMakeFiles/cmTC_79e35.dir/build
-make[1]: Entering directory '/home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_79e35.dir/feature_tests.c.o
-/usr/bin/gcc-7   -std=c11 -o CMakeFiles/cmTC_79e35.dir/feature_tests.c.o   -c /home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/feature_tests.c
-Linking C executable cmTC_79e35
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_79e35.dir/link.txt --verbose=1
-/usr/bin/gcc-7      CMakeFiles/cmTC_79e35.dir/feature_tests.c.o  -o cmTC_79e35 
-make[1]: Leaving directory '/home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/make" "cmTC_46413/fast"
+/Library/Developer/CommandLineTools/usr/bin/make -f CMakeFiles/cmTC_46413.dir/build.make CMakeFiles/cmTC_46413.dir/build
+Building C object CMakeFiles/cmTC_46413.dir/feature_tests.c.o
+/usr/local/bin/gcc   -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk   -std=c11 -o CMakeFiles/cmTC_46413.dir/feature_tests.c.o   -c /Users/bagseonghyeon/Documents/GitHub/Re-implemented-CPSim/build/CMakeFiles/feature_tests.c
+Linking C executable cmTC_46413
+/usr/local/Cellar/cmake/3.10.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_46413.dir/link.txt --verbose=1
+/usr/local/bin/gcc   -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names   CMakeFiles/cmTC_46413.dir/feature_tests.c.o  -o cmTC_46413 
 
 
     Feature record: C_FEATURE:1c_function_prototypes
@@ -176,17 +156,15 @@ make[1]: Leaving directory '/home/park/git_base/Re-implemented-CPSim/build/CMake
 
 
 Detecting C [-std=c99] compiler features compiled with the following output:
-Change Dir: /home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp
+Change Dir: /Users/bagseonghyeon/Documents/GitHub/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_90a04/fast"
-/usr/bin/make -f CMakeFiles/cmTC_90a04.dir/build.make CMakeFiles/cmTC_90a04.dir/build
-make[1]: Entering directory '/home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_90a04.dir/feature_tests.c.o
-/usr/bin/gcc-7   -std=c99 -o CMakeFiles/cmTC_90a04.dir/feature_tests.c.o   -c /home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/feature_tests.c
-Linking C executable cmTC_90a04
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_90a04.dir/link.txt --verbose=1
-/usr/bin/gcc-7      CMakeFiles/cmTC_90a04.dir/feature_tests.c.o  -o cmTC_90a04 
-make[1]: Leaving directory '/home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/make" "cmTC_6dc02/fast"
+/Library/Developer/CommandLineTools/usr/bin/make -f CMakeFiles/cmTC_6dc02.dir/build.make CMakeFiles/cmTC_6dc02.dir/build
+Building C object CMakeFiles/cmTC_6dc02.dir/feature_tests.c.o
+/usr/local/bin/gcc   -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk   -std=c99 -o CMakeFiles/cmTC_6dc02.dir/feature_tests.c.o   -c /Users/bagseonghyeon/Documents/GitHub/Re-implemented-CPSim/build/CMakeFiles/feature_tests.c
+Linking C executable cmTC_6dc02
+/usr/local/Cellar/cmake/3.10.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6dc02.dir/link.txt --verbose=1
+/usr/local/bin/gcc   -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names   CMakeFiles/cmTC_6dc02.dir/feature_tests.c.o  -o cmTC_6dc02 
 
 
     Feature record: C_FEATURE:1c_function_prototypes
@@ -196,17 +174,15 @@ make[1]: Leaving directory '/home/park/git_base/Re-implemented-CPSim/build/CMake
 
 
 Detecting C [-std=c90] compiler features compiled with the following output:
-Change Dir: /home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp
+Change Dir: /Users/bagseonghyeon/Documents/GitHub/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_00754/fast"
-/usr/bin/make -f CMakeFiles/cmTC_00754.dir/build.make CMakeFiles/cmTC_00754.dir/build
-make[1]: Entering directory '/home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_00754.dir/feature_tests.c.o
-/usr/bin/gcc-7   -std=c90 -o CMakeFiles/cmTC_00754.dir/feature_tests.c.o   -c /home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/feature_tests.c
-Linking C executable cmTC_00754
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_00754.dir/link.txt --verbose=1
-/usr/bin/gcc-7      CMakeFiles/cmTC_00754.dir/feature_tests.c.o  -o cmTC_00754 
-make[1]: Leaving directory '/home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/make" "cmTC_a3530/fast"
+/Library/Developer/CommandLineTools/usr/bin/make -f CMakeFiles/cmTC_a3530.dir/build.make CMakeFiles/cmTC_a3530.dir/build
+Building C object CMakeFiles/cmTC_a3530.dir/feature_tests.c.o
+/usr/local/bin/gcc   -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk   -std=c90 -o CMakeFiles/cmTC_a3530.dir/feature_tests.c.o   -c /Users/bagseonghyeon/Documents/GitHub/Re-implemented-CPSim/build/CMakeFiles/feature_tests.c
+Linking C executable cmTC_a3530
+/usr/local/Cellar/cmake/3.10.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a3530.dir/link.txt --verbose=1
+/usr/local/bin/gcc   -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names   CMakeFiles/cmTC_a3530.dir/feature_tests.c.o  -o cmTC_a3530 
 
 
     Feature record: C_FEATURE:1c_function_prototypes
@@ -214,143 +190,128 @@ make[1]: Leaving directory '/home/park/git_base/Re-implemented-CPSim/build/CMake
     Feature record: C_FEATURE:0c_static_assert
     Feature record: C_FEATURE:0c_variadic_macros
 Determining if the CXX compiler works passed with the following output:
-Change Dir: /home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp
+Change Dir: /Users/bagseonghyeon/Documents/GitHub/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_6dce1/fast"
-/usr/bin/make -f CMakeFiles/cmTC_6dce1.dir/build.make CMakeFiles/cmTC_6dce1.dir/build
-make[1]: Entering directory '/home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_6dce1.dir/testCXXCompiler.cxx.o
-/usr/bin/g++-7     -o CMakeFiles/cmTC_6dce1.dir/testCXXCompiler.cxx.o -c /home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
-Linking CXX executable cmTC_6dce1
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6dce1.dir/link.txt --verbose=1
-/usr/bin/g++-7       CMakeFiles/cmTC_6dce1.dir/testCXXCompiler.cxx.o  -o cmTC_6dce1 
-make[1]: Leaving directory '/home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/make" "cmTC_72d81/fast"
+/Library/Developer/CommandLineTools/usr/bin/make -f CMakeFiles/cmTC_72d81.dir/build.make CMakeFiles/cmTC_72d81.dir/build
+Building CXX object CMakeFiles/cmTC_72d81.dir/testCXXCompiler.cxx.o
+/usr/local/bin/g++    -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk   -o CMakeFiles/cmTC_72d81.dir/testCXXCompiler.cxx.o -c /Users/bagseonghyeon/Documents/GitHub/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
+Linking CXX executable cmTC_72d81
+/usr/local/Cellar/cmake/3.10.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_72d81.dir/link.txt --verbose=1
+/usr/local/bin/g++    -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names   CMakeFiles/cmTC_72d81.dir/testCXXCompiler.cxx.o  -o cmTC_72d81 
 
 
 Detecting CXX compiler ABI info compiled with the following output:
-Change Dir: /home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp
+Change Dir: /Users/bagseonghyeon/Documents/GitHub/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_dc324/fast"
-/usr/bin/make -f CMakeFiles/cmTC_dc324.dir/build.make CMakeFiles/cmTC_dc324.dir/build
-make[1]: Entering directory '/home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_dc324.dir/CMakeCXXCompilerABI.cpp.o
-/usr/bin/g++-7     -o CMakeFiles/cmTC_dc324.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.10/Modules/CMakeCXXCompilerABI.cpp
-Linking CXX executable cmTC_dc324
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_dc324.dir/link.txt --verbose=1
-/usr/bin/g++-7      -v CMakeFiles/cmTC_dc324.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_dc324 
+Run Build Command:"/usr/bin/make" "cmTC_f5adb/fast"
+/Library/Developer/CommandLineTools/usr/bin/make -f CMakeFiles/cmTC_f5adb.dir/build.make CMakeFiles/cmTC_f5adb.dir/build
+Building CXX object CMakeFiles/cmTC_f5adb.dir/CMakeCXXCompilerABI.cpp.o
+/usr/local/bin/g++    -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk   -o CMakeFiles/cmTC_f5adb.dir/CMakeCXXCompilerABI.cpp.o -c /usr/local/Cellar/cmake/3.10.1/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+Linking CXX executable cmTC_f5adb
+/usr/local/Cellar/cmake/3.10.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f5adb.dir/link.txt --verbose=1
+/usr/local/bin/g++    -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names  -v -Wl,-v CMakeFiles/cmTC_f5adb.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_f5adb 
 Using built-in specs.
-COLLECT_GCC=/usr/bin/g++-7
-COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper
-OFFLOAD_TARGET_NAMES=nvptx-none
-OFFLOAD_TARGET_DEFAULT=1
-Target: x86_64-linux-gnu
-Configured with: ../src/configure -v --with-pkgversion='Ubuntu 7.5.0-3ubuntu1~18.04' --with-bugurl=file:///usr/share/doc/gcc-7/README.Bugs --enable-languages=c,ada,c++,go,brig,d,fortran,objc,obj-c++ --prefix=/usr --with-gcc-major-version-only --program-suffix=-7 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-bootstrap --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-gnu-unique-object --disable-vtable-verify --enable-libmpx --enable-plugin --enable-default-pie --with-system-zlib --with-target-system-zlib --enable-objc-gc=auto --enable-multiarch --disable-werror --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu
+COLLECT_GCC=/usr/local/bin/g++
+COLLECT_LTO_WRAPPER=/usr/local/libexec/gcc/x86_64-apple-darwin19/9.2.0/lto-wrapper
+Target: x86_64-apple-darwin19
+Configured with: ../gcc-9.2.0/configure --build=x86_64-apple-darwin19 --disable-nls --enable-checking=release --with-system-zlib --disable-multilib --with-sysroot=/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk --enable-languages=c,c++,fortran --with-gmp=/usr/local --with-mpc=/usr/local --with-mpfr=/usr/local
 Thread model: posix
-gcc version 7.5.0 (Ubuntu 7.5.0-3ubuntu1~18.04) 
-COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/
-LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../:/lib/:/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_dc324' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
- /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/cc9ekacq.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_dc324 /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. CMakeFiles/cmTC_dc324.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_dc324' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
-make[1]: Leaving directory '/home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp'
+gcc version 9.2.0 (GCC) 
+COMPILER_PATH=/usr/local/libexec/gcc/x86_64-apple-darwin19/9.2.0/:/usr/local/libexec/gcc/x86_64-apple-darwin19/9.2.0/:/usr/local/libexec/gcc/x86_64-apple-darwin19/:/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0/:/usr/local/lib/gcc/x86_64-apple-darwin19/
+LIBRARY_PATH=/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0/:/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0/../../../
+COLLECT_GCC_OPTIONS='-isysroot' '/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk' '-v' '-o' 'cmTC_f5adb' '-mmacosx-version-min=10.15.0' '-asm_macosx_version_min=10.15' '-shared-libgcc' '-mtune=core2'
+ /usr/local/libexec/gcc/x86_64-apple-darwin19/9.2.0/collect2 -dynamic -arch x86_64 -macosx_version_min 10.15.0 -syslibroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk -weak_reference_mismatches non-weak -o cmTC_f5adb -L/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0 -L/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0/../../.. -search_paths_first -headerpad_max_install_names -v CMakeFiles/cmTC_f5adb.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -no_compact_unwind -lSystem -lgcc_ext.10.5 -lgcc -lSystem -v
+collect2 version 9.2.0
+/usr/bin/ld -dynamic -arch x86_64 -macosx_version_min 10.15.0 -syslibroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk -weak_reference_mismatches non-weak -o cmTC_f5adb -L/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0 -L/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0/../../.. -search_paths_first -headerpad_max_install_names -v CMakeFiles/cmTC_f5adb.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -no_compact_unwind -lSystem -lgcc_ext.10.5 -lgcc -lSystem -v
+@(#)PROGRAM:ld  PROJECT:ld64-556.6
+BUILD 13:10:29 Apr  7 2020
+configured to support archs: armv6 armv7 armv7s arm64 arm64e arm64_32 i386 x86_64 x86_64h armv6m armv7k armv7m armv7em
+@(#)PROGRAM:ld  PROJECT:ld64-556.6
+BUILD 13:10:29 Apr  7 2020
+configured to support archs: armv6 armv7 armv7s arm64 arm64e arm64_32 i386 x86_64 x86_64h armv6m armv7k armv7m armv7em
+Library search paths:
+	/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0
+	/usr/local/lib
+	/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/lib
+Framework search paths:
+	/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/
 
 
 Parsed CXX implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
-  ignore line: [Change Dir: /home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp]
+  ignore line: [Change Dir: /Users/bagseonghyeon/Documents/GitHub/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command:"/usr/bin/make" "cmTC_dc324/fast"]
-  ignore line: [/usr/bin/make -f CMakeFiles/cmTC_dc324.dir/build.make CMakeFiles/cmTC_dc324.dir/build]
-  ignore line: [make[1]: Entering directory '/home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp']
-  ignore line: [Building CXX object CMakeFiles/cmTC_dc324.dir/CMakeCXXCompilerABI.cpp.o]
-  ignore line: [/usr/bin/g++-7     -o CMakeFiles/cmTC_dc324.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.10/Modules/CMakeCXXCompilerABI.cpp]
-  ignore line: [Linking CXX executable cmTC_dc324]
-  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_dc324.dir/link.txt --verbose=1]
-  ignore line: [/usr/bin/g++-7      -v CMakeFiles/cmTC_dc324.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_dc324 ]
+  ignore line: [Run Build Command:"/usr/bin/make" "cmTC_f5adb/fast"]
+  ignore line: [/Library/Developer/CommandLineTools/usr/bin/make -f CMakeFiles/cmTC_f5adb.dir/build.make CMakeFiles/cmTC_f5adb.dir/build]
+  ignore line: [Building CXX object CMakeFiles/cmTC_f5adb.dir/CMakeCXXCompilerABI.cpp.o]
+  ignore line: [/usr/local/bin/g++    -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk   -o CMakeFiles/cmTC_f5adb.dir/CMakeCXXCompilerABI.cpp.o -c /usr/local/Cellar/cmake/3.10.1/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
+  ignore line: [Linking CXX executable cmTC_f5adb]
+  ignore line: [/usr/local/Cellar/cmake/3.10.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f5adb.dir/link.txt --verbose=1]
+  ignore line: [/usr/local/bin/g++    -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names  -v -Wl,-v CMakeFiles/cmTC_f5adb.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_f5adb ]
   ignore line: [Using built-in specs.]
-  ignore line: [COLLECT_GCC=/usr/bin/g++-7]
-  ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper]
-  ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none]
-  ignore line: [OFFLOAD_TARGET_DEFAULT=1]
-  ignore line: [Target: x86_64-linux-gnu]
-  ignore line: [Configured with: ../src/configure -v --with-pkgversion='Ubuntu 7.5.0-3ubuntu1~18.04' --with-bugurl=file:///usr/share/doc/gcc-7/README.Bugs --enable-languages=c,ada,c++,go,brig,d,fortran,objc,obj-c++ --prefix=/usr --with-gcc-major-version-only --program-suffix=-7 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-bootstrap --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-gnu-unique-object --disable-vtable-verify --enable-libmpx --enable-plugin --enable-default-pie --with-system-zlib --with-target-system-zlib --enable-objc-gc=auto --enable-multiarch --disable-werror --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu]
+  ignore line: [COLLECT_GCC=/usr/local/bin/g++]
+  ignore line: [COLLECT_LTO_WRAPPER=/usr/local/libexec/gcc/x86_64-apple-darwin19/9.2.0/lto-wrapper]
+  ignore line: [Target: x86_64-apple-darwin19]
+  ignore line: [Configured with: ../gcc-9.2.0/configure --build=x86_64-apple-darwin19 --disable-nls --enable-checking=release --with-system-zlib --disable-multilib --with-sysroot=/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk --enable-languages=c,c++,fortran --with-gmp=/usr/local --with-mpc=/usr/local --with-mpfr=/usr/local]
   ignore line: [Thread model: posix]
-  ignore line: [gcc version 7.5.0 (Ubuntu 7.5.0-3ubuntu1~18.04) ]
-  ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/]
-  ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../:/lib/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_dc324' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
-  link line: [ /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/cc9ekacq.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_dc324 /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. CMakeFiles/cmTC_dc324.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o]
-    arg [/usr/lib/gcc/x86_64-linux-gnu/7/collect2] ==> ignore
-    arg [-plugin] ==> ignore
-    arg [/usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so] ==> ignore
-    arg [-plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper] ==> ignore
-    arg [-plugin-opt=-fresolution=/tmp/cc9ekacq.res] ==> ignore
-    arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
-    arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
-    arg [-plugin-opt=-pass-through=-lc] ==> ignore
-    arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
-    arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
-    arg [--build-id] ==> ignore
-    arg [--eh-frame-hdr] ==> ignore
-    arg [-m] ==> ignore
-    arg [elf_x86_64] ==> ignore
-    arg [--hash-style=gnu] ==> ignore
-    arg [--as-needed] ==> ignore
-    arg [-dynamic-linker] ==> ignore
-    arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
-    arg [-pie] ==> ignore
-    arg [-znow] ==> ignore
-    arg [-zrelro] ==> ignore
+  ignore line: [gcc version 9.2.0 (GCC) ]
+  ignore line: [COMPILER_PATH=/usr/local/libexec/gcc/x86_64-apple-darwin19/9.2.0/:/usr/local/libexec/gcc/x86_64-apple-darwin19/9.2.0/:/usr/local/libexec/gcc/x86_64-apple-darwin19/:/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0/:/usr/local/lib/gcc/x86_64-apple-darwin19/]
+  ignore line: [LIBRARY_PATH=/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0/:/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0/../../../]
+  ignore line: [COLLECT_GCC_OPTIONS='-isysroot' '/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk' '-v' '-o' 'cmTC_f5adb' '-mmacosx-version-min=10.15.0' '-asm_macosx_version_min=10.15' '-shared-libgcc' '-mtune=core2']
+  link line: [ /usr/local/libexec/gcc/x86_64-apple-darwin19/9.2.0/collect2 -dynamic -arch x86_64 -macosx_version_min 10.15.0 -syslibroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk -weak_reference_mismatches non-weak -o cmTC_f5adb -L/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0 -L/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0/../../.. -search_paths_first -headerpad_max_install_names -v CMakeFiles/cmTC_f5adb.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -no_compact_unwind -lSystem -lgcc_ext.10.5 -lgcc -lSystem -v]
+    arg [/usr/local/libexec/gcc/x86_64-apple-darwin19/9.2.0/collect2] ==> ignore
+    arg [-dynamic] ==> ignore
+    arg [-arch] ==> ignore
+    arg [x86_64] ==> ignore
+    arg [-macosx_version_min] ==> ignore
+    arg [10.15.0] ==> ignore
+    arg [-syslibroot] ==> ignore
+    arg [/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk] ==> ignore
+    arg [-weak_reference_mismatches] ==> ignore
+    arg [non-weak] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_dc324] ==> ignore
-    arg [/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o] ==> ignore
-    arg [/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o] ==> ignore
-    arg [/usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o] ==> ignore
-    arg [-L/usr/lib/gcc/x86_64-linux-gnu/7] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/7]
-    arg [-L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu]
-    arg [-L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib]
-    arg [-L/lib/x86_64-linux-gnu] ==> dir [/lib/x86_64-linux-gnu]
-    arg [-L/lib/../lib] ==> dir [/lib/../lib]
-    arg [-L/usr/lib/x86_64-linux-gnu] ==> dir [/usr/lib/x86_64-linux-gnu]
-    arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
-    arg [-L/usr/lib/gcc/x86_64-linux-gnu/7/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/7/../../..]
-    arg [CMakeFiles/cmTC_dc324.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+    arg [cmTC_f5adb] ==> ignore
+    arg [-L/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0] ==> dir [/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0]
+    arg [-L/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0/../../..] ==> dir [/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0/../../..]
+    arg [-search_paths_first] ==> ignore
+    arg [-headerpad_max_install_names] ==> ignore
+    arg [-v] ==> ignore
+    arg [CMakeFiles/cmTC_f5adb.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
     arg [-lstdc++] ==> lib [stdc++]
-    arg [-lm] ==> lib [m]
-    arg [-lgcc_s] ==> lib [gcc_s]
+    arg [-no_compact_unwind] ==> ignore
+    arg [-lSystem] ==> lib [System]
+    arg [-lgcc_ext.10.5] ==> lib [gcc_ext.10.5]
     arg [-lgcc] ==> lib [gcc]
-    arg [-lc] ==> lib [c]
-    arg [-lgcc_s] ==> lib [gcc_s]
-    arg [-lgcc] ==> lib [gcc]
-    arg [/usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o] ==> ignore
-    arg [/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o] ==> ignore
-  collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/7] ==> [/usr/lib/gcc/x86_64-linux-gnu/7]
-  collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu] ==> [/usr/lib/x86_64-linux-gnu]
-  collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib] ==> [/usr/lib]
-  collapse library dir [/lib/x86_64-linux-gnu] ==> [/lib/x86_64-linux-gnu]
-  collapse library dir [/lib/../lib] ==> [/lib]
-  collapse library dir [/usr/lib/x86_64-linux-gnu] ==> [/usr/lib/x86_64-linux-gnu]
-  collapse library dir [/usr/lib/../lib] ==> [/usr/lib]
-  collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/7/../../..] ==> [/usr/lib]
-  implicit libs: [stdc++;m;gcc_s;gcc;c;gcc_s;gcc]
-  implicit dirs: [/usr/lib/gcc/x86_64-linux-gnu/7;/usr/lib/x86_64-linux-gnu;/usr/lib;/lib/x86_64-linux-gnu;/lib]
-  implicit fwks: []
+    arg [-lSystem] ==> lib [System]
+    arg [-v] ==> ignore
+  Library search paths: [;/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0;/usr/local/lib;/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/lib]
+  Framework search paths: [;/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/]
+  remove lib [System]
+  remove lib [System]
+  collapse library dir [/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0] ==> [/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0]
+  collapse library dir [/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0/../../..] ==> [/usr/local/lib]
+  collapse library dir [/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0] ==> [/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0]
+  collapse library dir [/usr/local/lib] ==> [/usr/local/lib]
+  collapse library dir [/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/lib] ==> [/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/lib]
+  collapse framework dir [/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/] ==> [/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks]
+  implicit libs: [stdc++;gcc_ext.10.5;gcc]
+  implicit dirs: [/usr/local/lib/gcc/x86_64-apple-darwin19/9.2.0;/usr/local/lib;/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/lib]
+  implicit fwks: [/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks]
 
 
 
 
 Detecting CXX [-std=c++1z] compiler features compiled with the following output:
-Change Dir: /home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp
+Change Dir: /Users/bagseonghyeon/Documents/GitHub/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_8e99b/fast"
-/usr/bin/make -f CMakeFiles/cmTC_8e99b.dir/build.make CMakeFiles/cmTC_8e99b.dir/build
-make[1]: Entering directory '/home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_8e99b.dir/feature_tests.cxx.o
-/usr/bin/g++-7    -std=c++1z -o CMakeFiles/cmTC_8e99b.dir/feature_tests.cxx.o -c /home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_8e99b
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8e99b.dir/link.txt --verbose=1
-/usr/bin/g++-7       CMakeFiles/cmTC_8e99b.dir/feature_tests.cxx.o  -o cmTC_8e99b 
-make[1]: Leaving directory '/home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/make" "cmTC_cec90/fast"
+/Library/Developer/CommandLineTools/usr/bin/make -f CMakeFiles/cmTC_cec90.dir/build.make CMakeFiles/cmTC_cec90.dir/build
+Building CXX object CMakeFiles/cmTC_cec90.dir/feature_tests.cxx.o
+/usr/local/bin/g++    -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk   -std=c++1z -o CMakeFiles/cmTC_cec90.dir/feature_tests.cxx.o -c /Users/bagseonghyeon/Documents/GitHub/Re-implemented-CPSim/build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_cec90
+/usr/local/Cellar/cmake/3.10.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_cec90.dir/link.txt --verbose=1
+/usr/local/bin/g++    -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names   CMakeFiles/cmTC_cec90.dir/feature_tests.cxx.o  -o cmTC_cec90 
 
 
     Feature record: CXX_FEATURE:1cxx_aggregate_default_initializers
@@ -413,17 +374,15 @@ make[1]: Leaving directory '/home/park/git_base/Re-implemented-CPSim/build/CMake
 
 
 Detecting CXX [-std=c++14] compiler features compiled with the following output:
-Change Dir: /home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp
+Change Dir: /Users/bagseonghyeon/Documents/GitHub/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_6c3e3/fast"
-/usr/bin/make -f CMakeFiles/cmTC_6c3e3.dir/build.make CMakeFiles/cmTC_6c3e3.dir/build
-make[1]: Entering directory '/home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_6c3e3.dir/feature_tests.cxx.o
-/usr/bin/g++-7    -std=c++14 -o CMakeFiles/cmTC_6c3e3.dir/feature_tests.cxx.o -c /home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_6c3e3
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6c3e3.dir/link.txt --verbose=1
-/usr/bin/g++-7       CMakeFiles/cmTC_6c3e3.dir/feature_tests.cxx.o  -o cmTC_6c3e3 
-make[1]: Leaving directory '/home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/make" "cmTC_074f2/fast"
+/Library/Developer/CommandLineTools/usr/bin/make -f CMakeFiles/cmTC_074f2.dir/build.make CMakeFiles/cmTC_074f2.dir/build
+Building CXX object CMakeFiles/cmTC_074f2.dir/feature_tests.cxx.o
+/usr/local/bin/g++    -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk   -std=c++14 -o CMakeFiles/cmTC_074f2.dir/feature_tests.cxx.o -c /Users/bagseonghyeon/Documents/GitHub/Re-implemented-CPSim/build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_074f2
+/usr/local/Cellar/cmake/3.10.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_074f2.dir/link.txt --verbose=1
+/usr/local/bin/g++    -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names   CMakeFiles/cmTC_074f2.dir/feature_tests.cxx.o  -o cmTC_074f2 
 
 
     Feature record: CXX_FEATURE:1cxx_aggregate_default_initializers
@@ -486,17 +445,15 @@ make[1]: Leaving directory '/home/park/git_base/Re-implemented-CPSim/build/CMake
 
 
 Detecting CXX [-std=c++11] compiler features compiled with the following output:
-Change Dir: /home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp
+Change Dir: /Users/bagseonghyeon/Documents/GitHub/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_e44aa/fast"
-/usr/bin/make -f CMakeFiles/cmTC_e44aa.dir/build.make CMakeFiles/cmTC_e44aa.dir/build
-make[1]: Entering directory '/home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_e44aa.dir/feature_tests.cxx.o
-/usr/bin/g++-7    -std=c++11 -o CMakeFiles/cmTC_e44aa.dir/feature_tests.cxx.o -c /home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_e44aa
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e44aa.dir/link.txt --verbose=1
-/usr/bin/g++-7       CMakeFiles/cmTC_e44aa.dir/feature_tests.cxx.o  -o cmTC_e44aa 
-make[1]: Leaving directory '/home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/make" "cmTC_c2887/fast"
+/Library/Developer/CommandLineTools/usr/bin/make -f CMakeFiles/cmTC_c2887.dir/build.make CMakeFiles/cmTC_c2887.dir/build
+Building CXX object CMakeFiles/cmTC_c2887.dir/feature_tests.cxx.o
+/usr/local/bin/g++    -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk   -std=c++11 -o CMakeFiles/cmTC_c2887.dir/feature_tests.cxx.o -c /Users/bagseonghyeon/Documents/GitHub/Re-implemented-CPSim/build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_c2887
+/usr/local/Cellar/cmake/3.10.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c2887.dir/link.txt --verbose=1
+/usr/local/bin/g++    -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names   CMakeFiles/cmTC_c2887.dir/feature_tests.cxx.o  -o cmTC_c2887 
 
 
     Feature record: CXX_FEATURE:0cxx_aggregate_default_initializers
@@ -559,17 +516,15 @@ make[1]: Leaving directory '/home/park/git_base/Re-implemented-CPSim/build/CMake
 
 
 Detecting CXX [-std=c++98] compiler features compiled with the following output:
-Change Dir: /home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp
+Change Dir: /Users/bagseonghyeon/Documents/GitHub/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_0038b/fast"
-/usr/bin/make -f CMakeFiles/cmTC_0038b.dir/build.make CMakeFiles/cmTC_0038b.dir/build
-make[1]: Entering directory '/home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_0038b.dir/feature_tests.cxx.o
-/usr/bin/g++-7    -std=c++98 -o CMakeFiles/cmTC_0038b.dir/feature_tests.cxx.o -c /home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_0038b
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_0038b.dir/link.txt --verbose=1
-/usr/bin/g++-7       CMakeFiles/cmTC_0038b.dir/feature_tests.cxx.o  -o cmTC_0038b 
-make[1]: Leaving directory '/home/park/git_base/Re-implemented-CPSim/build/CMakeFiles/CMakeTmp'
+Run Build Command:"/usr/bin/make" "cmTC_e97c9/fast"
+/Library/Developer/CommandLineTools/usr/bin/make -f CMakeFiles/cmTC_e97c9.dir/build.make CMakeFiles/cmTC_e97c9.dir/build
+Building CXX object CMakeFiles/cmTC_e97c9.dir/feature_tests.cxx.o
+/usr/local/bin/g++    -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk   -std=c++98 -o CMakeFiles/cmTC_e97c9.dir/feature_tests.cxx.o -c /Users/bagseonghyeon/Documents/GitHub/Re-implemented-CPSim/build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_e97c9
+/usr/local/Cellar/cmake/3.10.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e97c9.dir/link.txt --verbose=1
+/usr/local/bin/g++    -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names   CMakeFiles/cmTC_e97c9.dir/feature_tests.cxx.o  -o cmTC_e97c9 
 
 
     Feature record: CXX_FEATURE:0cxx_aggregate_default_initializers

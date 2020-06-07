@@ -591,7 +591,7 @@ void Executor::update_jobset(std::shared_ptr<Job> simulated_job)
     }
 }
 
-int Executor::check_deadline_miss()
+bool Executor::check_deadline_miss()
 {
     for(auto job : vectors::job_vector_of_simulator)
     {
@@ -599,15 +599,16 @@ int Executor::check_deadline_miss()
         { 
             //std::cout << "Simulated finish time for job " << job->get_task_name() << ":" << job->get_job_id() << " was " << job->get_simulated_finish_time() << std::endl;
             //std::cout << "The simulated deadline was " << job->get_simulated_deadline() << std::endl;
-            return job->get_ECU()->get_ECU_id(); // Return the failing ECU id.
+            global_object::logger->log_which_job_was_deadline_miss(job);
+            return true; //deadline miss occured
         } 
     }
 
-    return -1; // -1 for success.
+    return false; // -1 for success.
 }
 
-int Executor::simulatability_analysis()
+bool Executor::simulatability_analysis()
 {
-    int is_simulatable = check_deadline_miss();
+    bool is_simulatable = !check_deadline_miss();
     return is_simulatable;
 }

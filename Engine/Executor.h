@@ -58,8 +58,8 @@ public:
     void assign_deadline_for_simulated_jobs();
     void assign_predecessors_successors();
 
-    int check_deadline_miss();
-    int simulatability_analysis();
+    bool check_deadline_miss();
+    bool simulatability_analysis();
 };
 
 #endif

@@ -90,7 +90,7 @@ int Initializer::can_interface_initalizer(int num_channel)
 
 int Initializer::parsing_specificated_information()
 {
-
+    return 0;
 }
 
 /**

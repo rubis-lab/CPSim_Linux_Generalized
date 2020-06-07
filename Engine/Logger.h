@@ -35,7 +35,7 @@ public:
     void log_task_vector_status();
     void log_job_vector_of_each_ECU_status();
     void log_job_vector_of_simulator_status();
-    void log_which_job_was_deadline_miss();
+    void log_which_job_was_deadline_miss(std::shared_ptr<Job>);
     void print_job_execution_schedule();
     void print_offline_guider_status();
 };
