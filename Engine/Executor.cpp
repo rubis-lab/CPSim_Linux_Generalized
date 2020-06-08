@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <climits>
 #include <unordered_map>
+#include "Logger.h"
 
 /**
  *  This file is the cpp file for the Executor class.
@@ -93,7 +94,7 @@ void Executor::set_current_hyper_period_end(int current_hyper_period_end)
  * @warning none
  * @todo implement this today's night
  */
-void Executor::run_simulation(double start_time)
+bool Executor::run_simulation(double start_time)
 {
     double end_time = start_time + utils::hyper_period;
     move_ecus_jobs_to_simulator(); // Copies job vectors from ECUs to Sim.
@@ -101,6 +102,7 @@ void Executor::run_simulation(double start_time)
     change_execution_time(); // Sets the simulated exec time. Warning: Need to adapt for GPU by changing Init job's GPU WAIT TIME variable. Do we need to change the sync job aswell to accord for this..?
     assign_predecessors_successors();
     assign_deadline_for_simulated_jobs();
+    assign_initial_actual_start_time();
     global_object::logger->log_job_vector_of_simulator_status();
     /**
      * Iterating Loop for running jobs in one HP
@@ -116,7 +118,7 @@ void Executor::run_simulation(double start_time)
             {
                 if(job->get_is_read())
                 {
-                    if(utils::current_time < job->get_actual_release_time()) // This is right actual release time is the factor of read constraint check
+                    if(utils::current_time < job->get_actual_start_time()) // This is right actual release time is the factor of read constraint check
                     {
                         continue;
                     }
@@ -156,17 +158,37 @@ void Executor::run_simulation(double start_time)
                     run_job = job;
                 }
             }
-
+            
+            run_job->set_simulated_start_time(utils::current_time); 
+            run_job->set_simulated_finish_time(utils::current_time + run_job->get_simulated_execution_time());
+            run_job->set_is_simulated(true);
+            
+            global_object::gld.est = run_job->get_est();
+            global_object::gld.lst = run_job->get_lst();
+            global_object::gld.eft = run_job->get_eft();
+            global_object::gld.lft = run_job->get_lft();
+            global_object::gld.act_rel = run_job->get_actual_release_time();
+            global_object::gld.act_start = run_job->get_actual_start_time();
+            global_object::gld.sim_deadline = run_job->get_simulated_deadline();
+            global_object::gld.sim_finish = run_job->get_simulated_finish_time();
+            global_object::gld.sim_release = run_job->get_simulated_release_time();
+            global_object::gld.sim_start = run_job->get_simulated_start_time();
+            global_object::gld.wcbp_start = run_job->get_wcbp().front();
+            global_object::gld_vector.push_back(global_object::gld);
             global_object::logger->add_current_simulated_job(run_job);
+            bool is_simulatable = simulatability_analysis();
+            if(!is_simulatable)
+            {
+                std::cout << "NOT SIMULATABLE" << std::endl;
+                return false;
+            }
+            
 
             /**
              * If, this is a real mode simulator, use actual function code of task
              * Else, this is synthetic workload, so that we just add simulated execution time to current time;
              */
-            
-            run_job->set_simulated_start_time(utils::current_time); 
-            run_job->set_simulated_finish_time(utils::current_time + run_job->get_simulated_execution_time());
-            run_job->set_is_simulated(true);
+
             
             utils::current_time += run_job->get_simulated_execution_time();
             for(int i = 0; i < simulation_ready_queue.size(); i++)
@@ -182,13 +204,14 @@ void Executor::run_simulation(double start_time)
     }
     utils::current_time = end_time;
     global_object::logger->print_job_execution_schedule();
+    return true;
 }
 
 void Executor::change_execution_time()
 {
     for (auto job : vectors::job_vector_of_simulator)
     {
-        job->set_simulated_execution_time(job->get_actual_execution_time() * 0.3);
+        job->set_simulated_execution_time(job->get_actual_execution_time() * utils::simple_mapping_function);
         if (job->get_priority_policy() == PriorityPolicy::GPU)
         {
             double execution_time_mapping_factor = (double)job->get_ECU()->get_gpu_performance() / utils::simulatorGPU_performance;
@@ -202,11 +225,13 @@ void Executor::assign_deadline_for_simulated_jobs()
 {
     for (auto job : vectors::job_vector_of_simulator)
     {
-        job->initialize_simulated_deadline();
+        if(job->get_is_simulated() == false || job->get_is_released() == false)
+            job->initialize_simulated_deadline();
     }
     for (auto job : vectors::job_vector_of_simulator)
     {
-        job->update_simulated_deadline();
+        if(job->get_is_simulated() == false || job->get_is_released() == false)
+            job->update_simulated_deadline();
     } 
 }
 
@@ -375,16 +400,31 @@ void Executor::move_ecus_jobs_to_simulator()
     vectors::job_vector_of_simulator.clear();
     for(int i = 0; i < vectors::job_vectors_for_each_ECU.size(); i++ )
     {
-        vectors::job_vector_of_simulator.insert(vectors::job_vector_of_simulator.end(), vectors::job_vectors_for_each_ECU.at(i).begin(), vectors::job_vectors_for_each_ECU.at(i).end());
-        vectors::job_vectors_for_each_ECU.at(i).clear();
+        for(int task_id = 0; task_id < vectors::job_vectors_for_each_ECU.at(i).size(); ++task_id)
+        {
+            vectors::job_vector_of_simulator.insert(vectors::job_vector_of_simulator.end(), vectors::job_vectors_for_each_ECU.at(i).at(task_id).begin(), vectors::job_vectors_for_each_ECU.at(i).at(task_id).end());
+            vectors::job_vectors_for_each_ECU.at(i).at(task_id).clear();
+        }
     }
 }
 
 void Executor::update_all(std::shared_ptr<Job> last_simulated_job)
-{
+{    
     /**
      * UPDATE THE SUCCESSORS' PREDECESSORS JOB SET
-     * Last simulated job must be removed from all job's predecessor queue;
+     * ACTUAL START TIME
+     * ACTUAL FINISH TIME
+     * UPDATED EST
+     * UPDATED LST
+     * UPDATED EFT
+     * UPDATED LFT
+     * 
+     * JOBSET START TIME
+     * JOBSET FINISH TIME
+     * JOBSET PROCON
+     * 
+     * DET_PREDECESSOR
+     * DET_SUCCESSOR
      */
     
     /**
@@ -611,4 +651,26 @@ bool Executor::simulatability_analysis()
 {
     bool is_simulatable = !check_deadline_miss();
     return is_simulatable;
+}
+
+void Executor::assign_initial_actual_start_time()
+{
+    for(auto job : vectors::job_vector_of_simulator)
+    {
+        /**
+         * IF BUSY PERIOD START POINT IS SAME WITH RELEASE TIME
+         * THAT JOB IS THE FIRST JOB OF THE BUSY PERIOD
+         */
+        if(job->get_est() == job->get_actual_release_time())
+        {
+            job->set_actual_start_time(job->get_actual_release_time());
+            /**
+             * FOR CHECKING FUNCTIONALITY
+             */
+            if(!(job->get_actual_start_time() == job->get_lst()))
+            {
+                std::cout << job->get_task_id()<<job->get_job_id() <<"MALFUNCTION" << std::endl;
+            }
+        }
+    }
 }

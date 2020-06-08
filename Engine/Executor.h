@@ -52,12 +52,12 @@ public:
     void update_ecu_schedule(std::shared_ptr<Job>, OldData);
     void update_simulated_deadlines(int);
     void update_jobset(std::shared_ptr<Job>);
-    void run_simulation(double);
+    bool run_simulation(double);
     void change_execution_time();
 
     void assign_deadline_for_simulated_jobs();
     void assign_predecessors_successors();
-
+    void assign_initial_actual_start_time();
     bool check_deadline_miss();
     bool simulatability_analysis();
 };

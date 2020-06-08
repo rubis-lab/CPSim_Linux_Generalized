@@ -12,6 +12,9 @@
 class ScheduleSimulator {
 private:
     int m_hyper_period;
+    std::vector<std::shared_ptr<Job>> m_execution_order_b;
+    std::vector<std::shared_ptr<Job>> m_execution_order_w;
+    
 
 public:
     /**

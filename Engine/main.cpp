@@ -66,50 +66,36 @@ int main(int argc, char *argv[])
     OfflineGuider offline_guider;
     Executor executor;
 
-    int i = 0;
-    int is_simulatable = -1; // -1 for success, other numbers represent failing ECU.
-   
-    // for(auto job : vectors::job_vectors_for_each_ECU.at(0))
-    // {
-    //     std::cout << job->get_task_name() <<job->get_job_id() << ", "<<job->get_is_read() << ", "<<job->get_is_write() <<", "<< job->get_consumers().size() <<std::endl;
-    //     if(job->get_consumers().size()!= 0)
-    //         for(auto con : job->get_consumers())
-    //         {
-    //             std::cout << con->get_task_name() << std::endl;
-    //         }    
-    // }
+    /** [Generation of Real-Cyber System's Scheduling]
+     * To run simulator, 
+     * second, we need to calculate all of the ECUs' behavior.
+     * For this, we simulate those ECUs' job scheduling scenario with the specificated informations.
+     */
+    schedule_simulator_on_Real.simulate_scheduling_on_real(utils::current_time);
+    /** [Construction of Job Precedence Graph(Offline Guider)]
+     * To run simulator, 
+     * third, we need to consider those constraints(Physical Read Constraint, Physical Write Constraint, Producer-Consumer Constraint)
+     * For this, we create offline guider, and make a graph data structure for representing all of the jobs' precedence relationship.
+    */  
+    offline_guider.construct_job_precedence_graph();
+    
     int simulation_termination_time = utils::hyper_period * 1;
+    int simulatable_count = 0;
+    int nonsimulatable_count = 0;
     while(utils::current_time < simulation_termination_time)
     {
-        /** [Generation of Real-Cyber System's Scheduling]
-         * To run simulator, 
-         * second, we need to calculate all of the ECUs' behavior.
-         * For this, we simulate those ECUs' job scheduling scenario with the specificated informations.
-         */
-        schedule_simulator_on_Real.simulate_scheduling_on_real(utils::current_time);
-        /** [Construction of Job Precedence Graph(Offline Guider)]
-         * To run simulator, 
-         * third, we need to consider those constraints(Physical Read Constraint, Physical Write Constraint, Producer-Consumer Constraint)
-         * For this, we create offline guider, and make a graph data structure for representing all of the jobs' precedence relationship.
-        */  
-        
-        offline_guider.construct_job_precedence_graph();
- 
         /** [Execute Jobs and Update the graph]
          * To start simulator,
          * forth, we need to schedule those jobs' that is already inserted in the Job Precedence Graph.
          * For this, we create executor which is responsible for 
         */
+        bool is_simulatable = executor.run_simulation(utils::current_time);
         
-        executor.run_simulation(utils::current_time);
-        is_simulatable = executor.simulatability_analysis();
         if(is_simulatable)
-            std::cout << "SIMULATABLE" << std::endl;
-        else
         {
-            std::cout << "NOT SIMULATABLE" << std::endl;
+            ++simulatable_count;
         }
-        
+        else ++nonsimulatable_count;
     }
     return 0;
 }

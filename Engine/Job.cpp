@@ -67,6 +67,7 @@ Job::Job(std::shared_ptr<Task> task, int job_id)
     m_job_id = job_id;
     m_actual_release_time = calculate_release_time(task->get_period(), task->get_offset());
     m_actual_deadline = calculate_absolute_deadline(m_actual_release_time, task->get_deadline());
+    m_actual_start_time = INT_MAX;
     m_simulated_release_time = -1;
     m_simulated_start_time = -1;
     m_simulated_finish_time = -1;
@@ -175,23 +176,23 @@ int Job::get_wpet()
 
 double Job::get_simulated_release_time()
 {
-    return m_simulated_release_time;
+    return std::floor(m_simulated_release_time*10)/10;
 }
 double Job::get_simulated_deadline()
 {
-    return std::floor(m_simulated_deadline*1000)/1000; 
+    return std::floor(m_simulated_deadline*10)/10; 
 }
 double Job::get_simulated_start_time()
 {
-    return m_simulated_start_time;
+    return std::floor(m_simulated_start_time*10)/10;
 }
 double Job::get_simulated_finish_time()
 {
-    return m_simulated_finish_time;
+    return std::floor(m_simulated_finish_time*10)/10;
 }
 double Job::get_simulated_execution_time()
 {
-    return m_simulated_execution_time;
+    return std::floor(m_simulated_execution_time*10)/10;
 }
 
 std::array<int, 2>& Job::get_wcbp()
@@ -323,23 +324,23 @@ void Job::set_actual_execution_time(int original_execution_time)
 
 void Job::set_simulated_release_time(double simulated_release_time)
 {
-    m_simulated_release_time = simulated_release_time;
+    m_simulated_release_time = std::floor(simulated_release_time*10)/10;
 }
 void Job::set_simulated_deadline(double simulated_deadline)
 {
-    m_simulated_deadline = std::floor(simulated_deadline*1000)/1000; ;
+    m_simulated_deadline = std::floor(simulated_deadline*10)/10;
 }
 void Job::set_simulated_start_time(double simulated_start_time)
 {
-    m_simulated_start_time = simulated_start_time;
+    m_simulated_start_time = std::floor(simulated_start_time*10)/10;
 }
 void Job::set_simulated_finish_time(double simulated_finish_time)
 {
-    m_simulated_finish_time = simulated_finish_time;
+    m_simulated_finish_time = std::floor(simulated_finish_time*10)/10;
 }
 void Job::set_simulated_execution_time(double simulated_execution_time)
 {
-    m_simulated_execution_time = simulated_execution_time;
+    m_simulated_execution_time = std::floor(simulated_execution_time*10)/10;
 }
 
 
@@ -420,22 +421,25 @@ void Job::initialize_simulated_deadline()
 }
 void Job::update_simulated_deadline()
 {
-    if(this->get_is_write())
+    if(m_is_simulated == false || m_is_released == false)
     {
-        //std::cout << "EFT: " << m_eft << std::endl;
-        m_simulated_deadline = static_cast<double>(m_eft);
-        if(m_simulated_deadline == 0)
+        if(this->get_is_write())
         {
-            std::cout << "WE GOT A ZERO VALUE DEADLINE INSIDE THE UPDATE SIMULATED DEADLINE FUNCTION!" << std::endl;
+            
+            m_simulated_deadline = static_cast<double>(m_eft);
+            if(m_simulated_deadline == 0)
+            {
+                std::cout << "WE GOT A ZERO VALUE DEADLINE INSIDE THE UPDATE SIMULATED DEADLINE FUNCTION!" << std::endl;
+            }
+            else
+            {
+                //std::cout << "WE GOT A NON ZERO VALUE INSIDE THE UPDATE SIMULATED DEADLINE FUNCTION!" << std::endl;
+            }
         }
         else
         {
-            //std::cout << "WE GOT A NON ZERO VALUE INSIDE THE UPDATE SIMULATED DEADLINE FUNCTION!" << std::endl;
+            m_simulated_deadline = min_simulated_deadline_det_successor();
         }
-    }
-    else
-    {
-        m_simulated_deadline = min_simulated_deadline_det_successor();
     }
 }
 double Job::min_simulated_deadline_det_successor()

@@ -58,8 +58,7 @@ namespace utils
 namespace vectors
 {
     inline std::vector<std::shared_ptr<Job> > job_vector_of_simulator;
-    inline std::vector<std::vector<std::shared_ptr<Job>>> job_vectors_for_each_task;
-    inline std::vector<std::vector<std::shared_ptr<Job>>> job_vectors_for_each_ECU;
+    inline std::vector<std::vector<std::vector<std::shared_ptr<Job>>>> job_vectors_for_each_ECU;
     inline std::vector<std::shared_ptr<ECU> > ecu_vector;
     inline std::vector<std::shared_ptr<Task>> task_vector;
     inline std::vector<std::shared_ptr<CAN_message> > can_msg_vector;
@@ -69,6 +68,23 @@ namespace global_object
 {
     inline std::shared_ptr<Logger> logger;
     inline std::shared_ptr<std::thread> logger_thread;
+
+    typedef struct LogData
+    {
+        int est;
+        int lst;
+        int eft;
+        int lft;
+        int act_rel;
+        int act_start;
+        int wcbp_start;
+        double sim_deadline;
+        double sim_release;
+        double sim_start;
+        double sim_finish;
+    } LogData;
+    inline LogData gld;
+    inline std::vector<LogData> gld_vector;
 }
 
 #endif

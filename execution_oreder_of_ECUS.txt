@@ -1,0 +1,126 @@
+
+EXECUTION ORDER OF ECU0
+  -----J01-----	  -----J91-----	 -----J181-----	  -----J02-----	  -----J03-----	  -----J92-----	  -----J04-----	  -----J05-----	  -----J93-----	  -----J06-----	  -----J07-----	  -----J94-----	  -----J08-----	
+REL:          0	REL:          0	REL:          0	REL:         10	REL:         20	REL:         20	REL:         30	REL:         40	REL:         40	REL:         50	REL:         60	REL:         60	REL:         70	
+PER:         10	PER:         20	PER:         80	PER:         10	PER:         10	PER:         20	PER:         10	PER:         10	PER:         20	PER:         10	PER:         10	PER:         20	PER:         10	
+EST:          0	EST:          1	EST:          8	EST:         11	EST:         20	EST:         23	EST:         31	EST:         40	EST:         43	EST:         51	EST:         60	EST:         63	EST:         71	
+BCT:          1	BCT:          2	BCT:          5	BCT:          1	BCT:          1	BCT:          2	BCT:          1	BCT:          1	BCT:          2	BCT:          1	BCT:          1	BCT:          2	BCT:          1	
+EFT:          1	EFT:          3	EFT:          8	EFT:         11	EFT:         21	EFT:         23	EFT:         31	EFT:         41	EFT:         43	EFT:         51	EFT:         61	EFT:         63	EFT:         71	
+  -----J01-----	  -----J91-----	 -----J181-----	  -----J02-----	  -----J03-----	  -----J92-----	  -----J04-----	  -----J05-----	  -----J93-----	  -----J06-----	  -----J07-----	  -----J94-----	  -----J08-----	
+REL:          0	REL:          0	REL:          0	REL:         10	REL:         20	REL:         20	REL:         30	REL:         40	REL:         40	REL:         50	REL:         60	REL:         60	REL:         70	
+PER:         10	PER:         20	PER:         80	PER:         10	PER:         10	PER:         20	PER:         10	PER:         10	PER:         20	PER:         10	PER:         10	PER:         20	PER:         10	
+LST:          0	LST:          1	LST:          3	LST:         10	LST:         20	LST:         21	LST:         30	LST:         40	LST:         41	LST:         50	LST:         60	LST:         61	LST:         70	
+WCT:          1	WCT:          2	WCT:          5	WCT:          1	WCT:          1	WCT:          2	WCT:          1	WCT:          1	WCT:          2	WCT:          1	WCT:          1	WCT:          2	WCT:          1	
+LFT:          1	LFT:          3	LFT:          8	LFT:         11	LFT:         21	LFT:         23	LFT:         31	LFT:         41	LFT:         43	LFT:         51	LFT:         61	LFT:         63	LFT:         71	
+
+EXECUTION ORDER OF ECU1
+ -----J101-----	 -----J191-----	  -----J11-----	 -----J102-----	 -----J103-----	 -----J192-----	 -----J104-----	 -----J105-----	 -----J193-----	  -----J12-----	 -----J106-----	 -----J107-----	 -----J194-----	 -----J108-----	
+REL:          0	REL:          0	REL:          0	REL:         10	REL:         20	REL:         20	REL:         30	REL:         40	REL:         40	REL:         40	REL:         50	REL:         60	REL:         60	REL:         70	
+PER:         10	PER:         20	PER:         40	PER:         10	PER:         10	PER:         20	PER:         10	PER:         10	PER:         20	PER:         40	PER:         10	PER:         10	PER:         20	PER:         10	
+EST:          0	EST:          1	EST:         11	EST:         11	EST:         20	EST:         23	EST:         31	EST:         40	EST:         41	EST:         51	EST:         51	EST:         60	EST:         63	EST:         71	
+BCT:          1	BCT:          2	BCT:          4	BCT:          1	BCT:          1	BCT:          2	BCT:          1	BCT:          1	BCT:          2	BCT:          4	BCT:          1	BCT:          1	BCT:          2	BCT:          1	
+EFT:          1	EFT:          3	EFT:          7	EFT:         11	EFT:         21	EFT:         23	EFT:         31	EFT:         41	EFT:         43	EFT:         47	EFT:         51	EFT:         61	EFT:         63	EFT:         71	
+ -----J101-----	 -----J191-----	  -----J11-----	 -----J102-----	 -----J103-----	 -----J192-----	 -----J104-----	 -----J105-----	 -----J193-----	  -----J12-----	 -----J106-----	 -----J107-----	 -----J194-----	 -----J108-----	
+REL:          0	REL:          0	REL:          0	REL:         10	REL:         20	REL:         20	REL:         30	REL:         40	REL:         40	REL:         40	REL:         50	REL:         60	REL:         60	REL:         70	
+PER:         10	PER:         20	PER:         40	PER:         10	PER:         10	PER:         20	PER:         10	PER:         10	PER:         20	PER:         40	PER:         10	PER:         10	PER:         20	PER:         10	
+LST:          0	LST:          1	LST:          3	LST:         10	LST:         20	LST:         21	LST:         30	LST:         40	LST:         41	LST:         43	LST:         50	LST:         60	LST:         61	LST:         70	
+WCT:          1	WCT:          2	WCT:          8	WCT:          1	WCT:          1	WCT:          2	WCT:          1	WCT:          1	WCT:          2	WCT:          8	WCT:          1	WCT:          1	WCT:          2	WCT:          1	
+LFT:          1	LFT:          3	LFT:         11	LFT:         11	LFT:         21	LFT:         23	LFT:         31	LFT:         41	LFT:         43	LFT:         51	LFT:         51	LFT:         61	LFT:         63	LFT:         71	
+
+EXECUTION ORDER OF ECU2
+  -----J21-----	 -----J111-----	  -----J22-----	  -----J23-----	 -----J112-----	  -----J24-----	  -----J25-----	 -----J113-----	  -----J26-----	  -----J27-----	 -----J114-----	  -----J28-----	
+REL:          0	REL:          0	REL:         10	REL:         20	REL:         20	REL:         30	REL:         40	REL:         40	REL:         50	REL:         60	REL:         60	REL:         70	
+PER:         10	PER:         20	PER:         10	PER:         10	PER:         20	PER:         10	PER:         10	PER:         20	PER:         10	PER:         10	PER:         20	PER:         10	
+EST:          0	EST:          3	EST:         11	EST:         20	EST:         23	EST:         31	EST:         40	EST:         43	EST:         51	EST:         60	EST:         63	EST:         71	
+BCT:          1	BCT:          2	BCT:          1	BCT:          1	BCT:          2	BCT:          1	BCT:          1	BCT:          2	BCT:          1	BCT:          1	BCT:          2	BCT:          1	
+EFT:          1	EFT:          3	EFT:         11	EFT:         21	EFT:         23	EFT:         31	EFT:         41	EFT:         43	EFT:         51	EFT:         61	EFT:         63	EFT:         71	
+  -----J21-----	 -----J111-----	  -----J22-----	  -----J23-----	 -----J112-----	  -----J24-----	  -----J25-----	 -----J113-----	  -----J26-----	  -----J27-----	 -----J114-----	  -----J28-----	
+REL:          0	REL:          0	REL:         10	REL:         20	REL:         20	REL:         30	REL:         40	REL:         40	REL:         50	REL:         60	REL:         60	REL:         70	
+PER:         10	PER:         20	PER:         10	PER:         10	PER:         20	PER:         10	PER:         10	PER:         20	PER:         10	PER:         10	PER:         20	PER:         10	
+LST:          0	LST:          1	LST:         10	LST:         20	LST:         21	LST:         30	LST:         40	LST:         41	LST:         50	LST:         60	LST:         61	LST:         70	
+WCT:          1	WCT:          2	WCT:          1	WCT:          1	WCT:          2	WCT:          1	WCT:          1	WCT:          2	WCT:          1	WCT:          1	WCT:          2	WCT:          1	
+LFT:          1	LFT:          3	LFT:         11	LFT:         21	LFT:         23	LFT:         31	LFT:         41	LFT:         43	LFT:         51	LFT:         61	LFT:         63	LFT:         71	
+
+EXECUTION ORDER OF ECU3
+ -----J121-----	  -----J31-----	 -----J122-----	 -----J123-----	 -----J124-----	
+REL:          0	REL:          0	REL:         20	REL:         40	REL:         60	
+PER:         20	PER:         80	PER:         20	PER:         20	PER:         20	
+EST:          0	EST:         15	EST:         21	EST:         41	EST:         61	
+BCT:          1	BCT:          7	BCT:          1	BCT:          1	BCT:          1	
+EFT:          1	EFT:          8	EFT:         21	EFT:         41	EFT:         61	
+ -----J121-----	  -----J31-----	 -----J122-----	 -----J123-----	 -----J124-----	
+REL:          0	REL:          0	REL:         20	REL:         40	REL:         60	
+PER:         20	PER:         80	PER:         20	PER:         20	PER:         20	
+LST:          0	LST:          1	LST:         20	LST:         40	LST:         60	
+WCT:          1	WCT:         14	WCT:          1	WCT:          1	WCT:          1	
+LFT:          1	LFT:         15	LFT:         21	LFT:         41	LFT:         61	
+
+EXECUTION ORDER OF ECU4
+ -----J131-----	  -----J41-----	 -----J132-----	 -----J133-----	 -----J134-----	 -----J135-----	 -----J136-----	 -----J137-----	 -----J138-----	
+REL:          0	REL:          0	REL:         10	REL:         20	REL:         30	REL:         40	REL:         50	REL:         60	REL:         70	
+PER:         10	PER:         80	PER:         10	PER:         10	PER:         10	PER:         10	PER:         10	PER:         10	PER:         10	
+EST:          0	EST:         10	EST:         12	EST:         22	EST:         32	EST:         42	EST:         52	EST:         62	EST:         72	
+BCT:          1	BCT:          8	BCT:          1	BCT:          1	BCT:          1	BCT:          1	BCT:          1	BCT:          1	BCT:          1	
+EFT:          1	EFT:          9	EFT:         11	EFT:         21	EFT:         31	EFT:         41	EFT:         51	EFT:         61	EFT:         71	
+ -----J131-----	  -----J41-----	 -----J132-----	 -----J133-----	 -----J134-----	 -----J135-----	 -----J136-----	 -----J137-----	 -----J138-----	
+REL:          0	REL:          0	REL:         10	REL:         20	REL:         30	REL:         40	REL:         50	REL:         60	REL:         70	
+PER:         10	PER:         80	PER:         10	PER:         10	PER:         10	PER:         10	PER:         10	PER:         10	PER:         10	
+LST:          0	LST:          2	LST:         10	LST:         20	LST:         30	LST:         40	LST:         50	LST:         60	LST:         70	
+WCT:          2	WCT:          8	WCT:          2	WCT:          2	WCT:          2	WCT:          2	WCT:          2	WCT:          2	WCT:          2	
+LFT:          2	LFT:         10	LFT:         12	LFT:         22	LFT:         32	LFT:         42	LFT:         52	LFT:         62	LFT:         72	
+
+EXECUTION ORDER OF ECU5
+  -----J51-----	 -----J141-----	  -----J52-----	  -----J53-----	  -----J54-----	  -----J55-----	 -----J142-----	  -----J56-----	  -----J57-----	  -----J58-----	
+REL:          0	REL:          0	REL:         10	REL:         20	REL:         30	REL:         40	REL:         40	REL:         50	REL:         60	REL:         70	
+PER:         10	PER:         40	PER:         10	PER:         10	PER:         10	PER:         10	PER:         40	PER:         10	PER:         10	PER:         10	
+EST:          0	EST:          6	EST:         12	EST:         22	EST:         32	EST:         40	EST:         46	EST:         52	EST:         62	EST:         72	
+BCT:          1	BCT:          4	BCT:          1	BCT:          1	BCT:          1	BCT:          1	BCT:          4	BCT:          1	BCT:          1	BCT:          1	
+EFT:          1	EFT:          5	EFT:         11	EFT:         21	EFT:         31	EFT:         41	EFT:         45	EFT:         51	EFT:         61	EFT:         71	
+  -----J51-----	 -----J141-----	  -----J52-----	  -----J53-----	  -----J54-----	  -----J55-----	 -----J142-----	  -----J56-----	  -----J57-----	  -----J58-----	
+REL:          0	REL:          0	REL:         10	REL:         20	REL:         30	REL:         40	REL:         40	REL:         50	REL:         60	REL:         70	
+PER:         10	PER:         40	PER:         10	PER:         10	PER:         10	PER:         10	PER:         40	PER:         10	PER:         10	PER:         10	
+LST:          0	LST:          2	LST:         10	LST:         20	LST:         30	LST:         40	LST:         42	LST:         50	LST:         60	LST:         70	
+WCT:          2	WCT:          4	WCT:          2	WCT:          2	WCT:          2	WCT:          2	WCT:          4	WCT:          2	WCT:          2	WCT:          2	
+LFT:          2	LFT:          6	LFT:         12	LFT:         22	LFT:         32	LFT:         42	LFT:         46	LFT:         52	LFT:         62	LFT:         72	
+
+EXECUTION ORDER OF ECU6
+  -----J61-----	 -----J151-----	  -----J62-----	  -----J63-----	 -----J152-----	  -----J64-----	  -----J65-----	 -----J153-----	  -----J66-----	  -----J67-----	 -----J154-----	  -----J68-----	
+REL:          0	REL:          0	REL:         10	REL:         20	REL:         20	REL:         30	REL:         40	REL:         40	REL:         50	REL:         60	REL:         60	REL:         70	
+PER:         10	PER:         20	PER:         10	PER:         10	PER:         20	PER:         10	PER:         10	PER:         20	PER:         10	PER:         10	PER:         20	PER:         10	
+EST:          0	EST:          6	EST:         12	EST:         20	EST:         26	EST:         32	EST:         40	EST:         46	EST:         52	EST:         60	EST:         66	EST:         72	
+BCT:          1	BCT:          2	BCT:          1	BCT:          1	BCT:          2	BCT:          1	BCT:          1	BCT:          2	BCT:          1	BCT:          1	BCT:          2	BCT:          1	
+EFT:          1	EFT:          3	EFT:         11	EFT:         21	EFT:         23	EFT:         31	EFT:         41	EFT:         43	EFT:         51	EFT:         61	EFT:         63	EFT:         71	
+  -----J61-----	 -----J151-----	  -----J62-----	  -----J63-----	 -----J152-----	  -----J64-----	  -----J65-----	 -----J153-----	  -----J66-----	  -----J67-----	 -----J154-----	  -----J68-----	
+REL:          0	REL:          0	REL:         10	REL:         20	REL:         20	REL:         30	REL:         40	REL:         40	REL:         50	REL:         60	REL:         60	REL:         70	
+PER:         10	PER:         20	PER:         10	PER:         10	PER:         20	PER:         10	PER:         10	PER:         20	PER:         10	PER:         10	PER:         20	PER:         10	
+LST:          0	LST:          2	LST:         10	LST:         20	LST:         22	LST:         30	LST:         40	LST:         42	LST:         50	LST:         60	LST:         62	LST:         70	
+WCT:          2	WCT:          4	WCT:          2	WCT:          2	WCT:          4	WCT:          2	WCT:          2	WCT:          4	WCT:          2	WCT:          2	WCT:          4	WCT:          2	
+LFT:          2	LFT:          6	LFT:         12	LFT:         22	LFT:         26	LFT:         32	LFT:         42	LFT:         46	LFT:         52	LFT:         62	LFT:         66	LFT:         72	
+
+EXECUTION ORDER OF ECU7
+ -----J161-----	  -----J71-----	 -----J162-----	 -----J163-----	 -----J164-----	
+REL:          0	REL:          0	REL:         20	REL:         40	REL:         60	
+PER:         20	PER:         80	PER:         20	PER:         20	PER:         20	
+EST:          0	EST:          8	EST:         24	EST:         44	EST:         64	
+BCT:          2	BCT:          4	BCT:          2	BCT:          2	BCT:          2	
+EFT:          2	EFT:          6	EFT:         22	EFT:         42	EFT:         62	
+ -----J161-----	  -----J71-----	 -----J162-----	 -----J163-----	 -----J164-----	
+REL:          0	REL:          0	REL:         20	REL:         40	REL:         60	
+PER:         20	PER:         80	PER:         20	PER:         20	PER:         20	
+LST:          0	LST:          4	LST:         20	LST:         40	LST:         60	
+WCT:          4	WCT:          4	WCT:          4	WCT:          4	WCT:          4	
+LFT:          4	LFT:          8	LFT:         24	LFT:         44	LFT:         64	
+
+EXECUTION ORDER OF ECU8
+ -----J171-----	  -----J81-----	 -----J172-----	 -----J173-----	 -----J174-----	 -----J175-----	 -----J176-----	 -----J177-----	 -----J178-----	
+REL:          0	REL:          0	REL:         10	REL:         20	REL:         30	REL:         40	REL:         50	REL:         60	REL:         70	
+PER:         10	PER:         80	PER:         10	PER:         10	PER:         10	PER:         10	PER:         10	PER:         10	PER:         10	
+EST:          0	EST:         10	EST:         12	EST:         22	EST:         32	EST:         42	EST:         52	EST:         62	EST:         72	
+BCT:          1	BCT:          4	BCT:          1	BCT:          1	BCT:          1	BCT:          1	BCT:          1	BCT:          1	BCT:          1	
+EFT:          1	EFT:          5	EFT:         11	EFT:         21	EFT:         31	EFT:         41	EFT:         51	EFT:         61	EFT:         71	
+ -----J171-----	  -----J81-----	 -----J172-----	 -----J173-----	 -----J174-----	 -----J175-----	 -----J176-----	 -----J177-----	 -----J178-----	
+REL:          0	REL:          0	REL:         10	REL:         20	REL:         30	REL:         40	REL:         50	REL:         60	REL:         70	
+PER:         10	PER:         80	PER:         10	PER:         10	PER:         10	PER:         10	PER:         10	PER:         10	PER:         10	
+LST:          0	LST:          2	LST:         10	LST:         20	LST:         30	LST:         40	LST:         50	LST:         60	LST:         70	
+WCT:          2	WCT:          8	WCT:          2	WCT:          2	WCT:          2	WCT:          2	WCT:          2	WCT:          2	WCT:          2	
+LFT:          2	LFT:         10	LFT:         12	LFT:         22	LFT:         32	LFT:         42	LFT:         52	LFT:         62	LFT:         72	

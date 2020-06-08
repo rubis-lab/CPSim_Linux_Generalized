@@ -135,7 +135,8 @@ void Logger::log_job_vector_of_each_ECU_status()
     for(int i=0; i < vectors::job_vectors_for_each_ECU.size(); i++)
     {
         contents += "NUMBER OF JOBS IN ECU " + std::to_string(i) + ": " + std::to_string(vectors::job_vectors_for_each_ECU.at(i).size()) + "\n";
-        for(auto job : vectors::job_vectors_for_each_ECU.at(i))
+        for(int task_id=0; task_id<vectors::job_vectors_for_each_ECU.at(i).size(); ++task_id)
+        for(auto job : vectors::job_vectors_for_each_ECU.at(i).at(task_id))
         {
             contents += "JOB" + std::to_string(job->get_task_id()) + std::to_string(job->get_job_id()) + " RELEASE TIME:\t" + std::to_string(job->get_actual_release_time()) + "\n";
             contents += "JOB" + std::to_string(job->get_task_id()) + std::to_string(job->get_job_id()) + " EST:\t" + std::to_string(job->get_est()) + "\n";
@@ -180,14 +181,117 @@ void Logger::print_offline_guider_status()
     std::ofstream write_offline_guider;
     write_offline_guider.open("offline_guider.txt");
     std::string contents = "Offline Guider Info";
+}
+void Logger::print_job_execution_on_ECU(std::vector<std::shared_ptr<Job>> b, std::vector<std::shared_ptr<Job>> w , int ecu_id)
+{
+    std::ofstream write_execution_order;
+    if(ecu_id == 0)
+        write_execution_order.open("execution_oreder_of_ECUS.txt", std::ios::out);
+    else
+    {
+        write_execution_order.open("execution_oreder_of_ECUS.txt", std::ios::app);
+    }
+    
+        
+    std::string contents = "\nEXECUTION ORDER OF ECU" + std::to_string(ecu_id) + "\n";
 
+    for(auto job : b)
+    {
+        std::stringstream stream;
+        std::string temp;
+        temp += "-----J"+std::to_string(job->get_task_id()) + std::to_string(job->get_job_id())+"-----";
+        stream << std::setw(15) << temp;
+        contents += stream.str() + "\t";
+    }
+    contents += "\n";
+    for(auto job : b)
+    {
+        std::stringstream stream;
+        stream << std::fixed << std::setprecision(2) << std::setw (10) << job->get_actual_release_time(); 
+        contents += "REL: "+ stream.str() + "\t";
+    }
+    contents += "\n";
+    for(auto job : b)
+    {
+        std::stringstream stream;
+        stream << std::fixed << std::setprecision(2) << std::setw (10) << job->get_period(); 
+        contents += "PER: "+ stream.str() + "\t";
+    }
+    contents += "\n";
+    for(auto job : b)
+    {
+        std::stringstream stream;
+        stream << std::fixed << std::setprecision(2) << std::setw (10) << job->get_est(); 
+        contents += "EST: "+ stream.str() + "\t";
+    }
+    contents += "\n";
+    for(auto job : b)
+    {
+        std::stringstream stream;
+        stream << std::fixed << std::setprecision(2) << std::setw (10) << job->get_bcet(); 
+        contents += "BCT: "+ stream.str() + "\t";
+    }
+    contents += "\n";
+    for(auto job : b)
+    {
+        std::stringstream stream;
+        stream << std::fixed << std::setprecision(2) << std::setw (10) << job->get_eft(); 
+        contents += "EFT: "+ stream.str() + "\t";
+    }
+    contents += "\n";
+    for(auto job : w)
+    {
+        std::stringstream stream;
+        std::string temp;
+        temp += "-----J"+std::to_string(job->get_task_id()) + std::to_string(job->get_job_id())+"-----";
+        stream << std::setw(15) << temp;
+        contents += stream.str() + "\t";
+    }
+    contents += "\n";
+    for(auto job : w)
+    {
+        std::stringstream stream;
+        stream << std::fixed << std::setprecision(2) << std::setw (10) << job->get_actual_release_time(); 
+        contents += "REL: "+ stream.str() + "\t";
+    }
+    contents += "\n";
+    for(auto job : w)
+    {
+        std::stringstream stream;
+        stream << std::fixed << std::setprecision(2) << std::setw (10) << job->get_period(); 
+        contents += "PER: "+ stream.str() + "\t";
+    }
+    contents += "\n";
+    for(auto job : w)
+    {
+        std::stringstream stream;
+        stream << std::fixed << std::setprecision(2) << std::setw (10) << job->get_lst(); 
+        contents += "LST: "+ stream.str() + "\t";
+    }
+    contents += "\n";
+    for(auto job : w)
+    {
+        std::stringstream stream;
+        stream << std::fixed << std::setprecision(2) << std::setw (10) << job->get_wcet(); 
+        contents += "WCT: "+ stream.str() + "\t";
+    }
+    contents += "\n";
+    for(auto job : w)
+    {
+        std::stringstream stream;
+        stream << std::fixed << std::setprecision(2) << std::setw (10) << job->get_lft(); 
+        contents += "LFT: "+ stream.str() + "\t";
+    }
+    contents += "\n";
+    write_execution_order.write(contents.c_str(), contents.size());
+    write_execution_order.close();
 }
 void Logger::print_job_execution_schedule()
 {
     std::ofstream write_execution_order;
     write_execution_order.open("execution_oreder.txt");
     std::string contents = "EXECUTION ORDER Info\n";
-    write_execution_order << std::fixed << std::setprecision(2);
+
     for(auto job : m_execution_order_buffer)
     {
         std::stringstream stream;
@@ -257,6 +361,76 @@ void Logger::print_job_execution_schedule()
         std::stringstream stream;
         stream << std::fixed << std::setprecision(2) << std::setw (10) << job->get_simulated_execution_time();
         contents += "SIM_EXECU: "+ stream.str() + "\t";
+    }
+    contents += "\n";
+    for(auto log : global_object::gld_vector)
+    {
+        std::stringstream stream;
+        stream << std::fixed << std::setprecision(2) << std::setw (10) << log.est;
+        contents += "LOG_EST_: "+ stream.str() + "\t";
+    }
+    contents += "\n";
+    for(auto log : global_object::gld_vector)
+    {
+        std::stringstream stream;
+        stream << std::fixed << std::setprecision(2) << std::setw (10) << log.lst;
+        contents += "LOG_LST_: "+ stream.str() + "\t";
+    }
+    contents += "\n";
+    for(auto log : global_object::gld_vector)
+    {
+        std::stringstream stream;
+        stream << std::fixed << std::setprecision(2) << std::setw (10) << log.eft;
+        contents += "LOG_EFT_: "+ stream.str() + "\t";
+    }
+    contents += "\n";
+    for(auto log : global_object::gld_vector)
+    {
+        std::stringstream stream;
+        stream << std::fixed << std::setprecision(2) << std::setw (10) << log.lft;
+        contents += "LOG_LFT_: "+ stream.str() + "\t";
+    }
+    contents += "\n";
+    for(auto log : global_object::gld_vector)
+    {
+        std::stringstream stream;
+        stream << std::fixed << std::setprecision(2) << std::setw (10) << log.sim_release;
+        contents += "LOG_SREL: "+ stream.str() + "\t";
+    }
+    contents += "\n";
+    for(auto log : global_object::gld_vector)
+    {
+        std::stringstream stream;
+        stream << std::fixed << std::setprecision(2) << std::setw (10) << log.sim_deadline;
+        contents += "LOG_SDEA: "+ stream.str() + "\t";
+    }
+    contents += "\n";
+    for(auto log : global_object::gld_vector)
+    {
+        std::stringstream stream;
+        stream << std::fixed << std::setprecision(2) << std::setw (10) << log.sim_start;
+        contents += "LOG_SSTA: "+ stream.str() + "\t";
+    }
+    contents += "\n";
+    for(auto log : global_object::gld_vector)
+    {
+        std::stringstream stream;
+        stream << std::fixed << std::setprecision(2) << std::setw (10) << log.sim_finish;
+        contents += "LOG_SFIN: "+ stream.str() + "\t";
+    }
+    contents += "\n";
+    for(auto log : global_object::gld_vector)
+    {
+        std::stringstream stream;
+        stream << std::fixed << std::setprecision(2) << std::setw (10) << log.act_rel;
+        contents += "LOG_AREL: "+ stream.str() + "\t";
+    }
+    contents += "\n";
+    for(auto log : global_object::gld_vector)
+    {
+        std::stringstream stream;
+        stream << std::fixed << std::setprecision(2) << std::setw (10) << log.act_start;
+        contents += "LOG_ASTA: "+ stream.str() + "\t";
     }
     write_execution_order.write(contents.c_str(), contents.size());
     write_execution_order.close();

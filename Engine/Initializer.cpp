@@ -295,6 +295,15 @@ void Initializer::random_task_generator(int task_num)
             vectors::task_vector.push_back(std::move(sync));
         }
     }
+    for(int ecu_num =0; ecu_num < vectors::ecu_vector.size(); ecu_num++)
+    {
+        for(int i = 0; i < task_num; i++)
+        {
+            std::vector<std::shared_ptr<Job>> v_job_of_ecu;
+            vectors::job_vectors_for_each_ECU.at(ecu_num).push_back(v_job_of_ecu);
+        }
+    }
+    
 }
 
 void Initializer::random_ecu_generator(int ecu_num)
@@ -307,7 +316,7 @@ void Initializer::random_ecu_generator(int ecu_num)
     
     for(int i = 0; i < ecu_num; i++)
     {
-        std::vector<std::shared_ptr<Job>> v_job_of_ecu;
+        std::vector<std::vector<std::shared_ptr<Job>>> v_job_of_ecu;
         vectors::job_vectors_for_each_ECU.push_back(v_job_of_ecu);
     }
 }
