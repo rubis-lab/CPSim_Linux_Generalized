@@ -128,15 +128,15 @@ void Initializer::initialize(std::string location)
      * ECU Vector Initialization
      * number of ECU is [3-10]
      */                         
-    random_ecu_generator((rand() % 8) + 3);
-    //random_ecu_generator(1);
+    //random_ecu_generator((rand() % 8) + 3);
+    random_ecu_generator(1);
     
     /**
      * Task Vector Initialization
      * Implement GPU / CPU job...
      */
     //random_task_generator(0.3, 0.3, (rand() % 5 + 1) * vectors::ecu_vector.size());
-    random_task_generator(20);
+    random_task_generator(utils::task_amount);
     if(utils::is_experimental == false)
         for(auto task : vectors::task_vector)
         {
@@ -169,22 +169,42 @@ void Initializer::initialize(std::string location)
 
 void Initializer::random_task_generator(int task_num)
 {
+    int gpu_jobs = task_num * utils::gpu_task_percentage;
+    std::cout << "We have " << task_num - gpu_jobs << " CPU Tasks." << std::endl;
+    std::cout << "We have " << gpu_jobs << " GPU Tasks." << std::endl;
+    if(!utils::enable_gpu_scheduling)
+        gpu_jobs = 0;
     for(int i = 0; i < task_num; i++)
     {
+        std::cout << "We have " << gpu_jobs << " GPU jobs left to add." << std::endl;
         std::string task_name = "TASK" + std::to_string(i);
         bool is_gpu_task = false;
         bool execute_gpu_on_cpu = false;
-        if (utils::enable_gpu_scheduling)
+        /*if (utils::enable_gpu_scheduling)
         {
             int chance = rand() % 100;
             if (chance < utils::gpu_task_percentage)
                 is_gpu_task = true;
-        }
-        else if (utils::execute_gpu_jobs_on_cpu)
+        }*/
+        
+        if (utils::enable_gpu_scheduling)
         {
-            int chance = rand() % 100;
-            if (chance < utils::gpu_task_percentage)
+            int nth = task_num / (task_num * utils::enable_gpu_scheduling);
+            if(task_num % nth == 0 && gpu_jobs > 0)
+            {
+                --gpu_jobs;
+                is_gpu_task = true;
+                std::cout << "Creating GPU Task." << std::endl;
+            }
+        }
+        else if (utils::execute_gpu_jobs_on_cpu && gpu_jobs > 0)
+        {
+            int nth = task_num / (task_num * utils::enable_gpu_scheduling);
+            if(task_num % nth == 0)
+            {
+                --gpu_jobs;
                 execute_gpu_on_cpu = true; // We are running CPU only, but we treat this as an originally GPU task. So we will increase its execution time.
+            }
         }
 
 
@@ -197,7 +217,7 @@ void Initializer::random_task_generator(int task_num)
             period = 40;
         else period = 80;
         // Make sure period is large enough for GPU jobs so that we can have discrete sync / init execution times...
-        if (period != 40 && is_gpu_task) period = 80;
+        if (period < 40 && is_gpu_task) period = 80;
         
         int bcet = std::ceil(period * ((rand() % 6 + 5) * 0.01)); // [5-10] percent of period.
         if (execute_gpu_on_cpu)
@@ -253,6 +273,7 @@ void Initializer::random_task_generator(int task_num)
                 min_ecu_id = vectors::ecu_vector.at(j)->get_ECU_id();
             }
         }
+
         ecu_id = min_ecu_id;
         vectors::ecu_vector.at(ecu_id)->set_num_of_task(min_num + 1);
 
@@ -283,11 +304,13 @@ void Initializer::random_task_generator(int task_num)
 
             init = std::make_shared<Task>(task_name, period, exec, exec, exec, offset, is_read, is_write, ecu_id, producers, consumers);
             init->set_is_gpu_init(true);
+            init->set_is_gpu_sync(false);
             init->set_gpu_wait_time(gpu_wait_time);
             init->set_priority_policy(PriorityPolicy::GPU);
 
             sync = std::make_shared<Task>(task_name, period, (exec * 2) + gpu_wait_time, exec, exec, offset, is_read, is_write, ecu_id, producers, consumers);
             sync->set_is_gpu_sync(true);
+            sync->set_is_gpu_init(false);
             sync->set_gpu_wait_time(gpu_wait_time);
             sync->set_priority_policy(PriorityPolicy::GPU);
 

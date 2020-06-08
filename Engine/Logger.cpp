@@ -108,6 +108,14 @@ void Logger::log_task_vector_status()
         contents += "TASK PERIOD:\t" + std::to_string(task->get_period()) + "\n";
         contents += "TASK BCET:\t" + std::to_string(task->get_bcet()) + "\n";
         contents += "TASK WCET:\t" + std::to_string(task->get_wcet()) + "\n";
+        if(task->get_priority_policy() == PriorityPolicy::GPU)
+        {
+            if( task->get_is_gpu_init()) 
+                contents += "GPU INIT\n";
+            if( task->get_is_gpu_sync())
+                contents += "GPU SYNC\n";
+        }
+        else contents += "TASK PROPERTY:\t CPU\n";
         contents += "TASK CONSTRAINTS:\t" + std::to_string(task->get_is_read()) + std::to_string(task->get_is_write()) + "\n";
         contents += "TASK ECU MAPPING IS:\t" + std::to_string(task->get_ECU()->get_ECU_id()) + "\n";
         contents += "TASK PRODUCERS :\t" + std::to_string(task->get_producers().size()) + "\n";
@@ -223,6 +231,17 @@ void Logger::print_job_execution_on_ECU(std::vector<std::shared_ptr<Job>> b, std
         std::stringstream stream;
         stream << std::fixed << std::setprecision(2) << std::setw (10) << job->get_est(); 
         contents += "EST: "+ stream.str() + "\t";
+    }
+    contents += "\n";
+    for(auto job : b)
+    {
+        std::stringstream stream;
+        //if(job->get_priority_policy() != PriorityPolicy::GPU) continue;
+        //stream << std::setw(10) << (job->get_priority_policy() == PriorityPolicy::GPU) ? "YES" : "NO";
+        if(job->get_priority_policy() == PriorityPolicy::GPU)
+            stream << std::setw(10) << "YES";
+        else stream << std::setw(10) << "NO";
+        contents += "GPU: " + stream.str() + "\t";
     }
     contents += "\n";
     for(auto job : b)

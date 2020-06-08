@@ -35,11 +35,12 @@ namespace utils
     inline int number_of_ECUs = 0;
     inline int number_of_tasks = 0;
     inline int simulatorPC_performance = 3000;
+    inline int task_amount = 55;
     inline double simple_mapping_function = 0.3;
     inline double simple_gpu_mapping_function = 0.1;
     inline bool execute_gpu_jobs_on_cpu = false; // Used for comparing CPU vs GPU simulatability increase.
     inline bool enable_gpu_scheduling = false;
-    inline int gpu_task_percentage = 30; // 30% of tasks will be GPU tasks.
+    inline double gpu_task_percentage = 0.5; // 50% of tasks will be GPU tasks.
     inline int simulatorGPU_performance = 12000;
     inline unsigned int ecu_counter = 0;
     inline bool is_experimental = true;

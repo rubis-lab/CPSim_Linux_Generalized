@@ -65,6 +65,10 @@ Task::Task(std::string task_name, int period, int deadline, int wcet,
     m_offset = offset;
     m_is_read = is_read;
     m_is_write = is_write;
+    m_priority_policy = policy;
+    m_is_gpu_init = false;
+    m_is_gpu_sync = false;
+    m_gpu_wait_time = 0;
 
     for(auto iter = vectors::ecu_vector.begin(); iter != vectors::ecu_vector.end(); iter++)
     {
@@ -83,7 +87,8 @@ Task::Task(std::string task_name, int period, int deadline, int wcet,
      * Member variable initializaion
      */
     m_task_name = task_name;
-    m_task_id = vectors::task_vector.size();
+    //m_task_id = vectors::task_vector.size();
+    m_task_id = std::stoi(m_task_name.substr(4));
     m_period = period;
     m_deadline = deadline;
     m_wcet = wcet;
@@ -93,6 +98,10 @@ Task::Task(std::string task_name, int period, int deadline, int wcet,
     m_is_write = is_write;
     m_producers_info = prodcuers;
     m_consumers_info = consumers;
+    m_priority_policy = policy;
+    m_is_gpu_init = false;
+    m_is_gpu_sync = false;
+    m_gpu_wait_time = 0;
     
     for(auto iter = vectors::ecu_vector.begin(); iter != vectors::ecu_vector.end(); iter++)
     {
@@ -120,6 +129,10 @@ Task::Task(std::string task_name, int period, int deadline, int wcet,
     m_is_write = is_write;
     m_producers = prodcuers;
     m_consumers = consumers;
+    m_priority_policy = policy;
+    m_is_gpu_init = false;
+    m_is_gpu_sync = false;
+    m_gpu_wait_time = 0;
     
     for(auto iter = vectors::ecu_vector.begin(); iter != vectors::ecu_vector.end(); iter++)
     {
