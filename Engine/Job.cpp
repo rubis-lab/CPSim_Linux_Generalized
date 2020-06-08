@@ -3,6 +3,7 @@
 #include <ctime>
 #include <cstdlib>
 #include <climits>
+#include <cmath>
 /** 
  *  This file is the cpp file for the Job class.
  *  @file Job.cpp
@@ -66,6 +67,9 @@ Job::Job(std::shared_ptr<Task> task, int job_id)
     m_job_id = job_id;
     m_actual_release_time = calculate_release_time(task->get_period(), task->get_offset());
     m_actual_deadline = calculate_absolute_deadline(m_actual_release_time, task->get_deadline());
+    m_simulated_release_time = -1;
+    m_simulated_start_time = -1;
+    m_simulated_finish_time = -1;
 }
 
 /**
@@ -175,7 +179,7 @@ double Job::get_simulated_release_time()
 }
 double Job::get_simulated_deadline()
 {
-    return m_simulated_deadline;
+    return std::floor(m_simulated_deadline*1000)/1000; 
 }
 double Job::get_simulated_start_time()
 {
@@ -323,7 +327,7 @@ void Job::set_simulated_release_time(double simulated_release_time)
 }
 void Job::set_simulated_deadline(double simulated_deadline)
 {
-    m_simulated_deadline = simulated_deadline;
+    m_simulated_deadline = std::floor(simulated_deadline*1000)/1000; ;
 }
 void Job::set_simulated_start_time(double simulated_start_time)
 {
@@ -411,7 +415,7 @@ void Job::initialize_simulated_deadline()
     }
     else
     {
-        m_simulated_deadline = INT64_MAX;
+        m_simulated_deadline = INT_MAX;
     }
 }
 void Job::update_simulated_deadline()
@@ -437,12 +441,35 @@ void Job::update_simulated_deadline()
 double Job::min_simulated_deadline_det_successor()
 {
     double min_value = INT_MAX;
-    for(auto succ : m_det_successors)
+    if(!m_det_successors.empty())
     {
-        if(succ->get_simulated_deadline() < min_value)
+        std::shared_ptr<Job> min_succ = m_det_successors.front();
+        for(auto succ : m_det_successors)
         {
-            min_value = succ->get_simulated_deadline();
+            if(succ->get_simulated_deadline() < min_value)
+            {
+                min_value = succ->get_simulated_deadline();
+                min_succ = succ;
+            }
         }
+        add_history(min_succ);
+        return min_value;
     }
-    return min_value;
+    else
+    {
+        if(min_value == INT_MAX)
+            return min_value;
+    }
+        
+    
 } 
+
+std::vector<std::shared_ptr<Job>> Job::get_history()
+{
+    return m_history_of_sim_deadline;
+}
+
+void Job::add_history(std::shared_ptr<Job> new_deadline)
+{
+    m_history_of_sim_deadline.push_back(new_deadline);
+}

@@ -190,7 +190,11 @@ void Logger::print_job_execution_schedule()
     write_execution_order << std::fixed << std::setprecision(2);
     for(auto job : m_execution_order_buffer)
     {
-        contents += std::to_string(job->get_task_id()) + std::to_string(job->get_job_id()) + "\t\t\t\t\t\t";
+        std::stringstream stream;
+        std::string temp;
+        temp += "--------J"+std::to_string(job->get_task_id()) + std::to_string(job->get_job_id())+"--------";
+        stream << std::setw(20) << temp;
+        contents += stream.str() + "\t";
     }
     contents += "\n";
     for(auto job : m_execution_order_buffer)
@@ -266,28 +270,33 @@ void Logger::log_which_job_was_deadline_miss(std::shared_ptr<Job> deadline_job)
     contents += "JOB's Constraints R/W: " + std::to_string(deadline_job->get_is_read()) + std::to_string(deadline_job->get_is_write());
     {
         std::stringstream stream;
-        stream << std::fixed << std::setprecision(2) << std::setw (10) << deadline_job->get_simulated_deadline();
+        stream << std::fixed << std::setprecision(4) << std::setw (10) << deadline_job->get_simulated_deadline();
         contents += "\nSIM_DEAD: " + stream.str() + "\n";
     }
     {
         std::stringstream stream;
-        stream << std::fixed << std::setprecision(2) << std::setw (10) << deadline_job->get_simulated_release_time();
+        stream << std::fixed << std::setprecision(4) << std::setw (10) << deadline_job->get_simulated_release_time();
         contents += "SIM_RELE: " + stream.str() + "\n";
     }
     {
         std::stringstream stream;
-        stream << std::fixed << std::setprecision(2) << std::setw (10) << deadline_job->get_simulated_start_time();
+        stream << std::fixed << std::setprecision(4) << std::setw (10) << deadline_job->get_simulated_start_time();
         contents += "SIM_STAR: " + stream.str() + "\n";
     }
     {
         std::stringstream stream;
-        stream << std::fixed << std::setprecision(2) << std::setw (10) << deadline_job->get_simulated_execution_time();
+        stream << std::fixed << std::setprecision(4) << std::setw (10) << deadline_job->get_simulated_execution_time();
         contents += "SIM_EXEC: " + stream.str() + "\n";
     }
     {
         std::stringstream stream;
-        stream << std::fixed << std::setprecision(2) << std::setw (10) << deadline_job->get_simulated_finish_time();
+        stream << std::fixed << std::setprecision(4) << std::setw (10) << deadline_job->get_simulated_finish_time();
         contents += "SIM_FINI: " + stream.str() + "\n";
+    }
+    {
+        std::stringstream stream;
+        stream << std::fixed << std::setprecision(2) << std::setw (10) << deadline_job->get_actual_release_time();
+        contents += "ACT_RELE: " + stream.str() + "\n";
     }
      contents += "\n";
     for(auto job : deadline_job->get_det_successors())
@@ -295,6 +304,14 @@ void Logger::log_which_job_was_deadline_miss(std::shared_ptr<Job> deadline_job)
         contents += "JOB" + std::to_string(job->get_task_id()) + std::to_string(job->get_job_id()) + "\n";
         contents += "EFT: " + std::to_string(job->get_eft()) + "\n";
         contents += "\n";
+    }
+    contents += "\n";
+    contents += "NUMBER OF HISTORY" + std::to_string(deadline_job->get_history().size()) + "\n";
+    for(auto deadline : deadline_job->get_history())
+    {
+        std::stringstream stream;
+        stream << std::fixed << std::setprecision(4) << std::setw (10) << deadline->get_simulated_deadline();
+        contents += "DEADLINE: " + stream.str() + "\n";
     }
 
     

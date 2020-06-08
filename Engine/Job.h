@@ -56,7 +56,7 @@ private:
     int m_wpet;
 
     std::array<int, 2> m_worst_case_busy_period;
-    
+    std::vector<std::shared_ptr<Job>> m_history_of_sim_deadline;
     std::vector<std::shared_ptr<Job>> m_job_set_start_det;
     std::vector<std::shared_ptr<Job>> m_job_set_start_non_det;
     std::vector<std::shared_ptr<Job>> m_job_set_finish_det;
@@ -98,6 +98,7 @@ public:
     double get_simulated_start_time();
     double get_simulated_finish_time();
     double get_simulated_execution_time();
+    std::vector<std::shared_ptr<Job>> get_history();
 
     int get_est();
     int get_lst();
@@ -168,6 +169,7 @@ public:
     void initialize_simulated_deadline();
     void update_simulated_deadline();
     double min_simulated_deadline_det_successor();
+    void add_history(std::shared_ptr<Job>);
 };
 
 #endif
