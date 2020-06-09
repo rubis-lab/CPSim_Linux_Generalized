@@ -89,7 +89,7 @@ void ScheduleSimulator::simulate_scheduling_on_real(double global_hyper_period_s
             }
         }
     }
-    std::cout << "Highest GPU Priority is: " << highest_gpu_priority << std::endl;
+    //std::cout << "Highest GPU Priority is: " << highest_gpu_priority << std::endl;
     // Assign CPU Task Priorities
     for(auto task : vectors::task_vector)
     {
@@ -149,9 +149,6 @@ void ScheduleSimulator::simulate_scheduling_on_real(double global_hyper_period_s
             }
     
     int offset = global_hyper_period_start_point;
-    std::vector<bool> freeTimeSlots;
-    freeTimeSlots.reserve(m_hyper_period);
-    for (int i = 0; i < m_hyper_period; i++) freeTimeSlots.push_back(true);
     // ACCOUNT FOR GPU JOBS.
     // Schedule GPU JOBS.
     if(utils::enable_gpu_scheduling)
@@ -168,14 +165,14 @@ void ScheduleSimulator::simulate_scheduling_on_real(double global_hyper_period_s
                     if (job->get_is_gpu_init())
                     {
                         initJobs.push_back(job);
-                        std::cout << "Init job found added to initJobs." << std::endl;
-                        std::cout << "GPU Enabled: " << utils::enable_gpu_scheduling << std::endl;
+                        //std::cout << "Init job found added to initJobs." << std::endl;
+                        //std::cout << "GPU Enabled: " << utils::enable_gpu_scheduling << std::endl;
                     }
                     else if (job->get_is_gpu_sync())
                     {
                         syncJobs.push_back(job);
-                        std::cout << "Sync job found added to syncJobs." << std::endl;
-                        std::cout << "GPU Enabled: " << utils::enable_gpu_scheduling << std::endl;
+                        //std::cout << "Sync job found added to syncJobs." << std::endl;
+                        //std::cout << "GPU Enabled: " << utils::enable_gpu_scheduling << std::endl;
                     }
                     else continue;
                     job->set_is_started(false);
@@ -259,13 +256,12 @@ void ScheduleSimulator::simulate_scheduling_on_real(double global_hyper_period_s
                 current_time_point += running_job->get_wcet(); // time needed to execute the init or sync portion.
                 if (last_job_was_init) // is running_job an init job?
                     current_time_point += running_job->get_gpu_wait_time(); // add the gpu time portion wait before sync can start.
-                std::cout << "prev: " << prev_time << std::endl;
+                /*std::cout << "prev: " << prev_time << std::endl;
                 std::cout << "offset: " << offset << std::endl;
                 std::cout << "i start: " << prev_time - offset << std::endl;
                 std::cout << "current time point: " << current_time_point << std::endl;
                 std::cout << "upper limit: " << current_time_point - offset << std::endl;
-                for (int i = prev_time - offset; i < (current_time_point - offset); ++i)
-                    freeTimeSlots[i] = false; // Mark this time slot as occupied..
+                */
 
                 running_job->set_is_started(true);
                 running_job->set_is_finished(true);
@@ -396,7 +392,7 @@ void ScheduleSimulator::simulate_scheduling_on_real(double global_hyper_period_s
                 }*/
                 if(current_time_point > (global_hyper_period_start_point + m_hyper_period))
                 {
-                    std::cout << "CURRENT TIME OVER " << std::endl;
+                    //std::cout << "CURRENT TIME OVER " << std::endl;
                 }
             }
             is_best = !is_best;
@@ -562,14 +558,14 @@ void ScheduleSimulator::busy_period_analysis(std::vector<std::shared_ptr<Job>>& 
             if(!setWorstCase)
             {
                 m_execution_order_b.push_back(highest_job);
-                if(highest_job->get_priority_policy() == PriorityPolicy::GPU)
-                    std::cout << "GPU JOB ADDED TO EXECUTION ORDER!!!!!1" << std::endl;
+                //if(highest_job->get_priority_policy() == PriorityPolicy::GPU)
+                    //std::cout << "GPU JOB ADDED TO EXECUTION ORDER!!!!!1" << std::endl;
             }
             else
             {
                 m_execution_order_w.push_back(highest_job);
-                if(highest_job->get_priority_policy() == PriorityPolicy::GPU)
-                    std::cout << "GPU JOB ADDED TO EXECUTION ORDER!!!!!1" << std::endl;
+                //if(highest_job->get_priority_policy() == PriorityPolicy::GPU)
+                    //std::cout << "GPU JOB ADDED TO EXECUTION ORDER!!!!!1" << std::endl;
             }
             
             highest_job->set_is_started(false);

@@ -411,7 +411,7 @@ void Job::initialize_simulated_deadline()
         m_simulated_deadline = static_cast<double>(m_eft);
         if(m_simulated_deadline == 0)
         {
-            std::cout << "WE GOT A ZERO VALUE DEADLINE INSIDE THE INITIALIZE SIMULATED DEADLINE FUNCTION!" << std::endl;
+            //std::cout << "WE GOT A ZERO VALUE DEADLINE INSIDE THE INITIALIZE SIMULATED DEADLINE FUNCTION!" << std::endl;
         }
     }
     else
@@ -429,7 +429,7 @@ void Job::update_simulated_deadline()
             m_simulated_deadline = static_cast<double>(m_eft);
             if(m_simulated_deadline == 0)
             {
-                std::cout << "WE GOT A ZERO VALUE DEADLINE INSIDE THE UPDATE SIMULATED DEADLINE FUNCTION!" << std::endl;
+                //std::cout << "WE GOT A ZERO VALUE DEADLINE INSIDE THE UPDATE SIMULATED DEADLINE FUNCTION!" << std::endl;
             }
             else
             {
@@ -464,8 +464,8 @@ double Job::min_simulated_deadline_det_successor()
         if(min_value == INT_MAX)
             return min_value;
     }
-        
-    
+    std::cout << "FATAL ERROR" << std::endl;
+    std::cin >> min_value;
 } 
 
 std::vector<std::shared_ptr<Job>> Job::get_history()

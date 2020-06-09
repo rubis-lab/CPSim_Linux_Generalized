@@ -128,7 +128,7 @@ int utils::calculate_hyper_period(std::vector<std::shared_ptr<Task>>& task_set)
 {
 	int hyper_period = 0;
 	hyper_period = utils::least_common_multiple_array(task_set);
-	std::cout << "Hyper Period is : " << hyper_period << std::endl;
+	//std::cout << "Hyper Period is : " << hyper_period << std::endl;
 	return hyper_period;
 }
 

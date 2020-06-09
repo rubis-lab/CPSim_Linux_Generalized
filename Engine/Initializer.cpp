@@ -129,7 +129,7 @@ void Initializer::initialize(std::string location)
      * number of ECU is [3-10]
      */                         
     //random_ecu_generator((rand() % 8) + 3);
-    random_ecu_generator(1);
+    random_ecu_generator(2);
     
     /**
      * Task Vector Initialization
@@ -170,43 +170,25 @@ void Initializer::initialize(std::string location)
 void Initializer::random_task_generator(int task_num)
 {
     int gpu_jobs = task_num * utils::gpu_task_percentage;
-    std::cout << "We have " << task_num - gpu_jobs << " CPU Tasks." << std::endl;
-    std::cout << "We have " << gpu_jobs << " GPU Tasks." << std::endl;
     if(!utils::enable_gpu_scheduling)
         gpu_jobs = 0;
     for(int i = 0; i < task_num; i++)
     {
-        std::cout << "We have " << gpu_jobs << " GPU jobs left to add." << std::endl;
+        //if(gpu_jobs > 0)
+            //std::cout << "We have " << gpu_jobs << " GPU jobs left to add." << std::endl;
         std::string task_name = "TASK" + std::to_string(i);
         bool is_gpu_task = false;
-        bool execute_gpu_on_cpu = false;
-        /*if (utils::enable_gpu_scheduling)
-        {
-            int chance = rand() % 100;
-            if (chance < utils::gpu_task_percentage)
-                is_gpu_task = true;
-        }*/
         
         if (utils::enable_gpu_scheduling)
         {
-            int nth = task_num / (task_num * utils::enable_gpu_scheduling);
-            if(task_num % nth == 0 && gpu_jobs > 0)
+            int nth = task_num / (task_num * utils::gpu_task_percentage);
+            if(i % nth == 0 && gpu_jobs > 0)
             {
                 --gpu_jobs;
                 is_gpu_task = true;
-                std::cout << "Creating GPU Task." << std::endl;
+                //std::cout << "Creating GPU Task." << std::endl;
             }
         }
-        else if (utils::execute_gpu_jobs_on_cpu && gpu_jobs > 0)
-        {
-            int nth = task_num / (task_num * utils::enable_gpu_scheduling);
-            if(task_num % nth == 0)
-            {
-                --gpu_jobs;
-                execute_gpu_on_cpu = true; // We are running CPU only, but we treat this as an originally GPU task. So we will increase its execution time.
-            }
-        }
-
 
         int period = rand() % 100; //[10-100] milli sec.
         if(period < 25)
@@ -220,8 +202,6 @@ void Initializer::random_task_generator(int task_num)
         if (period < 40 && is_gpu_task) period = 80;
         
         int bcet = std::ceil(period * ((rand() % 6 + 5) * 0.01)); // [5-10] percent of period.
-        if (execute_gpu_on_cpu)
-            bcet = bcet / utils::simple_gpu_mapping_function;
         int wcet = ((rand() % 2) + 1) * (double)bcet;// [1.0-2.0] random variation factor multiply bcet
         int offset = 0; //RTSS paper sets offset as 0.
         bool is_read = false;
@@ -364,15 +344,20 @@ void Initializer::random_producer_consumer_generator()
 
 void Initializer::random_constraint_selector(double read_ratio, double write_ratio)
 {
-    int task_num = vectors::task_vector.size();
+    // Using vector.size() will give an inflated number if GPU jobs exists.
+    // As GPU tasks count as 2, the task_num becomes inflated.
+    // If we originally have X tasks, the inflation will be:
+    // (2X * gpu_ratio) + (X * 1 - gpu_ratio) = Z, where Z is the inflated task number and vector size.
+    int task_num = utils::task_amount; //vectors::task_vector.size();
+
     int number_of_read = std::ceil(read_ratio * task_num); //read ratio is 30%
     int number_of_write = std::ceil(write_ratio * task_num); //write ratio is 30%
-    
+
     int selector = 0;
     while(number_of_read != 0)
     {
-        selector = rand() % vectors::task_vector.size();
-        if(vectors::task_vector.at(selector)->get_is_read() == true )
+        selector = rand() % vectors::task_vector.size();                                                   // Sync jobs can only read from Init jobs (gpu wait time).
+        if(vectors::task_vector.at(selector)->get_is_read() == true || vectors::task_vector.at(selector)->get_is_gpu_sync())
         {
             continue;
         }
@@ -386,8 +371,8 @@ void Initializer::random_constraint_selector(double read_ratio, double write_rat
 
     while(number_of_write != 0)
     {
-        selector = rand() % vectors::task_vector.size();
-        if(vectors::task_vector.at(rand() % vectors::task_vector.size())->get_is_write() == true )
+        selector = rand() % vectors::task_vector.size();                                                                    // Init jobs only write to the gpu.
+        if(vectors::task_vector.at(rand() % vectors::task_vector.size())->get_is_write() == true || vectors::task_vector.at(selector)->get_is_gpu_init())
         {
             continue;
         }

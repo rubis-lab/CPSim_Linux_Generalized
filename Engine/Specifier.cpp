@@ -60,7 +60,7 @@ Specifier::~Specifier()
  */
 void Specifier::specify_the_system(std::string file_path)
 {
-    std::cout << file_path << std::endl;
+    //std::cout << file_path << std::endl;
     utils::number_of_ECUs = specify_number_of_ECUs(file_path);
     utils::number_of_tasks = specify_number_of_tasks(file_path);
 }
