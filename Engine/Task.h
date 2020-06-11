@@ -115,6 +115,8 @@ public:
 	void add_task_to_consumers(std::shared_ptr<Task>);
 	void add_task_to_producers(std::shared_ptr<Task>);
 	void synchronize_producer_consumer_relation();
+
+	bool penalty;
 };
 
 #endif

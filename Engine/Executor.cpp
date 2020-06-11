@@ -212,7 +212,18 @@ void Executor::change_execution_time()
     for (auto job : vectors::job_vector_of_simulator)
     {
         job->set_simulated_execution_time(job->get_actual_execution_time() * utils::simple_mapping_function);
-        if (job->get_priority_policy() == PriorityPolicy::GPU)
+        if(utils::execute_gpu_jobs_on_cpu)
+        {
+            if(job->penalty) // This job was a GPU job on the real system.
+            {
+                double exec = job->get_gpu_wait_time() + 2;
+                exec *= utils::simple_gpu_mapping_function;
+                exec *= utils::simple_mapping_function;
+                job->set_simulated_execution_time(exec);
+                //job->set_simulated_execution_time(job->get_simulated_execution_time() * utils::simple_gpu_mapping_function);
+            }
+        }
+        else if (job->get_priority_policy() == PriorityPolicy::GPU)
         {
             //double execution_time_mapping_factor = (double)job->get_ECU()->get_gpu_performance() / utils::simulatorGPU_performance;
             //job->set_simulated_execution_time(job->get_actual_execution_time() * execution_time_mapping_factor);

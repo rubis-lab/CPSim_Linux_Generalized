@@ -63,6 +63,7 @@ Job::Job(std::shared_ptr<Task> task, int job_id)
     this->set_is_gpu_init(task->get_is_gpu_init());
     this->set_is_gpu_sync(task->get_is_gpu_sync());
     this->set_gpu_wait_time(task->get_gpu_wait_time());
+    penalty = task->penalty;
     
     m_job_id = job_id;
     m_actual_release_time = calculate_release_time(task->get_period(), task->get_offset());

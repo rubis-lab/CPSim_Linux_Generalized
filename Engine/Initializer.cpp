@@ -261,6 +261,17 @@ void Initializer::random_task_generator(int task_num)
         if (!is_gpu_task)
         {
             std::shared_ptr<Task> task = std::make_shared<Task>(task_name, period, period, wcet, bcet, offset, is_read, is_write, ecu_id, producers, consumers);
+            task->set_priority_policy(PriorityPolicy::CPU);
+            vectors::task_vector.push_back(std::move(task));
+        }
+        else if(utils::execute_gpu_jobs_on_cpu) // Work around to see if Fgr results are bogus or not.
+        {
+            int exec = 2;
+            int gpuWaitTime = wcet - exec;
+            std::shared_ptr<Task> task = std::make_shared<Task>(task_name, period, period, wcet, bcet, offset, is_read, is_write, ecu_id, producers, consumers);
+            task->set_priority_policy(PriorityPolicy::CPU);
+            task->penalty = true;
+            task->set_gpu_wait_time(gpuWaitTime);
             vectors::task_vector.push_back(std::move(task));
         }
         else

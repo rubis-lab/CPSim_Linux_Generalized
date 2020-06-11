@@ -69,6 +69,7 @@ Task::Task(std::string task_name, int period, int deadline, int wcet,
     m_is_gpu_init = false;
     m_is_gpu_sync = false;
     m_gpu_wait_time = 0;
+    penalty = false;
 
     for(auto iter = vectors::ecu_vector.begin(); iter != vectors::ecu_vector.end(); iter++)
     {
@@ -102,6 +103,7 @@ Task::Task(std::string task_name, int period, int deadline, int wcet,
     m_is_gpu_init = false;
     m_is_gpu_sync = false;
     m_gpu_wait_time = 0;
+    penalty = false;
     
     for(auto iter = vectors::ecu_vector.begin(); iter != vectors::ecu_vector.end(); iter++)
     {
@@ -133,6 +135,7 @@ Task::Task(std::string task_name, int period, int deadline, int wcet,
     m_is_gpu_init = false;
     m_is_gpu_sync = false;
     m_gpu_wait_time = 0;
+    penalty = false;
     
     for(auto iter = vectors::ecu_vector.begin(); iter != vectors::ecu_vector.end(); iter++)
     {
