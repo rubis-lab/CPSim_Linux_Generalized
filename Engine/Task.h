@@ -8,6 +8,14 @@
 #include "ECU.h"
 #include "PriorityPolicy.h"
 
+#ifdef __linux__
+#include <dlfcn.h>
+#elif _WIN32
+// Windows code for loading dll func
+#else
+#error "OS not recognised."
+#endif
+
 /** This file is engine code of CPSim-Re engine
  * @file Task.h
  * @class Task
@@ -29,6 +37,7 @@
 class Task
 {
 private:
+	void (*m_casted_func)(char*);
 	std::string m_task_name;
 	int m_task_id;
 	int m_period;
@@ -115,6 +124,9 @@ public:
 	void add_task_to_consumers(std::shared_ptr<Task>);
 	void add_task_to_producers(std::shared_ptr<Task>);
 	void synchronize_producer_consumer_relation();
+
+	void loadFunction(std::string file_path, std::string function_name);
+	void run(char* param);
 
 	bool penalty;
 };

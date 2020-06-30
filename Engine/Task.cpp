@@ -80,6 +80,27 @@ Task::Task(std::string task_name, int period, int deadline, int wcet,
     }
 }
 
+// Example:
+// loadFunction("/lib/x86_64-linux-gnu/libc.so.6", "puts");
+// run("Hello World");
+
+// Note: Extension of implementation needed to support any parameter types and amount.
+void Task::loadFunction(std::string file_path, std::string function_name)
+{
+    void* handle;
+    void* func;
+
+    handle = dlopen(file_path, RTLD_LAZY);
+    func = dlsym(handle, function_name.c_str()); //c_str() so we get \0 null terminator included in the string.
+
+    m_casted_func = reinterpret_cast<void(*)(char*)>(func);
+}
+
+void Task::run(char* param)
+{
+    m_casted_func(param);
+}
+
 Task::Task(std::string task_name, int period, int deadline, int wcet,
             int bcet, int offset, bool is_read, bool is_write, int ecu_id,
             std::vector<std::string> prodcuers, std::vector<std::string> consumers, PriorityPolicy policy)
@@ -113,6 +134,7 @@ Task::Task(std::string task_name, int period, int deadline, int wcet,
         }
     }
 }
+
 Task::Task(std::string task_name, int period, int deadline, int wcet,
             int bcet, int offset, bool is_read, bool is_write, int ecu_id,
             std::vector<std::shared_ptr<Task>> prodcuers, std::vector<std::shared_ptr<Task>> consumers, PriorityPolicy policy)
