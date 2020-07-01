@@ -6,9 +6,7 @@
 #include <string.h>
 #include <iostream>
 #include <list>
-#include <pthread.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <fcntl.h>
 #include <ctype.h>
 #include <errno.h>

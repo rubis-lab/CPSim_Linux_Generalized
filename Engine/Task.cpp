@@ -90,10 +90,15 @@ void Task::loadFunction(std::string file_path, std::string function_name)
     void* handle;
     void* func;
 
+#ifdef __linux__
     handle = dlopen(file_path, RTLD_LAZY);
     func = dlsym(handle, function_name.c_str()); //c_str() so we get \0 null terminator included in the string.
-
-    m_casted_func = reinterpret_cast<void(*)(char*)>(func);
+#elif _WIN32
+    // Windows code for loading DLL func.
+#else
+#error "OS not recognised."
+#endif
+    m_casted_func = reinterpret_cast<void(*)(char*)>(func); // Maybe need to put this in the preprocessor macro as well?
 }
 
 void Task::run(char* param)
