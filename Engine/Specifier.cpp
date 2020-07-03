@@ -90,6 +90,9 @@ void Specifier::specify_the_system(std::string file_path)
                 performance = specify_performance(m_parser.get_ecu_info().at(ecu_idx).at(i).substr(pos));
             }
         }
+
+        std::shared_ptr<ECU> ecu =  std::make_shared<ECU>(performance,scheduling_policy, ecu_id);
+        vectors::ecu_vector.push_back(std::move(ecu));
     }
     for(task_idx = 0; task_idx < m_parser.get_task_info().size(); task_idx++)
     {
@@ -102,6 +105,8 @@ void Specifier::specify_the_system(std::string file_path)
         bool is_read;
         bool is_write;
         int ecu_id;
+        std::string code_path;
+        std::vector<std::string> producers;
         std::vector<std::string> consumers;
 
         for(int i = 0; i< m_parser.get_task_info().at(task_idx).size(); i++)
@@ -146,7 +151,22 @@ void Specifier::specify_the_system(std::string file_path)
             {
                 is_write = specify_write_constraint(m_parser.get_task_info().at(task_idx).at(i).substr(pos));
             }
+            pos = m_parser.get_task_info().at(task_idx).at(i).find("path");
+            if(pos != std::string::npos)
+            {
+                code_path = specify_mapping_functions(m_parser.get_task_info().at(task_idx).at(i).substr(pos));
+            }
+            pos = m_parser.get_task_info().at(task_idx).at(i).find("consumer");
+            if(pos != std::string::npos)
+            {
+                consumers = specify_consumers(m_parser.get_task_info().at(task_idx).at(i).substr(pos));
+            }
         }
+
+        std::shared_ptr<Task> task = std::make_shared<Task>(task_id, period, deadline, wcet, bcet, offset, is_read, is_write, ecu_id, producers, consumers);
+        task->loadFunction("/lib/x86_64-linux-gnu/libc.so.6", "puts");
+        task->set_priority_policy(PriorityPolicy::CPU);
+        vectors::task_vector.push_back(std::move(task));
     }
 }
 
@@ -250,7 +270,7 @@ bool Specifier::specify_read_constraint(std::string line)
     start_pos = line.find("\"");
     start_pos += 1;
     end_pos = line.substr(start_pos).find("\"");
-    std::cout << line.substr(start_pos, end_pos) << std::endl;
+    std::cout << "readCon: " << line.substr(start_pos, end_pos) << std::endl;
     return std::stoi(line.substr(start_pos, end_pos));
 }
 bool Specifier::specify_write_constraint(std::string line)
@@ -259,7 +279,7 @@ bool Specifier::specify_write_constraint(std::string line)
     start_pos = line.find("\"");
     start_pos += 1;
     end_pos = line.substr(start_pos).find("\"");
-    std::cout << line.substr(start_pos, end_pos) << std::endl;
+    std::cout << "writeCon: "<< line.substr(start_pos, end_pos) << std::endl;
     return std::stoi(line.substr(start_pos, end_pos));
 }
 int Specifier::specify_ecu_id(std::string line)
@@ -288,4 +308,39 @@ int Specifier::specify_performance(std::string line)
     end_pos = line.substr(start_pos).find("\"");
     std::cout << line.substr(start_pos, end_pos) << std::endl;
     return std::stoi(line.substr(start_pos, end_pos));
+}
+std::string Specifier::specify_mapping_functions(std::string line)
+{
+    std::string::size_type start_pos, end_pos;
+    start_pos = line.find("\"");
+    start_pos += 1;
+    end_pos = line.substr(start_pos).find("\"");
+    std::cout << "path: " << line.substr(start_pos, end_pos) << std::endl;
+    return line.substr(start_pos, end_pos);        
+}
+std::vector<std::string> Specifier::specify_consumers(std::string line)
+{
+    std::vector<std::string> consumers;
+    std::string::size_type start_pos, end_pos;
+    start_pos = line.find("\"");
+    start_pos += 1;
+    end_pos = line.substr(start_pos).find("\"");
+    line = line.substr(start_pos, end_pos);
+
+    bool is_end = false;
+    while(!is_end)
+    {
+        end_pos = line.find(",");      
+        consumers.push_back(line.substr(0, end_pos));
+        if(end_pos == std::string::npos)
+        {
+            is_end = true;
+            break;
+        }
+        else
+        {
+            line = line.substr(end_pos + 1);   
+        }
+    }
+    return consumers;
 }
