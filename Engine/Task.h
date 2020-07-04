@@ -7,6 +7,7 @@
 #include <memory>
 #include "ECU.h"
 #include "PriorityPolicy.h"
+#include <chrono>
 
 #ifdef __linux__
 #include <dlfcn.h>
@@ -47,6 +48,10 @@ private:
 	//#else
 	//#error "OS not recognised."
 	//#endif
+
+	std::chrono::steady_clock::time_point m_run_start;
+	std::chrono::steady_clock::time_point m_run_end;
+
 	std::string m_task_name;
 	int m_task_id;
 	int m_period;
@@ -84,6 +89,11 @@ public:
     /**
      * Getter member functions
      */
+	long long get_last_elapsed_nano_sec();
+	long long get_last_elapsed_micro_sec();
+	long long get_last_elapsed_milli_sec();
+	long long get_last_elapsed_seconds();
+
 	std::string get_task_name();
 	int get_task_id();
 	int get_period();

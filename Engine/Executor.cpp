@@ -186,11 +186,21 @@ bool Executor::run_simulation(double start_time)
 
             /**
              * If, this is a real mode simulator, use actual function code of task
-             * Else, this is synthetic workload, so that we just add simulated execution time to current time;
+             * Else, this is synthetic work
+             
+             , so that we just add simulated execution time to current time;
              */
 
-            
-            utils::current_time += run_job->get_simulated_execution_time();
+            if (utils::real_workload)
+            {
+                run_job->run("PLACEHOLDER INPUT");
+                // Choose which one you think is best.
+                //utils::current_time += run_job->get_last_elapsed_nano_sec();
+                utils::current_time += run_job->get_last_elapsed_micro_sec();
+                //utils::current_time += run_job->get_last_elapsed_milli_sec();
+                //utils::current_time += run_job->get_last_elapsed_seconds();
+            }
+            else utils::current_time += run_job->get_simulated_execution_time();
             for(int i = 0; i < simulation_ready_queue.size(); i++)
             {
                 if(simulation_ready_queue.at(i) == run_job)
