@@ -1,6 +1,8 @@
 #ifndef PARSER_H__
 #define PARSER_H__
 
+#include <iostream>
+#include <fstream>
 
 /** This file is engine code of CPSim-Re engine
  * @file Parser.h
@@ -14,8 +16,11 @@
 
 class Parser
 {
-    
+private:
+
+public:
     void parse_system();
+    void parse_xml_file();
 };
 
 #endif

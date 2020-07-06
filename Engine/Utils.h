@@ -36,6 +36,7 @@ namespace utils
     inline int number_of_tasks = 0;
     inline int simulatorPC_performance = 3000;
     inline int task_amount = 10;
+     
     inline double simple_mapping_function = 0.3;
     inline double simple_gpu_mapping_function = 10; // GPU Tasks take 10x longer to run on CPU than on GPU.
     inline bool execute_gpu_jobs_on_cpu = false; // Used for comparing CPU vs GPU simulatability increase.
@@ -45,7 +46,11 @@ namespace utils
     inline unsigned int ecu_counter = 0;
     inline bool is_experimental = true;
     inline bool real_workload = true;
-    
+    /**
+     * CHECK REAL WORKLOAD OPTIONS
+     */
+    inline int real_task_num = 0;
+    inline int real_ecu_num = 0;
 
     int greatest_common_divider(int a, int b);
     int least_common_multiple(int a, int b);
