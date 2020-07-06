@@ -47,7 +47,8 @@ int main(int argc, char *argv[])
     srand((unsigned int)time(NULL)); // only ever seed once, not in func that is executed many times
     signal(SIGINT, utils::exit_simulation);
     
-    int epochs = 1000;
+    //int epochs = 1000;
+    int epochs = 1;
     int simulatable_count = 0;
     int nonsimulatable_count = 0;
 

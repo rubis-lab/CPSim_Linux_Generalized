@@ -90,7 +90,7 @@ void Task::loadFunction(std::string file_path, std::string function_name)
     void* handle;
     void* func;
 
-    handle = dlopen(file_path, RTLD_LAZY);
+    handle = dlopen(file_path.c_str(), RTLD_LAZY);
     func = dlsym(handle, function_name.c_str()); //c_str() so we get \0 null terminator included in the string.
 
     m_casted_func = reinterpret_cast<void(*)(char*)>(func);
