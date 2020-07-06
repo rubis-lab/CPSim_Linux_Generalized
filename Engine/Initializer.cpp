@@ -261,6 +261,7 @@ void Initializer::random_task_generator(int task_num)
         if (!is_gpu_task)
         {
             std::shared_ptr<Task> task = std::make_shared<Task>(task_name, period, period, wcet, bcet, offset, is_read, is_write, ecu_id, producers, consumers);
+            task->loadFunction("/lib/x86_64-linux-gnu/libc.so.6", "puts");
             task->set_priority_policy(PriorityPolicy::CPU);
             vectors::task_vector.push_back(std::move(task));
         }

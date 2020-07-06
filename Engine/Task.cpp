@@ -90,15 +90,42 @@ void Task::loadFunction(std::string file_path, std::string function_name)
     void* handle;
     void* func;
 
+#ifdef __linux__
     handle = dlopen(file_path.c_str(), RTLD_LAZY);
     func = dlsym(handle, function_name.c_str()); //c_str() so we get \0 null terminator included in the string.
-
-    m_casted_func = reinterpret_cast<void(*)(char*)>(func);
+#elif _WIN32
+    // Windows code for loading DLL func.
+#else
+#error "OS not recognised."
+#endif
+    m_casted_func = reinterpret_cast<void(*)(char*)>(func); // Maybe need to put this in the preprocessor macro as well?
 }
 
 void Task::run(char* param)
 {
+    m_run_start = std::chrono::steady_clock::now();
     m_casted_func(param);
+    m_run_end = std::chrono::steady_clock::now();
+}
+
+long long Task::get_last_elapsed_nano_sec()
+{
+    return std::chrono::duration_cast<std::chrono::nanoseconds>(m_run_end - m_run_start).count();
+}
+
+long long Task::get_last_elapsed_micro_sec()
+{
+    return std::chrono::duration_cast<std::chrono::microseconds>(m_run_end - m_run_start).count();
+}
+
+long long Task::get_last_elapsed_milli_sec()
+{
+    return std::chrono::duration_cast<std::chrono::milliseconds>(m_run_end - m_run_start).count();
+}
+
+long long Task::get_last_elapsed_seconds()
+{
+    return std::chrono::duration_cast<std::chrono::seconds>(m_run_end - m_run_start).count();
 }
 
 Task::Task(std::string task_name, int period, int deadline, int wcet,

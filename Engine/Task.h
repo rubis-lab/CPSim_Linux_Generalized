@@ -7,6 +7,7 @@
 #include <memory>
 #include "ECU.h"
 #include "PriorityPolicy.h"
+#include <chrono>
 
 #ifdef __linux__
 #include <dlfcn.h>
@@ -37,7 +38,20 @@
 class Task
 {
 private:
-	void (*m_casted_func)(char*);
+	void (*m_casted_func)(char*); // Not sure if this would be same type on windows or not..
+	// if it is NOT:
+	// Then wrap this variable like this:
+	//#ifdef __linux__
+	//void (*m_casted_func)(char*);
+	//#elif _WIN32
+	// ..windows variable decl..
+	//#else
+	//#error "OS not recognised."
+	//#endif
+
+	std::chrono::steady_clock::time_point m_run_start;
+	std::chrono::steady_clock::time_point m_run_end;
+
 	std::string m_task_name;
 	int m_task_id;
 	int m_period;
@@ -75,6 +89,11 @@ public:
     /**
      * Getter member functions
      */
+	long long get_last_elapsed_nano_sec();
+	long long get_last_elapsed_micro_sec();
+	long long get_last_elapsed_milli_sec();
+	long long get_last_elapsed_seconds();
+
 	std::string get_task_name();
 	int get_task_id();
 	int get_period();
@@ -125,6 +144,14 @@ public:
 	void add_task_to_producers(std::shared_ptr<Task>);
 	void synchronize_producer_consumer_relation();
 
+	// If these 2 funcs are different for windows / linux, wrap them like this:
+//#ifdef __linux__
+// .. function decls
+//#elif _WIN32
+// .. funciton decls
+//#else
+//#error "OS not recognised."
+//#endif
 	void loadFunction(std::string file_path, std::string function_name);
 	void run(char* param);
 

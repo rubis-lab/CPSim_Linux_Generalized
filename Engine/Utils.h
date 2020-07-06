@@ -38,12 +38,13 @@ namespace utils
     inline int task_amount = 10;
     inline double simple_mapping_function = 0.3;
     inline double simple_gpu_mapping_function = 10; // GPU Tasks take 10x longer to run on CPU than on GPU.
-    inline bool execute_gpu_jobs_on_cpu = true; // Used for comparing CPU vs GPU simulatability increase.
-    inline bool enable_gpu_scheduling = true;
+    inline bool execute_gpu_jobs_on_cpu = false; // Used for comparing CPU vs GPU simulatability increase.
+    inline bool enable_gpu_scheduling = false;
     inline double gpu_task_percentage = 0.3; // 40% of tasks will be GPU tasks.
     inline int simulatorGPU_performance = 12000;
     inline unsigned int ecu_counter = 0;
     inline bool is_experimental = true;
+    inline bool real_workload = true;
     
 
     int greatest_common_divider(int a, int b);
