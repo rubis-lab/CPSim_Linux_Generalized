@@ -397,6 +397,7 @@ void Executor::assign_predecessors_successors()
     {
         if (!job->get_is_gpu_sync()) continue;
         if (job->get_det_prdecessors().size() > 0) continue;
+        std::cout << "Adding virtual job" << std::endl;
         // We are a sync job with no predecessors left.
         // Make sure that we can't be released until GPU Wait Time has occured.
 

@@ -1,5 +1,5 @@
 #include "Parser.h"
-
+#include <string.h>
 /**
  *  This file is the cpp file for the Parser class.
  *  @file Parser.cpp
@@ -148,7 +148,8 @@ void Parser::parse_system()
 
 void Parser::parse_xml_file()
 {
-    std::string filePath = "example_case.xml";
+    //std::string filePath = "example_case.xml";
+    std::string filePath = "Re-implemented-CPSim/example_case.xml";
     
 	/**
      * READ XML FILE, AND STORE DATA TO m_xml_info
@@ -165,6 +166,7 @@ void Parser::parse_xml_file()
 	}
     else
     {
+        std::cout << strerror(errno) << std::endl;
         std::cout << "ERROR, XML FILE CANNOT BE READ" << std::endl;
     }
 

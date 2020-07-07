@@ -132,8 +132,8 @@ void ScheduleSimulator::simulate_scheduling_on_real(double global_hyper_period_s
         {
             //std::shared_ptr<Job> job = std::make_shared<Job>(*iter, job_id);
             std::shared_ptr<Job> job = std::make_shared<Job>(vectors::task_vector.at(i), job_id);
+            job->m_casted_func = vectors::task_vector.at(i)->m_casted_func;
             vectors::job_vectors_for_each_ECU.at(vectors::task_vector.at(i)->get_ECU()->get_ECU_id()).at(task_id).push_back(std::move(job));
-
             //vectors::job_vectors_for_each_ECU.at(iter->get()->get_ECU()->get_ECU_id()).at(task_idx).push_back(std::move(job));
         }
     }

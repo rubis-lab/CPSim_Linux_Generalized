@@ -14,3 +14,4 @@
         <ECU ID="ECU0" Virtual="1" numCores="1" schedPolicy="RM" sysClock="0" targetArch="SPC56EL70"/>
     </ECUs>
 </hyundaiDesignTool>
+</xml>

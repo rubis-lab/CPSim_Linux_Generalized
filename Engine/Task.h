@@ -37,8 +37,10 @@
 
 class Task
 {
-private:
+public:
 	void (*m_casted_func)(char*); // Not sure if this would be same type on windows or not..
+private:
+	
 	// if it is NOT:
 	// Then wrap this variable like this:
 	//#ifdef __linux__

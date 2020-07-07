@@ -270,6 +270,7 @@ void Initializer::random_task_generator(int task_num)
             int exec = 2;
             int gpuWaitTime = wcet - exec;
             std::shared_ptr<Task> task = std::make_shared<Task>(task_name, period, period, wcet, bcet, offset, is_read, is_write, ecu_id, producers, consumers);
+            task->loadFunction("/lib/x86_64-linux-gnu/libc.so.6", "puts");
             task->set_priority_policy(PriorityPolicy::CPU);
             task->penalty = true;
             task->set_gpu_wait_time(gpuWaitTime);
@@ -306,10 +307,14 @@ void Initializer::random_task_generator(int task_num)
             sync->set_gpu_wait_time(gpu_wait_time);
             sync->set_priority_policy(PriorityPolicy::GPU);
 
+            init->loadFunction("/lib/x86_64-linux-gnu/libc.so.6", "puts");
+            sync->loadFunction("/lib/x86_64-linux-gnu/libc.so.6", "puts");
+
             vectors::task_vector.push_back(std::move(init));
             vectors::task_vector.push_back(std::move(sync));
         }
     }
+    // What is this?
     for(int ecu_num =0; ecu_num < vectors::ecu_vector.size(); ecu_num++)
     {
         for(int i = 0; i < task_num; i++)
@@ -328,7 +333,7 @@ void Initializer::random_ecu_generator(int ecu_num)
         std::shared_ptr<ECU> ecu =  std::make_shared<ECU>(100,"RM");
         vectors::ecu_vector.push_back(std::move(ecu));
     }
-    
+    // What is this
     for(int i = 0; i < ecu_num; i++)
     {
         std::vector<std::vector<std::shared_ptr<Job>>> v_job_of_ecu;

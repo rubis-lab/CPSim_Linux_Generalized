@@ -79,57 +79,56 @@ int main(int argc, char *argv[])
         {
             initializer_module.initialize(utils::null_path);
         }
-    }    
-    //     ScheduleSimulator schedule_simulator_on_Real;
-    //     OfflineGuider offline_guider;
-    //     Executor executor;
+         ScheduleSimulator schedule_simulator_on_Real;
+         OfflineGuider offline_guider;
+         Executor executor;
 
-    //     /** [Generation of Real-Cyber System's Scheduling]
-    //      * To run simulator, 
-    //      * second, we need to calculate all of the ECUs' behavior.
-    //      * For this, we simulate those ECUs' job scheduling scenario with the specificated informations.
-    //      */
-    //     schedule_simulator_on_Real.simulate_scheduling_on_real(utils::current_time);
-    //     /** [Construction of Job Precedence Graph(Offline Guider)]
-    //      * To run simulator, 
-    //      * third, we need to consider those constraints(Physical Read Constraint, Physical Write Constraint, Producer-Consumer Constraint)
-    //      * For this, we create offline guider, and make a graph data structure for representing all of the jobs' precedence relationship.
-    //     */  
-    //     offline_guider.construct_job_precedence_graph();
+         /** [Generation of Real-Cyber System's Scheduling]
+          * To run simulator, 
+          * second, we need to calculate all of the ECUs' behavior.
+          * For this, we simulate those ECUs' job scheduling scenario with the specificated informations.
+          */
+         schedule_simulator_on_Real.simulate_scheduling_on_real(utils::current_time);
+         /** [Construction of Job Precedence Graph(Offline Guider)]
+          * To run simulator, 
+          * third, we need to consider those constraints(Physical Read Constraint, Physical Write Constraint, Producer-Consumer Constraint)
+          * For this, we create offline guider, and make a graph data structure for representing all of the jobs' precedence relationship.
+         */  
+         offline_guider.construct_job_precedence_graph();
         
-    //     int simulation_termination_time = utils::hyper_period * 1;
-    //     bool is_simulatable = true;
+         int simulation_termination_time = utils::hyper_period * 1;
+         bool is_simulatable = true;
 
-    //     while(utils::current_time < simulation_termination_time && is_simulatable)
-    //     {
-    //         /** [Execute Jobs and Update the graph]
-    //          * To start simulator,
-    //          * forth, we need to schedule those jobs' that is already inserted in the Job Precedence Graph.
-    //          * For this, we create executor which is responsible for 
-    //         */
-    //         is_simulatable = executor.run_simulation(utils::current_time);
-    //     }
-    //     is_simulatable ? ++simulatable_count : ++nonsimulatable_count;
+         while(utils::current_time < simulation_termination_time && is_simulatable)
+         {
+             /** [Execute Jobs and Update the graph]
+              * To start simulator,
+              * forth, we need to schedule those jobs' that is already inserted in the Job Precedence Graph.
+              * For this, we create executor which is responsible for 
+             */
+             is_simulatable = executor.run_simulation(utils::current_time);
+         }
+         is_simulatable ? ++simulatable_count : ++nonsimulatable_count;
 
-    //     // Reset Globals
-    //     global_object::logger_thread = nullptr; // Removing logger_thread first as it holds a reference to logger func.
-    //     global_object::logger = nullptr;
-    //     global_object::gld_vector.clear();
-    //     vectors::job_vector_of_simulator.clear();
-    //     vectors::ecu_vector.clear();
-    //     vectors::task_vector.clear();
-    //     vectors::can_msg_vector.clear();
-    //     for(auto someVector : vectors::job_vectors_for_each_ECU)
-    //         someVector.clear();
-    //     vectors::job_vectors_for_each_ECU.clear();
-    //     utils::current_time = 0;
-    // }
-    // std::cout << std::endl;
-    // std::cout << "--------------------" << std::endl;
-    // std::cout << simulatable_count << " simulations were simulatable." << std::endl;
-    // std::cout << nonsimulatable_count << " simulations were non-simulatable." << std::endl;
-    // std::cout << "Simulatability ratio is " << simulatable_count / (double)(simulatable_count + nonsimulatable_count) << std::endl;
-    // std::cout << "--------------------" << std::endl;
+         // Reset Globals
+         global_object::logger_thread = nullptr; // Removing logger_thread first as it holds a reference to logger func.
+         global_object::logger = nullptr;
+         global_object::gld_vector.clear();
+         vectors::job_vector_of_simulator.clear();
+         vectors::ecu_vector.clear();
+         vectors::task_vector.clear();
+         vectors::can_msg_vector.clear();
+         for(auto someVector : vectors::job_vectors_for_each_ECU)
+             someVector.clear();
+         vectors::job_vectors_for_each_ECU.clear();
+         utils::current_time = 0;
+    }
+    std::cout << std::endl;
+    std::cout << "--------------------" << std::endl;
+    std::cout << simulatable_count << " simulations were simulatable." << std::endl;
+    std::cout << nonsimulatable_count << " simulations were non-simulatable." << std::endl;
+    std::cout << "Simulatability ratio is " << simulatable_count / (double)(simulatable_count + nonsimulatable_count) << std::endl;
+    std::cout << "--------------------" << std::endl;
         
     return 0;
 }
