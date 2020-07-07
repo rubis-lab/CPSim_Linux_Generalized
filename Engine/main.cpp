@@ -34,7 +34,6 @@
 #include "OfflineGuider.h"
 #include "Executor.h"
 #include "Utils.h"
-#include "Parser.h"
 
 /**
     @fn main(void)
@@ -61,27 +60,26 @@ int main(int argc, char *argv[])
     int epochs = 1;
     int simulatable_count = 0;
     int nonsimulatable_count = 0;
-    Parser parser;
-    parser.parse_xml_file();
+
     
-    // for(int i = 0; i < epochs; i++) // Initializer, ScheduleSimulator, OfflineGuider and Executer will be reset due to going out of scope at each loop.
-    // {
-    //     /** [Initialization with Specification]
-    //      *  To run simulator, 
-    //      *  first we need to initialize all of the instances of ECU, Task, CAN, etc.).
-    //      *  For this, we create initializer module here, and call initialize function which includes all the functions
-    //      *  that we need.
-    //     */
-    //     Initializer initializer_module;
-    //     if (argv[1] != NULL)
-    //     {
-    //         initializer_module.initialize(argv[1]);
-    //     }
-    //     else
-    //     {
-    //         initializer_module.initialize(utils::null_path);
-    //     }
-        
+    for(int i = 0; i < epochs; i++) // Initializer, ScheduleSimulator, OfflineGuider and Executer will be reset due to going out of scope at each loop.
+    {
+        /** [Initialization with Specification]
+         *  To run simulator, 
+         *  first we need to initialize all of the instances of ECU, Task, CAN, etc.).
+         *  For this, we create initializer module here, and call initialize function which includes all the functions
+         *  that we need.
+        */
+        Initializer initializer_module;
+        if (argv[1] != NULL)
+        {
+            initializer_module.initialize(argv[1]);
+        }
+        else
+        {
+            initializer_module.initialize(utils::null_path);
+        }
+    }    
     //     ScheduleSimulator schedule_simulator_on_Real;
     //     OfflineGuider offline_guider;
     //     Executor executor;

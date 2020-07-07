@@ -60,9 +60,10 @@ Specifier::~Specifier()
  */
 void Specifier::specify_the_system(std::string file_path)
 {
-    //std::cout << file_path << std::endl;
-    utils::number_of_ECUs = specify_number_of_ECUs(file_path);
-    utils::number_of_tasks = specify_number_of_tasks(file_path);
+    
+    m_parser.parse_xml_file();
+    utils::number_of_ECUs = specify_number_of_ECUs();
+    utils::number_of_tasks = specify_number_of_tasks();
 }
 
 /**
@@ -78,9 +79,9 @@ void Specifier::specify_the_system(std::string file_path)
  * @warning none
  * @todo none
  */
-int Specifier::specify_number_of_ECUs(std::string file_path)
+int Specifier::specify_number_of_ECUs()
 {
-    int number_of_ecus;
+    int number_of_ecus = m_parser.get_number_of_ECUs();
     return number_of_ecus;
 }
 
@@ -97,8 +98,8 @@ int Specifier::specify_number_of_ECUs(std::string file_path)
  * @warning none
  * @todo none
  */
-int Specifier::specify_number_of_tasks(std::string file_path)
+int Specifier::specify_number_of_tasks()
 {
-    int number_of_tasks;
+    int number_of_tasks = m_parser.get_number_of_Task();
     return number_of_tasks;
 }
