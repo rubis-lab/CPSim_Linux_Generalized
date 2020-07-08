@@ -27,6 +27,7 @@ public:
      */
     ECU();
     ECU(int, std::string, int gpu_performance = 6000);
+    ECU(int, std::string,int ecu_id, int gpu_performance = 6000);
     ~ECU();
 
     /**

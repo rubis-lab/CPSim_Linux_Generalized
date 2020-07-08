@@ -20,9 +20,9 @@ class Parser
 {
 private:
     std::vector<std::string> m_xml_info;
-    std::vector<std::string> m_ecu_info;
-    std::vector<std::string> m_task_info;
-    std::vector<std::string> m_can_info;
+    std::vector<std::vector<std::string>> m_ecu_info;
+    std::vector<std::vector<std::string>> m_task_info;
+    std::vector<std::vector<std::string>> m_can_info;
     
     int m_number_of_ECUs;
     int m_number_of_Task;
@@ -35,6 +35,9 @@ public:
     int get_number_of_ECUs();
     int get_number_of_Task();
     std::vector<std::string> get_xml_info();
+    std::vector<std::vector<std::string>> get_ecu_info();
+    std::vector<std::vector<std::string>> get_task_info();
+    std::vector<std::vector<std::string>> get_can_info();
 };
 
 #endif

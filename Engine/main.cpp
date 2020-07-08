@@ -25,6 +25,7 @@
 #include <unistd.h>
 #include <dlfcn.h>
 #include <random>
+#include <stdlib.h>
 
 /**
     Header file lists.. in our simulator
@@ -34,6 +35,7 @@
 #include "OfflineGuider.h"
 #include "Executor.h"
 #include "Utils.h"
+#define CANMODE
 
 /**
     @fn main(void)
@@ -57,6 +59,7 @@ int main(int argc, char *argv[])
      * SYNTHETIC WORKLOAD SIMULATION OPTIONS
      */
     //int epochs = 1000;
+    std::cout << "CPSIM_PATH : " << getenv("HOME") << std::endl;
     int epochs = 1;
     int simulatable_count = 0;
     int nonsimulatable_count = 0;

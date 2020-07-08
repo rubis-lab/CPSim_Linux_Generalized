@@ -1,175 +1,273 @@
 JOB LIST
 NUMBER OF JOBS IN ECU 0: 10
 JOB01 RELEASE TIME:	0
-JOB01 EST:	4
-JOB01 LST:	4
-JOB01 EFT:	6
-JOB01 LFT:	8
+JOB01 EST:	0
+JOB01 LST:	0
+JOB01 EFT:	1
+JOB01 LFT:	1
 JOB01 WCBP START:	0
 ---------------------------------------------------------------------------------------------------
-JOB02 RELEASE TIME:	40
-JOB02 EST:	44
-JOB02 LST:	44
-JOB02 EFT:	46
-JOB02 LFT:	48
-JOB02 WCBP START:	40
+JOB02 RELEASE TIME:	10
+JOB02 EST:	10
+JOB02 LST:	10
+JOB02 EFT:	11
+JOB02 LFT:	11
+JOB02 WCBP START:	10
+---------------------------------------------------------------------------------------------------
+JOB03 RELEASE TIME:	20
+JOB03 EST:	11
+JOB03 LST:	20
+JOB03 EFT:	21
+JOB03 LFT:	12
+JOB03 WCBP START:	10
+---------------------------------------------------------------------------------------------------
+JOB04 RELEASE TIME:	30
+JOB04 EST:	31
+JOB04 LST:	30
+JOB04 EFT:	31
+JOB04 LFT:	31
+JOB04 WCBP START:	30
+---------------------------------------------------------------------------------------------------
+JOB05 RELEASE TIME:	40
+JOB05 EST:	40
+JOB05 LST:	40
+JOB05 EFT:	41
+JOB05 LFT:	41
+JOB05 WCBP START:	40
+---------------------------------------------------------------------------------------------------
+JOB06 RELEASE TIME:	50
+JOB06 EST:	51
+JOB06 LST:	50
+JOB06 EFT:	51
+JOB06 LFT:	51
+JOB06 WCBP START:	50
+---------------------------------------------------------------------------------------------------
+JOB07 RELEASE TIME:	60
+JOB07 EST:	60
+JOB07 LST:	60
+JOB07 EFT:	61
+JOB07 LFT:	61
+JOB07 WCBP START:	60
+---------------------------------------------------------------------------------------------------
+JOB08 RELEASE TIME:	70
+JOB08 EST:	71
+JOB08 LST:	70
+JOB08 EFT:	71
+JOB08 LFT:	71
+JOB08 WCBP START:	70
 ---------------------------------------------------------------------------------------------------
 JOB21 RELEASE TIME:	0
-JOB21 EST:	12
-JOB21 LST:	12
-JOB21 EFT:	17
-JOB21 LFT:	26
+JOB21 EST:	5
+JOB21 LST:	5
+JOB21 EFT:	6
+JOB21 LFT:	11
 JOB21 WCBP START:	0
 ---------------------------------------------------------------------------------------------------
+JOB22 RELEASE TIME:	40
+JOB22 EST:	45
+JOB22 LST:	45
+JOB22 EFT:	46
+JOB22 LFT:	51
+JOB22 WCBP START:	40
+---------------------------------------------------------------------------------------------------
 JOB41 RELEASE TIME:	0
-JOB41 EST:	8
-JOB41 LST:	8
-JOB41 EFT:	10
-JOB41 LFT:	12
+JOB41 EST:	21
+JOB41 LST:	15
+JOB41 EFT:	17
+JOB41 LFT:	21
 JOB41 WCBP START:	0
 ---------------------------------------------------------------------------------------------------
-JOB42 RELEASE TIME:	40
-JOB42 EST:	52
-JOB42 LST:	48
-JOB42 EFT:	50
-JOB42 LFT:	52
-JOB42 WCBP START:	40
----------------------------------------------------------------------------------------------------
 JOB61 RELEASE TIME:	0
-JOB61 EST:	33
-JOB61 LST:	26
-JOB61 EFT:	26
-JOB61 LFT:	33
+JOB61 EST:	11
+JOB61 LST:	11
+JOB61 EFT:	10
+JOB61 LFT:	15
 JOB61 WCBP START:	0
 ---------------------------------------------------------------------------------------------------
+JOB62 RELEASE TIME:	40
+JOB62 EST:	55
+JOB62 LST:	51
+JOB62 EFT:	50
+JOB62 LFT:	55
+JOB62 WCBP START:	40
+---------------------------------------------------------------------------------------------------
 JOB81 RELEASE TIME:	0
-JOB81 EST:	0
-JOB81 LST:	0
-JOB81 EFT:	2
-JOB81 LFT:	4
+JOB81 EST:	1
+JOB81 LST:	1
+JOB81 EFT:	3
+JOB81 LFT:	5
 JOB81 WCBP START:	0
 ---------------------------------------------------------------------------------------------------
 JOB82 RELEASE TIME:	20
-JOB82 EST:	24
+JOB82 EST:	16
 JOB82 LST:	20
-JOB82 EFT:	22
-JOB82 LFT:	24
-JOB82 WCBP START:	20
+JOB82 EFT:	23
+JOB82 LFT:	16
+JOB82 WCBP START:	10
 ---------------------------------------------------------------------------------------------------
 JOB83 RELEASE TIME:	40
-JOB83 EST:	40
-JOB83 LST:	40
-JOB83 EFT:	42
-JOB83 LFT:	44
+JOB83 EST:	41
+JOB83 LST:	41
+JOB83 EFT:	43
+JOB83 LFT:	45
 JOB83 WCBP START:	40
 ---------------------------------------------------------------------------------------------------
 JOB84 RELEASE TIME:	60
-JOB84 EST:	64
-JOB84 LST:	60
-JOB84 EFT:	62
-JOB84 LFT:	64
+JOB84 EST:	65
+JOB84 LST:	61
+JOB84 EFT:	63
+JOB84 LFT:	65
 JOB84 WCBP START:	60
 ---------------------------------------------------------------------------------------------------
 
 
 NUMBER OF JOBS IN ECU 1: 10
 JOB11 RELEASE TIME:	0
-JOB11 EST:	0
-JOB11 LST:	0
-JOB11 EFT:	2
-JOB11 LFT:	4
+JOB11 EST:	23
+JOB11 LST:	11
+JOB11 EFT:	13
+JOB11 LFT:	23
 JOB11 WCBP START:	0
 ---------------------------------------------------------------------------------------------------
-JOB12 RELEASE TIME:	20
-JOB12 EST:	20
-JOB12 LST:	20
-JOB12 EFT:	22
-JOB12 LFT:	24
-JOB12 WCBP START:	20
----------------------------------------------------------------------------------------------------
-JOB13 RELEASE TIME:	40
-JOB13 EST:	40
-JOB13 LST:	40
-JOB13 EFT:	42
-JOB13 LFT:	44
-JOB13 WCBP START:	40
----------------------------------------------------------------------------------------------------
-JOB14 RELEASE TIME:	60
-JOB14 EST:	60
-JOB14 LST:	60
-JOB14 EFT:	62
-JOB14 LFT:	64
-JOB14 WCBP START:	60
----------------------------------------------------------------------------------------------------
 JOB31 RELEASE TIME:	0
-JOB31 EST:	4
-JOB31 LST:	4
-JOB31 EFT:	4
-JOB31 LFT:	6
+JOB31 EST:	1
+JOB31 LST:	1
+JOB31 EFT:	3
+JOB31 LFT:	5
 JOB31 WCBP START:	0
 ---------------------------------------------------------------------------------------------------
 JOB32 RELEASE TIME:	20
-JOB32 EST:	26
-JOB32 LST:	24
-JOB32 EFT:	24
-JOB32 LFT:	26
-JOB32 WCBP START:	20
+JOB32 EST:	12
+JOB32 LST:	20
+JOB32 EFT:	23
+JOB32 LFT:	16
+JOB32 WCBP START:	10
 ---------------------------------------------------------------------------------------------------
 JOB33 RELEASE TIME:	40
-JOB33 EST:	44
-JOB33 LST:	44
-JOB33 EFT:	44
-JOB33 LFT:	46
+JOB33 EST:	41
+JOB33 LST:	41
+JOB33 EFT:	43
+JOB33 LFT:	45
 JOB33 WCBP START:	40
 ---------------------------------------------------------------------------------------------------
 JOB34 RELEASE TIME:	60
-JOB34 EST:	66
-JOB34 LST:	64
-JOB34 EFT:	64
-JOB34 LFT:	66
+JOB34 EST:	61
+JOB34 LST:	61
+JOB34 EFT:	63
+JOB34 LFT:	65
 JOB34 WCBP START:	60
 ---------------------------------------------------------------------------------------------------
 JOB51 RELEASE TIME:	0
-JOB51 EST:	6
-JOB51 LST:	6
-JOB51 EFT:	8
-JOB51 LFT:	14
+JOB51 EST:	0
+JOB51 LST:	0
+JOB51 EFT:	1
+JOB51 LFT:	1
 JOB51 WCBP START:	0
 ---------------------------------------------------------------------------------------------------
-JOB52 RELEASE TIME:	40
-JOB52 EST:	46
-JOB52 LST:	46
-JOB52 EFT:	48
-JOB52 LFT:	54
-JOB52 WCBP START:	40
+JOB52 RELEASE TIME:	10
+JOB52 EST:	11
+JOB52 LST:	10
+JOB52 EFT:	11
+JOB52 LFT:	11
+JOB52 WCBP START:	10
+---------------------------------------------------------------------------------------------------
+JOB53 RELEASE TIME:	20
+JOB53 EST:	11
+JOB53 LST:	20
+JOB53 EFT:	21
+JOB53 LFT:	12
+JOB53 WCBP START:	10
+---------------------------------------------------------------------------------------------------
+JOB54 RELEASE TIME:	30
+JOB54 EST:	31
+JOB54 LST:	30
+JOB54 EFT:	31
+JOB54 LFT:	31
+JOB54 WCBP START:	30
+---------------------------------------------------------------------------------------------------
+JOB55 RELEASE TIME:	40
+JOB55 EST:	40
+JOB55 LST:	40
+JOB55 EFT:	41
+JOB55 LFT:	41
+JOB55 WCBP START:	40
+---------------------------------------------------------------------------------------------------
+JOB56 RELEASE TIME:	50
+JOB56 EST:	51
+JOB56 LST:	50
+JOB56 EFT:	51
+JOB56 LFT:	51
+JOB56 WCBP START:	50
+---------------------------------------------------------------------------------------------------
+JOB57 RELEASE TIME:	60
+JOB57 EST:	60
+JOB57 LST:	60
+JOB57 EFT:	61
+JOB57 LFT:	61
+JOB57 WCBP START:	60
+---------------------------------------------------------------------------------------------------
+JOB58 RELEASE TIME:	70
+JOB58 EST:	71
+JOB58 LST:	70
+JOB58 EFT:	71
+JOB58 LFT:	71
+JOB58 WCBP START:	70
 ---------------------------------------------------------------------------------------------------
 JOB71 RELEASE TIME:	0
-JOB71 EST:	14
-JOB71 LST:	14
-JOB71 EFT:	12
-JOB71 LFT:	18
+JOB71 EST:	5
+JOB71 LST:	5
+JOB71 EFT:	5
+JOB71 LFT:	7
 JOB71 WCBP START:	0
 ---------------------------------------------------------------------------------------------------
-JOB72 RELEASE TIME:	40
-JOB72 EST:	54
-JOB72 LST:	54
-JOB72 EFT:	52
-JOB72 LFT:	58
-JOB72 WCBP START:	40
+JOB72 RELEASE TIME:	20
+JOB72 EST:	16
+JOB72 LST:	20
+JOB72 EFT:	25
+JOB72 LFT:	18
+JOB72 WCBP START:	10
+---------------------------------------------------------------------------------------------------
+JOB73 RELEASE TIME:	40
+JOB73 EST:	45
+JOB73 LST:	45
+JOB73 EFT:	45
+JOB73 LFT:	47
+JOB73 WCBP START:	40
+---------------------------------------------------------------------------------------------------
+JOB74 RELEASE TIME:	60
+JOB74 EST:	65
+JOB74 LST:	65
+JOB74 EFT:	65
+JOB74 LFT:	67
+JOB74 WCBP START:	60
 ---------------------------------------------------------------------------------------------------
 JOB91 RELEASE TIME:	0
-JOB91 EST:	26
-JOB91 LST:	18
-JOB91 EFT:	16
-JOB91 LFT:	26
+JOB91 EST:	7
+JOB91 LST:	7
+JOB91 EFT:	7
+JOB91 LFT:	11
 JOB91 WCBP START:	0
 ---------------------------------------------------------------------------------------------------
-JOB92 RELEASE TIME:	40
-JOB92 EST:	66
-JOB92 LST:	58
-JOB92 EFT:	56
-JOB92 LFT:	66
-JOB92 WCBP START:	40
+JOB92 RELEASE TIME:	20
+JOB92 EST:	22
+JOB92 LST:	20
+JOB92 EFT:	27
+JOB92 LFT:	22
+JOB92 WCBP START:	10
+---------------------------------------------------------------------------------------------------
+JOB93 RELEASE TIME:	40
+JOB93 EST:	51
+JOB93 LST:	47
+JOB93 EFT:	47
+JOB93 LFT:	51
+JOB93 WCBP START:	40
+---------------------------------------------------------------------------------------------------
+JOB94 RELEASE TIME:	60
+JOB94 EST:	71
+JOB94 LST:	67
+JOB94 EFT:	67
+JOB94 LFT:	71
+JOB94 WCBP START:	60
 ---------------------------------------------------------------------------------------------------
 
 

@@ -48,8 +48,17 @@ ECU::ECU(int performance, std::string scheduling_policy, int gpu_performance)
 {
     m_performance = performance;
     m_scheduling_policy = scheduling_policy;
-    m_ecu_id = vectors::ecu_vector.size();
     m_num_of_task = 0;
+    m_ecu_id = vectors::ecu_vector.size();
+    m_gpu_performance = gpu_performance;
+}
+
+ECU::ECU(int performance, std::string scheduling_policy, int ecu_id, int gpu_performance)
+{
+    m_performance = performance;
+    m_scheduling_policy = scheduling_policy;
+    m_num_of_task = 0;
+    m_ecu_id = ecu_id;
     m_gpu_performance = gpu_performance;
 }
 

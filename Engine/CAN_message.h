@@ -1,5 +1,5 @@
-#ifndef CAN_INTERFACE_H__
-#define CAN_INTERFACE_H__
+#ifndef CAN_MESSAGE_H__
+#define CAN_MESSAGE_H__
 
 #include <stdio.h>
 #include <string>
@@ -13,10 +13,10 @@
 /**
  * NO CAN MODE
  */
-#ifdef CANMODE
+//#ifdef CANMODE
 #include <pcan.h>
 #include <libpcan.h>
-#endif
+//#endif
 /** This file is engine code of CPSim-Re engine
  * @file CANInterface.h
  * @author Seonghyeon Park
@@ -37,13 +37,7 @@ typedef struct
 	unsigned char DATA[8];      // data bytes, up to 8
 } TPCANMsg;
 #endif
-typedef struct
-{
-	unsigned int ID;            // 11/29 bit code
-	unsigned char MSGTYPE;      // bits of MSGTYPE
-	unsigned char LEN;          // count of data bytes (0..8)
-	unsigned char DATA[8];      // data bytes, up to 8
-} TPCANMsg;
+
 /** CAN Message class
  * @class CAN_message
  * @brief This class is responsible for sending messages via CAN bus

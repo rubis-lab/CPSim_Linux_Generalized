@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?><hyundaiDesignTool>
+    <CANs>
+        <CAN ID="CAN0" bandwidth="0" type="CAN">
+            <link rid="ECU0" type="ECU"/>
+            <link rid="CAR" type="CAR"/>
+        </CAN>
+    </CANs>
+    <CAR ID="CAR">
+        <link rid="CAN0" type="CAN"/>
+    </CAR>
+    <SWCs>
+        <SWC BCET="0" ID="SENSING" Virtual="1" WCET="5" consumer="" deadline="10" period="10" phase="0" readCon="0" writeCon="0">
+            <impl path="/home/park/Desktop/Old_simulator/src_x86" type="MANUAL"/>
+            <link idxCore="0" rid="ECU0" type="ECU"/>
+        </SWC>
+        <SWC BCET="0" ID="LK" Virtual="1" WCET="5" consumer="" deadline="10" period="10" phase="0" readCon="0" writeCon="0">
+            <impl path="/home/park/Desktop/Old_simulator/src_x86" type="MANUAL"/>
+            <link idxCore="0" rid="ECU0" type="ECU"/>
+        </SWC>
+    </SWCs>
+    <ECUs>
+        <ECU ID="ECU0" Virtual="1" numCores="1" schedPolicy="RM" sysClock="100" targetArch="TC275">
+            <link idxCore="0" rid="SENSING" type="SWC"/>
+            <link idxCore="0" rid="LK" type="SWC"/>
+            <link rid="CAN0" type="CAN"/>
+        </ECU>
+    </ECUs>
+</hyundaiDesignTool>
