@@ -91,8 +91,8 @@ void Specifier::specify_the_system(std::string file_path)
             }
         }
 
-        std::shared_ptr<ECU> ecu =  std::make_shared<ECU>(performance,scheduling_policy, ecu_id);
-        vectors::ecu_vector.push_back(std::move(ecu));
+        //std::shared_ptr<ECU> ecu =  std::make_shared<ECU>(performance,scheduling_policy, ecu_id , 6000);
+        //vectors::ecu_vector.push_back(std::move(ecu));
     }
     for(task_idx = 0; task_idx < m_parser.get_task_info().size(); task_idx++)
     {
@@ -104,7 +104,7 @@ void Specifier::specify_the_system(std::string file_path)
         int deadline;
         bool is_read;
         bool is_write;
-        int ecu_id;
+        int ecu_id = 0;
         std::string code_path;
         std::vector<std::string> producers;
         std::vector<std::string> consumers;
@@ -119,37 +119,37 @@ void Specifier::specify_the_system(std::string file_path)
             pos = m_parser.get_task_info().at(task_idx).at(i).find("period");
             if(pos != std::string::npos)
             {
-                period = specify_period(m_parser.get_task_info().at(task_idx).at(i).substr(pos));
+                period = static_cast<int>(specify_period(m_parser.get_task_info().at(task_idx).at(i).substr(pos)));
             }
             pos = m_parser.get_task_info().at(task_idx).at(i).find("deadline");
             if(pos != std::string::npos)
             {
-                deadline = specify_deadline(m_parser.get_task_info().at(task_idx).at(i).substr(pos));
+                deadline = static_cast<int>(specify_deadline(m_parser.get_task_info().at(task_idx).at(i).substr(pos)));
             }
             pos = m_parser.get_task_info().at(task_idx).at(i).find("BCET");
             if(pos != std::string::npos)
             {
-                bcet = specify_bcet(m_parser.get_task_info().at(task_idx).at(i).substr(pos));
+                bcet = static_cast<int>(specify_bcet(m_parser.get_task_info().at(task_idx).at(i).substr(pos)));
             }
             pos = m_parser.get_task_info().at(task_idx).at(i).find("WCET");
             if(pos != std::string::npos)
             {
-                wcet = specify_wcet(m_parser.get_task_info().at(task_idx).at(i).substr(pos));
+                wcet = static_cast<int>(specify_wcet(m_parser.get_task_info().at(task_idx).at(i).substr(pos)));
             }
             pos = m_parser.get_task_info().at(task_idx).at(i).find("phase");
             if(pos != std::string::npos)
             {
-                offset = specify_offset(m_parser.get_task_info().at(task_idx).at(i).substr(pos));
+                offset = static_cast<int>(specify_offset(m_parser.get_task_info().at(task_idx).at(i).substr(pos)));
             }
             pos = m_parser.get_task_info().at(task_idx).at(i).find("readCon");
             if(pos != std::string::npos)
             {
-                is_read = specify_read_constraint(m_parser.get_task_info().at(task_idx).at(i).substr(pos));
+                is_read = static_cast<bool>(specify_read_constraint(m_parser.get_task_info().at(task_idx).at(i).substr(pos)));
             }
             pos = m_parser.get_task_info().at(task_idx).at(i).find("writeCon");
             if(pos != std::string::npos)
             {
-                is_write = specify_write_constraint(m_parser.get_task_info().at(task_idx).at(i).substr(pos));
+                is_write = static_cast<bool>(specify_write_constraint(m_parser.get_task_info().at(task_idx).at(i).substr(pos)));
             }
             pos = m_parser.get_task_info().at(task_idx).at(i).find("path");
             if(pos != std::string::npos)
@@ -326,20 +326,33 @@ std::vector<std::string> Specifier::specify_consumers(std::string line)
     start_pos += 1;
     end_pos = line.substr(start_pos).find("\"");
     line = line.substr(start_pos, end_pos);
-
-    bool is_end = false;
-    while(!is_end)
+    
+    if(end_pos==0)
     {
-        end_pos = line.find(",");      
-        consumers.push_back(line.substr(0, end_pos));
-        if(end_pos == std::string::npos)
+        return consumers;
+    }
+    else
+    {
+        bool is_end = false;
+        while(!is_end)
         {
-            is_end = true;
-            break;
+            end_pos = line.find(",");      
+            
+            if(end_pos == std::string::npos)
+            {
+                if(end_pos != 0)
+                    consumers.push_back(line.substr(0, end_pos));
+                is_end = true;
+                break;
+            }
+            else
+            {
+                line = line.substr(end_pos + 1);   
+            }
         }
-        else
+        if(consumers.size() == 0)
         {
-            line = line.substr(end_pos + 1);   
+            consumers.push_back(line);
         }
     }
     return consumers;
