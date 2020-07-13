@@ -32,8 +32,9 @@ public:
     bool specify_write_constraint(std::string);
     int specify_ecu_id(std::string);
     std::string specify_sched_policy(std::string);
-    std::vector<std::string> specify_consumers();
+    std::vector<std::string> specify_consumers(std::string);
     int specify_performance(std::string);
+    std::string specify_mapping_functions(std::string);
     void specify_the_system(std::string file_path);
 };
 

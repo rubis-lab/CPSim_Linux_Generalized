@@ -162,8 +162,8 @@ Task::Task(std::string task_name, int period, int deadline, int wcet,
      * Member variable initializaion
      */
     m_task_name = task_name;
-    //m_task_id = vectors::task_vector.size();
-    m_task_id = std::stoi(m_task_name.substr(4));
+    m_task_id = vectors::task_vector.size();
+    //m_task_id = std::stoi(m_task_name.substr(4));
     m_period = period;
     m_deadline = deadline;
     m_wcet = wcet;
