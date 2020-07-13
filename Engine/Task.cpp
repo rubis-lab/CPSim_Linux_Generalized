@@ -118,6 +118,22 @@ void Task::loadFunction(std::string file_path, std::string function_name)
     *shared3 = &shared::shared3;
     *shared4 = &shared::shared4;
 
+    // Assign shared vars for CC
+    unsigned int** CC_Recv_ACCEL_VALUE = (unsigned int**)dlsym(handle, "CC_Recv_ACCEL_VALUE");
+    int** CC_Recv_TARGET_SPEED = (int**)dlsym(handle, "CC_Recv_TARGET_SPEED");
+    int** CC_Recv_SPEED = (int**)dlsym(handle, "CC_Recv_SPEED");
+    int** CC_Recv_CC_TRIGGER = (int**)dlsym(handle, "CC_Recv_CC_TRIGGER");
+    int** CC_Send_BRAKE = (int**)dlsym(handle, "CC_Send_BRAKE");
+    int** CC_Send_ACCEL = (int**)dlsym(handle, "CC_Send_ACCEL");
+
+    *CC_Recv_ACCEL_VALUE = &shared::CC_Recv_ACCEL_VALUE;
+    *CC_Recv_TARGET_SPEED = &shared::CC_Recv_TARGET_SPEED;
+    *CC_Recv_SPEED = &shared::CC_Recv_SPEED;
+    *CC_Recv_CC_TRIGGER = &shared::CC_Recv_CC_TRIGGER;
+    *CC_Send_BRAKE = &shared::CC_Send_BRAKE;
+    *CC_Send_ACCEL = &shared::CC_Send_ACCEL;
+
+
     //std::cout << "last dlerror(): " << dlerror() << std::endl;
 #elif _WIN32
     // Windows code for loading DLL func.

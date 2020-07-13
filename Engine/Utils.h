@@ -67,10 +67,18 @@ namespace utils
 // (All .so files must include shared.h)
 namespace shared
 {
+    // Example shared vars
     inline int shared1 = 1;
     inline int shared2 = 2;
     inline int shared3 = 3;
     inline int shared4 = 4;
+    // Shared Vars used by CC
+    inline unsigned int CC_Recv_ACCEL_VALUE = 0;
+    inline int CC_Recv_TARGET_SPEED = 0;
+    inline int CC_Recv_SPEED = 0;
+    inline int CC_Recv_CC_TRIGGER = 0;
+    inline int CC_Send_BRAKE = 0;
+    inline int CC_Send_ACCEL = 0;
 }
 
 namespace vectors
