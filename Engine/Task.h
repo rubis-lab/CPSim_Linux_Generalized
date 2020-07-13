@@ -38,7 +38,8 @@
 class Task
 {
 public:
-	void (*m_casted_func)(char*); // Not sure if this would be same type on windows or not..
+	void (*m_casted_func)(); // Not sure if this would be same type on windows or not..
+	int* shared_variable;
 private:
 	
 	// if it is NOT:
@@ -155,7 +156,8 @@ public:
 //#error "OS not recognised."
 //#endif
 	void loadFunction(std::string file_path, std::string function_name);
-	void run(char* param);
+	void run();
+	
 
 	bool penalty;
 };

@@ -193,7 +193,7 @@ bool Executor::run_simulation(double start_time)
 
             if (utils::real_workload)
             {
-                run_job->run("PLACEHOLDER INPUT");
+                run_job->run();
                 // Choose which one you think is best.
                 //utils::current_time += run_job->get_last_elapsed_nano_sec();
                 utils::current_time += run_job->get_last_elapsed_micro_sec();

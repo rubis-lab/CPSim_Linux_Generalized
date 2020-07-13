@@ -85,26 +85,52 @@ Task::Task(std::string task_name, int period, int deadline, int wcet,
 // run("Hello World");
 
 // Note: Extension of implementation needed to support any parameter types and amount.
+//extern void sim_main();
+//extern "C" void test();
+
 void Task::loadFunction(std::string file_path, std::string function_name)
 {
     void* handle;
     void* func;
-
+    void* sharedVariable;
 #ifdef __linux__
     handle = dlopen(file_path.c_str(), RTLD_LAZY);
+    if(handle != NULL)
+        std::cout << "Successfully loaded library." << std::endl;
+    else
+    {
+        std::cout << "Unsuccessfully loaded library." << std::endl;
+        std::cout << dlerror() << std::endl;
+    }
     func = dlsym(handle, function_name.c_str()); //c_str() so we get \0 null terminator included in the string.
+    //sharedVariable = dlsym(handle, "shared_variable");
+    //this->shared_variable = (int *)sharedVariable;
+
+    // These variables are in shared.h, included by all .so files as rule.
+    int** shared1 = (int**)dlsym(handle, "shared1");
+    int** shared2 = (int**)dlsym(handle, "shared2");
+    int** shared3 = (int**)dlsym(handle, "shared3");
+    int** shared4 = (int**)dlsym(handle, "shared4");
+
+    // Make .so file point to the vars in utils.h shared:: namespace.
+    *shared1 = &shared::shared1;
+    *shared2 = &shared::shared2;
+    *shared3 = &shared::shared3;
+    *shared4 = &shared::shared4;
+
+    //std::cout << "last dlerror(): " << dlerror() << std::endl;
 #elif _WIN32
     // Windows code for loading DLL func.
 #else
 #error "OS not recognised."
 #endif
-    m_casted_func = reinterpret_cast<void(*)(char*)>(func); // Maybe need to put this in the preprocessor macro as well?
+    m_casted_func = reinterpret_cast<void(*)()>(func); // Maybe need to put this in the preprocessor macro as well?
 }
 
-void Task::run(char* param)
+void Task::run()
 {
     m_run_start = std::chrono::steady_clock::now();
-    m_casted_func(param);
+    m_casted_func();
     m_run_end = std::chrono::steady_clock::now();
 }
 

@@ -36,6 +36,7 @@ namespace utils
     inline int number_of_tasks = 0;
     inline int simulatorPC_performance = 3000;
     inline int task_amount = 10;
+    extern int shared_variable;
      
     inline double simple_mapping_function = 0.3;
     inline double simple_gpu_mapping_function = 10; // GPU Tasks take 10x longer to run on CPU than on GPU.
@@ -60,6 +61,16 @@ namespace utils
     bool first_release(std::shared_ptr<Job> pred, std::shared_ptr<Job> succ);
     void exit_simulation(int signo);
     void insert_can_msg(std::shared_ptr<CAN_message> input);
+}
+
+// All .so files have access to these variables.
+// (All .so files must include shared.h)
+namespace shared
+{
+    inline int shared1 = 1;
+    inline int shared2 = 2;
+    inline int shared3 = 3;
+    inline int shared4 = 4;
 }
 
 namespace vectors
