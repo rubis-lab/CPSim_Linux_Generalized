@@ -133,6 +133,14 @@ void Task::loadFunction(std::string file_path, std::string function_name)
     *CC_Send_BRAKE = &shared::CC_Send_BRAKE;
     *CC_Send_ACCEL = &shared::CC_Send_ACCEL;
 
+    // Assign shared vars for LK
+    shared::DW** rtU = (shared::DW**)dlsym(handle, "rtU");
+    shared::ExtU** rtDW = (shared::ExtU**)dlsym(handle, "rtDW");
+    shared::ExtY** rtY = (shared::ExtY**)dlsym(handle, "rtY");
+
+    *rtU = &shared::rtU;
+    *rtDW = &shared::rtDW;
+    *rtY = &shared::rtY;
 
     //std::cout << "last dlerror(): " << dlerror() << std::endl;
 #elif _WIN32
