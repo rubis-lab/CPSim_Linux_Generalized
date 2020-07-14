@@ -1,19 +1,19 @@
 EXECUTION ORDER Info
- --------J01--------	 --------J61--------	 --------J31--------	 --------J41--------	
-THIS JOB IS:    WRITE	THIS JOB IS:         	THIS JOB IS:         	THIS JOB IS:         	
-CURRENT_T:       0.00	CURRENT_T:      10.00	CURRENT_T:      14.00	CURRENT_T:      18.00	
-SIM_RELEA:       0.00	SIM_RELEA:       0.00	SIM_RELEA:       0.00	SIM_RELEA:      14.00	
-SIM_DEADL:       1.00	SIM_DEADL:      16.00	SIM_DEADL:      16.00	SIM_DEADL:      INFIN	
-SIM_START:       0.00	SIM_START:      10.00	SIM_START:      14.00	SIM_START:      18.00	
-SIM_FINIS:       0.60	SIM_FINIS:      10.30	SIM_FINIS:      15.20	SIM_FINIS:      19.80	
-SIM_EXECU:       0.60	SIM_EXECU:       0.30	SIM_EXECU:       1.20	SIM_EXECU:       1.80	
-LOG_EST_:          0	LOG_EST_:          2	LOG_EST_:          0	LOG_EST_:          3	
-LOG_LST_:          0	LOG_LST_:          2	LOG_LST_:          0	LOG_LST_:          3	
-LOG_EFT_:          1	LOG_EFT_:          2	LOG_EFT_:          2	LOG_EFT_:          5	
-LOG_LFT_:          2	LOG_LFT_:          3	LOG_LFT_:          4	LOG_LFT_:          9	
-LOG_SREL:       0.00	LOG_SREL:       0.00	LOG_SREL:       0.00	LOG_SREL:      14.00	
-LOG_SDEA:       1.00	LOG_SDEA:      16.00	LOG_SDEA:      16.00	LOG_SDEA: 2147483647.00	
-LOG_SSTA:       0.00	LOG_SSTA:      10.00	LOG_SSTA:      14.00	LOG_SSTA:      18.00	
-LOG_SFIN:       0.60	LOG_SFIN:      10.30	LOG_SFIN:      15.20	LOG_SFIN:      19.80	
-LOG_AREL:          0	LOG_AREL:          0	LOG_AREL:          0	LOG_AREL:          0	
-LOG_ASTA:          0	LOG_ASTA: 2147483647	LOG_ASTA:          0	LOG_ASTA: 2147483647	
+ --------J01--------	 --------J11--------	
+THIS JOB IS:         	THIS JOB IS:         	
+CURRENT_T:       0.00	CURRENT_T:       0.00	
+SIM_RELEA:       0.00	SIM_RELEA:       0.00	
+SIM_DEADL:      INFIN	SIM_DEADL:      INFIN	
+SIM_START:       0.00	SIM_START:       0.00	
+SIM_FINIS:       0.30	SIM_FINIS:       1.50	
+SIM_EXECU:       0.30	SIM_EXECU:       1.50	
+LOG_EST_:          0	LOG_EST_:         10	
+LOG_LST_:          0	LOG_LST_:          5	
+LOG_EFT_:          0	LOG_EFT_:          0	
+LOG_LFT_:          5	LOG_LFT_:         10	
+LOG_SREL:       0.00	LOG_SREL:       0.00	
+LOG_SDEA: 2147483647.00	LOG_SDEA: 2147483647.00	
+LOG_SSTA:       0.00	LOG_SSTA:       0.00	
+LOG_SFIN:       0.30	LOG_SFIN:       1.50	
+LOG_AREL:          0	LOG_AREL:          0	
+LOG_ASTA:          0	LOG_ASTA: 2147483647	

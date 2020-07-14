@@ -115,41 +115,65 @@ void Initializer::initialize(std::string location)
     {
         utils::file_path = location;
     }
-    Specifier specifier;
-    specifier.specify_the_system(utils::file_path);
 
-    /**
-     * CAN Network Initialization
-     */
-    
-    
+    if(utils::real_workload == true)
+    {
+        Specifier specifier;
+        specifier.specify_the_system(utils::file_path);
+        /**
+         * CAN Network Initialization
+         */
 
-    /**
-     * ECU Vector Initialization
-     * number of ECU is [3-10]
-     */                         
-    //random_ecu_generator((rand() % 8) + 3);
-    random_ecu_generator(2);
-    
-    /**
-     * Task Vector Initialization
-     * Implement GPU / CPU job...
-     */
-    //random_task_generator(0.3, 0.3, (rand() % 5 + 1) * vectors::ecu_vector.size());
-    random_task_generator(utils::task_amount);
-    if(utils::is_experimental == false)
-        for(auto task : vectors::task_vector)
+        /**
+         * ECU Vector Initialization
+         */
+        for(int i = 0; i < vectors::ecu_vector.size(); i++)
         {
-            task->synchronize_producer_consumer_relation();
+            std::vector<std::vector<std::shared_ptr<Job>>> v_job_of_ecu;
+            vectors::job_vectors_for_each_ECU.push_back(v_job_of_ecu);
         }
+        /**
+         * Task Vector Initialization
+         */
+        for(int ecu_num =0; ecu_num < vectors::ecu_vector.size(); ecu_num++)
+        {
+            for(int i = 0; i < vectors::ecu_vector.at(ecu_num)->get_num_of_task(); i++)
+            {
+                std::vector<std::shared_ptr<Job>> v_job_of_ecu;
+                vectors::job_vectors_for_each_ECU.at(ecu_num).push_back(v_job_of_ecu);
+            }
+        }
+    }   
     else
     {
         /**
-         * Each task can be [0-2] data producer of random selected job.
+         * ECU Vector Initialization
+         * number of ECU is [3-10]
          */
-        random_constraint_selector(0.3, 0.3);
-        random_producer_consumer_generator();
+        //random_ecu_generator((rand() % 8) + 3);
+        random_ecu_generator(2);
+        
+        /**
+         * Task Vector Initialization
+         * Implement GPU / CPU job...
+         */
+        //random_task_generator(0.3, 0.3, (rand() % 5 + 1) * vectors::ecu_vector.size());
+        random_task_generator(utils::task_amount);
+        if(utils::is_experimental == false)
+            for(auto task : vectors::task_vector)
+            {
+                task->synchronize_producer_consumer_relation();
+            }
+        else
+        {
+            /**
+             * Each task can be [0-2] data producer of random selected job.
+             */
+            random_constraint_selector(0.3, 0.3);
+            random_producer_consumer_generator();
+        }
     }
+                          
     
     /**
      * Global Hyper Period Initialization
@@ -159,11 +183,16 @@ void Initializer::initialize(std::string location)
     /**
      * Logger Thread Initialized
      */
-    if(utils::is_experimental == false)
+    if(utils::real_workload == true)
     {
+        global_object::logger = std::make_shared<Logger>();
         global_object::logger_thread = std::make_shared<std::thread>(&Logger::start_logging, global_object::logger);
     }
-    global_object::logger = std::make_shared<Logger>();
+    else
+    {
+        global_object::logger = std::make_shared<Logger>();
+    }
+    
     global_object::logger->log_task_vector_status();
 }
 

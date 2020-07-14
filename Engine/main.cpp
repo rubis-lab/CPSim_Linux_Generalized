@@ -60,31 +60,34 @@ int main(int argc, char *argv[])
      * SYNTHETIC WORKLOAD SIMULATION OPTIONS
      */
     //int epochs = 1000;
-    std::cout << "CPSIM_PATH : " << getenv("HOME") << std::endl;
+    
+    utils::cpsim_path = getenv("PWD");
+    std::cout << "CPSIM_PATH : " << utils::cpsim_path << std::endl;
+
     int epochs = 1;
     int simulatable_count = 0;
     int nonsimulatable_count = 0;
 
     // SHARED OBJECT VARIABLE SHARING TEST
     // NAME OF SHARED VARIABLES: shared1, shared2, shared3, shared4
-    dlerror();
+    // dlerror();
     // SO FILE MADE WITH:
     // gcc -std=c++17 -shared -o example.so -fPIC example.cpp
     // SYMBOL CHECKING DONE WITH
     // nm -D example.so
-    Job ex1;
-    ex1.loadFunction("/home/alex/Documents/sosource/example.so", "sim_main");
-    ex1.run();
-    std::cout << "(inside main) shared values are: " << shared::shared1 << " " << shared::shared2 << " " << shared::shared3 << " " << shared::shared4 << std::endl;
-    shared::shared1 = 20;
-    shared::shared2 = 30;
-    shared::shared3 = 40;
-    shared::shared4 = 50;
-    ex1.run();
-    std::cout << "(inside main) shared values are now: " << shared::shared1 << " " << shared::shared2 << " " << shared::shared3 << " " << shared::shared4 << std::endl;
-    //std::cout << "(inside main) shared variable is: " << *ex1.shared_variable << std::endl;
-    //*ex1.shared_variable = 15;
-    return 0;
+    // Job ex1;
+    // ex1.loadFunction(utils::cpsim_path + "/sharedObjectFiles/example.so", "sim_main");
+    // ex1.run();
+    // std::cout << "(inside main) shared values are: " << shared::shared1 << " " << shared::shared2 << " " << shared::shared3 << " " << shared::shared4 << std::endl;
+    // shared::shared1 = 20;
+    // shared::shared2 = 30;
+    // shared::shared3 = 40;
+    // shared::shared4 = 50;
+    // ex1.run();
+    // std::cout << "(inside main) shared values are now: " << shared::shared1 << " " << shared::shared2 << " " << shared::shared3 << " " << shared::shared4 << std::endl;
+    // std::cout << "(inside main) shared variable is: " << *ex1.shared_variable << std::endl;
+    // *ex1.shared_variable = 15;
+    // return 0;
     // ENDS HERE
 
     
@@ -135,26 +138,31 @@ int main(int argc, char *argv[])
              is_simulatable = executor.run_simulation(utils::current_time);
          }
          is_simulatable ? ++simulatable_count : ++nonsimulatable_count;
-
-         // Reset Globals
-         global_object::logger_thread = nullptr; // Removing logger_thread first as it holds a reference to logger func.
-         global_object::logger = nullptr;
-         global_object::gld_vector.clear();
-         vectors::job_vector_of_simulator.clear();
-         vectors::ecu_vector.clear();
-         vectors::task_vector.clear();
-         vectors::can_msg_vector.clear();
-         for(auto someVector : vectors::job_vectors_for_each_ECU)
-             someVector.clear();
-         vectors::job_vectors_for_each_ECU.clear();
-         utils::current_time = 0;
+        if(utils::real_workload == false)
+        {
+            // Reset Globals
+            global_object::logger_thread = nullptr; // Removing logger_thread first as it holds a reference to logger func.
+            global_object::logger = nullptr;
+            global_object::gld_vector.clear();
+            vectors::job_vector_of_simulator.clear();
+            vectors::ecu_vector.clear();
+            vectors::task_vector.clear();
+            vectors::can_msg_vector.clear();
+            for(auto someVector : vectors::job_vectors_for_each_ECU)
+                someVector.clear();
+            vectors::job_vectors_for_each_ECU.clear();
+            utils::current_time = 0;
+        }
     }
-    std::cout << std::endl;
-    std::cout << "--------------------" << std::endl;
-    std::cout << simulatable_count << " simulations were simulatable." << std::endl;
-    std::cout << nonsimulatable_count << " simulations were non-simulatable." << std::endl;
-    std::cout << "Simulatability ratio is " << simulatable_count / (double)(simulatable_count + nonsimulatable_count) << std::endl;
-    std::cout << "--------------------" << std::endl;
-        
+
+    if(utils::real_workload == false)
+    {
+        std::cout << std::endl;
+        std::cout << "--------------------" << std::endl;
+        std::cout << simulatable_count << " simulations were simulatable." << std::endl;
+        std::cout << nonsimulatable_count << " simulations were non-simulatable." << std::endl;
+        std::cout << "Simulatability ratio is " << simulatable_count / (double)(simulatable_count + nonsimulatable_count) << std::endl;
+        std::cout << "--------------------" << std::endl;
+    }        
     return 0;
 }

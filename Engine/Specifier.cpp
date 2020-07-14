@@ -91,8 +91,8 @@ void Specifier::specify_the_system(std::string file_path)
             }
         }
 
-        //std::shared_ptr<ECU> ecu =  std::make_shared<ECU>(performance,scheduling_policy, ecu_id , 6000);
-        //vectors::ecu_vector.push_back(std::move(ecu));
+        std::shared_ptr<ECU> ecu =  std::make_shared<ECU>(performance,scheduling_policy, ecu_id , 6000);
+        vectors::ecu_vector.push_back(std::move(ecu));
     }
     for(task_idx = 0; task_idx < m_parser.get_task_info().size(); task_idx++)
     {
@@ -104,7 +104,7 @@ void Specifier::specify_the_system(std::string file_path)
         int deadline;
         bool is_read;
         bool is_write;
-        int ecu_id = 0;
+        int ecu_id;
         std::string code_path;
         std::vector<std::string> producers;
         std::vector<std::string> consumers;
@@ -151,6 +151,11 @@ void Specifier::specify_the_system(std::string file_path)
             {
                 is_write = static_cast<bool>(specify_write_constraint(m_parser.get_task_info().at(task_idx).at(i).substr(pos)));
             }
+            pos = m_parser.get_task_info().at(task_idx).at(i).find("rid");
+            if(pos != std::string::npos)
+            {
+                ecu_id = specify_linked_ecu_id(m_parser.get_task_info().at(task_idx).at(i).substr(pos));
+            }
             pos = m_parser.get_task_info().at(task_idx).at(i).find("path");
             if(pos != std::string::npos)
             {
@@ -164,9 +169,10 @@ void Specifier::specify_the_system(std::string file_path)
         }
 
         std::shared_ptr<Task> task = std::make_shared<Task>(task_id, period, deadline, wcet, bcet, offset, is_read, is_write, ecu_id, producers, consumers);
-        task->loadFunction("/lib/x86_64-linux-gnu/libc.so.6", "puts");
+        task->loadFunction(utils::cpsim_path + "/sharedObjectFiles/" + task_id + "/" + task_id + ".so", "sim_main");
         task->set_priority_policy(PriorityPolicy::CPU);
         vectors::task_vector.push_back(std::move(task));
+        vectors::ecu_vector.at(ecu_id)->set_num_of_task(vectors::ecu_vector.at(ecu_id)->get_num_of_task() + 1);
     }
 }
 
@@ -356,4 +362,13 @@ std::vector<std::string> Specifier::specify_consumers(std::string line)
         }
     }
     return consumers;
+}
+int Specifier::specify_linked_ecu_id(std::string line)
+{
+    std::string::size_type start_pos, end_pos;
+    start_pos = line.find("\"");
+    start_pos += 4;
+    end_pos = line.substr(start_pos).find("\"");
+    std::cout << "ECU ID: " << line.substr(start_pos, end_pos) << std::endl;
+    return std::stoi(line.substr(start_pos, end_pos));    
 }

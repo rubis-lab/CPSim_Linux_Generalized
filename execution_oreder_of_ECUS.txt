@@ -1,30 +1,15 @@
 
 EXECUTION ORDER OF ECU0
-  -----J41-----	  -----J61-----	  -----J01-----	  -----J81-----	  -----J21-----	  -----J42-----	  -----J62-----	  -----J43-----	  -----J63-----	  -----J02-----	  -----J82-----	  -----J44-----	  -----J64-----	
-REL:          0	REL:          0	REL:          0	REL:          0	REL:          0	REL:         10	REL:         10	REL:         20	REL:         20	REL:         20	REL:         20	REL:         30	REL:         30	
-PER:         10	PER:         10	PER:         20	PER:         20	PER:         40	PER:         10	PER:         10	PER:         10	PER:         10	PER:         20	PER:         20	PER:         10	PER:         10	
-EST:          0	EST:          2	EST:          3	EST:          5	EST:         13	EST:         10	EST:         13	EST:         20	EST:         22	EST:         23	EST:         29	EST:         30	EST:         33	
-GPU:         NO	GPU:         NO	GPU:         NO	GPU:         NO	GPU:         NO	GPU:         NO	GPU:         NO	GPU:         NO	GPU:         NO	GPU:         NO	GPU:         NO	GPU:         NO	GPU:         NO	
-BCT:          1	BCT:          1	BCT:          2	BCT:          2	BCT:          4	BCT:          1	BCT:          1	BCT:          1	BCT:          1	BCT:          2	BCT:          2	BCT:          1	BCT:          1	
-EFT:          1	EFT:          2	EFT:          4	EFT:          6	EFT:         10	EFT:         11	EFT:         12	EFT:         21	EFT:         22	EFT:         24	EFT:         26	EFT:         31	EFT:         32	
-  -----J41-----	  -----J61-----	  -----J01-----	  -----J81-----	  -----J21-----	  -----J42-----	  -----J62-----	  -----J43-----	  -----J63-----	  -----J02-----	  -----J82-----	  -----J44-----	  -----J64-----	
-REL:          0	REL:          0	REL:          0	REL:          0	REL:          0	REL:         10	REL:         10	REL:         20	REL:         20	REL:         20	REL:         20	REL:         30	REL:         30	
-PER:         10	PER:         10	PER:         20	PER:         20	PER:         40	PER:         10	PER:         10	PER:         10	PER:         10	PER:         20	PER:         20	PER:         10	PER:         10	
-LST:          0	LST:          2	LST:          3	LST:          5	LST:          9	LST:         10	LST:         12	LST:         20	LST:         22	LST:         23	LST:         25	LST:         30	LST:         32	
-WCT:          2	WCT:          1	WCT:          2	WCT:          4	WCT:          4	WCT:          2	WCT:          1	WCT:          2	WCT:          1	WCT:          2	WCT:          4	WCT:          2	WCT:          1	
-LFT:          2	LFT:          3	LFT:          5	LFT:          9	LFT:         13	LFT:         12	LFT:         13	LFT:         22	LFT:         23	LFT:         25	LFT:         29	LFT:         32	LFT:         33	
-
-EXECUTION ORDER OF ECU1
-  -----J51-----	  -----J11-----	  -----J31-----	  -----J71-----	  -----J91-----	  -----J52-----	  -----J53-----	  -----J12-----	  -----J32-----	  -----J72-----	  -----J54-----	
-REL:          0	REL:          0	REL:          0	REL:          0	REL:          0	REL:         10	REL:         20	REL:         20	REL:         20	REL:         20	REL:         30	
-PER:         10	PER:         20	PER:         20	PER:         20	PER:         40	PER:         10	PER:         10	PER:         20	PER:         20	PER:         20	PER:         10	
-EST:          0	EST:          2	EST:          6	EST:          8	EST:         11	EST:         12	EST:         20	EST:         22	EST:         26	EST:         29	EST:         32	
-GPU:         NO	GPU:         NO	GPU:         NO	GPU:         NO	GPU:         NO	GPU:         NO	GPU:         NO	GPU:         NO	GPU:         NO	GPU:         NO	GPU:         NO	
-BCT:          1	BCT:          2	BCT:          2	BCT:          1	BCT:          2	BCT:          1	BCT:          1	BCT:          2	BCT:          2	BCT:          1	BCT:          1	
-EFT:          1	EFT:          3	EFT:          5	EFT:          6	EFT:          8	EFT:         11	EFT:         21	EFT:         23	EFT:         25	EFT:         26	EFT:         31	
-  -----J51-----	  -----J11-----	  -----J31-----	  -----J71-----	  -----J91-----	  -----J52-----	  -----J53-----	  -----J12-----	  -----J32-----	  -----J72-----	  -----J54-----	
-REL:          0	REL:          0	REL:          0	REL:          0	REL:          0	REL:         10	REL:         20	REL:         20	REL:         20	REL:         20	REL:         30	
-PER:         10	PER:         20	PER:         20	PER:         20	PER:         40	PER:         10	PER:         10	PER:         20	PER:         20	PER:         20	PER:         10	
-LST:          0	LST:          2	LST:          6	LST:          8	LST:          9	LST:         10	LST:         20	LST:         22	LST:         26	LST:         28	LST:         30	
-WCT:          2	WCT:          4	WCT:          2	WCT:          1	WCT:          2	WCT:          2	WCT:          2	WCT:          4	WCT:          2	WCT:          1	WCT:          2	
-LFT:          2	LFT:          6	LFT:          8	LFT:          9	LFT:         11	LFT:         12	LFT:         22	LFT:         26	LFT:         28	LFT:         29	LFT:         32	
+  -----J01-----	  -----J11-----	
+REL:          0	REL:          0	
+PER:         10	PER:         10	
+EST:          0	EST:         10	
+GPU:         NO	GPU:         NO	
+BCT:          0	BCT:          0	
+EFT:          0	EFT:          0	
+  -----J01-----	  -----J11-----	
+REL:          0	REL:          0	
+PER:         10	PER:         10	
+LST:          0	LST:          5	
+WCT:          5	WCT:          5	
+LFT:          5	LFT:         10	

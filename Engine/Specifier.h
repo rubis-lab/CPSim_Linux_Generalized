@@ -31,6 +31,7 @@ public:
     bool specify_read_constraint(std::string);
     bool specify_write_constraint(std::string);
     int specify_ecu_id(std::string);
+    int specify_linked_ecu_id(std::string);
     std::string specify_sched_policy(std::string);
     std::vector<std::string> specify_consumers(std::string);
     int specify_performance(std::string);
