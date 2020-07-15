@@ -1,4 +1,5 @@
 #include "Parser.h"
+#include "Utils.h"
 #include <string.h>
 /**
  *  This file is the cpp file for the Parser class.
@@ -233,13 +234,10 @@ void Parser::parse_system()
 
 void Parser::parse_xml_file()
 {
-    //std::string filePath = "design.xml";
-    std::string filePath = "Re-implemented-CPSim/example_case.xml";
-    
-	/**
+ 	/**
      * READ XML FILE, AND STORE DATA TO m_xml_info
      */
-	std::ifstream openFile(filePath.data());
+	std::ifstream openFile(utils::cpsim_path + "/design.xml");
 	if( openFile.is_open() )
     {	
         std::string line;

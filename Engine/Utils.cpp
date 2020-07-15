@@ -168,8 +168,9 @@ void utils::insert_can_msg(std::shared_ptr<CAN_message> input)
 
 void utils::exit_simulation(int signo)
 {
-	global_object::logger_thread->join();
-	std::cout << "Simulation End\n" << SIGINT;
+	std::cout << "Simulation End\n" << std::endl;
+	global_object::logger_thread->detach();
+	exit(signo);
 }
 
 bool utils::compare(std::shared_ptr<Job> pred, std::shared_ptr<Job> succ)

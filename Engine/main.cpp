@@ -164,5 +164,6 @@ int main(int argc, char *argv[])
         std::cout << "Simulatability ratio is " << simulatable_count / (double)(simulatable_count + nonsimulatable_count) << std::endl;
         std::cout << "--------------------" << std::endl;
     }        
+    global_object::logger_thread->join();
     return 0;
 }

@@ -74,8 +74,15 @@ CMakeFiles/CPSim-0.1.out.dir/Engine/OfflineGuider.cpp.o: ../Engine/PriorityPolic
 CMakeFiles/CPSim-0.1.out.dir/Engine/OfflineGuider.cpp.o: ../Engine/Task.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/OfflineGuider.cpp.o: ../Engine/Utils.h
 
+CMakeFiles/CPSim-0.1.out.dir/Engine/Parser.cpp.o: ../Engine/CAN_message.h
+CMakeFiles/CPSim-0.1.out.dir/Engine/Parser.cpp.o: ../Engine/ECU.h
+CMakeFiles/CPSim-0.1.out.dir/Engine/Parser.cpp.o: ../Engine/Job.h
+CMakeFiles/CPSim-0.1.out.dir/Engine/Parser.cpp.o: ../Engine/Logger.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/Parser.cpp.o: ../Engine/Parser.cpp
 CMakeFiles/CPSim-0.1.out.dir/Engine/Parser.cpp.o: ../Engine/Parser.h
+CMakeFiles/CPSim-0.1.out.dir/Engine/Parser.cpp.o: ../Engine/PriorityPolicy.h
+CMakeFiles/CPSim-0.1.out.dir/Engine/Parser.cpp.o: ../Engine/Task.h
+CMakeFiles/CPSim-0.1.out.dir/Engine/Parser.cpp.o: ../Engine/Utils.h
 
 CMakeFiles/CPSim-0.1.out.dir/Engine/PrecedenceGraph.cpp.o: ../Engine/PrecedenceGraph.cpp
 CMakeFiles/CPSim-0.1.out.dir/Engine/PrecedenceGraph.cpp.o: ../Engine/PrecedenceGraph.h
