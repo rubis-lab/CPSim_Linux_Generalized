@@ -125,7 +125,7 @@ int main(int argc, char *argv[])
          */  
          offline_guider.construct_job_precedence_graph();
         
-         int simulation_termination_time = utils::hyper_period * 1;
+         int simulation_termination_time = utils::hyper_period * 10000000000;
          bool is_simulatable = true;
 
          while(utils::current_time < simulation_termination_time && is_simulatable)

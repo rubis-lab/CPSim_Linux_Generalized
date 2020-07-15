@@ -1,15 +1,15 @@
 
 EXECUTION ORDER OF ECU0
-  -----J01-----	  -----J11-----	
-REL:          0	REL:          0	
-PER:         10	PER:         10	
-EST:          0	EST:         10	
-GPU:         NO	GPU:         NO	
-BCT:          0	BCT:          0	
-EFT:          0	EFT:          0	
-  -----J01-----	  -----J11-----	
-REL:          0	REL:          0	
-PER:         10	PER:         10	
-LST:          0	LST:          5	
-WCT:          5	WCT:          5	
-LFT:          5	LFT:         10	
+  -----J01-----	
+REL:          0	
+PER:         10	
+EST:         10	
+GPU:         NO	
+BCT:          0	
+EFT:          0	
+  -----J01-----	
+REL:          0	
+PER:         10	
+LST:          0	
+WCT:         10	
+LFT:         10	
