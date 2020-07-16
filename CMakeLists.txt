@@ -43,6 +43,8 @@ SET ( SRC_FILES
         Engine/Network.h Engine/Network.cpp 
         # set CAN_message files
         Engine/CAN_message.h Engine/CAN_message.cpp
+        # set CAN_receiver files
+        Engine/CAN_receiver.h Engine/CAN_receiver.cpp
         # set Utils files
         Engine/Utils.h Engine/Utils.cpp
         # set JobNode files
@@ -62,7 +64,7 @@ ADD_COMPILE_OPTIONS ( -std=c++1z )
 # SET ( CMAKE_EXE_LINKER_FLAGS "-static -Wl, --gc-sections" )
 
 # Common Linking Libraries
-LINK_LIBRARIES( dl pthread)
+LINK_LIBRARIES( dl pthread pcan)
 
 # "Debug" Configruation options
 SET ( CMAKE_C_FLAGS_DEBUG "-DDEBUG -DC_FLAGS" )

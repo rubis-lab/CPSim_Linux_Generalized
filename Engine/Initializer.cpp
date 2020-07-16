@@ -3,6 +3,8 @@
 #include <cstdlib>
 #include <climits>
 #include <cmath>
+#include <pcan.h>
+#include <libpcan.h>
 
 /** 
  *  This file is the cpp file for the Initializer class.
@@ -81,11 +83,50 @@ int Initializer::execution_time_mapping_function()
  * @warning none
  * @todo will be implemented at tomorrow
  */
-int Initializer::can_interface_initalizer(int num_channel)
+void Initializer::can_interface_initalizer(int num_channel)
 {
-    int i = 0; ///<for iterate
-    //LINUX_CAN
-    return 0;
+	// can connect
+	int i = 0;
+
+	can::hCAN1 = LINUX_CAN_Open(PCANUSB1, O_RDWR);
+	if(!can::hCAN1)
+	{
+		std::cerr << "No device, USBBUS1\n";
+        std::cerr << PCANUSB1 << std::endl;
+		exit(1);
+	}
+	if(can::wBTR0BTR1)
+	{
+		errno = CAN_Init(can::hCAN1, can::wBTR0BTR1, can::nExtended);
+		if(errno)
+		{
+			CAN_Close(can::hCAN1);
+		}	
+	}
+	CAN_Status(can::hCAN1);
+
+	if(num_channel <= 1)
+    {
+
+    }
+    else
+    {
+        can::hCAN2 = LINUX_CAN_Open(PCANUSB2, O_RDWR);
+        if(!can::hCAN2)
+        {
+            std::cerr << "No device, USBBUS2\n";
+            exit(1);
+        }
+        if(can::wBTR0BTR1)
+        {
+            errno = CAN_Init(can::hCAN2, can::wBTR0BTR1, can::nExtended);
+            if(errno)
+            {
+                CAN_Close(can::hCAN2);
+            }	
+        }
+    }
+
 }
 
 int Initializer::parsing_specificated_information()
@@ -123,14 +164,16 @@ void Initializer::initialize(std::string location)
         /**
          * CAN Network Initialization
          */
-
+        can_interface_initalizer(1);
+        global_object::can_receiver = std::make_shared<CAN_receiver>();
+        global_object::can_receiver->start_simulation_time();
         /**
          * ECU Vector Initialization
          */
         for(int i = 0; i < vectors::ecu_vector.size(); i++)
         {
-            std::vector<std::vector<std::shared_ptr<Job>>> v_job_of_ecu;
-            vectors::job_vectors_for_each_ECU.push_back(v_job_of_ecu);
+            std::vector<std::vector<std::shared_ptr<Job>>> vector_space_for_ecu;
+            vectors::job_vectors_for_each_ECU.push_back(vector_space_for_ecu);
         }
         /**
          * Task Vector Initialization
@@ -139,9 +182,10 @@ void Initializer::initialize(std::string location)
         {
             for(int i = 0; i < vectors::ecu_vector.at(ecu_num)->get_num_of_task(); i++)
             {
-                std::vector<std::shared_ptr<Job>> v_job_of_ecu;
-                vectors::job_vectors_for_each_ECU.at(ecu_num).push_back(v_job_of_ecu);
+                std::vector<std::shared_ptr<Job>> vector_space_for_task_in_this_ecu;
+                vectors::job_vectors_for_each_ECU.at(ecu_num).push_back(vector_space_for_task_in_this_ecu);
             }
+
         }
     }   
     else
@@ -192,8 +236,15 @@ void Initializer::initialize(std::string location)
     {
         global_object::logger = std::make_shared<Logger>();
     }
-    
     global_object::logger->log_task_vector_status();
+
+    /**
+     * CAN Receiver Thread Initialized
+     */
+    if(utils::real_workload == true)
+    {
+        global_object::can_receiver_thread = std::make_shared<std::thread>(&CAN_receiver::receive_can_messages, global_object::can_receiver);
+    }
 }
 
 void Initializer::random_task_generator(int task_num)

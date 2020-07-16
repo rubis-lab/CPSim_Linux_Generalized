@@ -1,11 +1,6 @@
 #ifndef INITIALIZER_H__
 #include <stdio.h>
-//#ifdef CANMODE
-#include <pcan.h>
-#include <libpcan.h>
-//#endif
 #include <thread>
-
 #include "Specifier.h"
 #include "Utils.h"
 #include "Logger.h"
@@ -32,7 +27,7 @@ public:
     ~Initializer();
 
     int execution_time_mapping_function();
-    int can_interface_initalizer(int num_channel);
+    void can_interface_initalizer(int num_channel);
     int parsing_specificated_information();
     
     void random_task_generator(int); // this function is for experiments.

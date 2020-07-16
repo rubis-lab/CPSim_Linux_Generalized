@@ -14,6 +14,7 @@
 #include "Job.h"
 #include "ECU.h"
 #include "CAN_message.h"
+#include "CAN_receiver.h"
 #include "Logger.h"
 
 /** This file is engine code of CPSim-Re engine
@@ -118,6 +119,9 @@ namespace global_object
 {
     inline std::shared_ptr<Logger> logger;
     inline std::shared_ptr<std::thread> logger_thread;
+    inline std::shared_ptr<CAN_receiver> can_receiver;
+    inline std::shared_ptr<std::thread> can_receiver_thread;
+    
 
     typedef struct LogData
     {
@@ -135,6 +139,17 @@ namespace global_object
     } LogData;
     inline LogData gld;
     inline std::vector<LogData> gld_vector;
+}
+
+namespace can
+{
+    inline HANDLE hCAN1;
+    inline HANDLE hCAN2;
+    inline int nType = HW_PCI;
+    inline __u32 dwPort = 0;
+    inline __u16 wIrq = 0;
+    inline __u16 wBTR0BTR1 = CAN_BAUD_500K;
+    inline int nExtended = CAN_INIT_TYPE_ST;
 }
 
 #endif

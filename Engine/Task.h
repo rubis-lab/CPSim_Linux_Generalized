@@ -57,6 +57,7 @@ private:
 
 	std::string m_task_name;
 	int m_task_id;
+	int m_vector_idx;
 	int m_period;
 	int m_deadline;
 	int m_wcet;
@@ -99,6 +100,7 @@ public:
 
 	std::string get_task_name();
 	int get_task_id();
+	int get_vector_idx();
 	int get_period();
 	int get_deadline();
 	int get_wcet();
@@ -124,6 +126,7 @@ public:
 	void set_priority_policy(PriorityPolicy priority_policy);
 	void set_task_name(std::string task_name);
 	void set_task_id(int task_id);
+	void set_vector_idx(int vector_idx);
 	void set_period(int period);
 	void set_deadline(int deadline);
 	void set_wcet(int wcet);

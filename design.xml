@@ -3,18 +3,30 @@
         <CAN ID="CAN0" bandwidth="0" type="CAN">
             <link rid="ECU0" type="ECU"/>
             <link rid="CAR" type="CAR"/>
+            <link rid="ECU1" type="ECU"/>
         </CAN>
     </CANs>
     <CAR ID="CAR">
         <link rid="CAN0" type="CAN"/>
     </CAR>
     <SWCs>
-        <SWC BCET="0" ID="CC" Virtual="1" WCET="10" consumer="" deadline="10" period="10" phase="0" readCon="0" writeCon="0">
+        <SWC BCET="20" ID="SENSING" Virtual="1" WCET="20" consumer="" deadline="40" period="40" phase="0" readCon="0" writeCon="0">
             <link idxCore="0" rid="ECU0" type="ECU"/>
+        </SWC>
+        <SWC BCET="10" ID="LK" Virtual="1" WCET="10" consumer="" deadline="40" period="40" phase="0" readCon="0" writeCon="1">
+            <link idxCore="0" rid="ECU0" type="ECU"/>
+        </SWC>
+        <SWC BCET="15" ID="CC" Virtual="1" WCET="15" consumer="" deadline="20" period="20" phase="0" readCon="0" writeCon="1">
+            <link idxCore="0" rid="ECU1" type="ECU"/>
         </SWC>
     </SWCs>
     <ECUs>
         <ECU ID="ECU0" Virtual="1" numCores="1" schedPolicy="RM" sysClock="100" targetArch="SPC56EL70">
+            <link idxCore="0" rid="SENSING" type="SWC"/>
+            <link idxCore="0" rid="LK" type="SWC"/>
+            <link rid="CAN0" type="CAN"/>
+        </ECU>
+        <ECU ID="ECU1" Virtual="1" numCores="1" schedPolicy="RM" sysClock="100" targetArch="SPC56EL70">
             <link idxCore="0" rid="CC" type="SWC"/>
             <link rid="CAN0" type="CAN"/>
         </ECU>

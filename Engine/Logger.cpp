@@ -81,13 +81,15 @@ void Logger::add_current_simulated_job(std::shared_ptr<Job> current_job_instance
 }
 void Logger::start_logging()
 {
+    
     std::cout << "Logging starts" << std::endl;
+    
 }
 
 void Logger::log_task_vector_status()
 {
     std::ofstream write_task_info;
-    write_task_info.open("task_info.txt");
+    write_task_info.open(utils::cpsim_path + "/Log/task_info.txt");
     std::string contents = "TASK LIST\n";
     contents += "NUMBER OF TASK: " + std::to_string(vectors::task_vector.size()) + "\n";
     int read_job=0, write_job=0;
@@ -138,7 +140,7 @@ void Logger::log_task_vector_status()
 void Logger::log_job_vector_of_each_ECU_status()
 {
     std::ofstream write_job_info;
-    write_job_info.open("job_info.txt");
+    write_job_info.open(utils::cpsim_path + "/Log/job_info.txt");
     std::string contents = "JOB LIST\n";
     for(int i=0; i < vectors::job_vectors_for_each_ECU.size(); i++)
     {
@@ -164,7 +166,7 @@ void Logger::log_job_vector_of_each_ECU_status()
 void Logger::log_job_vector_of_simulator_status()
 {
     std::ofstream write_job_info;
-    write_job_info.open("job_info_of_simulator.txt");
+    write_job_info.open(utils::cpsim_path + "/Log/job_info_of_simulator.txt");
     std::string contents = "JOB LIST\n";
 
     contents += "NUMBER OF JOBS IN SIMULATOR : " + std::to_string(vectors::job_vector_of_simulator.size()) + "\n";
@@ -187,17 +189,17 @@ void Logger::log_job_vector_of_simulator_status()
 void Logger::print_offline_guider_status()
 {
     std::ofstream write_offline_guider;
-    write_offline_guider.open("offline_guider.txt");
+    write_offline_guider.open(utils::cpsim_path + "/Log/offline_guider.txt");
     std::string contents = "Offline Guider Info";
 }
 void Logger::print_job_execution_on_ECU(std::vector<std::shared_ptr<Job>> b, std::vector<std::shared_ptr<Job>> w , int ecu_id)
 {
     std::ofstream write_execution_order;
     if(ecu_id == 0)
-        write_execution_order.open("execution_oreder_of_ECUS.txt", std::ios::out);
+        write_execution_order.open(utils::cpsim_path + "/Log/execution_oreder_of_ECUS.txt", std::ios::out);
     else
     {
-        write_execution_order.open("execution_oreder_of_ECUS.txt", std::ios::app);
+        write_execution_order.open(utils::cpsim_path + "/Log/execution_oreder_of_ECUS.txt", std::ios::app);
     }
     
         
@@ -308,7 +310,7 @@ void Logger::print_job_execution_on_ECU(std::vector<std::shared_ptr<Job>> b, std
 void Logger::print_job_execution_schedule()
 {
     std::ofstream write_execution_order;
-    write_execution_order.open("execution_oreder.txt");
+    write_execution_order.open(utils::cpsim_path + "/Log/execution_oreder.txt");
     std::string contents = "EXECUTION ORDER Info\n";
 
     for(auto job : m_execution_order_buffer)
@@ -457,7 +459,7 @@ void Logger::print_job_execution_schedule()
 void Logger::log_which_job_was_deadline_miss(std::shared_ptr<Job> deadline_job)
 {
     std::ofstream write_deadline_miss;
-    write_deadline_miss.open("deadline_miss.txt");
+    write_deadline_miss.open(utils::cpsim_path + "/Log/deadline_miss.txt");
     std::string contents = "DEADLINE MISS\n";
     contents += "JOB" +  std::to_string(deadline_job->get_task_id()) + std::to_string(deadline_job->get_job_id()) + "\n";
     contents += "JOB's Constraints R/W: " + std::to_string(deadline_job->get_is_read()) + std::to_string(deadline_job->get_is_write());

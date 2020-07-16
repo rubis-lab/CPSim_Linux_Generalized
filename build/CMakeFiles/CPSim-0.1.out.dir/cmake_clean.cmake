@@ -13,6 +13,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/CPSim-0.1.out.dir/Engine/Job.cpp.o"
   "CMakeFiles/CPSim-0.1.out.dir/Engine/Network.cpp.o"
   "CMakeFiles/CPSim-0.1.out.dir/Engine/CAN_message.cpp.o"
+  "CMakeFiles/CPSim-0.1.out.dir/Engine/CAN_receiver.cpp.o"
   "CMakeFiles/CPSim-0.1.out.dir/Engine/Utils.cpp.o"
   "CMakeFiles/CPSim-0.1.out.dir/Engine/JobNode.cpp.o"
   "Debug/CPSim-0.1.out.pdb"

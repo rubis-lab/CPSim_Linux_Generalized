@@ -298,6 +298,10 @@ int Task::get_task_id()
 {
     return m_task_id;
 }
+int Task::get_vector_idx()
+{
+    return m_vector_idx;
+}
 
 int Task::get_gpu_wait_time()
 {
@@ -509,6 +513,10 @@ void Task::set_task_name(std::string task_name)
 void Task::set_task_id(int task_id)
 {
     m_task_id = task_id;
+}
+void Task::set_vector_idx(int vector_idx)
+{
+    m_vector_idx = vector_idx;
 }
 void Task::set_period(int period)
 {

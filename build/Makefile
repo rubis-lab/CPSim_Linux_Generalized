@@ -153,6 +153,33 @@ Engine/CAN_message.cpp.s:
 	$(MAKE) -f CMakeFiles/CPSim-0.1.out.dir/build.make CMakeFiles/CPSim-0.1.out.dir/Engine/CAN_message.cpp.s
 .PHONY : Engine/CAN_message.cpp.s
 
+Engine/CAN_receiver.o: Engine/CAN_receiver.cpp.o
+
+.PHONY : Engine/CAN_receiver.o
+
+# target to build an object file
+Engine/CAN_receiver.cpp.o:
+	$(MAKE) -f CMakeFiles/CPSim-0.1.out.dir/build.make CMakeFiles/CPSim-0.1.out.dir/Engine/CAN_receiver.cpp.o
+.PHONY : Engine/CAN_receiver.cpp.o
+
+Engine/CAN_receiver.i: Engine/CAN_receiver.cpp.i
+
+.PHONY : Engine/CAN_receiver.i
+
+# target to preprocess a source file
+Engine/CAN_receiver.cpp.i:
+	$(MAKE) -f CMakeFiles/CPSim-0.1.out.dir/build.make CMakeFiles/CPSim-0.1.out.dir/Engine/CAN_receiver.cpp.i
+.PHONY : Engine/CAN_receiver.cpp.i
+
+Engine/CAN_receiver.s: Engine/CAN_receiver.cpp.s
+
+.PHONY : Engine/CAN_receiver.s
+
+# target to generate assembly for a file
+Engine/CAN_receiver.cpp.s:
+	$(MAKE) -f CMakeFiles/CPSim-0.1.out.dir/build.make CMakeFiles/CPSim-0.1.out.dir/Engine/CAN_receiver.cpp.s
+.PHONY : Engine/CAN_receiver.cpp.s
+
 Engine/ECU.o: Engine/ECU.cpp.o
 
 .PHONY : Engine/ECU.o
@@ -570,6 +597,9 @@ help:
 	@echo "... Engine/CAN_message.o"
 	@echo "... Engine/CAN_message.i"
 	@echo "... Engine/CAN_message.s"
+	@echo "... Engine/CAN_receiver.o"
+	@echo "... Engine/CAN_receiver.i"
+	@echo "... Engine/CAN_receiver.s"
 	@echo "... Engine/ECU.o"
 	@echo "... Engine/ECU.i"
 	@echo "... Engine/ECU.s"

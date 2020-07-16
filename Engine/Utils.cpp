@@ -169,6 +169,7 @@ void utils::insert_can_msg(std::shared_ptr<CAN_message> input)
 void utils::exit_simulation(int signo)
 {
 	std::cout << "Simulation End\n" << std::endl;
+	CAN_Close(can::hCAN1);
 	global_object::logger_thread->detach();
 	exit(signo);
 }

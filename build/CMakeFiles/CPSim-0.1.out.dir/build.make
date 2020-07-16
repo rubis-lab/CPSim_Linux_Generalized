@@ -396,9 +396,33 @@ CMakeFiles/CPSim-0.1.out.dir/Engine/CAN_message.cpp.o.provides: CMakeFiles/CPSim
 CMakeFiles/CPSim-0.1.out.dir/Engine/CAN_message.cpp.o.provides.build: CMakeFiles/CPSim-0.1.out.dir/Engine/CAN_message.cpp.o
 
 
+CMakeFiles/CPSim-0.1.out.dir/Engine/CAN_receiver.cpp.o: CMakeFiles/CPSim-0.1.out.dir/flags.make
+CMakeFiles/CPSim-0.1.out.dir/Engine/CAN_receiver.cpp.o: ../Engine/CAN_receiver.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/park/git_base/Re-implemented-CPSim/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/CPSim-0.1.out.dir/Engine/CAN_receiver.cpp.o"
+	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/CPSim-0.1.out.dir/Engine/CAN_receiver.cpp.o -c /home/park/git_base/Re-implemented-CPSim/Engine/CAN_receiver.cpp
+
+CMakeFiles/CPSim-0.1.out.dir/Engine/CAN_receiver.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/CPSim-0.1.out.dir/Engine/CAN_receiver.cpp.i"
+	/usr/bin/g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/park/git_base/Re-implemented-CPSim/Engine/CAN_receiver.cpp > CMakeFiles/CPSim-0.1.out.dir/Engine/CAN_receiver.cpp.i
+
+CMakeFiles/CPSim-0.1.out.dir/Engine/CAN_receiver.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/CPSim-0.1.out.dir/Engine/CAN_receiver.cpp.s"
+	/usr/bin/g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/park/git_base/Re-implemented-CPSim/Engine/CAN_receiver.cpp -o CMakeFiles/CPSim-0.1.out.dir/Engine/CAN_receiver.cpp.s
+
+CMakeFiles/CPSim-0.1.out.dir/Engine/CAN_receiver.cpp.o.requires:
+
+.PHONY : CMakeFiles/CPSim-0.1.out.dir/Engine/CAN_receiver.cpp.o.requires
+
+CMakeFiles/CPSim-0.1.out.dir/Engine/CAN_receiver.cpp.o.provides: CMakeFiles/CPSim-0.1.out.dir/Engine/CAN_receiver.cpp.o.requires
+	$(MAKE) -f CMakeFiles/CPSim-0.1.out.dir/build.make CMakeFiles/CPSim-0.1.out.dir/Engine/CAN_receiver.cpp.o.provides.build
+.PHONY : CMakeFiles/CPSim-0.1.out.dir/Engine/CAN_receiver.cpp.o.provides
+
+CMakeFiles/CPSim-0.1.out.dir/Engine/CAN_receiver.cpp.o.provides.build: CMakeFiles/CPSim-0.1.out.dir/Engine/CAN_receiver.cpp.o
+
+
 CMakeFiles/CPSim-0.1.out.dir/Engine/Utils.cpp.o: CMakeFiles/CPSim-0.1.out.dir/flags.make
 CMakeFiles/CPSim-0.1.out.dir/Engine/Utils.cpp.o: ../Engine/Utils.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/park/git_base/Re-implemented-CPSim/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/CPSim-0.1.out.dir/Engine/Utils.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/park/git_base/Re-implemented-CPSim/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/CPSim-0.1.out.dir/Engine/Utils.cpp.o"
 	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/CPSim-0.1.out.dir/Engine/Utils.cpp.o -c /home/park/git_base/Re-implemented-CPSim/Engine/Utils.cpp
 
 CMakeFiles/CPSim-0.1.out.dir/Engine/Utils.cpp.i: cmake_force
@@ -422,7 +446,7 @@ CMakeFiles/CPSim-0.1.out.dir/Engine/Utils.cpp.o.provides.build: CMakeFiles/CPSim
 
 CMakeFiles/CPSim-0.1.out.dir/Engine/JobNode.cpp.o: CMakeFiles/CPSim-0.1.out.dir/flags.make
 CMakeFiles/CPSim-0.1.out.dir/Engine/JobNode.cpp.o: ../Engine/JobNode.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/park/git_base/Re-implemented-CPSim/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/CPSim-0.1.out.dir/Engine/JobNode.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/park/git_base/Re-implemented-CPSim/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/CPSim-0.1.out.dir/Engine/JobNode.cpp.o"
 	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/CPSim-0.1.out.dir/Engine/JobNode.cpp.o -c /home/park/git_base/Re-implemented-CPSim/Engine/JobNode.cpp
 
 CMakeFiles/CPSim-0.1.out.dir/Engine/JobNode.cpp.i: cmake_force
@@ -460,6 +484,7 @@ CPSim__0_1_out_OBJECTS = \
 "CMakeFiles/CPSim-0.1.out.dir/Engine/Job.cpp.o" \
 "CMakeFiles/CPSim-0.1.out.dir/Engine/Network.cpp.o" \
 "CMakeFiles/CPSim-0.1.out.dir/Engine/CAN_message.cpp.o" \
+"CMakeFiles/CPSim-0.1.out.dir/Engine/CAN_receiver.cpp.o" \
 "CMakeFiles/CPSim-0.1.out.dir/Engine/Utils.cpp.o" \
 "CMakeFiles/CPSim-0.1.out.dir/Engine/JobNode.cpp.o"
 
@@ -480,11 +505,12 @@ Debug/CPSim-0.1.out: CMakeFiles/CPSim-0.1.out.dir/Engine/Task.cpp.o
 Debug/CPSim-0.1.out: CMakeFiles/CPSim-0.1.out.dir/Engine/Job.cpp.o
 Debug/CPSim-0.1.out: CMakeFiles/CPSim-0.1.out.dir/Engine/Network.cpp.o
 Debug/CPSim-0.1.out: CMakeFiles/CPSim-0.1.out.dir/Engine/CAN_message.cpp.o
+Debug/CPSim-0.1.out: CMakeFiles/CPSim-0.1.out.dir/Engine/CAN_receiver.cpp.o
 Debug/CPSim-0.1.out: CMakeFiles/CPSim-0.1.out.dir/Engine/Utils.cpp.o
 Debug/CPSim-0.1.out: CMakeFiles/CPSim-0.1.out.dir/Engine/JobNode.cpp.o
 Debug/CPSim-0.1.out: CMakeFiles/CPSim-0.1.out.dir/build.make
 Debug/CPSim-0.1.out: CMakeFiles/CPSim-0.1.out.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/park/git_base/Re-implemented-CPSim/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Linking CXX executable Debug/CPSim-0.1.out"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/park/git_base/Re-implemented-CPSim/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Linking CXX executable Debug/CPSim-0.1.out"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/CPSim-0.1.out.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -506,6 +532,7 @@ CMakeFiles/CPSim-0.1.out.dir/requires: CMakeFiles/CPSim-0.1.out.dir/Engine/Task.
 CMakeFiles/CPSim-0.1.out.dir/requires: CMakeFiles/CPSim-0.1.out.dir/Engine/Job.cpp.o.requires
 CMakeFiles/CPSim-0.1.out.dir/requires: CMakeFiles/CPSim-0.1.out.dir/Engine/Network.cpp.o.requires
 CMakeFiles/CPSim-0.1.out.dir/requires: CMakeFiles/CPSim-0.1.out.dir/Engine/CAN_message.cpp.o.requires
+CMakeFiles/CPSim-0.1.out.dir/requires: CMakeFiles/CPSim-0.1.out.dir/Engine/CAN_receiver.cpp.o.requires
 CMakeFiles/CPSim-0.1.out.dir/requires: CMakeFiles/CPSim-0.1.out.dir/Engine/Utils.cpp.o.requires
 CMakeFiles/CPSim-0.1.out.dir/requires: CMakeFiles/CPSim-0.1.out.dir/Engine/JobNode.cpp.o.requires
 

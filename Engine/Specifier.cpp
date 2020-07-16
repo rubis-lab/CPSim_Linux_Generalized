@@ -60,7 +60,6 @@ Specifier::~Specifier()
  */
 void Specifier::specify_the_system(std::string file_path)
 {
-    
     m_parser.parse_xml_file();
     utils::number_of_ECUs = specify_number_of_ECUs();
     utils::number_of_tasks = specify_number_of_tasks();
@@ -171,6 +170,7 @@ void Specifier::specify_the_system(std::string file_path)
         std::shared_ptr<Task> task = std::make_shared<Task>(task_id, period, deadline, wcet, bcet, offset, is_read, is_write, ecu_id, producers, consumers);
         task->loadFunction(utils::cpsim_path + "/sharedObjectFiles/" + task_id + "/" + task_id + ".so", "sim_main");
         task->set_priority_policy(PriorityPolicy::CPU);
+        task->set_vector_idx(vectors::ecu_vector.at(ecu_id)->get_num_of_task());
         vectors::task_vector.push_back(std::move(task));
         vectors::ecu_vector.at(ecu_id)->set_num_of_task(vectors::ecu_vector.at(ecu_id)->get_num_of_task() + 1);
     }
@@ -220,7 +220,6 @@ std::string Specifier::specify_task_name(std::string line)
     start_pos = line.find("\"");
     start_pos += 1;
     end_pos = line.substr(start_pos).find("\"");
-    std::cout << line.substr(start_pos, end_pos) << std::endl;
     return line.substr(start_pos, end_pos);
 }
 int Specifier::specify_deadline(std::string line)
@@ -228,8 +227,7 @@ int Specifier::specify_deadline(std::string line)
     std::string::size_type start_pos, end_pos;
     start_pos = line.find("\"");
     start_pos += 1;
-    end_pos = line.substr(start_pos).find("\"");
-    std::cout << line.substr(start_pos, end_pos) << std::endl; 
+    end_pos = line.substr(start_pos).find("\""); 
     return std::stoi(line.substr(start_pos, end_pos));
 }
 int Specifier::specify_period(std::string line)
@@ -238,7 +236,6 @@ int Specifier::specify_period(std::string line)
     start_pos = line.find("\"");
     start_pos += 1;
     end_pos = line.substr(start_pos).find("\"");
-    std::cout << line.substr(start_pos, end_pos) << std::endl;
     return std::stoi(line.substr(start_pos, end_pos));
 }
 int Specifier::specify_offset(std::string line)
@@ -247,7 +244,6 @@ int Specifier::specify_offset(std::string line)
     start_pos = line.find("\"");
     start_pos += 1;
     end_pos = line.substr(start_pos).find("\"");
-    std::cout << line.substr(start_pos, end_pos) << std::endl;
     return std::stoi(line.substr(start_pos, end_pos));
 }
 int Specifier::specify_bcet(std::string line)
@@ -256,7 +252,6 @@ int Specifier::specify_bcet(std::string line)
     start_pos = line.find("\"");
     start_pos += 1;
     end_pos = line.substr(start_pos).find("\"");
-    std::cout << line.substr(start_pos, end_pos) << std::endl;
     return std::stoi(line.substr(start_pos, end_pos));
 }
 
@@ -266,7 +261,6 @@ int Specifier::specify_wcet(std::string line)
     start_pos = line.find("\"");
     start_pos += 1;
     end_pos = line.substr(start_pos).find("\"");
-    std::cout << line.substr(start_pos, end_pos) << std::endl;
     return std::stoi(line.substr(start_pos, end_pos));
 }
 
@@ -276,7 +270,6 @@ bool Specifier::specify_read_constraint(std::string line)
     start_pos = line.find("\"");
     start_pos += 1;
     end_pos = line.substr(start_pos).find("\"");
-    std::cout << "readCon: " << line.substr(start_pos, end_pos) << std::endl;
     return std::stoi(line.substr(start_pos, end_pos));
 }
 bool Specifier::specify_write_constraint(std::string line)
@@ -285,7 +278,6 @@ bool Specifier::specify_write_constraint(std::string line)
     start_pos = line.find("\"");
     start_pos += 1;
     end_pos = line.substr(start_pos).find("\"");
-    std::cout << "writeCon: "<< line.substr(start_pos, end_pos) << std::endl;
     return std::stoi(line.substr(start_pos, end_pos));
 }
 int Specifier::specify_ecu_id(std::string line)
@@ -294,7 +286,6 @@ int Specifier::specify_ecu_id(std::string line)
     start_pos = line.find("\"");
     start_pos += 4;
     end_pos = line.substr(start_pos).find("\"");
-    std::cout << line.substr(start_pos, end_pos) << std::endl;
     return std::stoi(line.substr(start_pos, end_pos));
 }
 std::string Specifier::specify_sched_policy(std::string line)
@@ -303,7 +294,6 @@ std::string Specifier::specify_sched_policy(std::string line)
     start_pos = line.find("\"");
     start_pos += 1;
     end_pos = line.substr(start_pos).find("\"");
-    std::cout << line.substr(start_pos, end_pos) << std::endl;
     return line.substr(start_pos, end_pos);    
 }
 int Specifier::specify_performance(std::string line)
@@ -312,7 +302,6 @@ int Specifier::specify_performance(std::string line)
     start_pos = line.find("\"");
     start_pos += 1;
     end_pos = line.substr(start_pos).find("\"");
-    std::cout << line.substr(start_pos, end_pos) << std::endl;
     return std::stoi(line.substr(start_pos, end_pos));
 }
 std::string Specifier::specify_mapping_functions(std::string line)
@@ -321,7 +310,6 @@ std::string Specifier::specify_mapping_functions(std::string line)
     start_pos = line.find("\"");
     start_pos += 1;
     end_pos = line.substr(start_pos).find("\"");
-    std::cout << "path: " << line.substr(start_pos, end_pos) << std::endl;
     return line.substr(start_pos, end_pos);        
 }
 std::vector<std::string> Specifier::specify_consumers(std::string line)
@@ -369,6 +357,5 @@ int Specifier::specify_linked_ecu_id(std::string line)
     start_pos = line.find("\"");
     start_pos += 4;
     end_pos = line.substr(start_pos).find("\"");
-    std::cout << "ECU ID: " << line.substr(start_pos, end_pos) << std::endl;
     return std::stoi(line.substr(start_pos, end_pos));    
 }
