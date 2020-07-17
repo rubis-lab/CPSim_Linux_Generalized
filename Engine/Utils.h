@@ -107,8 +107,8 @@ namespace shared
     inline int CC_Send_ACCEL = 0;
 
     // Shared Vars used by LK
-    inline ExtU rtU = {.read1 = 0.0, .read2 = 0.0};
     inline DW rtDW = {.w3 = 0.0, .w4 = 0.0};
+    inline ExtU rtU = {.read1 = 0.0, .read2 = 0.0};
     inline ExtY rtY = {.write3 = 0.0, .write4 = 0.0};
 }
 

@@ -79,7 +79,7 @@ void CAN_message::transmit_can_message(std::string task_name)
 {
 	TPCANMsg msg;
 	unsigned char can_buffer[8];
-	double tmp_value;                    
+	double tmp_value = 0.0;                    
 	int tmp_signed_signal;               
 	unsigned int tmp_unsigned_signal;    
 	int st_signal;                       
@@ -87,7 +87,7 @@ void CAN_message::transmit_can_message(std::string task_name)
 
 	if(task_name == "LK")
 	{
-		msg.ID = 2046;
+		msg.ID = 2046; //2046
 		msg.MSGTYPE = 0;
 		msg.LEN = 8;
 		tmp_value = ((shared::rtY.write4 - 0.000000) / 1.000000);          
@@ -111,17 +111,20 @@ void CAN_message::transmit_can_message(std::string task_name)
 	}
 	else if (task_name == "CC")
 	{
-		msg.ID = 2049;
+		msg.ID = 2047; //2047
 		msg.MSGTYPE = 0;
 		msg.LEN = 8;
-		std::cout << "CCRECVTRIGGER: " << shared::CC_Recv_CC_TRIGGER << std::endl;
-		std::cout << "CCRECVSPEED: " << shared::CC_Recv_SPEED << std::endl;
-		std::cout << "CCRECVACCELVALUE: " << shared::CC_Recv_ACCEL_VALUE << std::endl;
-		
-		std::cout << "CCSENDACCEL: " << shared::CC_Send_ACCEL << std::endl;
-		std::cout << "CCSENDBRAKE: " << shared::CC_Send_BRAKE << std::endl;
+		std::cout << "---------------------" << std::endl;
+		std::cout << "CC_RECV_TRIGGER: " << shared::CC_Recv_CC_TRIGGER << std::endl;
+		std::cout << "CC_RECV_SPEED: " << shared::CC_Recv_SPEED << std::endl;
+		std::cout << "CC_RECV_ACCEL_VALUE: " << shared::CC_Recv_ACCEL_VALUE << std::endl;
+		std::cout << "CC_RECV_TARGET_SPEED: " << shared::CC_Recv_TARGET_SPEED << std::endl;
+		std::cout << "CC_SEND_ACCEL: " << shared::CC_Send_ACCEL << std::endl;
+		std::cout << "CC_SEND_BRAKE: " << shared::CC_Send_BRAKE << std::endl;
+		std::cout << std::endl;
 		tmp_value = ((shared::CC_Send_ACCEL - 0.000000) / 1.000000);            
 		tmp_signed_signal = (int)tmp_value;                      
+		std::cout << "CC_SEND_ACCEL_DOUBLE: " << tmp_value << std::endl;
 		tmp_unsigned_signal = (unsigned int)tmp_signed_signal;   
 		for (int len = 32 - 1; len >= 0; --len) {                                       
 			int row = (0 + len) / 8;                                                     
@@ -139,6 +142,15 @@ void CAN_message::transmit_can_message(std::string task_name)
 			can_buffer[row] |= (tmp_unsigned_signal & (1 << len)) ? (1 << col) : 0; 
 		}    
 	}
+
+	msg.DATA[0] = can_buffer[0];
+	msg.DATA[1] = can_buffer[1];
+	msg.DATA[2] = can_buffer[2];
+	msg.DATA[3] = can_buffer[3];
+	msg.DATA[4] = can_buffer[4];
+	msg.DATA[5] = can_buffer[5];
+	msg.DATA[6] = can_buffer[6];
+	msg.DATA[7] = can_buffer[7];
 
 	errno = CAN_Write(can::hCAN1, &(msg));
 	if(errno)
