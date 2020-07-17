@@ -1,3 +1,4 @@
+#include <fstream>
 #include <climits>
 #include "ScheduleSimulator.h"
 #include "PriorityPolicy.h"
@@ -466,6 +467,14 @@ void ScheduleSimulator::busy_period_analysis(std::vector<std::shared_ptr<Job>>& 
                     }
                 }
                 last_start = highest_job->get_est();
+                if(!setWorstCase)
+                {
+                    std::ofstream scheduling_log;
+                    scheduling_log.open(utils::cpsim_path + "/Log/scheduling.log", std::ios::app);     
+                    std::string contents = std::to_string(highest_job->get_est()) + ", ECU" + std::to_string(highest_job->get_ECU()->get_ECU_id()) + ": " + highest_job->get_task_name() + ", 1\n";
+                    scheduling_log.write(contents.c_str(), contents.size());
+                    scheduling_log.close();
+                }
             }
             else
             {
@@ -563,7 +572,19 @@ void ScheduleSimulator::busy_period_analysis(std::vector<std::shared_ptr<Job>>& 
                     highest_job->set_lft(start + end);
                     highest_job->set_wcbp(wcbp);
                 }
-                else highest_job->set_eft(start + end);
+                else 
+                {
+                    highest_job->set_eft(start + end);
+                    if(!setWorstCase)
+                    {
+                        std::ofstream scheduling_log;
+                        scheduling_log.open(utils::cpsim_path + "/Log/scheduling.log", std::ios::app);     
+                        std::string contents = std::to_string(highest_job->get_eft()) + ", ECU" + std::to_string(highest_job->get_ECU()->get_ECU_id()) + ": " + highest_job->get_task_name() + ", 0\n";
+                        scheduling_log.write(contents.c_str(), contents.size());
+                        scheduling_log.close();
+                    }
+                    
+                }
             }
             if(!setWorstCase)
             {
@@ -580,6 +601,7 @@ void ScheduleSimulator::busy_period_analysis(std::vector<std::shared_ptr<Job>>& 
             
             highest_job->set_is_started(false);
             highest_job->set_is_finished(true);
+            
             if(!setWorstCase && highest_job->get_actual_release_time() > highest_job->get_est())
             {
                 std::cout << highest_job->get_task_id() << highest_job->get_job_id() << "EST ERROR!!!!" <<  highest_job->get_actual_release_time()<<" " << highest_job->get_est() <<std::endl;
@@ -620,6 +642,7 @@ void ScheduleSimulator::busy_period_analysis(std::vector<std::shared_ptr<Job>>& 
                 highest_job->set_est(start+end);
         }
     }
+
 }
 
 void ScheduleSimulator::update_job_vector()

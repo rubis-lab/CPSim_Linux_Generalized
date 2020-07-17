@@ -9,6 +9,7 @@
 #include <signal.h>
 #include <thread>
 #include <algorithm>
+#include <queue>
 
 #include "Task.h"
 #include "Job.h"
@@ -123,6 +124,8 @@ namespace vectors
 
 namespace global_object
 {
+    inline std::shared_ptr<Job> running_job;
+    inline std::priority_queue<std::shared_ptr<Job>> finished_job;
     inline std::shared_ptr<Logger> logger;
     inline std::shared_ptr<std::thread> logger_thread;
     inline std::shared_ptr<CAN_receiver> can_receiver;

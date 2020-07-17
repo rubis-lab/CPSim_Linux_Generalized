@@ -36,11 +36,12 @@ private:
     bool m_is_simulated;
 
     int m_job_id;
-    int m_actual_release_time;
-    int m_actual_deadline;
+    
     int m_actual_execution_time;
     int m_actual_start_time;
     int m_actual_finish_time;
+    int m_actual_release_time;
+    int m_actual_deadline;
 
     double m_simulated_release_time;
     double m_simulated_deadline;
@@ -67,7 +68,6 @@ private:
     std::vector<std::shared_ptr<Job>> m_det_successors;
     std::vector<std::shared_ptr<Job>> m_non_det_predecessors;
     std::vector<std::shared_ptr<Job>> m_non_det_successors;
-        
 public:
     /**
      * Constructor & Destructor
@@ -99,6 +99,7 @@ public:
     double get_simulated_finish_time();
     double get_simulated_execution_time();
     std::vector<std::shared_ptr<Job>> get_history();
+
 
     int get_est();
     int get_lst();
@@ -170,6 +171,8 @@ public:
     void update_simulated_deadline();
     double min_simulated_deadline_det_successor();
     void add_history(std::shared_ptr<Job>);
+
+    bool operator<(const Job& other_job);
 };
 
 #endif

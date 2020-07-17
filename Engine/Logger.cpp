@@ -81,8 +81,15 @@ void Logger::add_current_simulated_job(std::shared_ptr<Job> current_job_instance
 }
 void Logger::start_logging()
 {
-    
     std::cout << "Logging starts" << std::endl;
+    // std::ofstream scheduling_log;
+    // scheduling_log.open(utils::cpsim_path + "/Log/scheduling.log", std::ios::app);     
+    // std::string contents = std::to_string(run_job->get_actual_release_time()) + ", ECU" + std::to_string(run_job->get_ECU()->get_ECU_id()) + ": " + run_job->get_task_name() + ", 1\n";
+    // contents += std::to_string(run_job->get_actual_deadline()) + ", ECU" + std::to_string(run_job->get_ECU()->get_ECU_id()) + ": " + run_job->get_task_name() + ", 0\n";
+    // scheduling_log.write(contents.c_str(), contents.size());
+    // scheduling_log.close();
+    
+    
     
 }
 
