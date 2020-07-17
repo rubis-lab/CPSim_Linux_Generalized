@@ -14,7 +14,7 @@ private:
     int m_hyper_period;
     std::vector<std::shared_ptr<Job>> m_execution_order_b;
     std::vector<std::shared_ptr<Job>> m_execution_order_w;
-    
+    bool m_is_offline;
 
 public:
     /**
@@ -37,6 +37,7 @@ public:
      */
     
     void simulate_scheduling_on_real(double);
+    void update_job_vector();
     void busy_period_analysis(std::vector<std::shared_ptr<Job>>& job_queue, int start, int& end, int ecu_id, bool setWorstCase);
 };
 

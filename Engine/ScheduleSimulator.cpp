@@ -26,7 +26,7 @@
  */
 ScheduleSimulator::ScheduleSimulator()
 {
-    
+    m_is_offline = true;
 }
 
 /**
@@ -62,54 +62,63 @@ ScheduleSimulator::~ScheduleSimulator()
  */
 void ScheduleSimulator::simulate_scheduling_on_real(double global_hyper_period_start_point)
 {
-    /**
-     *  Generate scheduling simulation to refer to.
-     *  Generated Scheduling Simulation Result will be stored to the utils:: 
-     */
-    m_hyper_period = utils::hyper_period;
-    for(auto task : vectors::task_vector) // Incase simulate is run multiple times on same task set.
-        task->set_priority(0);
-    // Assign GPU Priorities.
-    int highest_gpu_priority = 0;
-    if(utils::enable_gpu_scheduling)
+    if(m_is_offline == true)
     {
-        for(auto task : vectors::task_vector)
+        /**
+         *  Generate scheduling simulation to refer to.
+         *  Generated Scheduling Simulation Result will be stored to the utils:: 
+         */
+        m_hyper_period = utils::hyper_period;
+        for(auto task : vectors::task_vector) // Incase simulate is run multiple times on same task set.
+            task->set_priority(0);
+        // Assign GPU Priorities.
+        int highest_gpu_priority = 0;
+        if(utils::enable_gpu_scheduling)
         {
-            if(task->get_priority_policy() != PriorityPolicy::GPU) continue;
-            for(auto other_task : vectors::task_vector)
+            for(auto task : vectors::task_vector)
             {
-                if(task == other_task) continue;
-                if(other_task->get_priority_policy() != PriorityPolicy::GPU) continue;
-                if(task->get_period() > other_task->get_period())
+                if(task->get_priority_policy() != PriorityPolicy::GPU) continue;
+                for(auto other_task : vectors::task_vector)
                 {
-                    task->set_priority(task->get_priority() + 1);
-                    if(task->get_priority() > highest_gpu_priority)
-                        highest_gpu_priority = task->get_priority();
+                    if(task == other_task) continue;
+                    if(other_task->get_priority_policy() != PriorityPolicy::GPU) continue;
+                    if(task->get_period() > other_task->get_period())
+                    {
+                        task->set_priority(task->get_priority() + 1);
+                        if(task->get_priority() > highest_gpu_priority)
+                            highest_gpu_priority = task->get_priority();
+                    }
                 }
             }
         }
-    }
-    //std::cout << "Highest GPU Priority is: " << highest_gpu_priority << std::endl;
-    // Assign CPU Task Priorities
-    for(auto task : vectors::task_vector)
-    {
-        if(task->get_priority_policy() == PriorityPolicy::GPU) continue;
-        for(auto other_task : vectors::task_vector)
-        {
-            if(task == other_task) continue;
-            if(other_task->get_priority_policy() == PriorityPolicy::GPU) continue;
-            if(task->get_period() > other_task->get_period())
-                task->set_priority(task->get_priority() + 1);
-        }
-    }
-
-    if(utils::enable_gpu_scheduling)
+        //std::cout << "Highest GPU Priority is: " << highest_gpu_priority << std::endl;
+        // Assign CPU Task Priorities
         for(auto task : vectors::task_vector)
         {
-            if(task->get_priority_policy() != PriorityPolicy::CPU) continue;
-            task->set_priority(task->get_priority() + highest_gpu_priority);
+            if(task->get_priority_policy() == PriorityPolicy::GPU) continue;
+            for(auto other_task : vectors::task_vector)
+            {
+                if(task == other_task) continue;
+                if(other_task->get_priority_policy() == PriorityPolicy::GPU) continue;
+                if(task->get_period() > other_task->get_period())
+                    task->set_priority(task->get_priority() + 1);
+            }
         }
 
+        if(utils::enable_gpu_scheduling)
+            for(auto task : vectors::task_vector)
+            {
+                if(task->get_priority_policy() != PriorityPolicy::CPU) continue;
+                task->set_priority(task->get_priority() + highest_gpu_priority);
+            }
+
+    }
+    else
+    {
+        update_job_vector();
+    }
+    
+    
     /** 
      * Job instances generation for one HP
      */
@@ -131,9 +140,8 @@ void ScheduleSimulator::simulate_scheduling_on_real(double global_hyper_period_s
         for(int job_id = 1; job_id <= num_of_jobs; job_id++)
         {
             //std::shared_ptr<Job> job = std::make_shared<Job>(*iter, job_id);
-            std::shared_ptr<Job> job = std::make_shared<Job>(vectors::task_vector.at(task_id), job_id);
+            std::shared_ptr<Job> job = std::make_shared<Job>(vectors::task_vector.at(task_id), job_id, global_hyper_period_start_point);
             job->m_casted_func = vectors::task_vector.at(task_id)->m_casted_func;
-            
             vectors::job_vectors_for_each_ECU.at(vectors::task_vector.at(i)->get_ECU()->get_ECU_id()).at(vectors::task_vector.at(i)->get_vector_idx()).push_back(std::move(job));
             //vectors::job_vectors_for_each_ECU.at(iter->get()->get_ECU()->get_ECU_id()).at(task_idx).push_back(std::move(job));
         }
@@ -403,6 +411,7 @@ void ScheduleSimulator::simulate_scheduling_on_real(double global_hyper_period_s
         m_execution_order_w.clear();
     }
     global_object::logger->log_job_vector_of_each_ECU_status();
+    m_is_offline = false;
 }
 
 void ScheduleSimulator::busy_period_analysis(std::vector<std::shared_ptr<Job>>& job_queue, int start, int& end, int ecu_id, bool setWorstCase)
@@ -610,5 +619,26 @@ void ScheduleSimulator::busy_period_analysis(std::vector<std::shared_ptr<Job>>& 
             if (highest_job->get_priority_policy() == PriorityPolicy::CPU)
                 highest_job->set_est(start+end);
         }
+    }
+}
+
+void ScheduleSimulator::update_job_vector()
+{
+    for(int i = 0; i < vectors::ecu_vector.size(); i++)
+    {
+        std::vector<std::vector<std::shared_ptr<Job>>> vector_space_for_ecu;
+        vectors::job_vectors_for_each_ECU.push_back(vector_space_for_ecu);
+    }
+    /**
+     * Task Vector Initialization
+     */
+    for(int ecu_num =0; ecu_num < vectors::ecu_vector.size(); ecu_num++)
+    {
+        for(int i = 0; i < vectors::ecu_vector.at(ecu_num)->get_num_of_task(); i++)
+        {
+            std::vector<std::shared_ptr<Job>> vector_space_for_task_in_this_ecu;
+            vectors::job_vectors_for_each_ECU.at(ecu_num).push_back(vector_space_for_task_in_this_ecu);
+        }
+
     }
 }

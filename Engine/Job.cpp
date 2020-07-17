@@ -44,7 +44,7 @@ Job::Job()
  * @warning none
  * @todo none
  */
-Job::Job(std::shared_ptr<Task> task, int job_id)
+Job::Job(std::shared_ptr<Task> task, int job_id, int hyper_period_start)
 {
     this->set_task_id(task->get_task_id());
     this->set_task_name(task->get_task_name());
@@ -66,7 +66,7 @@ Job::Job(std::shared_ptr<Task> task, int job_id)
     penalty = task->penalty;
     
     m_job_id = job_id;
-    m_actual_release_time = calculate_release_time(task->get_period(), task->get_offset());
+    m_actual_release_time = calculate_release_time(task->get_period(), task->get_offset(), hyper_period_start);
     m_actual_deadline = calculate_absolute_deadline(m_actual_release_time, task->get_deadline());
     m_actual_start_time = INT_MAX;
     m_simulated_release_time = -1;
@@ -392,12 +392,12 @@ void Job::set_non_det_successors(std::vector<std::shared_ptr<Job>>& successors)
 }
 
 
-int Job::calculate_release_time(int period, int offset)
+int Job::calculate_release_time(int period, int offset, int hyper_period_start)
 {
     /**
      * n-th Job release time can be calculated with [ period * (n-1) + task offset ]
      */
-    return (period * (m_job_id - 1)) + offset;
+    return (period * (m_job_id - 1)) + offset + hyper_period_start;
 }
 
 int Job::calculate_absolute_deadline(int release_time, int r_deadline)

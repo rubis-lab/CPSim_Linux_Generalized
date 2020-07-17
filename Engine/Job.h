@@ -73,7 +73,7 @@ public:
      * Constructor & Destructor
      */
     Job();
-    Job(std::shared_ptr<Task>, int);
+    Job(std::shared_ptr<Task>, int, int);
     ~Job();
     /**
      * Getter & Setter
@@ -163,7 +163,7 @@ public:
     /**
      * SPECIFIC FUNCTIONS OF JOB CLASS
      */
-    int calculate_release_time(int, int);
+    int calculate_release_time(int, int, int);
     int calculate_absolute_deadline(int, int);
     std::array<int, 2> calculate_wcbp();
     void initialize_simulated_deadline();

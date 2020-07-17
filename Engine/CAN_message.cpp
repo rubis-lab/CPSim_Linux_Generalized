@@ -1,5 +1,5 @@
 #include "CAN_message.h"
-
+#include "Utils.h"
 #include <mutex>
 #include <thread>
 
@@ -24,13 +24,13 @@ CAN_message::CAN_message(unsigned long long time_input, int channel_input, int i
 {
 	time = time_input;
 	channel = channel_input;
-	msg.DATA[0] = data1;
-	msg.DATA[4] = data2;
+	m_message.DATA[0] = data1;
+	m_message.DATA[4] = data2;
 	//memcpy(&(msg.DATA[0]), &data1, sizeof(float));
 	//memcpy(&(msg.DATA[4]), &data2, sizeof(float));
-	msg.ID = id_input;
-	msg.MSGTYPE = 0;
-	msg.LEN = 8;
+	m_message.ID = id_input;
+	m_message.MSGTYPE = 0;
+	m_message.LEN = 8;
 	_task_name = name;
 	num_data = data_num_input;
 	data_index1 = index1;
@@ -75,3 +75,70 @@ std::string CAN_message::get_task_name()
  * Each class is inserted into the list according to its time.
  */
 
+void CAN_message::transmit_can_message(std::string task_name)
+{
+	TPCANMsg msg;
+	unsigned char can_buffer[8];
+	double tmp_value;                    
+	int tmp_signed_signal;               
+	unsigned int tmp_unsigned_signal;    
+	int st_signal;                       
+	int pos_signal;
+
+	if(task_name == "LK")
+	{
+		msg.ID = 2046;
+		msg.MSGTYPE = 0;
+		msg.LEN = 8;
+		tmp_value = ((shared::rtY.write4 - 0.000000) / 1.000000);          
+		tmp_signed_signal = (int)tmp_value;                      
+		tmp_unsigned_signal = (unsigned int)tmp_signed_signal;   
+		for (int len = 32 - 1; len >= 0; --len) {                                       
+			int row = (0 + len) / 8;                                                     
+			int col = (0 + len) % 8;                                                    
+			can_buffer[row] &= ~(1 << col);                                         
+			can_buffer[row] |= (tmp_unsigned_signal & (1 << len)) ? (1 << col) : 0; 
+		}                                                                               
+		tmp_value = ((shared::rtY.write3 - 0.000000) / 1.000000);           
+		tmp_signed_signal = (int)tmp_value;                      
+		tmp_unsigned_signal = (unsigned int)tmp_signed_signal;   
+		for (int len = 32 - 1; len >= 0; --len) {                                       
+			int row = (32 + len) / 8;                                                     
+			int col = (32 + len) % 8;                                                    
+			can_buffer[row] &= ~(1 << col);                                         
+			can_buffer[row] |= (tmp_unsigned_signal & (1 << len)) ? (1 << col) : 0; 
+		}                                                                                   
+	}
+	else if (task_name == "CC")
+	{
+		msg.ID = 2047;
+		msg.MSGTYPE = 0;
+		msg.LEN = 8;
+		tmp_value = ((shared::CC_Send_ACCEL - 0.000000) / 1.000000);            
+		tmp_signed_signal = (int)tmp_value;                      
+		tmp_unsigned_signal = (unsigned int)tmp_signed_signal;   
+		for (int len = 32 - 1; len >= 0; --len) {                                       
+			int row = (0 + len) / 8;                                                     
+			int col = (0 + len) % 8;                                                    
+			can_buffer[row] &= ~(1 << col);                                         
+			can_buffer[row] |= (tmp_unsigned_signal & (1 << len)) ? (1 << col) : 0; 
+		}                                                                               
+		tmp_value = ((shared::CC_Send_BRAKE - 0.000000) / 1.000000);            
+		tmp_signed_signal = (int)tmp_value;                      
+		tmp_unsigned_signal = (unsigned int)tmp_signed_signal;   
+		for (int len = 32 - 1; len >= 0; --len) {                                       
+			int row = (32 + len) / 8;                                                     
+			int col = (32 + len) % 8;                                                    
+			can_buffer[row] &= ~(1 << col);                                         
+			can_buffer[row] |= (tmp_unsigned_signal & (1 << len)) ? (1 << col) : 0; 
+		}    
+	}
+
+	errno = CAN_Write(can::hCAN1, &(msg));
+	if(errno)
+		{
+			char strMsg[256];
+			// An error occurred, get a text describing the error and show it
+			std::cout << strMsg << std::endl;
+		}                                                                         
+}

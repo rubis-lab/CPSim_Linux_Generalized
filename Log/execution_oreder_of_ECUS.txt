@@ -1,30 +1,30 @@
 
 EXECUTION ORDER OF ECU0
   -----J01-----	  -----J11-----	
-REL:          0	REL:          0	
+REL:       8320	REL:       8320	
 PER:         40	PER:         40	
-EST:          0	EST:         30	
+EST:       8320	EST:       8350	
 GPU:         NO	GPU:         NO	
 BCT:         20	BCT:         10	
-EFT:         20	EFT:         30	
+EFT:       8340	EFT:       8350	
   -----J01-----	  -----J11-----	
-REL:          0	REL:          0	
+REL:       8320	REL:       8320	
 PER:         40	PER:         40	
-LST:          0	LST:         20	
+LST:       8320	LST:       8340	
 WCT:         20	WCT:         10	
-LFT:         20	LFT:         30	
+LFT:       8340	LFT:       8350	
 
 EXECUTION ORDER OF ECU1
   -----J21-----	  -----J22-----	
-REL:          0	REL:         20	
+REL:       8320	REL:       8340	
 PER:         20	PER:         20	
-EST:         15	EST:         35	
+EST:       8335	EST:       8355	
 GPU:         NO	GPU:         NO	
 BCT:         15	BCT:         15	
-EFT:         15	EFT:         35	
+EFT:       8335	EFT:       8355	
   -----J21-----	  -----J22-----	
-REL:          0	REL:         20	
+REL:       8320	REL:       8340	
 PER:         20	PER:         20	
-LST:          0	LST:         20	
+LST:       8320	LST:       8340	
 WCT:         15	WCT:         15	
-LFT:         15	LFT:         35	
+LFT:       8335	LFT:       8355	

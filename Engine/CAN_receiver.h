@@ -19,6 +19,8 @@ public:
     void receive_can_messages();
     unsigned long long getcurrenttime();
     void start_simulation_time();
+    void extract_variables(int, unsigned char*);
+    int SIGNEX(unsigned int, unsigned int);
 };
 
 #endif

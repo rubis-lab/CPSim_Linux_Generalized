@@ -7,6 +7,7 @@
 #include <memory>
 #include "ECU.h"
 #include "PriorityPolicy.h"
+#include "CAN_message.h"
 #include <chrono>
 
 #ifdef __linux__

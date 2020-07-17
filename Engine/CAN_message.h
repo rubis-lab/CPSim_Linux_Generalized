@@ -45,6 +45,7 @@ typedef struct
 class CAN_message
 {
 private:
+	TPCANMsg m_message;
 	unsigned long long time;		// (expected) sending time
 	int channel;					// CAN bus channel
 	std::string _task_name;				// a task's name who tries to send this message
@@ -54,7 +55,7 @@ public:
 	CAN_message(unsigned long long, int, int, int, int, int, float, float, std::string);
 	~CAN_message();
 	
-	TPCANMsg msg;					// message struct provided by PCAN-USB API
+						// message struct provided by PCAN-USB API
 	int num_data;
 	int data_index1;
 	int data_index2;
@@ -64,6 +65,7 @@ public:
 	unsigned long long get_time();
 	int get_channel();
 	std::string get_task_name();
+	void transmit_can_message(std::string);
 };
 
 

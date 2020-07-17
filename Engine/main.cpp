@@ -117,13 +117,13 @@ int main(int argc, char *argv[])
           * second, we need to calculate all of the ECUs' behavior.
           * For this, we simulate those ECUs' job scheduling scenario with the specificated informations.
           */
-         schedule_simulator_on_Real.simulate_scheduling_on_real(utils::current_time);
+         
          /** [Construction of Job Precedence Graph(Offline Guider)]
           * To run simulator, 
           * third, we need to consider those constraints(Physical Read Constraint, Physical Write Constraint, Producer-Consumer Constraint)
           * For this, we create offline guider, and make a graph data structure for representing all of the jobs' precedence relationship.
          */  
-         offline_guider.construct_job_precedence_graph();
+         
         
          int simulation_termination_time = utils::hyper_period * 10000000000;
          bool is_simulatable = true;
@@ -135,7 +135,13 @@ int main(int argc, char *argv[])
               * forth, we need to schedule those jobs' that is already inserted in the Job Precedence Graph.
               * For this, we create executor which is responsible for 
              */
-             is_simulatable = executor.run_simulation(utils::current_time);
+            schedule_simulator_on_Real.simulate_scheduling_on_real(utils::current_time);
+            offline_guider.construct_job_precedence_graph();
+            is_simulatable = executor.run_simulation(utils::current_time);
+            vectors::job_vector_of_simulator.clear();
+            for(auto someVector : vectors::job_vectors_for_each_ECU)
+                someVector.clear();
+            vectors::job_vectors_for_each_ECU.clear();
          }
          is_simulatable ? ++simulatable_count : ++nonsimulatable_count;
         if(utils::real_workload == false)

@@ -69,12 +69,18 @@ namespace utils
 // (All .so files must include shared.h)
 namespace shared
 {
+    // typedef struct
+    // {
+    //     double w3;
+    //     double w4;
+    // } DW;
+    
     typedef struct
     {
         double w3;
         double w4;
     } DW;
-    
+
     typedef struct
     {
         double read1;
@@ -101,8 +107,8 @@ namespace shared
     inline int CC_Send_ACCEL = 0;
 
     // Shared Vars used by LK
-    inline DW rtU = {.w3 = 0.0, .w4 = 0.0};
-    inline ExtU rtDW = {.read1 = 0.0, .read2 = 0.0};
+    inline ExtU rtU = {.read1 = 0.0, .read2 = 0.0};
+    inline DW rtDW = {.w3 = 0.0, .w4 = 0.0};
     inline ExtY rtY = {.write3 = 0.0, .write4 = 0.0};
 }
 

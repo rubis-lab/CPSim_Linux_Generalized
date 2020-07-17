@@ -134,8 +134,8 @@ void Task::loadFunction(std::string file_path, std::string function_name)
     *CC_Send_ACCEL = &shared::CC_Send_ACCEL;
 
     // Assign shared vars for LK
-    shared::DW** rtU = (shared::DW**)dlsym(handle, "rtU");
-    shared::ExtU** rtDW = (shared::ExtU**)dlsym(handle, "rtDW");
+    shared::ExtU** rtU = (shared::ExtU**)dlsym(handle, "rtU");
+    shared::DW** rtDW = (shared::DW**)dlsym(handle, "rtDW");
     shared::ExtY** rtY = (shared::ExtY**)dlsym(handle, "rtY");
 
     *rtU = &shared::rtU;
@@ -156,6 +156,17 @@ void Task::run()
     m_run_start = std::chrono::steady_clock::now();
     m_casted_func();
     m_run_end = std::chrono::steady_clock::now();
+    
+    if(m_is_write == true)
+    {
+        CAN_message msg; 
+        msg.transmit_can_message(m_task_name);
+    }
+    else
+    {
+        
+    }
+    
 }
 
 long long Task::get_last_elapsed_nano_sec()

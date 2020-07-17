@@ -103,7 +103,7 @@ bool Executor::run_simulation(double start_time)
     assign_predecessors_successors();
     assign_deadline_for_simulated_jobs();
     assign_initial_actual_start_time();
-    global_object::logger->log_job_vector_of_simulator_status();
+    //global_object::logger->log_job_vector_of_simulator_status();
     /**
      * Iterating Loop for running jobs in one HP
      */
