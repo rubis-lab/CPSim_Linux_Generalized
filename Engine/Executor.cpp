@@ -5,6 +5,7 @@
 #include <climits>
 #include <unordered_map>
 #include "Logger.h"
+#include <fstream>
 
 /**
  *  This file is the cpp file for the Executor class.
@@ -193,6 +194,13 @@ bool Executor::run_simulation(double start_time)
 
             if (utils::real_workload)
             {
+                //starttime, get_ECUid: taskname, is started
+                std::ofstream scheduling_log;
+                scheduling_log.open(utils::cpsim_path + "/Log/scheduling.log", std::ios::app);     
+                std::string contents = std::to_string(run_job->get_actual_release_time()) + ", ECU" + std::to_string(run_job->get_ECU()->get_ECU_id()) + ": " + run_job->get_task_name() + ", 1\n";
+                contents += std::to_string(run_job->get_actual_deadline()) + ", ECU" + std::to_string(run_job->get_ECU()->get_ECU_id()) + ": " + run_job->get_task_name() + ", 0\n";
+                scheduling_log.write(contents.c_str(), contents.size());
+                scheduling_log.close();
                 run_job->run();
                 // Choose which one you think is best.
                 //utils::current_time += run_job->get_last_elapsed_nano_sec();

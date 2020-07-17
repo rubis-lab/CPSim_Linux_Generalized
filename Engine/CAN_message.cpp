@@ -111,9 +111,15 @@ void CAN_message::transmit_can_message(std::string task_name)
 	}
 	else if (task_name == "CC")
 	{
-		msg.ID = 2047;
+		msg.ID = 2049;
 		msg.MSGTYPE = 0;
 		msg.LEN = 8;
+		std::cout << "CCRECVTRIGGER: " << shared::CC_Recv_CC_TRIGGER << std::endl;
+		std::cout << "CCRECVSPEED: " << shared::CC_Recv_SPEED << std::endl;
+		std::cout << "CCRECVACCELVALUE: " << shared::CC_Recv_ACCEL_VALUE << std::endl;
+		
+		std::cout << "CCSENDACCEL: " << shared::CC_Send_ACCEL << std::endl;
+		std::cout << "CCSENDBRAKE: " << shared::CC_Send_BRAKE << std::endl;
 		tmp_value = ((shared::CC_Send_ACCEL - 0.000000) / 1.000000);            
 		tmp_signed_signal = (int)tmp_value;                      
 		tmp_unsigned_signal = (unsigned int)tmp_signed_signal;   
@@ -136,9 +142,7 @@ void CAN_message::transmit_can_message(std::string task_name)
 
 	errno = CAN_Write(can::hCAN1, &(msg));
 	if(errno)
-		{
-			char strMsg[256];
-			// An error occurred, get a text describing the error and show it
-			std::cout << strMsg << std::endl;
-		}                                                                         
+	{
+
+	}                                                                         
 }
