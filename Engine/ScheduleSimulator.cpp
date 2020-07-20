@@ -469,11 +469,12 @@ void ScheduleSimulator::busy_period_analysis(std::vector<std::shared_ptr<Job>>& 
                 last_start = highest_job->get_est();
                 if(!setWorstCase)
                 {
-                    std::ofstream scheduling_log;
-                    scheduling_log.open(utils::cpsim_path + "/Log/scheduling.log", std::ios::app);     
-                    std::string contents = std::to_string(highest_job->get_est()) + ", ECU" + std::to_string(highest_job->get_ECU()->get_ECU_id()) + ": " + highest_job->get_task_name() + ", 1\n";
-                    scheduling_log.write(contents.c_str(), contents.size());
-                    scheduling_log.close();
+                    // std::ofstream scheduling_log;
+                    // scheduling_log.open(utils::cpsim_path + "/Log/scheduling.log", std::ios::app);     
+                    // std::string contents = std::to_string(highest_job->get_est()) + ", ECU" + std::to_string(highest_job->get_ECU()->get_ECU_id()) + ": " + highest_job->get_task_name() + ", 1\n";
+                    // scheduling_log.write(contents.c_str(), contents.size());
+                    // scheduling_log.close();
+                    global_object::
                 }
             }
             else
@@ -577,11 +578,11 @@ void ScheduleSimulator::busy_period_analysis(std::vector<std::shared_ptr<Job>>& 
                     highest_job->set_eft(start + end);
                     if(!setWorstCase)
                     {
-                        std::ofstream scheduling_log;
-                        scheduling_log.open(utils::cpsim_path + "/Log/scheduling.log", std::ios::app);     
-                        std::string contents = std::to_string(highest_job->get_eft()) + ", ECU" + std::to_string(highest_job->get_ECU()->get_ECU_id()) + ": " + highest_job->get_task_name() + ", 0\n";
-                        scheduling_log.write(contents.c_str(), contents.size());
-                        scheduling_log.close();
+                        // std::ofstream scheduling_log;
+                        // scheduling_log.open(utils::cpsim_path + "/Log/scheduling.log", std::ios::app);     
+                        // std::string contents = std::to_string(highest_job->get_eft()) + ", ECU" + std::to_string(highest_job->get_ECU()->get_ECU_id()) + ": " + highest_job->get_task_name() + ", 0\n";
+                        // scheduling_log.write(contents.c_str(), contents.size());
+                        // scheduling_log.close();
                     }
                     
                 }

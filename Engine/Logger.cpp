@@ -81,16 +81,32 @@ void Logger::add_current_simulated_job(std::shared_ptr<Job> current_job_instance
 }
 void Logger::start_logging()
 {
-    std::cout << "Logging starts" << std::endl;
+    // std::cout << "Logging starts" << std::endl;
     // std::ofstream scheduling_log;
-    // scheduling_log.open(utils::cpsim_path + "/Log/scheduling.log", std::ios::app);     
-    // std::string contents = std::to_string(run_job->get_actual_release_time()) + ", ECU" + std::to_string(run_job->get_ECU()->get_ECU_id()) + ": " + run_job->get_task_name() + ", 1\n";
-    // contents += std::to_string(run_job->get_actual_deadline()) + ", ECU" + std::to_string(run_job->get_ECU()->get_ECU_id()) + ": " + run_job->get_task_name() + ", 0\n";
+    // scheduling_log.open(utils::cpsim_path + "/Log/scheduling.log", std::ios::out);     
+    // std::string contents = "Deadline miss, ECU0: SENSING, ECU0: LK, ECU1: CC\n";
     // scheduling_log.write(contents.c_str(), contents.size());
     // scheduling_log.close();
     
     
-    
+    // std::vector<std::string> contented;
+    // contented.push_back("0, ECU0: SENSING, 1\n");
+    // contented.push_back("0, ECU1: CC, 1\n");
+    // contented.push_back("15, ECU1: CC, 0\n");
+    // contented.push_back("20, ECU0: SENSING, 0\n");
+    // contented.push_back("20, ECU0: LK, 1\n");
+    // contented.push_back("20, ECU1: CC, 1\n");
+    // int i = 0;
+
+    // while(1)
+    //     for(i = 0; i < 6; ++i)
+    //     {
+    //         std::ofstream scheduling_log;
+    //         scheduling_log.open(utils::cpsim_path + "/Log/scheduling.log", std::ios::app);         
+    //         scheduling_log.write(contented.at(i).c_str(), contented.at(i).size());
+    //         scheduling_log.close();
+    //         sleep(1);
+    //     }
 }
 
 void Logger::log_task_vector_status()

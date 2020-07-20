@@ -114,17 +114,17 @@ void CAN_message::transmit_can_message(std::string task_name)
 		msg.ID = 2047; //2047
 		msg.MSGTYPE = 0;
 		msg.LEN = 8;
-		std::cout << "---------------------" << std::endl;
-		std::cout << "CC_RECV_TRIGGER: " << shared::CC_Recv_CC_TRIGGER << std::endl;
-		std::cout << "CC_RECV_SPEED: " << shared::CC_Recv_SPEED << std::endl;
-		std::cout << "CC_RECV_ACCEL_VALUE: " << shared::CC_Recv_ACCEL_VALUE << std::endl;
-		std::cout << "CC_RECV_TARGET_SPEED: " << shared::CC_Recv_TARGET_SPEED << std::endl;
-		std::cout << "CC_SEND_ACCEL: " << shared::CC_Send_ACCEL << std::endl;
-		std::cout << "CC_SEND_BRAKE: " << shared::CC_Send_BRAKE << std::endl;
-		std::cout << std::endl;
+		// std::cout << "---------------------" << std::endl;
+		// std::cout << "CC_RECV_TRIGGER: " << shared::CC_Recv_CC_TRIGGER << std::endl;
+		// std::cout << "CC_RECV_SPEED: " << shared::CC_Recv_SPEED << std::endl;
+		// std::cout << "CC_RECV_ACCEL_VALUE: " << shared::CC_Recv_ACCEL_VALUE << std::endl;
+		// std::cout << "CC_RECV_TARGET_SPEED: " << shared::CC_Recv_TARGET_SPEED << std::endl;
+		// std::cout << "CC_SEND_ACCEL: " << shared::CC_Send_ACCEL << std::endl;
+		// std::cout << "CC_SEND_BRAKE: " << shared::CC_Send_BRAKE << std::endl;
+		// std::cout << std::endl;
 		tmp_value = ((shared::CC_Send_ACCEL - 0.000000) / 1.000000);            
 		tmp_signed_signal = (int)tmp_value;                      
-		std::cout << "CC_SEND_ACCEL_DOUBLE: " << tmp_value << std::endl;
+		// std::cout << "CC_SEND_ACCEL_DOUBLE: " << tmp_value << std::endl;
 		tmp_unsigned_signal = (unsigned int)tmp_signed_signal;   
 		for (int len = 32 - 1; len >= 0; --len) {                                       
 			int row = (0 + len) / 8;                                                     
