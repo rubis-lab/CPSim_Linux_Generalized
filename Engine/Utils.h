@@ -148,6 +148,28 @@ namespace global_object
     } LogData;
     inline LogData gld;
     inline std::vector<LogData> gld_vector;
+    // std::to_string(highest_job->get_est()) + ", ECU" + std::to_string(highest_job->get_ECU()->get_ECU_id()) + ": " + highest_job->get_task_name() + ", 1\n";
+    // std::to_string(highest_job->get_eft()) + ", ECU" + std::to_string(highest_job->get_ECU()->get_ECU_id()) + ": " + highest_job->get_task_name() + ", 0\n";
+
+    class DiagramData
+    {
+    public:
+        int time;
+        std::string data;
+
+        bool operator < (const DiagramData& rhs) const
+        {
+            return this->time < rhs.time;
+        }
+
+        bool operator>(const DiagramData& rhs) const
+        {
+            return this->time > rhs.time;
+        }
+    };
+
+    inline std::priority_queue<DiagramData> diagram_data;
+
 }
 
 namespace can

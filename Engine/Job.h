@@ -173,6 +173,7 @@ public:
     void add_history(std::shared_ptr<Job>);
 
     bool operator<(const Job& other_job);
+    bool operator>(const Job& other_job);
 };
 
 #endif

@@ -122,7 +122,12 @@ bool Job::get_is_simulated()
 
 bool Job::operator<(const Job& other_job)
 {
-    return this->m_actual_deadline > other_job.m_actual_deadline;
+    return this->m_actual_deadline < other_job.m_actual_deadline;
+}
+
+bool Job::operator>(const Job& other_job)
+{
+    return this->m_actual_deadline < other_job.m_actual_deadline;
 }
 
 int Job::get_job_id()
