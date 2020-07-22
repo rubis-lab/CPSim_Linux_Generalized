@@ -1,6 +1,8 @@
 #ifndef SCHEDULESIMULATOR_H__
 #define SCHEDULESIMULATOR_H__
 #include "Utils.h"
+#include <ctime>
+#include <chrono>
 
 /** This file is engine code of CPSim-Re engine
  * @file ScheduleSimulator.h
@@ -15,6 +17,8 @@ private:
     std::vector<std::shared_ptr<Job>> m_execution_order_b;
     std::vector<std::shared_ptr<Job>> m_execution_order_w;
     bool m_is_offline;
+
+    std::chrono::high_resolution_clock::time_point last = std::chrono::high_resolution_clock::now();
 
 public:
     /**

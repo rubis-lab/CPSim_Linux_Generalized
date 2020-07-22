@@ -454,6 +454,7 @@ void ScheduleSimulator::busy_period_analysis(std::vector<std::shared_ptr<Job>>& 
         if (is_idle)
         {
             highest_job->set_is_started(true);
+            
             if (!setWorstCase)
             {
                 // GPU jobs already have a fully deterministicx EST variable set, we do not need to change it.
@@ -466,24 +467,35 @@ void ScheduleSimulator::busy_period_analysis(std::vector<std::shared_ptr<Job>>& 
                         highest_job->set_est(start + end);
                     }
                 }
+
                 last_start = highest_job->get_est();
+
                 if(!setWorstCase)
                 {
+                    std::chrono::high_resolution_clock::time_point current = std::chrono::high_resolution_clock::now();
+                    int elapsed = std::chrono::duration_cast<std::chrono::seconds>(current - last).count();
+
                     global_object::DiagramData diagram_data;
                     diagram_data.time = highest_job->get_est();
                     diagram_data.data = std::to_string(highest_job->get_est()) + ", ECU" + std::to_string(highest_job->get_ECU()->get_ECU_id()) + ": " + highest_job->get_task_name() + ", 1\n";
                     global_object::diagram_data.push(diagram_data);
-                    
-                    std::ofstream scheduling_log;
-                    scheduling_log.open(utils::cpsim_path + "/Log/scheduling.log", std::ios::app);     
-                    std::priority_queue<global_object::DiagramData> copy_data(global_object::diagram_data);
-                    while(copy_data.size() > 0)
+
+                    if(elapsed >= utils::log_delay_seconds)
                     {
-                        global_object::DiagramData current_data = copy_data.top();
-                        copy_data.pop();
-                        scheduling_log.write(current_data.data.c_str(), current_data.data.size());
+                        std::ofstream scheduling_log;
+                        scheduling_log.open(utils::cpsim_path + "/Log/scheduling.log", std::ios::app);     
+                        //std::priority_queue<global_object::DiagramData> copy_data(global_object::diagram_data);
+
+                        //while(copy_data.size() > 0)
+                        while(global_object::diagram_data.size() > 0)
+                        {
+                            global_object::DiagramData current_data = global_object::diagram_data.top();
+                            global_object::diagram_data.pop();
+                            scheduling_log.write(current_data.data.c_str(), current_data.data.size());
+                        }
+                        scheduling_log.close();
+                        last = std::chrono::high_resolution_clock::now();
                     }
-                    scheduling_log.close();
                 }
             }
             else
@@ -587,21 +599,28 @@ void ScheduleSimulator::busy_period_analysis(std::vector<std::shared_ptr<Job>>& 
                     highest_job->set_eft(start + end);
                     if(!setWorstCase)
                     {
+                        std::chrono::high_resolution_clock::time_point current = std::chrono::high_resolution_clock::now();
+                        int elapsed = std::chrono::duration_cast<std::chrono::seconds>(current - last).count();
+
                         global_object::DiagramData diagram_data;
                         diagram_data.time = highest_job->get_eft();
                         diagram_data.data = std::to_string(highest_job->get_eft()) + ", ECU" + std::to_string(highest_job->get_ECU()->get_ECU_id()) + ": " + highest_job->get_task_name() + ", 0\n";
                         global_object::diagram_data.push(diagram_data);
                         
-                        std::ofstream scheduling_log;
-                        scheduling_log.open(utils::cpsim_path + "/Log/scheduling.log", std::ios::app);     
-                        std::priority_queue<global_object::DiagramData> copy_data(global_object::diagram_data);
-                        while(copy_data.size() > 0)
+                        if(elapsed >= utils::log_delay_seconds)
                         {
-                            global_object::DiagramData current_data = copy_data.top();
-                            copy_data.pop();
-                            scheduling_log.write(current_data.data.c_str(), current_data.data.size());
+                            std::ofstream scheduling_log;
+                            scheduling_log.open(utils::cpsim_path + "/Log/scheduling.log", std::ios::app);     
+                            //std::priority_queue<global_object::DiagramData> copy_data(global_object::diagram_data);
+                            while(global_object::diagram_data.size() > 0)
+                            {
+                                global_object::DiagramData current_data = global_object::diagram_data.top();
+                                global_object::diagram_data.pop();
+                                scheduling_log.write(current_data.data.c_str(), current_data.data.size());
+                            }
+                            scheduling_log.close();
+                            last = std::chrono::high_resolution_clock::now();
                         }
-                        scheduling_log.close();
                     }
                     
                 }

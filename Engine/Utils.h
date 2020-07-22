@@ -50,6 +50,9 @@ namespace utils
     inline unsigned int ecu_counter = 0;
     inline bool is_experimental = true;
     inline bool real_workload = true;
+
+    inline int log_delay_seconds = 1;
+
     /**
      * CHECK REAL WORKLOAD OPTIONS
      */
@@ -159,12 +162,12 @@ namespace global_object
 
         bool operator < (const DiagramData& rhs) const
         {
-            return this->time < rhs.time;
+            return this->time > rhs.time;
         }
 
         bool operator>(const DiagramData& rhs) const
         {
-            return this->time > rhs.time;
+            return this->time < rhs.time;
         }
     };
 
