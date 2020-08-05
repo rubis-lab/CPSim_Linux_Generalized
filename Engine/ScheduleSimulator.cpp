@@ -472,11 +472,12 @@ void ScheduleSimulator::busy_period_analysis(std::vector<std::shared_ptr<Job>>& 
 
                 if(!setWorstCase)
                 {
-                    std::chrono::high_resolution_clock::time_point current = std::chrono::high_resolution_clock::now();
+                    auto current = std::chrono::high_resolution_clock::now();
+
                     int elapsed = std::chrono::duration_cast<std::chrono::seconds>(current - last).count();
 
                     global_object::DiagramData diagram_data;
-                    diagram_data.time = highest_job->get_est();
+                    diagram_data.time = utils::log_entries++;
                     diagram_data.data = std::to_string(highest_job->get_est()) + ", ECU" + std::to_string(highest_job->get_ECU()->get_ECU_id()) + ": " + highest_job->get_task_name() + ", 1\n";
                     global_object::diagram_data.push(diagram_data);
 
@@ -603,7 +604,7 @@ void ScheduleSimulator::busy_period_analysis(std::vector<std::shared_ptr<Job>>& 
                         int elapsed = std::chrono::duration_cast<std::chrono::seconds>(current - last).count();
 
                         global_object::DiagramData diagram_data;
-                        diagram_data.time = highest_job->get_eft();
+                        diagram_data.time = utils::log_entries++;
                         diagram_data.data = std::to_string(highest_job->get_eft()) + ", ECU" + std::to_string(highest_job->get_ECU()->get_ECU_id()) + ": " + highest_job->get_task_name() + ", 0\n";
                         global_object::diagram_data.push(diagram_data);
                         

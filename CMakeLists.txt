@@ -49,6 +49,8 @@ SET ( SRC_FILES
         Engine/Utils.h Engine/Utils.cpp
         # set JobNode files
         Engine/JobNode.h Engine/JobNode.cpp
+        # set CodeWrapper files
+        Engine/CodeWrapper.h Engine/CodeWrapper.cpp
         )
 
 # Compiler Information

@@ -70,15 +70,18 @@ std::vector<std::shared_ptr<Job>> Logger::get_execution_order_buffer()
 {
     return m_execution_order_buffer;
 }
+
 void Logger::set_execution_order_buffer(std::vector<std::shared_ptr<Job>> execution_order_buffer)
 {
     m_execution_order_buffer = execution_order_buffer;
 }
+
 void Logger::add_current_simulated_job(std::shared_ptr<Job> current_job_instance)
 {
     m_execution_order_buffer.push_back(current_job_instance);
     m_current_time_buffer.push_back(utils::current_time);
 }
+
 void Logger::start_logging()
 {
     // std::cout << "Logging starts" << std::endl;
@@ -160,6 +163,7 @@ void Logger::log_task_vector_status()
     write_task_info.write(contents.c_str(), contents.size());
     write_task_info.close();
 }
+
 void Logger::log_job_vector_of_each_ECU_status()
 {
     std::ofstream write_job_info;
@@ -186,6 +190,7 @@ void Logger::log_job_vector_of_each_ECU_status()
     write_job_info.write(contents.c_str(), contents.size());
     write_job_info.close();
 }
+
 void Logger::log_job_vector_of_simulator_status()
 {
     std::ofstream write_job_info;
@@ -209,12 +214,14 @@ void Logger::log_job_vector_of_simulator_status()
     write_job_info.write(contents.c_str(), contents.size());
     write_job_info.close();    
 }
+
 void Logger::print_offline_guider_status()
 {
     std::ofstream write_offline_guider;
     write_offline_guider.open(utils::cpsim_path + "/Log/offline_guider.txt");
     std::string contents = "Offline Guider Info";
 }
+
 void Logger::print_job_execution_on_ECU(std::vector<std::shared_ptr<Job>> b, std::vector<std::shared_ptr<Job>> w , int ecu_id)
 {
     std::ofstream write_execution_order;
@@ -330,6 +337,7 @@ void Logger::print_job_execution_on_ECU(std::vector<std::shared_ptr<Job>> b, std
     write_execution_order.write(contents.c_str(), contents.size());
     write_execution_order.close();
 }
+
 void Logger::print_job_execution_schedule()
 {
     std::ofstream write_execution_order;
@@ -479,6 +487,7 @@ void Logger::print_job_execution_schedule()
     write_execution_order.write(contents.c_str(), contents.size());
     write_execution_order.close();
 }
+
 void Logger::log_which_job_was_deadline_miss(std::shared_ptr<Job> deadline_job)
 {
     std::ofstream write_deadline_miss;

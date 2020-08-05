@@ -39,6 +39,7 @@ namespace utils
     inline int number_of_tasks = 0;
     inline int simulatorPC_performance = 3000;
     inline int task_amount = 10;
+    inline int log_entries = 0;
     extern int shared_variable;
      
     inline double simple_mapping_function = 0.3;
