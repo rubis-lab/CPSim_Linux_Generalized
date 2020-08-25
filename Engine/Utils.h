@@ -10,6 +10,7 @@
 #include <thread>
 #include <algorithm>
 #include <queue>
+#include <fstream>
 
 #include "Task.h"
 #include "Job.h"
@@ -67,6 +68,7 @@ namespace utils
     bool compare(std::shared_ptr<Job> pred, std::shared_ptr<Job> succ);
     bool first_release(std::shared_ptr<Job> pred, std::shared_ptr<Job> succ);
     void exit_simulation(int signo);
+    void update_utils_variables();
     void insert_can_msg(std::shared_ptr<CAN_message> input);
 }
 

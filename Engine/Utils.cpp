@@ -193,3 +193,91 @@ bool utils::first_release(std::shared_ptr<Job> pred, std::shared_ptr<Job> succ)
 		return pred->get_actual_release_time() < succ->get_actual_release_time();
 	}	
 }
+
+
+void utils::update_utils_variables()
+{
+	std::ifstream var_file(utils::cpsim_path + "/settings.txt");
+
+	if( var_file.is_open() )
+    {
+		std::string temp; int temp_int;
+
+		//std::string  file_path
+		var_file.ignore(256, '=');  var_file >> utils::file_path;
+		utils::file_path.erase(remove( utils::file_path.begin(), utils::file_path.end(), '\"' ),utils::file_path.end());
+
+		//std::string  null_path
+		var_file.ignore(256, '=');  var_file >> utils::null_path;
+		utils::null_path.erase(remove( utils::null_path.begin(), utils::null_path.end(), '\"' ),utils::null_path.end());
+		
+		//std::string  cpsim_path :
+		var_file.ignore(256, '=');  var_file >> temp;
+		//utils::cpsim_path.erase(remove( utils::cpsim_path.begin(), utils::cpsim_path.end(), '\"' ),utils::cpsim_path.end());
+
+		//int hyper_period
+		var_file.ignore(256, '='); var_file >> utils::hyper_period;
+
+		//double current_time
+		var_file.ignore(256, '='); var_file >> utils::current_time;
+
+		//int number_of_ECUs
+		var_file.ignore(256, '='); var_file >> utils::number_of_ECUs;
+
+		//int number_of_tasks
+		var_file.ignore(256, '='); var_file >> utils::number_of_tasks;
+
+		//int  simulatorPC_perfomance
+		var_file.ignore(256, '='); var_file >> utils::simulatorPC_performance;
+
+		//int task_amount
+		var_file.ignore(256, '='); var_file >> utils::task_amount;
+
+		//int log_entries
+		var_file.ignore(256, '='); var_file >> utils::log_entries;
+
+		//double simple_mapping_function
+		var_file.ignore(256, '='); var_file >> utils::simple_mapping_function;
+
+		//double_simple_gpu_mapping_function
+		var_file.ignore(256, '='); var_file >> utils::simple_gpu_mapping_function;
+
+		//bool execute_gpu_jobs_on_cpu
+		var_file.ignore(256, '='); var_file >> temp; utils::execute_gpu_jobs_on_cpu = temp == "true";
+
+		//bool enable_gpu_scheduling
+		var_file.ignore(256, '='); var_file >> temp; utils::enable_gpu_scheduling = temp == "true";
+
+		//double gpu_task_percentage
+		var_file.ignore(256, '='); var_file >> utils::gpu_task_percentage;
+
+		//int simulatorGPU_perfomance
+		var_file.ignore(256, '='); var_file >> utils::simulatorGPU_performance;
+
+		//unsigned int ecu_counter
+		var_file.ignore(256, '='); var_file >> temp_int; utils::ecu_counter = temp_int;
+
+		//bool is_experiemental
+		var_file.ignore(256, '='); var_file >> temp; utils::is_experimental = temp == "true";
+
+		//bool real_workload
+		var_file.ignore(256, '='); var_file >> temp; utils::real_workload = temp == "true";
+
+		//int log_delay_seconds
+		var_file.ignore(256, '='); var_file >> utils::log_delay_seconds;
+
+		//int real_task_num
+		var_file.ignore(256, '='); var_file >> utils::real_task_num;
+
+		//int real_ecu_num
+		var_file.ignore(256, '='); var_file >> utils::real_ecu_num;
+
+		var_file.close();
+	}
+    else
+    {
+        std::cout << strerror(errno) << std::endl;
+        std::cout << "GLOBAL VARIABLES FILE COULD NOT BE READ" << std::endl;
+    }
+
+}

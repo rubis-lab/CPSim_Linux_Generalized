@@ -63,7 +63,8 @@ int main(int argc, char *argv[])
     
     utils::cpsim_path = getenv("CPSIM_PATH");
     std::cout << "CPSIM_PATH : " << utils::cpsim_path << std::endl;
-
+    utils::update_utils_variables();
+    
     int epochs = 1;
     int simulatable_count = 0;
     int nonsimulatable_count = 0;
