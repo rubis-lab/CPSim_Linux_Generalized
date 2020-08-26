@@ -40,9 +40,9 @@ public:
      * Generator for scheduling simulation
      */
     
-    void simulate_scheduling_on_real(double);
-    void update_job_vector();
-    void busy_period_analysis(std::vector<std::shared_ptr<Job>>& job_queue, int start, int& end, int ecu_id, bool setWorstCase);
+    void simulate_scheduling_on_real(EcuVector&, TaskVector&, JobVectorsForEachECU&, double);
+    void update_job_vector(EcuVector&, JobVectorsForEachECU&);
+    void busy_period_analysis(JobVectorsForEachECU&,  std::vector<std::shared_ptr<Job>>& job_queue, int start, int& end, int ecu_id, bool setWorstCase);
 };
 
 #endif

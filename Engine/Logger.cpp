@@ -112,14 +112,14 @@ void Logger::start_logging()
     //     }
 }
 
-void Logger::log_task_vector_status()
+void Logger::log_task_vector_status(std::vector<std::shared_ptr<Task>>& task_vector)
 {
     std::ofstream write_task_info;
     write_task_info.open(utils::cpsim_path + "/Log/task_info.txt");
     std::string contents = "TASK LIST\n";
-    contents += "NUMBER OF TASK: " + std::to_string(vectors::task_vector.size()) + "\n";
+    contents += "NUMBER OF TASK: " + std::to_string(task_vector.size()) + "\n";
     int read_job=0, write_job=0;
-    for(auto task : vectors::task_vector)
+    for(auto task : task_vector)
     {
         if(task->get_is_write())
             write_job ++;       
@@ -129,7 +129,7 @@ void Logger::log_task_vector_status()
 
     contents += "NUMBER OF READ CONSTRAINTED JOB: " +  std::to_string(read_job) + "\n";
     contents += "NUMBER OF WRITE CONSTRAINTED JOB: " +  std::to_string(write_job) + "\n";
-    for(auto task : vectors::task_vector)
+    for(auto task : task_vector)
     {
         contents += "\n";
         contents += "TASK NAME:\t" + task->get_task_name() + "\n";
@@ -164,16 +164,16 @@ void Logger::log_task_vector_status()
     write_task_info.close();
 }
 
-void Logger::log_job_vector_of_each_ECU_status()
+void Logger::log_job_vector_of_each_ECU_status(std::vector<std::vector<std::vector<std::shared_ptr<Job>>>>& job_vectors_for_each_ECU)
 {
     std::ofstream write_job_info;
     write_job_info.open(utils::cpsim_path + "/Log/job_info.txt");
     std::string contents = "JOB LIST\n";
-    for(int i=0; i < vectors::job_vectors_for_each_ECU.size(); i++)
+    for(int i=0; i < job_vectors_for_each_ECU.size(); i++)
     {
-        contents += "NUMBER OF JOBS IN ECU " + std::to_string(i) + ": " + std::to_string(vectors::job_vectors_for_each_ECU.at(i).size()) + "\n";
-        for(int task_id=0; task_id<vectors::job_vectors_for_each_ECU.at(i).size(); ++task_id)
-        for(auto job : vectors::job_vectors_for_each_ECU.at(i).at(task_id))
+        contents += "NUMBER OF JOBS IN ECU " + std::to_string(i) + ": " + std::to_string(job_vectors_for_each_ECU.at(i).size()) + "\n";
+        for(int task_id=0; task_id<job_vectors_for_each_ECU.at(i).size(); ++task_id)
+        for(auto job : job_vectors_for_each_ECU.at(i).at(task_id))
         {
             contents += "JOB" + std::to_string(job->get_task_id()) + std::to_string(job->get_job_id()) + " RELEASE TIME:\t" + std::to_string(job->get_actual_release_time()) + "\n";
             contents += "JOB" + std::to_string(job->get_task_id()) + std::to_string(job->get_job_id()) + " EST:\t" + std::to_string(job->get_est()) + "\n";
@@ -191,14 +191,14 @@ void Logger::log_job_vector_of_each_ECU_status()
     write_job_info.close();
 }
 
-void Logger::log_job_vector_of_simulator_status()
+void Logger::log_job_vector_of_simulator_status(std::vector<std::shared_ptr<Job>>& job_vector_of_simulator)
 {
     std::ofstream write_job_info;
     write_job_info.open(utils::cpsim_path + "/Log/job_info_of_simulator.txt");
     std::string contents = "JOB LIST\n";
 
-    contents += "NUMBER OF JOBS IN SIMULATOR : " + std::to_string(vectors::job_vector_of_simulator.size()) + "\n";
-    for(auto job : vectors::job_vector_of_simulator)
+    contents += "NUMBER OF JOBS IN SIMULATOR : " + std::to_string(job_vector_of_simulator.size()) + "\n";
+    for(auto job : job_vector_of_simulator)
     {
         contents += "JOB" + std::to_string(job->get_task_id()) + std::to_string(job->get_job_id()) + " RELEASE TIME:\t" + std::to_string(job->get_actual_release_time()) + "\n";
         contents += "JOB" + std::to_string(job->get_task_id()) + std::to_string(job->get_job_id()) + " EST:\t" + std::to_string(job->get_est()) + "\n";

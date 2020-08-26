@@ -29,6 +29,16 @@
  * This functions are based on inline styles on C++ which is extern style of C . 
 */
 
+/**
+ * This code creates aliases for vectors used in the code
+*/
+typedef std::vector<std::shared_ptr<Job>> JobVectorOfSimulator;
+typedef std::vector<std::vector<std::vector<std::shared_ptr<Job>>>> JobVectorsForEachECU;
+typedef std::vector<std::shared_ptr<ECU> > EcuVector;
+typedef std::vector<std::shared_ptr<Task>> TaskVector;
+typedef std::vector<std::shared_ptr<CAN_message> > CanMsgVector;
+
+
 namespace utils
 {
     inline std::string file_path = "/home/";
@@ -69,7 +79,7 @@ namespace utils
     bool first_release(std::shared_ptr<Job> pred, std::shared_ptr<Job> succ);
     void exit_simulation(int signo);
     void update_utils_variables();
-    void insert_can_msg(std::shared_ptr<CAN_message> input);
+    void insert_can_msg(CanMsgVector&, std::shared_ptr<CAN_message> input);
 }
 
 // All .so files have access to these variables.
@@ -117,15 +127,6 @@ namespace shared
     inline DW rtDW = {.w3 = 0.0, .w4 = 0.0};
     inline ExtU rtU = {.read1 = 0.0, .read2 = 0.0};
     inline ExtY rtY = {.write3 = 0.0, .write4 = 0.0};
-}
-
-namespace vectors
-{
-    inline std::vector<std::shared_ptr<Job> > job_vector_of_simulator;
-    inline std::vector<std::vector<std::vector<std::shared_ptr<Job>>>> job_vectors_for_each_ECU;
-    inline std::vector<std::shared_ptr<ECU> > ecu_vector;
-    inline std::vector<std::shared_ptr<Task>> task_vector;
-    inline std::vector<std::shared_ptr<CAN_message> > can_msg_vector;
 }
 
 namespace global_object

@@ -64,19 +64,19 @@ OfflineGuider::~OfflineGuider()
  * @warning none
  * @todo to be implemented tonight.
  */
-void OfflineGuider::construct_job_precedence_graph()
+void OfflineGuider::construct_job_precedence_graph(JobVectorsForEachECU& job_vectors_for_each_ECU)
 {
-    for(int ecu_id = 0; ecu_id < vectors::job_vectors_for_each_ECU.size(); ++ ecu_id )
+    for(int ecu_id = 0; ecu_id < job_vectors_for_each_ECU.size(); ++ ecu_id )
     {
-        if(vectors::job_vectors_for_each_ECU.at(ecu_id).size() != 0)
+        if(job_vectors_for_each_ECU.at(ecu_id).size() != 0)
         {
-            for(int task_id =0; task_id < vectors::job_vectors_for_each_ECU.at(ecu_id).size(); ++ task_id)
-            for (auto job : vectors::job_vectors_for_each_ECU.at(ecu_id).at(task_id))
+            for(int task_id =0; task_id < job_vectors_for_each_ECU.at(ecu_id).size(); ++ task_id)
+            for (auto job : job_vectors_for_each_ECU.at(ecu_id).at(task_id))
             {             
-                construct_start_job_sets(ecu_id, job); // no is_read() condition, because construct_producer_job_sets needs this info aswell.
+                construct_start_job_sets(job_vectors_for_each_ECU, ecu_id, job); // no is_read() condition, because construct_producer_job_sets needs this info aswell.
                 if (job->get_is_write())
-                    construct_finish_job_sets(ecu_id, job);
-                construct_producer_job_sets(ecu_id, job);
+                    construct_finish_job_sets(job_vectors_for_each_ECU, ecu_id, job);
+                construct_producer_job_sets(job_vectors_for_each_ECU, ecu_id, job);
             }
         }
     }
@@ -86,13 +86,13 @@ void OfflineGuider::construct_job_precedence_graph()
 // Current jobs WCBP should start before or at same time as the high job's release time.
 // comparing jobs real release should be <= lst of current job.
 // Also their lst should be earlier than our est to be deterministic.
-void OfflineGuider::construct_start_job_sets(int ecu_id, std::shared_ptr<Job>& current_job)
+void OfflineGuider::construct_start_job_sets(JobVectorsForEachECU& job_vectors_for_each_ECU, int ecu_id, std::shared_ptr<Job>& current_job)
 {
     current_job->get_job_set_start_det().clear(); // Reset.
     current_job->get_job_set_start_non_det().clear(); // Reset.
     if (current_job->get_priority_policy() == PriorityPolicy::GPU) return; // GPU Jobs have enforced determinism.
-    for(int task_id =0; task_id < vectors::job_vectors_for_each_ECU.at(ecu_id).size(); ++ task_id)
-    for (auto job : vectors::job_vectors_for_each_ECU.at(ecu_id).at(task_id))
+    for(int task_id =0; task_id < job_vectors_for_each_ECU.at(ecu_id).size(); ++ task_id)
+    for (auto job : job_vectors_for_each_ECU.at(ecu_id).at(task_id))
     {
         if (job->get_priority() >= current_job->get_priority() || job->get_task_id() == current_job->get_task_id()) continue; // Job is a lower or equal priority job.
         if (!((current_job->get_wcbp().front() <= job->get_actual_release_time()) && (job->get_actual_release_time() <= current_job->get_lst()))) continue; // Job doesn't satisfy the requirements to be part of the job set.
@@ -104,13 +104,13 @@ void OfflineGuider::construct_start_job_sets(int ecu_id, std::shared_ptr<Job>& c
     }
 }
 
-void OfflineGuider::construct_finish_job_sets(int ecu_id, std::shared_ptr<Job>& current_job)
+void OfflineGuider::construct_finish_job_sets(JobVectorsForEachECU& job_vectors_for_each_ECU, int ecu_id, std::shared_ptr<Job>& current_job)
 {
     current_job->get_job_set_finish_det().clear(); // Reset.
     current_job->get_job_set_finish_non_det().clear(); // Reset.
     if (current_job->get_priority_policy() == PriorityPolicy::GPU) return; // GPU Jobs have enforced determinism.
-    for(int task_id =0; task_id < vectors::job_vectors_for_each_ECU.at(ecu_id).size(); ++ task_id)
-    for (auto job : vectors::job_vectors_for_each_ECU.at(ecu_id).at(task_id))
+    for(int task_id =0; task_id < job_vectors_for_each_ECU.at(ecu_id).size(); ++ task_id)
+    for (auto job : job_vectors_for_each_ECU.at(ecu_id).at(task_id))
     {
         if (job->get_priority() >= current_job->get_priority() || job->get_task_id() == current_job->get_task_id()) continue; // Job is a lower or equal priority job.
         if (!((current_job->get_wcbp().front() <= job->get_actual_release_time()) && (job->get_actual_release_time() < current_job->get_lft()))) continue; // Job doesn't satisfy the requirements to be part of the job set.
@@ -132,16 +132,16 @@ void OfflineGuider::construct_finish_job_sets(int ecu_id, std::shared_ptr<Job>& 
 // if his lst < current job's est.
 // Otherwise push back into non-deterministic.
 // Push back deterministic into deterministic if he isn't nullptr.
-void OfflineGuider::construct_producer_job_sets(int ecu_id, std::shared_ptr<Job>& current_job)
+void OfflineGuider::construct_producer_job_sets(JobVectorsForEachECU& job_vectors_for_each_ECU, int ecu_id, std::shared_ptr<Job>& current_job)
 {
     current_job->get_job_set_pro_con_det().clear();
     current_job->get_job_set_pro_con_non_det().clear();
     std::shared_ptr<Job> deterministic_producer = nullptr;
-    for (int i = 0; i < vectors::job_vectors_for_each_ECU.size(); i++)
-        if(vectors::job_vectors_for_each_ECU.at(i).size() != 0)
+    for (int i = 0; i < job_vectors_for_each_ECU.size(); i++)
+        if(job_vectors_for_each_ECU.at(i).size() != 0)
             for (auto producer : current_job->get_producers())
-                for(int task_id =0; task_id < vectors::job_vectors_for_each_ECU.at(i).size(); ++ task_id)
-                    for (auto job : vectors::job_vectors_for_each_ECU.at(i).at(task_id))
+                for(int task_id =0; task_id < job_vectors_for_each_ECU.at(i).size(); ++ task_id)
+                    for (auto job : job_vectors_for_each_ECU.at(i).at(task_id))
                     {
                         if (job->get_task_name() == producer->get_task_name() && !job->get_is_gpu_sync()) // In Control System Design, this producer job is a producer of job.
                         {
@@ -166,8 +166,8 @@ void OfflineGuider::construct_producer_job_sets(int ecu_id, std::shared_ptr<Job>
         current_job->get_job_set_pro_con_non_det().push_back(job);
     if (current_job->get_is_gpu_sync())
     {
-        for(int task_id =0; task_id < vectors::job_vectors_for_each_ECU.at(current_job->get_ECU()->get_ECU_id()).size(); ++ task_id)
-        for (auto job : vectors::job_vectors_for_each_ECU.at(current_job->get_ECU()->get_ECU_id()).at(task_id))
+        for(int task_id =0; task_id < job_vectors_for_each_ECU.at(current_job->get_ECU()->get_ECU_id()).size(); ++ task_id)
+        for (auto job : job_vectors_for_each_ECU.at(current_job->get_ECU()->get_ECU_id()).at(task_id))
         {
             if (job->get_job_id() == current_job->get_job_id() && job->get_task_id() == current_job->get_task_id() && job->get_is_gpu_init())
             {

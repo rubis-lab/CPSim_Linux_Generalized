@@ -52,13 +52,13 @@ Task::Task()
  * @todo none
  */
 Task::Task(std::string task_name, int period, int deadline, int wcet,
-            int bcet, int offset, bool is_read, bool is_write, int ecu_id, PriorityPolicy policy)
+            int bcet, int offset, bool is_read, bool is_write, int ecu_id, int task_vector_size, EcuVector& ecu_vector, PriorityPolicy policy)
 {
     /**
      * Member variable initializaion
      */
     m_task_name = task_name;
-    m_task_id = vectors::task_vector.size();
+    m_task_id = task_vector_size;
     m_period = period;
     m_deadline = deadline;
     m_wcet = wcet;
@@ -72,7 +72,7 @@ Task::Task(std::string task_name, int period, int deadline, int wcet,
     m_gpu_wait_time = 0;
     penalty = false;
 
-    for(auto iter = vectors::ecu_vector.begin(); iter != vectors::ecu_vector.end(); iter++)
+    for(auto iter = ecu_vector.begin(); iter != ecu_vector.end(); iter++)
     {
         if(ecu_id == iter->get()->get_ECU_id())
         {
@@ -193,13 +193,13 @@ long long Task::get_last_elapsed_seconds()
 
 Task::Task(std::string task_name, int period, int deadline, int wcet,
             int bcet, int offset, bool is_read, bool is_write, int ecu_id,
-            std::vector<std::string> prodcuers, std::vector<std::string> consumers, PriorityPolicy policy)
+            std::vector<std::string> prodcuers, std::vector<std::string> consumers, int task_vector_size, EcuVector& ecu_vector, PriorityPolicy policy)
 {
     /**
      * Member variable initializaion
      */
     m_task_name = task_name;
-    m_task_id = vectors::task_vector.size();
+    m_task_id = task_vector_size;
     //m_task_id = std::stoi(m_task_name.substr(4));
     m_period = period;
     m_deadline = deadline;
@@ -216,7 +216,7 @@ Task::Task(std::string task_name, int period, int deadline, int wcet,
     m_gpu_wait_time = 0;
     penalty = false;
     
-    for(auto iter = vectors::ecu_vector.begin(); iter != vectors::ecu_vector.end(); iter++)
+    for(auto iter = ecu_vector.begin(); iter != ecu_vector.end(); iter++)
     {
         if(ecu_id == iter->get()->get_ECU_id())
         {
@@ -227,13 +227,13 @@ Task::Task(std::string task_name, int period, int deadline, int wcet,
 
 Task::Task(std::string task_name, int period, int deadline, int wcet,
             int bcet, int offset, bool is_read, bool is_write, int ecu_id,
-            std::vector<std::shared_ptr<Task>> prodcuers, std::vector<std::shared_ptr<Task>> consumers, PriorityPolicy policy)
+            std::vector<std::shared_ptr<Task>> prodcuers, std::vector<std::shared_ptr<Task>> consumers, int task_vector_size, EcuVector& ecu_vector, PriorityPolicy policy)
 {
     /**
      * Member variable initializaion
      */
     m_task_name = task_name;
-    m_task_id = vectors::task_vector.size();
+    m_task_id = task_vector_size;
     m_period = period;
     m_deadline = deadline;
     m_wcet = wcet;
@@ -249,7 +249,7 @@ Task::Task(std::string task_name, int period, int deadline, int wcet,
     m_gpu_wait_time = 0;
     penalty = false;
     
-    for(auto iter = vectors::ecu_vector.begin(); iter != vectors::ecu_vector.end(); iter++)
+    for(auto iter = ecu_vector.begin(); iter != ecu_vector.end(); iter++)
     {
         if(ecu_id == iter->get()->get_ECU_id())
         {
@@ -591,13 +591,13 @@ void Task::set_ECU(std::shared_ptr<ECU> ecu)
     m_ecu = ecu;
 }
 
-void Task::synchronize_producer_consumer_relation()
+void Task::synchronize_producer_consumer_relation(std::vector<std::shared_ptr<Task>>& task_vector)
 {
     if (this->get_is_gpu_sync()) return;
     if(m_producers_info.size() != 0)
         for(auto producer : m_producers_info)
         {
-            for(auto task : vectors::task_vector)
+            for(auto task : task_vector)
             {
                 if(task->get_task_name() == producer)
                 {
@@ -609,7 +609,7 @@ void Task::synchronize_producer_consumer_relation()
     if(m_consumers_info.size() != 0)
         for(auto consumer : m_consumers_info)
         {
-            for(auto task : vectors::task_vector)
+            for(auto task : task_vector)
             {
                 if(task->get_task_name() == consumer)
                 {       

@@ -85,10 +85,10 @@ public:
      */
 	Task();
 	// name, period, deadline, wcet, bcet, offset, isRead, isWrite, ecuId
-	Task(std::string, int, int, int, int, int, bool, bool, int, PriorityPolicy policy = PriorityPolicy::CPU);
+	Task(std::string, int, int, int, int, int, bool, bool, int, int, std::vector<std::shared_ptr<ECU> >&, PriorityPolicy policy = PriorityPolicy::CPU);
 
-	Task(std::string, int, int, int, int, int, bool, bool, int, std::vector<std::string>, std::vector<std::string>, PriorityPolicy policy = PriorityPolicy::CPU);
-	Task(std::string, int, int, int, int, int, bool, bool, int, std::vector<std::shared_ptr<Task>>, std::vector<std::shared_ptr<Task>>, PriorityPolicy policy = PriorityPolicy::CPU);
+	Task(std::string, int, int, int, int, int, bool, bool, int, std::vector<std::string>, std::vector<std::string>, int, std::vector<std::shared_ptr<ECU> >&, PriorityPolicy policy = PriorityPolicy::CPU);
+	Task(std::string, int, int, int, int, int, bool, bool, int, std::vector<std::shared_ptr<Task>>, std::vector<std::shared_ptr<Task>>, int, std::vector<std::shared_ptr<ECU> >&, PriorityPolicy policy = PriorityPolicy::CPU);
 	~Task();
 
     /**
@@ -149,7 +149,7 @@ public:
 	
 	void add_task_to_consumers(std::shared_ptr<Task>);
 	void add_task_to_producers(std::shared_ptr<Task>);
-	void synchronize_producer_consumer_relation();
+	void synchronize_producer_consumer_relation(std::vector<std::shared_ptr<Task>>&);
 
 	// If these 2 funcs are different for windows / linux, wrap them like this:
 //#ifdef __linux__

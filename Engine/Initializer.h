@@ -30,13 +30,13 @@ public:
     void can_interface_initalizer(int num_channel);
     int parsing_specificated_information();
     
-    void random_task_generator(int); // this function is for experiments.
-    void random_ecu_generator(int); // this function is for experiments.
-    void random_producer_consumer_generator();
-    void random_constraint_selector(double, double);
+    void random_task_generator(EcuVector&, TaskVector&, JobVectorsForEachECU&, int); // this function is for experiments.
+    void random_ecu_generator(EcuVector&, JobVectorsForEachECU&, int); // this function is for experiments.
+    void random_producer_consumer_generator(TaskVector&);
+    void random_constraint_selector(TaskVector&, double, double);
 
     void set_simulatorPC_performance();
-    void initialize(std::string location);
+    void initialize(EcuVector&, TaskVector&, JobVectorsForEachECU&, std::string location);
 };
 
 #endif

@@ -58,7 +58,7 @@ Specifier::~Specifier()
  * @warning none
  * @todo none
  */
-void Specifier::specify_the_system(std::string file_path)
+void Specifier::specify_the_system(EcuVector& ecu_vector, TaskVector& task_vector, std::string file_path)
 {
     m_parser.parse_xml_file();
     utils::number_of_ECUs = specify_number_of_ECUs();
@@ -91,7 +91,7 @@ void Specifier::specify_the_system(std::string file_path)
         }
 
         std::shared_ptr<ECU> ecu =  std::make_shared<ECU>(performance,scheduling_policy, ecu_id , 6000);
-        vectors::ecu_vector.push_back(std::move(ecu));
+        ecu_vector.push_back(std::move(ecu));
     }
     for(task_idx = 0; task_idx < m_parser.get_task_info().size(); task_idx++)
     {
@@ -167,12 +167,12 @@ void Specifier::specify_the_system(std::string file_path)
             }
         }
 
-        std::shared_ptr<Task> task = std::make_shared<Task>(task_id, period, deadline, wcet, bcet, offset, is_read, is_write, ecu_id, producers, consumers);
+        std::shared_ptr<Task> task = std::make_shared<Task>(task_id, period, deadline, wcet, bcet, offset, is_read, is_write, ecu_id, producers, consumers, task_vector.size(), ecu_vector);
         task->loadFunction(utils::cpsim_path + "/sharedObjectFiles/" + task_id + "/" + task_id + ".so", "sim_main");
         task->set_priority_policy(PriorityPolicy::CPU);
-        task->set_vector_idx(vectors::ecu_vector.at(ecu_id)->get_num_of_task());
-        vectors::task_vector.push_back(std::move(task));
-        vectors::ecu_vector.at(ecu_id)->set_num_of_task(vectors::ecu_vector.at(ecu_id)->get_num_of_task() + 1);
+        task->set_vector_idx(ecu_vector.at(ecu_id)->get_num_of_task());
+        task_vector.push_back(std::move(task));
+        ecu_vector.at(ecu_id)->set_num_of_task(ecu_vector.at(ecu_id)->get_num_of_task() + 1);
     }
 }
 

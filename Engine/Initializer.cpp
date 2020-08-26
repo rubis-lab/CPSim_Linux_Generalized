@@ -147,7 +147,7 @@ int Initializer::parsing_specificated_information()
  * @warning none
  * @todo none
  */
-void Initializer::initialize(std::string location)
+void Initializer::initialize(EcuVector& ecu_vector, TaskVector& task_vector, JobVectorsForEachECU& job_vectors_for_each_ECU, std::string location)
 {    
     /**
      * Speicification Initialization
@@ -160,7 +160,7 @@ void Initializer::initialize(std::string location)
     if(utils::real_workload == true)
     {
         Specifier specifier;
-        specifier.specify_the_system(utils::file_path);
+        specifier.specify_the_system(ecu_vector, task_vector, utils::file_path);
         /**
          * CAN Network Initialization
          */
@@ -170,20 +170,20 @@ void Initializer::initialize(std::string location)
         /**
          * ECU Vector Initialization
          */
-        for(int i = 0; i < vectors::ecu_vector.size(); i++)
+        for(int i = 0; i < ecu_vector.size(); i++)
         {
             std::vector<std::vector<std::shared_ptr<Job>>> vector_space_for_ecu;
-            vectors::job_vectors_for_each_ECU.push_back(vector_space_for_ecu);
+            job_vectors_for_each_ECU.push_back(vector_space_for_ecu);
         }
         /**
          * Task Vector Initialization
          */
-        for(int ecu_num =0; ecu_num < vectors::ecu_vector.size(); ecu_num++)
+        for(int ecu_num =0; ecu_num < ecu_vector.size(); ecu_num++)
         {
-            for(int i = 0; i < vectors::ecu_vector.at(ecu_num)->get_num_of_task(); i++)
+            for(int i = 0; i < ecu_vector.at(ecu_num)->get_num_of_task(); i++)
             {
                 std::vector<std::shared_ptr<Job>> vector_space_for_task_in_this_ecu;
-                vectors::job_vectors_for_each_ECU.at(ecu_num).push_back(vector_space_for_task_in_this_ecu);
+                job_vectors_for_each_ECU.at(ecu_num).push_back(vector_space_for_task_in_this_ecu);
             }
 
         }
@@ -195,26 +195,26 @@ void Initializer::initialize(std::string location)
          * number of ECU is [3-10]
          */
         //random_ecu_generator((rand() % 8) + 3);
-        random_ecu_generator(2);
+        random_ecu_generator(ecu_vector, job_vectors_for_each_ECU, 2);
         
         /**
          * Task Vector Initialization
          * Implement GPU / CPU job...
          */
-        //random_task_generator(0.3, 0.3, (rand() % 5 + 1) * vectors::ecu_vector.size());
-        random_task_generator(utils::task_amount);
+        //random_task_generator(0.3, 0.3, (rand() % 5 + 1) * ecu_vector.size());
+        random_task_generator(ecu_vector, task_vector, job_vectors_for_each_ECU,  utils::task_amount);
         if(utils::is_experimental == false)
-            for(auto task : vectors::task_vector)
+            for(auto task : task_vector)
             {
-                task->synchronize_producer_consumer_relation();
+                task->synchronize_producer_consumer_relation(task_vector);
             }
         else
         {
             /**
              * Each task can be [0-2] data producer of random selected job.
              */
-            random_constraint_selector(0.3, 0.3);
-            random_producer_consumer_generator();
+            random_constraint_selector(task_vector, 0.3, 0.3);
+            random_producer_consumer_generator(task_vector);
         }
     }
                           
@@ -222,7 +222,7 @@ void Initializer::initialize(std::string location)
     /**
      * Global Hyper Period Initialization
      */
-    utils::hyper_period = utils::calculate_hyper_period(vectors::task_vector);
+    utils::hyper_period = utils::calculate_hyper_period(task_vector);
     
     /**
      * Logger Thread Initialized
@@ -236,7 +236,7 @@ void Initializer::initialize(std::string location)
     {
         global_object::logger = std::make_shared<Logger>();
     }
-    global_object::logger->log_task_vector_status();
+    global_object::logger->log_task_vector_status(task_vector);
 
     /**
      * CAN Receiver Thread Initialized
@@ -247,7 +247,7 @@ void Initializer::initialize(std::string location)
     }
 }
 
-void Initializer::random_task_generator(int task_num)
+void Initializer::random_task_generator(EcuVector& ecu_vector, TaskVector& task_vector, JobVectorsForEachECU& job_vectors_for_each_ECU, int task_num)
 {
     int gpu_jobs = task_num * utils::gpu_task_percentage;
     if(!utils::enable_gpu_scheduling)
@@ -286,7 +286,7 @@ void Initializer::random_task_generator(int task_num)
         int offset = 0; //RTSS paper sets offset as 0.
         bool is_read = false;
         bool is_write = false;
-        int ecu_id = rand() % vectors::ecu_vector.size();
+        int ecu_id = rand() % ecu_vector.size();
         
         //each task can be data producer of [0-2] randomly selected task.
         std::vector<std::string> producers;
@@ -325,36 +325,36 @@ void Initializer::random_task_generator(int task_num)
         //each ecu can have [1-5] task.
         int min_num = INT_MAX;
         int min_ecu_id = 0;
-        for(int j = 0; j < vectors::ecu_vector.size(); j++)
+        for(int j = 0; j < ecu_vector.size(); j++)
         {
-            if(min_num > vectors::ecu_vector.at(j)->get_num_of_task())
+            if(min_num > ecu_vector.at(j)->get_num_of_task())
             {
-                min_num = vectors::ecu_vector.at(j)->get_num_of_task();
-                min_ecu_id = vectors::ecu_vector.at(j)->get_ECU_id();
+                min_num = ecu_vector.at(j)->get_num_of_task();
+                min_ecu_id = ecu_vector.at(j)->get_ECU_id();
             }
         }
 
         ecu_id = min_ecu_id;
-        vectors::ecu_vector.at(ecu_id)->set_num_of_task(min_num + 1);
+        ecu_vector.at(ecu_id)->set_num_of_task(min_num + 1);
 
         //Task Name(id), period, deadline, wcet, bcet, offset, read, write, ecu, producer, consumers
         if (!is_gpu_task)
         {
-            std::shared_ptr<Task> task = std::make_shared<Task>(task_name, period, period, wcet, bcet, offset, is_read, is_write, ecu_id, producers, consumers);
+            std::shared_ptr<Task> task = std::make_shared<Task>(task_name, period, period, wcet, bcet, offset, is_read, is_write, ecu_id, producers, consumers, task_vector.size(), ecu_vector);
             task->loadFunction("/lib/x86_64-linux-gnu/libc.so.6", "puts");
             task->set_priority_policy(PriorityPolicy::CPU);
-            vectors::task_vector.push_back(std::move(task));
+            task_vector.push_back(std::move(task));
         }
         else if(utils::execute_gpu_jobs_on_cpu) // Work around to see if Fgr results are bogus or not.
         {
             int exec = 2;
             int gpuWaitTime = wcet - exec;
-            std::shared_ptr<Task> task = std::make_shared<Task>(task_name, period, period, wcet, bcet, offset, is_read, is_write, ecu_id, producers, consumers);
+            std::shared_ptr<Task> task = std::make_shared<Task>(task_name, period, period, wcet, bcet, offset, is_read, is_write, ecu_id, producers, consumers, task_vector.size(), ecu_vector);
             task->loadFunction("/lib/x86_64-linux-gnu/libc.so.6", "puts");
             task->set_priority_policy(PriorityPolicy::CPU);
             task->penalty = true;
             task->set_gpu_wait_time(gpuWaitTime);
-            vectors::task_vector.push_back(std::move(task));
+            task_vector.push_back(std::move(task));
         }
         else
         {
@@ -375,13 +375,13 @@ void Initializer::random_task_generator(int task_num)
             // init has sync as consumer.
             // sync has init as producer.
 
-            init = std::make_shared<Task>(task_name, period, exec, exec, exec, offset, is_read, is_write, ecu_id, producers, consumers);
+            init = std::make_shared<Task>(task_name, period, exec, exec, exec, offset, is_read, is_write, ecu_id, producers, consumers, task_vector.size(), ecu_vector);
             init->set_is_gpu_init(true);
             init->set_is_gpu_sync(false);
             init->set_gpu_wait_time(gpu_wait_time);
             init->set_priority_policy(PriorityPolicy::GPU);
 
-            sync = std::make_shared<Task>(task_name, period, (exec * 2) + gpu_wait_time, exec, exec, offset, is_read, is_write, ecu_id, producers, consumers);
+            sync = std::make_shared<Task>(task_name, period, (exec * 2) + gpu_wait_time, exec, exec, offset, is_read, is_write, ecu_id, producers, consumers, task_vector.size(), ecu_vector);
             sync->set_is_gpu_sync(true);
             sync->set_is_gpu_init(false);
             sync->set_gpu_wait_time(gpu_wait_time);
@@ -390,42 +390,42 @@ void Initializer::random_task_generator(int task_num)
             init->loadFunction("/lib/x86_64-linux-gnu/libc.so.6", "puts");
             sync->loadFunction("/lib/x86_64-linux-gnu/libc.so.6", "puts");
 
-            vectors::task_vector.push_back(std::move(init));
-            vectors::task_vector.push_back(std::move(sync));
+            task_vector.push_back(std::move(init));
+            task_vector.push_back(std::move(sync));
         }
     }
     // What is this?
-    for(int ecu_num =0; ecu_num < vectors::ecu_vector.size(); ecu_num++)
+    for(int ecu_num =0; ecu_num < ecu_vector.size(); ecu_num++)
     {
         for(int i = 0; i < task_num; i++)
         {
             std::vector<std::shared_ptr<Job>> v_job_of_ecu;
-            vectors::job_vectors_for_each_ECU.at(ecu_num).push_back(v_job_of_ecu);
+            job_vectors_for_each_ECU.at(ecu_num).push_back(v_job_of_ecu);
         }
     }
     
 }
 
-void Initializer::random_ecu_generator(int ecu_num)
+void Initializer::random_ecu_generator(EcuVector& ecu_vector, JobVectorsForEachECU& job_vectors_for_each_ECU, int ecu_num)
 {
     for(int i = 0; i < ecu_num; i++)
     {
-        std::shared_ptr<ECU> ecu =  std::make_shared<ECU>(100,"RM");
-        vectors::ecu_vector.push_back(std::move(ecu));
+        std::shared_ptr<ECU> ecu =  std::make_shared<ECU>(ecu_vector.size(), 100,"RM");
+        ecu_vector.push_back(std::move(ecu));
     }
     // What is this
     for(int i = 0; i < ecu_num; i++)
     {
         std::vector<std::vector<std::shared_ptr<Job>>> v_job_of_ecu;
-        vectors::job_vectors_for_each_ECU.push_back(v_job_of_ecu);
+        job_vectors_for_each_ECU.push_back(v_job_of_ecu);
     }
 }
 
-void Initializer::random_producer_consumer_generator()
+void Initializer::random_producer_consumer_generator(TaskVector& task_vector)
 {
-    for(auto task : vectors::task_vector)
+    for(auto task : task_vector)
     {
-        for(auto consumer : vectors::task_vector)
+        for(auto consumer : task_vector)
         {
             for(auto to_be_consumer : task->get_consumers_info())
             {
@@ -439,13 +439,13 @@ void Initializer::random_producer_consumer_generator()
     }    
 }
 
-void Initializer::random_constraint_selector(double read_ratio, double write_ratio)
+void Initializer::random_constraint_selector(TaskVector& task_vector, double read_ratio, double write_ratio)
 {
     // Using vector.size() will give an inflated number if GPU jobs exists.
     // As GPU tasks count as 2, the task_num becomes inflated.
     // If we originally have X tasks, the inflation will be:
     // (2X * gpu_ratio) + (X * 1 - gpu_ratio) = Z, where Z is the inflated task number and vector size.
-    int task_num = utils::task_amount; //vectors::task_vector.size();
+    int task_num = utils::task_amount; //task_vector.size();
 
     int number_of_read = std::ceil(read_ratio * task_num); //read ratio is 30%
     int number_of_write = std::ceil(write_ratio * task_num); //write ratio is 30%
@@ -453,14 +453,14 @@ void Initializer::random_constraint_selector(double read_ratio, double write_rat
     int selector = 0;
     while(number_of_read != 0)
     {
-        selector = rand() % vectors::task_vector.size();                                                   // Sync jobs can only read from Init jobs (gpu wait time).
-        if(vectors::task_vector.at(selector)->get_is_read() == true || vectors::task_vector.at(selector)->get_is_gpu_sync())
+        selector = rand() % task_vector.size();                                                   // Sync jobs can only read from Init jobs (gpu wait time).
+        if(task_vector.at(selector)->get_is_read() == true || task_vector.at(selector)->get_is_gpu_sync())
         {
             continue;
         }
         else
         {
-            vectors::task_vector.at(selector)->set_is_read(true);
+            task_vector.at(selector)->set_is_read(true);
             number_of_read--;
         }
         
@@ -468,14 +468,14 @@ void Initializer::random_constraint_selector(double read_ratio, double write_rat
 
     while(number_of_write != 0)
     {
-        selector = rand() % vectors::task_vector.size();                                                                    // Init jobs only write to the gpu.
-        if(vectors::task_vector.at(rand() % vectors::task_vector.size())->get_is_write() == true || vectors::task_vector.at(selector)->get_is_gpu_init())
+        selector = rand() % task_vector.size();                                                                    // Init jobs only write to the gpu.
+        if(task_vector.at(rand() % task_vector.size())->get_is_write() == true || task_vector.at(selector)->get_is_gpu_init())
         {
             continue;
         }
         else
         {
-            vectors::task_vector.at(selector)->set_is_write(true);
+            task_vector.at(selector)->set_is_write(true);
             number_of_write--;
         }
     }

@@ -95,15 +95,15 @@ void Executor::set_current_hyper_period_end(int current_hyper_period_end)
  * @warning none
  * @todo implement this today's night
  */
-bool Executor::run_simulation(double start_time)
+bool Executor::run_simulation(JobVectorOfSimulator& job_vector_of_simulator, JobVectorsForEachECU& job_vectors_for_each_ECU, double start_time)
 {
     double end_time = start_time + utils::hyper_period;
-    move_ecus_jobs_to_simulator(); // Copies job vectors from ECUs to Sim.
-    random_execution_time_generator(); // Sets actual exec time on jobs in the Sim's job vectors.
-    change_execution_time(); // Sets the simulated exec time. Warning: Need to adapt for GPU by changing Init job's GPU WAIT TIME variable. Do we need to change the sync job aswell to accord for this..?
-    assign_predecessors_successors();
-    assign_deadline_for_simulated_jobs();
-    assign_initial_actual_start_time();
+    move_ecus_jobs_to_simulator(job_vector_of_simulator, job_vectors_for_each_ECU); // Copies job vectors from ECUs to Sim.
+    random_execution_time_generator(job_vector_of_simulator); // Sets actual exec time on jobs in the Sim's job vectors.
+    change_execution_time(job_vector_of_simulator); // Sets the simulated exec time. Warning: Need to adapt for GPU by changing Init job's GPU WAIT TIME variable. Do we need to change the sync job aswell to accord for this..?
+    assign_predecessors_successors(job_vector_of_simulator);
+    assign_deadline_for_simulated_jobs(job_vector_of_simulator);
+    assign_initial_actual_start_time(job_vector_of_simulator);
     //global_object::logger->log_job_vector_of_simulator_status();
     /**
      * Iterating Loop for running jobs in one HP
@@ -113,7 +113,7 @@ bool Executor::run_simulation(double start_time)
     while(utils::current_time < end_time)
     {
         bool is_idle = true;
-        for (auto job : vectors::job_vector_of_simulator)
+        for (auto job : job_vector_of_simulator)
         {
             if((job->get_det_prdecessors().size() == 0) && ( job->get_is_simulated() == false) && (job->get_is_released() == false))
             {
@@ -177,7 +177,7 @@ bool Executor::run_simulation(double start_time)
             global_object::gld.wcbp_start = run_job->get_wcbp().front();
             global_object::gld_vector.push_back(global_object::gld);
             global_object::logger->add_current_simulated_job(run_job);
-            bool is_simulatable = simulatability_analysis();
+            bool is_simulatable = simulatability_analysis(job_vector_of_simulator);
             if(!is_simulatable)
             {
                 //std::cout << "NOT SIMULATABLE" << std::endl;
@@ -213,7 +213,7 @@ bool Executor::run_simulation(double start_time)
                     break;
                 }
             }
-            update_all(run_job);
+            update_all(job_vector_of_simulator, run_job);
         }
     }
     utils::current_time = end_time;
@@ -221,9 +221,9 @@ bool Executor::run_simulation(double start_time)
     return true;
 }
 
-void Executor::change_execution_time()
+void Executor::change_execution_time(JobVectorOfSimulator& job_vector_of_simulator)
 {
-    for (auto job : vectors::job_vector_of_simulator)
+    for (auto job : job_vector_of_simulator)
     {
         job->set_simulated_execution_time(job->get_actual_execution_time() * utils::simple_mapping_function);
         if(utils::execute_gpu_jobs_on_cpu)
@@ -261,28 +261,28 @@ void Executor::change_execution_time()
     }
 }
 
-void Executor::assign_deadline_for_simulated_jobs()
+void Executor::assign_deadline_for_simulated_jobs(JobVectorOfSimulator& job_vector_of_simulator)
 {
-    for (auto job : vectors::job_vector_of_simulator)
+    for (auto job : job_vector_of_simulator)
     {
         if(job->get_is_simulated() == false || job->get_is_released() == false)
             job->initialize_simulated_deadline();
     }
-    for (auto job : vectors::job_vector_of_simulator)
+    for (auto job : job_vector_of_simulator)
     {
         if(job->get_is_simulated() == false || job->get_is_released() == false)
             job->update_simulated_deadline();
     } 
 }
 
-void Executor::assign_predecessors_successors()
+void Executor::assign_predecessors_successors(JobVectorOfSimulator& job_vector_of_simulator)
 {
     // Does this sort have any purpose? Pls let me know :)
-    std::sort(vectors::job_vector_of_simulator.begin(), vectors::job_vector_of_simulator.end(), utils::first_release);
+    std::sort(job_vector_of_simulator.begin(), job_vector_of_simulator.end(), utils::first_release);
     std::unordered_map<std::string, bool> duplication_check_det_pred;
     std::unordered_map<std::string, bool> duplication_check_non_det_pred;
 
-    for (auto job : vectors::job_vector_of_simulator)
+    for (auto job : job_vector_of_simulator)
     {
         job->set_is_simulated(false); // is_simulated true means is finished in sim.
         job->set_is_released(false);
@@ -292,12 +292,12 @@ void Executor::assign_predecessors_successors()
         job->get_non_det_successors().clear();
     }
 
-    for(auto job : vectors::job_vector_of_simulator)
+    for(auto job : job_vector_of_simulator)
     {
         duplication_check_det_pred.clear();
 
         duplication_check_det_pred[std::to_string(job->get_task_id()) + ":" + std::to_string(job->get_job_id())] = true;
-        for (auto other_job : vectors::job_vector_of_simulator) // For both CPU and GPU jobs.
+        for (auto other_job : job_vector_of_simulator) // For both CPU and GPU jobs.
         {
             if (job == other_job) continue;
             std::string identifier = std::to_string(other_job->get_task_id()) + ":" + std::to_string(other_job->get_job_id());
@@ -397,7 +397,7 @@ void Executor::assign_predecessors_successors()
     }
 
     // Make sure Sync job's dont start too fast. (Add Virtual GPU Job).
-    for (auto job : vectors::job_vector_of_simulator)
+    for (auto job : job_vector_of_simulator)
     {
         if (!job->get_is_gpu_sync()) continue;
         if (job->get_det_prdecessors().size() > 0) continue;
@@ -408,7 +408,7 @@ void Executor::assign_predecessors_successors()
         // Get the simulated finish time of our corresponding Init job.
         double init_finish_time; // Left uninitialized to catch if there is a logic error somewhere in task construction.
         bool init_finished = false;
-        for (auto init : vectors::job_vector_of_simulator)
+        for (auto init : job_vector_of_simulator)
         {
             if (!init->get_is_gpu_init()) continue;
             if (init->get_task_id() && job->get_task_id() && init->get_job_id() == job->get_job_id())
@@ -429,9 +429,9 @@ void Executor::assign_predecessors_successors()
     }
 }
 
-void Executor::random_execution_time_generator()
+void Executor::random_execution_time_generator(JobVectorOfSimulator& job_vector_of_simulator)
 {
-    for(auto job : vectors::job_vector_of_simulator)
+    for(auto job : job_vector_of_simulator)
     {
         if (job->get_priority_policy() == PriorityPolicy::GPU)
             job->set_actual_execution_time(job->get_wcet());
@@ -440,20 +440,20 @@ void Executor::random_execution_time_generator()
     }
 }
 
-void Executor::move_ecus_jobs_to_simulator()
+void Executor::move_ecus_jobs_to_simulator(JobVectorOfSimulator& job_vector_of_simulator, JobVectorsForEachECU& job_vectors_for_each_ECU)
 {
-    vectors::job_vector_of_simulator.clear();
-    for(int i = 0; i < vectors::job_vectors_for_each_ECU.size(); i++ )
+    job_vector_of_simulator.clear();
+    for(int i = 0; i < job_vectors_for_each_ECU.size(); i++ )
     {
-        for(int task_id = 0; task_id < vectors::job_vectors_for_each_ECU.at(i).size(); ++task_id)
+        for(int task_id = 0; task_id < job_vectors_for_each_ECU.at(i).size(); ++task_id)
         {
-            vectors::job_vector_of_simulator.insert(vectors::job_vector_of_simulator.end(), vectors::job_vectors_for_each_ECU.at(i).at(task_id).begin(), vectors::job_vectors_for_each_ECU.at(i).at(task_id).end());
-            vectors::job_vectors_for_each_ECU.at(i).at(task_id).clear();
+            job_vector_of_simulator.insert(job_vector_of_simulator.end(), job_vectors_for_each_ECU.at(i).at(task_id).begin(), job_vectors_for_each_ECU.at(i).at(task_id).end());
+            job_vectors_for_each_ECU.at(i).at(task_id).clear();
         }
     }
 }
 
-void Executor::update_all(std::shared_ptr<Job> last_simulated_job)
+void Executor::update_all(JobVectorOfSimulator& job_vector_of_simulator, std::shared_ptr<Job> last_simulated_job)
 {    
     /**
      * UPDATE THE SUCCESSORS' PREDECESSORS JOB SET
@@ -488,20 +488,20 @@ void Executor::update_all(std::shared_ptr<Job> last_simulated_job)
     //last_simulated_job->set_lst(old_data.lst + last_simulated_job->get_actual_start_time());
     last_simulated_job->set_eft(old_data.est + last_simulated_job->get_actual_execution_time());
     last_simulated_job->set_lft(old_data.lst + last_simulated_job->get_actual_execution_time());
-    update_ecu_schedule(last_simulated_job, old_data);
+    update_ecu_schedule(job_vector_of_simulator, last_simulated_job, old_data);
     /**
      * UPDATE SIMULATED DEADLINE FOR BEING SIMULATED JOBS
      */
     //update_jobset(last_simulated_job);
-    for(int i = 0; i < vectors::job_vector_of_simulator.size(); i++)
+    for(int i = 0; i < job_vector_of_simulator.size(); i++)
     {
-        update_simulated_deadlines(i);
+        update_simulated_deadlines(job_vector_of_simulator, i);
     }
     update_jobset(last_simulated_job);
 }
 
 // Recursive function to update time ranges of jobs.
-void Executor::update_ecu_schedule(std::shared_ptr<Job> source_job, OldData old_data)
+void Executor::update_ecu_schedule(JobVectorOfSimulator& job_vector_of_simulator, std::shared_ptr<Job> source_job, OldData old_data)
 {
     std::vector<std::shared_ptr<Job>> all_succers;
     for(auto job : source_job->get_det_successors())
@@ -613,7 +613,7 @@ void Executor::update_ecu_schedule(std::shared_ptr<Job> source_job, OldData old_
             // Add it to source job's lft
             // And see if our lst shrunk.
             int sum = 0;
-            for(auto higher : vectors::job_vector_of_simulator)
+            for(auto higher : job_vector_of_simulator)
             {
                 if(higher->get_ECU()->get_ECU_id() != job->get_ECU()->get_ECU_id())
                     continue; // Must be on same ECU.
@@ -633,16 +633,16 @@ void Executor::update_ecu_schedule(std::shared_ptr<Job> source_job, OldData old_
 
         }
         if(modified)
-            update_ecu_schedule(job, succ_jobs_old_data); // Recursively update.
+            update_ecu_schedule(job_vector_of_simulator, job, succ_jobs_old_data); // Recursively update.
     }
 }
 
-void Executor::update_simulated_deadlines(int job_index)
+void Executor::update_simulated_deadlines(JobVectorOfSimulator& job_vector_of_simulator, int job_index)
 {
     /**
      * EVERY JOB'S SUCCESSORS CHANGED, WHENEVER A JOB IS SIMULATED, SO THAT SIMULATED DEADLINE CAN BE CHAGNED
      */
-    vectors::job_vector_of_simulator.at(job_index)->update_simulated_deadline();
+    job_vector_of_simulator.at(job_index)->update_simulated_deadline();
 }
 
 void Executor::update_jobset(std::shared_ptr<Job> simulated_job)
@@ -676,9 +676,9 @@ void Executor::update_jobset(std::shared_ptr<Job> simulated_job)
     }
 }
 
-bool Executor::check_deadline_miss()
+bool Executor::check_deadline_miss(JobVectorOfSimulator& job_vector_of_simulator)
 {
-    for(auto job : vectors::job_vector_of_simulator)
+    for(auto job : job_vector_of_simulator)
     {
         if(job->get_simulated_finish_time() > job->get_simulated_deadline())
         { 
@@ -692,15 +692,15 @@ bool Executor::check_deadline_miss()
     return false; // -1 for success.
 }
 
-bool Executor::simulatability_analysis()
+bool Executor::simulatability_analysis(JobVectorOfSimulator& job_vector_of_simulator)
 {
-    bool is_simulatable = !check_deadline_miss();
+    bool is_simulatable = !check_deadline_miss(job_vector_of_simulator);
     return is_simulatable;
 }
 
-void Executor::assign_initial_actual_start_time()
+void Executor::assign_initial_actual_start_time(JobVectorOfSimulator& job_vector_of_simulator)
 {
-    for(auto job : vectors::job_vector_of_simulator)
+    for(auto job : job_vector_of_simulator)
     {
         /**
          * IF BUSY PERIOD START POINT IS SAME WITH RELEASE TIME

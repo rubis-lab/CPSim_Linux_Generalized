@@ -100,14 +100,26 @@ int main(int argc, char *argv[])
          *  For this, we create initializer module here, and call initialize function which includes all the functions
          *  that we need.
         */
+
+
+        std::vector<std::shared_ptr<Job> > job_vector_of_simulator;
+        std::vector<std::vector<std::vector<std::shared_ptr<Job>>>> job_vectors_for_each_ECU;
+        std::vector<std::shared_ptr<ECU> > ecu_vector;
+        std::vector<std::shared_ptr<Task>> task_vector;
+        std::vector<std::shared_ptr<CAN_message> > can_msg_vector;
+
+
+
+
+
         Initializer initializer_module;
         if (argv[1] != NULL)
         {
-            initializer_module.initialize(argv[1]);
+            initializer_module.initialize(ecu_vector, task_vector, job_vectors_for_each_ECU, argv[1]);
         }
         else
         {
-            initializer_module.initialize(utils::null_path);
+            initializer_module.initialize(ecu_vector, task_vector, job_vectors_for_each_ECU, utils::null_path);
         }
          ScheduleSimulator schedule_simulator_on_Real;
          OfflineGuider offline_guider;
@@ -136,13 +148,13 @@ int main(int argc, char *argv[])
               * forth, we need to schedule those jobs' that is already inserted in the Job Precedence Graph.
               * For this, we create executor which is responsible for 
              */
-            schedule_simulator_on_Real.simulate_scheduling_on_real(utils::current_time);
-            offline_guider.construct_job_precedence_graph();
-            is_simulatable = executor.run_simulation(utils::current_time);
-            vectors::job_vector_of_simulator.clear();
-            for(auto someVector : vectors::job_vectors_for_each_ECU)
+            schedule_simulator_on_Real.simulate_scheduling_on_real(ecu_vector, task_vector, job_vectors_for_each_ECU, utils::current_time);
+            offline_guider.construct_job_precedence_graph(job_vectors_for_each_ECU);
+            is_simulatable = executor.run_simulation(job_vector_of_simulator, job_vectors_for_each_ECU, utils::current_time);
+            job_vector_of_simulator.clear();
+            for(auto someVector : job_vectors_for_each_ECU)
                 someVector.clear();
-            vectors::job_vectors_for_each_ECU.clear();
+                job_vectors_for_each_ECU.clear();
          }
          is_simulatable ? ++simulatable_count : ++nonsimulatable_count;
         if(utils::real_workload == false)
@@ -151,13 +163,13 @@ int main(int argc, char *argv[])
             global_object::logger_thread = nullptr; // Removing logger_thread first as it holds a reference to logger func.
             global_object::logger = nullptr;
             global_object::gld_vector.clear();
-            vectors::job_vector_of_simulator.clear();
-            vectors::ecu_vector.clear();
-            vectors::task_vector.clear();
-            vectors::can_msg_vector.clear();
-            for(auto someVector : vectors::job_vectors_for_each_ECU)
+            job_vector_of_simulator.clear();
+            ecu_vector.clear();
+            task_vector.clear();
+            can_msg_vector.clear();
+            for(auto someVector : job_vectors_for_each_ECU)
                 someVector.clear();
-            vectors::job_vectors_for_each_ECU.clear();
+            job_vectors_for_each_ECU.clear();
             utils::current_time = 0;
         }
     }
