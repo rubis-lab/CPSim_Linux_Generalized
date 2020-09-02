@@ -21,6 +21,9 @@ CMakeFiles/CPSim-0.1.out.dir/Engine/CAN_receiver.cpp.o: ../Engine/PriorityPolicy
 CMakeFiles/CPSim-0.1.out.dir/Engine/CAN_receiver.cpp.o: ../Engine/Task.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/CAN_receiver.cpp.o: ../Engine/Utils.h
 
+CMakeFiles/CPSim-0.1.out.dir/Engine/CodeWrapper.cpp.o: ../Engine/CodeWrapper.cpp
+CMakeFiles/CPSim-0.1.out.dir/Engine/CodeWrapper.cpp.o: ../Engine/CodeWrapper.h
+
 CMakeFiles/CPSim-0.1.out.dir/Engine/ECU.cpp.o: ../Engine/CAN_message.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/ECU.cpp.o: ../Engine/CAN_receiver.h
 CMakeFiles/CPSim-0.1.out.dir/Engine/ECU.cpp.o: ../Engine/ECU.cpp

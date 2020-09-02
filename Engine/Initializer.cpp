@@ -164,9 +164,13 @@ void Initializer::initialize(EcuVector& ecu_vector, TaskVector& task_vector, Job
         /**
          * CAN Network Initialization
          */
-        can_interface_initalizer(1);
-        global_object::can_receiver = std::make_shared<CAN_receiver>();
-        global_object::can_receiver->start_simulation_time();
+        if(utils::is_nocanmode == false)
+        {
+            can_interface_initalizer(1);
+            global_object::can_receiver = std::make_shared<CAN_receiver>();
+            global_object::can_receiver->start_simulation_time();
+        }
+
         /**
          * ECU Vector Initialization
          */
@@ -241,7 +245,7 @@ void Initializer::initialize(EcuVector& ecu_vector, TaskVector& task_vector, Job
     /**
      * CAN Receiver Thread Initialized
      */
-    if(utils::real_workload == true)
+    if(utils::real_workload == true && utils::is_nocanmode == false)
     {
         global_object::can_receiver_thread = std::make_shared<std::thread>(&CAN_receiver::receive_can_messages, global_object::can_receiver);
     }

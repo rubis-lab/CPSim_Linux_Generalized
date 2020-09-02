@@ -84,12 +84,12 @@ void Logger::add_current_simulated_job(std::shared_ptr<Job> current_job_instance
 
 void Logger::start_logging()
 {
-    // std::cout << "Logging starts" << std::endl;
-    // std::ofstream scheduling_log;
-    // scheduling_log.open(utils::cpsim_path + "/Log/scheduling.log", std::ios::out);     
-    // std::string contents = "Deadline miss, ECU0: SENSING, ECU0: LK, ECU1: CC\n";
-    // scheduling_log.write(contents.c_str(), contents.size());
-    // scheduling_log.close();
+    std::cout << "Logging starts" << std::endl;
+    std::ofstream scheduling_log;
+    scheduling_log.open(utils::cpsim_path + "/Log/scheduling.log", std::ios::out);     
+    std::string contents = "Deadline miss, ECU0: SENSING, ECU0: LK, ECU1: CC\n";
+    scheduling_log.write(contents.c_str(), contents.size());
+    scheduling_log.close();
     
     
     // std::vector<std::string> contented;

@@ -13,10 +13,8 @@
 /**
  * NO CAN MODE
  */
-//#ifdef CANMODE
 #include <pcan.h>
 #include <libpcan.h>
-//#endif
 /** This file is engine code of CPSim-Re engine
  * @file CANInterface.h
  * @author Seonghyeon Park
@@ -24,10 +22,8 @@
  * @brief Codes for Engine-CANInterface 
 */
 
-// for CAN
 #define PCANUSB1	"/dev/pcan32"
 #define PCANUSB2	"/dev/pcan32"
-
 #ifdef NOCANMODE
 typedef struct
 {
