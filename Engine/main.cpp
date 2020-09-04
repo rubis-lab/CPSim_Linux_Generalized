@@ -62,6 +62,10 @@ int main(int argc, char *argv[])
     //int epochs = 1000;
     
     utils::cpsim_path = getenv("CPSIM_PATH");
+    std::string command = "rm -rf "+ utils::cpsim_path+"/sharedObjectFiles/*.so"; 
+    system(command.c_str());
+    command = "rm -rf "+ utils::cpsim_path+"/sharedObjectFiles/*.cpp";
+    system(command.c_str());
     std::cout << "CPSIM_PATH : " << utils::cpsim_path << std::endl;
     utils::update_utils_variables();
     

@@ -39,6 +39,7 @@ public:
     void print_job_execution_on_ECU(std::vector<std::shared_ptr<Job>>, std::vector<std::shared_ptr<Job>>, int);
     void print_job_execution_schedule();
     void print_offline_guider_status();
+    void set_schedule_log_info(std::vector<std::shared_ptr<Task>>&);
 };
 
 #endif

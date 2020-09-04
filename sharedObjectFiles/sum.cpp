@@ -42,7 +42,9 @@ extern "C" void sim_main();
 
 void sim_main()
 {
-	*shared1 = *shared2 + *shared3;
+	int a,b,c=0;
+	c = a+1;
+	b = c+2;
 
 }
 

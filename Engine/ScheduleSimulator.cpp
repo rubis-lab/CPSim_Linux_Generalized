@@ -472,22 +472,19 @@ void ScheduleSimulator::busy_period_analysis(JobVectorsForEachECU& job_vectors_f
 
                 if(!setWorstCase)
                 {
-                    auto current = std::chrono::high_resolution_clock::now();
+                    //auto current = std::chrono::high_resolution_clock::now();
 
-                    int elapsed = std::chrono::duration_cast<std::chrono::seconds>(current - last).count();
+                    //int elapsed = std::chrono::duration_cast<std::chrono::seconds>(current - last).count();
 
                     global_object::DiagramData diagram_data;
                     diagram_data.time = utils::log_entries++;
                     diagram_data.data = std::to_string(highest_job->get_est()) + ", ECU" + std::to_string(highest_job->get_ECU()->get_ECU_id()) + ": " + highest_job->get_task_name() + ", 1\n";
                     global_object::diagram_data.push(diagram_data);
 
-                    if(elapsed >= utils::log_delay_seconds)
-                    {
+                    // if(elapsed >= utils::log_delay_seconds)
+                    // {
                         std::ofstream scheduling_log;
                         scheduling_log.open(utils::cpsim_path + "/Log/scheduling.log", std::ios::app);     
-                        //std::priority_queue<global_object::DiagramData> copy_data(global_object::diagram_data);
-
-                        //while(copy_data.size() > 0)
                         while(global_object::diagram_data.size() > 0)
                         {
                             global_object::DiagramData current_data = global_object::diagram_data.top();
@@ -495,8 +492,8 @@ void ScheduleSimulator::busy_period_analysis(JobVectorsForEachECU& job_vectors_f
                             scheduling_log.write(current_data.data.c_str(), current_data.data.size());
                         }
                         scheduling_log.close();
-                        last = std::chrono::high_resolution_clock::now();
-                    }
+                    //     last = std::chrono::high_resolution_clock::now();
+                    // }
                 }
             }
             else
@@ -600,16 +597,16 @@ void ScheduleSimulator::busy_period_analysis(JobVectorsForEachECU& job_vectors_f
                     highest_job->set_eft(start + end);
                     if(!setWorstCase)
                     {
-                        std::chrono::high_resolution_clock::time_point current = std::chrono::high_resolution_clock::now();
-                        int elapsed = std::chrono::duration_cast<std::chrono::seconds>(current - last).count();
+                        //std::chrono::high_resolution_clock::time_point current = std::chrono::high_resolution_clock::now();
+                        //int elapsed = std::chrono::duration_cast<std::chrono::seconds>(current - last).count();
 
                         global_object::DiagramData diagram_data;
                         diagram_data.time = utils::log_entries++;
                         diagram_data.data = std::to_string(highest_job->get_eft()) + ", ECU" + std::to_string(highest_job->get_ECU()->get_ECU_id()) + ": " + highest_job->get_task_name() + ", 0\n";
                         global_object::diagram_data.push(diagram_data);
                         
-                        if(elapsed >= utils::log_delay_seconds)
-                        {
+                        // if(elapsed >= utils::log_delay_seconds)
+                        // {
                             std::ofstream scheduling_log;
                             scheduling_log.open(utils::cpsim_path + "/Log/scheduling.log", std::ios::app);     
                             //std::priority_queue<global_object::DiagramData> copy_data(global_object::diagram_data);
@@ -620,8 +617,8 @@ void ScheduleSimulator::busy_period_analysis(JobVectorsForEachECU& job_vectors_f
                                 scheduling_log.write(current_data.data.c_str(), current_data.data.size());
                             }
                             scheduling_log.close();
-                            last = std::chrono::high_resolution_clock::now();
-                        }
+                            //last = std::chrono::high_resolution_clock::now();
+                        //}
                     }
                     
                 }

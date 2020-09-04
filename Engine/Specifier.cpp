@@ -1,4 +1,7 @@
 #include "Specifier.h"
+#include "CodeWrapper.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 /**
  *  This file is the cpp file for the Specifier class.
@@ -168,7 +171,19 @@ void Specifier::specify_the_system(EcuVector& ecu_vector, TaskVector& task_vecto
         }
 
         std::shared_ptr<Task> task = std::make_shared<Task>(task_id, period, deadline, wcet, bcet, offset, is_read, is_write, ecu_id, producers, consumers, task_vector.size(), ecu_vector);
-        task->loadFunction(utils::cpsim_path + "/sharedObjectFiles/" + task_id + "/" + task_id + ".so", "sim_main");
+        CodeWrapper code_wrapper;
+        std::string wrapped_code;
+        std::string main_content = code_wrapper.extract_main_content(code_path);
+        std::string command;
+        wrapped_code = code_wrapper.wrap(main_content, "", utils::cpsim_path + "/sharedObjectFiles/shared.h");
+        std::ofstream save_code;
+        save_code.open(utils::cpsim_path + "/sharedObjectFiles/" + task_id + ".cpp");
+        save_code.write(wrapped_code.c_str(), wrapped_code.size());
+        save_code.close();
+        command = "gcc -std=c++17 -shared -o " + utils::cpsim_path + "/sharedObjectFiles/" + task_id + ".so -fPIC " + utils::cpsim_path + "/sharedObjectFiles/" + task_id + ".cpp";
+        
+        system(command.c_str());
+        task->loadFunction(utils::cpsim_path + "/sharedObjectFiles/" + task_id + ".so", "sim_main");
         task->set_priority_policy(PriorityPolicy::CPU);
         task->set_vector_idx(ecu_vector.at(ecu_id)->get_num_of_task());
         task_vector.push_back(std::move(task));

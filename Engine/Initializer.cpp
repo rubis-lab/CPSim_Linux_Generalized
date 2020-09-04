@@ -241,6 +241,7 @@ void Initializer::initialize(EcuVector& ecu_vector, TaskVector& task_vector, Job
         global_object::logger = std::make_shared<Logger>();
     }
     global_object::logger->log_task_vector_status(task_vector);
+    global_object::logger->set_schedule_log_info(task_vector);
 
     /**
      * CAN Receiver Thread Initialized

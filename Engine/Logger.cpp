@@ -81,17 +81,29 @@ void Logger::add_current_simulated_job(std::shared_ptr<Job> current_job_instance
     m_execution_order_buffer.push_back(current_job_instance);
     m_current_time_buffer.push_back(utils::current_time);
 }
-
-void Logger::start_logging()
+void Logger::set_schedule_log_info(std::vector<std::shared_ptr<Task>>& task_vector)
 {
     std::cout << "Logging starts" << std::endl;
     std::ofstream scheduling_log;
     scheduling_log.open(utils::cpsim_path + "/Log/scheduling.log", std::ios::out);     
-    std::string contents = "Deadline miss, ECU0: SENSING, ECU0: LK, ECU1: CC\n";
+    std::string contents = "";
+    for(int idx = 0; idx < task_vector.size(); idx++)
+    {
+        contents += "ECU" + std::to_string(task_vector.at(idx)->get_ECU()->get_ECU_id())+ ": " + task_vector.at(idx)->get_task_name();
+        if(idx == task_vector.size() - 1)
+            contents += "\n";
+        else
+        {
+            contents += ", ";
+        }
+         
+    }
     scheduling_log.write(contents.c_str(), contents.size());
     scheduling_log.close();
     
-    
+}
+void Logger::start_logging()
+{
     // std::vector<std::string> contented;
     // contented.push_back("0, ECU0: SENSING, 1\n");
     // contented.push_back("0, ECU1: CC, 1\n");
