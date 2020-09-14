@@ -210,7 +210,7 @@ void Initializer::initialize(EcuVector& ecu_vector, TaskVector& task_vector, Job
          */
         for(int i = 0; i < ecu_vector.size(); i++)
         {
-            std::cout << ecu_vector.at(i)->get_execution_time_mapping_ratio() << std::endl;
+            ecu_vector.at(i)->set_execution_time_mapping_ratio();
             std::vector<std::vector<std::shared_ptr<Job>>> vector_space_for_ecu;
             job_vectors_for_each_ECU.push_back(vector_space_for_ecu);
         }

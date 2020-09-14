@@ -44,7 +44,6 @@
     @param none
 
 */
-
 int main(int argc, char *argv[])
 {
     /**
@@ -62,6 +61,7 @@ int main(int argc, char *argv[])
     //int epochs = 1000;
     
     utils::cpsim_path = getenv("CPSIM_PATH");
+
     std::string command = "rm -rf "+ utils::cpsim_path+"/sharedObjectFiles/*.so"; 
     system(command.c_str());
     command = "rm -rf "+ utils::cpsim_path+"/sharedObjectFiles/*.cpp";
@@ -73,29 +73,6 @@ int main(int argc, char *argv[])
     int simulatable_count = 0;
     int nonsimulatable_count = 0;
 
-    // SHARED OBJECT VARIABLE SHARING TEST
-    // NAME OF SHARED VARIABLES: shared1, shared2, shared3, shared4
-    // dlerror();
-    // SO FILE MADE WITH:
-    // gcc -std=c++17 -shared -o example.so -fPIC example.cpp
-    // SYMBOL CHECKING DONE WITH
-    // nm -D example.so
-    // Job ex1;
-    // ex1.loadFunction(utils::cpsim_path + "/sharedObjectFiles/example.so", "sim_main");
-    // ex1.run();
-    // std::cout << "(inside main) shared values are: " << shared::shared1 << " " << shared::shared2 << " " << shared::shared3 << " " << shared::shared4 << std::endl;
-    // shared::shared1 = 20;
-    // shared::shared2 = 30;
-    // shared::shared3 = 40;
-    // shared::shared4 = 50;
-    // ex1.run();
-    // std::cout << "(inside main) shared values are now: " << shared::shared1 << " " << shared::shared2 << " " << shared::shared3 << " " << shared::shared4 << std::endl;
-    // std::cout << "(inside main) shared variable is: " << *ex1.shared_variable << std::endl;
-    // *ex1.shared_variable = 15;
-    // return 0;
-    // ENDS HERE
-
-    
     for(int i = 0; i < epochs; i++) // Initializer, ScheduleSimulator, OfflineGuider and Executer will be reset due to going out of scope at each loop.
     {
         /** [Initialization with Specification]
@@ -111,10 +88,6 @@ int main(int argc, char *argv[])
         std::vector<std::shared_ptr<ECU> > ecu_vector;
         std::vector<std::shared_ptr<Task>> task_vector;
         std::vector<std::shared_ptr<CAN_message> > can_msg_vector;
-
-
-
-
 
         Initializer initializer_module;
         if (argv[1] != NULL)
@@ -142,7 +115,7 @@ int main(int argc, char *argv[])
          */  
          
         
-         int simulation_termination_time = utils::hyper_period * 10000000000;
+         unsigned long long simulation_termination_time = utils::hyper_period * 10000000000;
          bool is_simulatable = true;
 
          while(utils::current_time < simulation_termination_time && is_simulatable)

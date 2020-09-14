@@ -64,6 +64,7 @@ namespace utils
     inline unsigned int ecu_counter = 0;
     inline bool is_experimental = true;
     inline bool real_workload = true;
+    inline unsigned long long simulator_elapsed_time = 0;
 
     inline int log_delay_seconds = 1;
 

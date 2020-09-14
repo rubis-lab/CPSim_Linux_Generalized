@@ -2,34 +2,35 @@
     <CANs>
         <CAN ID="CAN0" bandwidth="0" type="CAN">
             <link rid="ECU0" type="ECU"/>
-            <link rid="ECU1" type="ECU"/>
             <link rid="CAR" type="CAR"/>
+            <link rid="ECU1" type="ECU"/>
         </CAN>
     </CANs>
     <CAR ID="CAR">
         <link rid="CAN0" type="CAN"/>
     </CAR>
     <SWCs>
-        <SWC BCET="20" ID="add" Virtual="1" WCET="20" consumer="sum, mult" deadline="40" period="40" phase="0" readCon="0" writeCon="0">
-            <impl path="/home/park/Desktop/example.cpp" type="MATLAB"/>
+        <SWC BCET="20" ID="SENSING" Virtual="1" WCET="40" consumer="LK" deadline="50" period="50" phase="0" readCon="1" writeCon="0">
+            <impl path="/home/park/Desktop/SENSING.cpp" type="MANUAL"/>
             <link idxCore="0" rid="ECU0" type="ECU"/>
         </SWC>
-        <SWC BCET="0" ID="sum" Virtual="1" WCET="0" consumer="" deadline="0" period="0" phase="0" readCon="0" writeCon="0">
-            <impl path="/home/park/Desktop/cc.cpp" type="MANUAL"/>
+        <SWC BCET="50" ID="LK" Virtual="1" WCET="50" consumer="" deadline="100" period="100" phase="0" readCon="0" writeCon="1">
+            <impl path="/home/park/Desktop/LK.cpp" type="MANUAL"/>
+            <link idxCore="0" rid="ECU0" type="ECU"/>
         </SWC>
-        <SWC BCET="10" ID="sensing" Virtual="1" WCET="20" consumer="" deadline="40" period="40" phase="0" readCon="0" writeCon="1">
-            <impl path="/home/park/Desktop/lk.cpp" type="MANUAL"/>
-        </SWC>
-        <SWC BCET="30" ID="example" Virtual="1" WCET="40" consumer="" deadline="80" period="80" phase="0" readCon="0" writeCon="1">
-            <impl path="/home/park/Desktop/sensing.cpp" type="MANUAL"/>
+        <SWC BCET="20" ID="CC" Virtual="1" WCET="30" consumer="" deadline="50" period="50" phase="0" readCon="0" writeCon="1">
+            <impl path="/home/park/Desktop/CC.cpp" type="MATLAB"/>
+            <link idxCore="0" rid="ECU1" type="ECU"/>
         </SWC>
     </SWCs>
     <ECUs>
-        <ECU ID="ECU0" Virtual="1" numCores="1" schedPolicy="RM" sysClock="100" targetArch="SPC56EL70">
-            <link idxCore="0" rid="add" type="SWC"/>
+        <ECU ID="ECU0" Virtual="1" numCores="1" schedPolicy="RM" sysClock="100" targetArch="TC275">
+            <link idxCore="0" rid="SENSING" type="SWC"/>
+            <link idxCore="0" rid="LK" type="SWC"/>
             <link rid="CAN0" type="CAN"/>
         </ECU>
-        <ECU ID="ECU1" Virtual="1" numCores="1" schedPolicy="RM" sysClock="100" targetArch="SPC56EL70">
+        <ECU ID="ECU1" Virtual="1" numCores="1" schedPolicy="RM" sysClock="100" targetArch="TC275">
+            <link idxCore="0" rid="CC" type="SWC"/>
             <link rid="CAN0" type="CAN"/>
         </ECU>
     </ECUs>

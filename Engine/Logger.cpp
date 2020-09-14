@@ -104,24 +104,22 @@ void Logger::set_schedule_log_info(std::vector<std::shared_ptr<Task>>& task_vect
 }
 void Logger::start_logging()
 {
-    // std::vector<std::string> contented;
-    // contented.push_back("0, ECU0: SENSING, 1\n");
-    // contented.push_back("0, ECU1: CC, 1\n");
-    // contented.push_back("15, ECU1: CC, 0\n");
-    // contented.push_back("20, ECU0: SENSING, 0\n");
-    // contented.push_back("20, ECU0: LK, 1\n");
-    // contented.push_back("20, ECU1: CC, 1\n");
-    // int i = 0;
+    utils::simulator_elapsed_time = 0;
 
-    // while(1)
-    //     for(i = 0; i < 6; ++i)
-    //     {
-    //         std::ofstream scheduling_log;
-    //         scheduling_log.open(utils::cpsim_path + "/Log/scheduling.log", std::ios::app);         
-    //         scheduling_log.write(contented.at(i).c_str(), contented.at(i).size());
-    //         scheduling_log.close();
-    //         sleep(1);
-    //     }
+    std::ofstream scheduling_log; 
+    while (1)
+    {
+        scheduling_log.open(utils::cpsim_path + "/Log/scheduling.log", std::ios::app);    
+        while(global_object::diagram_data.size() > 0)
+        {
+            global_object::DiagramData current_data = global_object::diagram_data.top();
+            global_object::diagram_data.pop();
+            scheduling_log.write(current_data.data.c_str(), current_data.data.size());
+        }
+        scheduling_log.close();
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    }    
+    
 }
 
 void Logger::log_task_vector_status(std::vector<std::shared_ptr<Task>>& task_vector)
