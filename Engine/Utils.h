@@ -48,7 +48,8 @@ namespace utils
     inline double current_time = 0; //simulation time(us)
     inline int number_of_ECUs = 0;
     inline int number_of_tasks = 0;
-    inline int simulatorPC_performance = 3000;
+    inline int simulator_performance = 3000;
+    inline double execution_time_mapping_ratio = 0.0;
     inline int task_amount = 10;
     inline int log_entries = 0;
     inline bool is_nocanmode = true;

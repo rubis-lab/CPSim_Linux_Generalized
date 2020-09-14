@@ -4,6 +4,8 @@
 #include <climits>
 #include <cmath>
 #include <pcan.h>
+#include <string.h>
+#include <sstream>
 #include <libpcan.h>
 
 /** 
@@ -51,10 +53,10 @@ Initializer::~Initializer()
 }
 
 /**
- * @fn int Initializer::execution_time_mapping_function()
+ * @fn double Initializer::set_simulator_performance()
  * @brief the function for calculating execution time on Simulator
  * @author Seonghyeon Park
- * @date 2020-03-31
+ * @date 2020-09-15
  * @details 
  *  - Maybe Initializer should be changed to RUBIS_Util
  * @param SimulatorPC_rate
@@ -64,10 +66,41 @@ Initializer::~Initializer()
  * @warning none
  * @todo will be implemented at tomorrow
  */
-int Initializer::execution_time_mapping_function()
+double Initializer::set_simulator_performance()
 {
     //ECU to Simulator PC
-    return 0;
+    std::string command = "lscpu > "+ utils::cpsim_path+"/Log/CPU_info.log"; 
+    system(command.c_str());
+
+    std::ifstream openFile(utils::cpsim_path + "/Log/CPU_info.log");
+	if( openFile.is_open() )
+    {	
+        std::string line;
+		while(getline(openFile, line))
+        {
+			m_cpu_info.push_back(line);
+		}
+		openFile.close();
+	}
+    else
+    {
+        std::cout << strerror(errno) << std::endl;
+        std::cout << "ERROR, CANNOT READ CPU INFO" << std::endl;
+    }
+
+    double cpu_performance = 0.0;
+    for(int cpu_line = 0; cpu_line < m_cpu_info.size(); ++cpu_line)
+    {
+        std::string::size_type pos = m_cpu_info.at(cpu_line).find("CPU max MHz:");
+        if(pos != std::string::npos)
+        {
+            std::stringstream ss_double(m_cpu_info.at(cpu_line).substr(12));
+            ss_double >> cpu_performance;
+            std::cout << cpu_performance << std::endl;
+        }
+    }
+
+    return cpu_performance;
 }
 
 /**
@@ -161,6 +194,7 @@ void Initializer::initialize(EcuVector& ecu_vector, TaskVector& task_vector, Job
     {
         Specifier specifier;
         specifier.specify_the_system(ecu_vector, task_vector, utils::file_path);
+        utils::simulator_performance = set_simulator_performance();
         /**
          * CAN Network Initialization
          */
@@ -176,6 +210,7 @@ void Initializer::initialize(EcuVector& ecu_vector, TaskVector& task_vector, Job
          */
         for(int i = 0; i < ecu_vector.size(); i++)
         {
+            std::cout << ecu_vector.at(i)->get_execution_time_mapping_ratio() << std::endl;
             std::vector<std::vector<std::shared_ptr<Job>>> vector_space_for_ecu;
             job_vectors_for_each_ECU.push_back(vector_space_for_ecu);
         }

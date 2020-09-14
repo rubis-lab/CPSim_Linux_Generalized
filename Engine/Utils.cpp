@@ -228,7 +228,7 @@ void utils::update_utils_variables()
 		var_file.ignore(256, '='); var_file >> utils::number_of_tasks;
 
 		//int  simulatorPC_perfomance
-		var_file.ignore(256, '='); var_file >> utils::simulatorPC_performance;
+		var_file.ignore(256, '='); var_file >> utils::simulator_performance;
 
 		//int task_amount
 		var_file.ignore(256, '='); var_file >> utils::task_amount;

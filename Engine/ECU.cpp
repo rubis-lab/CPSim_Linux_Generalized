@@ -150,3 +150,13 @@ void ECU::set_num_of_task(int num)
 {
     m_num_of_task = num;
 }
+
+double ECU::get_execution_time_mapping_ratio()
+{
+    return m_execution_time_mapping_ratio;
+}
+
+void ECU::set_execution_time_mapping_ratio()
+{
+    m_execution_time_mapping_ratio = utils::simulator_performance / static_cast<double>(m_performance);
+}

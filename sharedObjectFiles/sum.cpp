@@ -42,9 +42,6 @@ extern "C" void sim_main();
 
 void sim_main()
 {
-	int a,b,c=0;
-	c = a+1;
-	b = c+2;
 
 }
 

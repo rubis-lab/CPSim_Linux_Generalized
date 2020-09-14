@@ -19,6 +19,8 @@
 class Initializer
 {
 private:
+    std::vector<std::string> m_cpu_info;
+
 public:
     /**
      * Constructor & Destructor
@@ -26,7 +28,6 @@ public:
     Initializer();
     ~Initializer();
 
-    int execution_time_mapping_function();
     void can_interface_initalizer(int num_channel);
     int parsing_specificated_information();
     
@@ -35,7 +36,7 @@ public:
     void random_producer_consumer_generator(TaskVector&);
     void random_constraint_selector(TaskVector&, double, double);
 
-    void set_simulatorPC_performance();
+    double set_simulator_performance();
     void initialize(EcuVector&, TaskVector&, JobVectorsForEachECU&, std::string location);
 };
 
