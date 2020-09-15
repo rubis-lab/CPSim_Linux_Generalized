@@ -1,0 +1,30 @@
+
+EXECUTION ORDER OF ECU0
+  -----J01-----	  -----J11-----	  -----J02-----	
+REL:     186300	REL:     186300	REL:     186350	
+PER:         50	PER:        100	PER:         50	
+EST:     186300	EST:     186390	EST:     186390	
+GPU:         NO	GPU:         NO	GPU:         NO	
+BCT:         20	BCT:         50	BCT:         20	
+EFT:     186320	EFT:     186370	EFT:     186370	
+  -----J01-----	  -----J11-----	  -----J02-----	
+REL:     186300	REL:     186300	REL:     186350	
+PER:         50	PER:        100	PER:         50	
+LST:     186300	LST:     186340	LST:     186350	
+WCT:         40	WCT:         50	WCT:         40	
+LFT:     186340	LFT:     186390	LFT:     186390	
+
+EXECUTION ORDER OF ECU1
+  -----J21-----	  -----J22-----	
+REL:     186300	REL:     186350	
+PER:         50	PER:         50	
+EST:     186330	EST:     186380	
+GPU:         NO	GPU:         NO	
+BCT:         20	BCT:         20	
+EFT:     186320	EFT:     186370	
+  -----J21-----	  -----J22-----	
+REL:     186300	REL:     186350	
+PER:         50	PER:         50	
+LST:     186300	LST:     186350	
+WCT:         30	WCT:         30	
+LFT:     186330	LFT:     186380	

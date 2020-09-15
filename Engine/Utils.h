@@ -165,6 +165,7 @@ namespace global_object
     {
     public:
         int time;
+        int execution_time;
         std::string data;
 
         bool operator < (const DiagramData& rhs) const
@@ -172,7 +173,7 @@ namespace global_object
             return this->time > rhs.time;
         }
 
-        bool operator>(const DiagramData& rhs) const
+        bool operator > (const DiagramData& rhs) const
         {
             return this->time < rhs.time;
         }
