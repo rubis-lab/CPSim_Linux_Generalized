@@ -1,11 +1,13 @@
 #include "Logger.h"
 #include "Utils.h"
+
 #include <fstream>
 #include <string>
 #include <cstdlib>
 #include <stdio.h>
 #include <iomanip>
 #include <climits>
+#include <mutex>
 
 /**
  *  This file is the cpp file for the Logger class.
@@ -109,17 +111,32 @@ void Logger::start_logging()
     std::ofstream scheduling_log;
     while (1)
     {
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
         scheduling_log.open(utils::cpsim_path + "/Log/scheduling.log", std::ios::app);    
-        while(global_object::diagram_data.size() > 0)
+        utils::mtx.lock();
+        if(global_object::diagram_vector.size() > 10)
         {
-            global_object::DiagramData current_data = global_object::diagram_data.top();
-            global_object::diagram_data.pop();
-            scheduling_log.write(current_data.data.c_str(), current_data.data.size());
-            std::this_thread::sleep_for(std::chrono::milliseconds(current_data.execution_time));
-            std::cout << current_data.execution_time << std::endl;
+            int min_idx = 0;
+            std::shared_ptr<DiagramData> current_data = global_object::diagram_vector.front();
+            for (int idx = 0; idx < global_object::diagram_vector.size(); idx ++)
+            {
+                if(current_data->get_time() >  global_object::diagram_vector.at(idx)->get_time())
+                {
+                    current_data = global_object::diagram_vector.at(idx);
+                    min_idx = idx;
+                }
+            }
+            
+            global_object::diagram_vector.erase(global_object::diagram_vector.begin() + min_idx);
+            //std::cout << current_data.data << std::endl;
+            // global_object::DiagramData current_data = global_object::diagram_data.top();
+            // global_object::diagram_data.pop();
+            scheduling_log.write(current_data->get_data().c_str(), current_data->get_data().size());
+            std::this_thread::sleep_for(std::chrono::milliseconds(current_data->get_execution_time()));
         }
         scheduling_log.close();
+        if(global_object::diagram_vector.size() > 100)
+            global_object::diagram_vector.clear();
+        utils::mtx.unlock();    
     }    
     
 }

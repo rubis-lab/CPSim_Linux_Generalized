@@ -1,4 +1,4 @@
-# Install script for directory: /home/park/git/CPSim_Linux_Generalized
+# Install script for directory: /home/park/git_base/CPSim_Linux_Generalized
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/park/git/CPSim_Linux_Generalized/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/park/git_base/CPSim_Linux_Generalized/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

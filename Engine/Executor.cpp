@@ -217,7 +217,7 @@ bool Executor::run_simulation(JobVectorOfSimulator& job_vector_of_simulator, Job
         }
     }
     utils::current_time = end_time;
-    global_object::logger->print_job_execution_schedule();
+    //global_object::logger->print_job_execution_schedule();
     return true;
 }
 

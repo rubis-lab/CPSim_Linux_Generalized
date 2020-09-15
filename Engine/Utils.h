@@ -11,6 +11,7 @@
 #include <algorithm>
 #include <queue>
 #include <fstream>
+#include <mutex>
 
 #include "Task.h"
 #include "Job.h"
@@ -18,6 +19,7 @@
 #include "CAN_message.h"
 #include "CAN_receiver.h"
 #include "Logger.h"
+#include "DiagramData.h"
 
 /** This file is engine code of CPSim-Re engine
  * @file RUBIS_Util.h
@@ -41,6 +43,7 @@ typedef std::vector<std::shared_ptr<CAN_message> > CanMsgVector;
 
 namespace utils
 {
+    inline std::mutex mtx;
     inline std::string file_path = "/home/";
     inline std::string null_path = "";
     inline std::string cpsim_path = "";
@@ -52,7 +55,7 @@ namespace utils
     inline double execution_time_mapping_ratio = 0.0;
     inline int task_amount = 10;
     inline int log_entries = 0;
-    inline bool is_nocanmode = true;
+    inline bool is_nocanmode = false;
     extern int shared_variable;
      
     inline double simple_mapping_function = 0.3;
@@ -161,26 +164,8 @@ namespace global_object
     // std::to_string(highest_job->get_est()) + ", ECU" + std::to_string(highest_job->get_ECU()->get_ECU_id()) + ": " + highest_job->get_task_name() + ", 1\n";
     // std::to_string(highest_job->get_eft()) + ", ECU" + std::to_string(highest_job->get_ECU()->get_ECU_id()) + ": " + highest_job->get_task_name() + ", 0\n";
 
-    class DiagramData
-    {
-    public:
-        int time;
-        int execution_time;
-        std::string data;
-
-        bool operator < (const DiagramData& rhs) const
-        {
-            return this->time > rhs.time;
-        }
-
-        bool operator > (const DiagramData& rhs) const
-        {
-            return this->time < rhs.time;
-        }
-    };
-
-    inline std::priority_queue<DiagramData> diagram_data;
-
+    // inline std::priority_queue<DiagramData> diagram_data;
+    inline std::vector<std::shared_ptr<DiagramData>> diagram_vector;
 }
 
 namespace can

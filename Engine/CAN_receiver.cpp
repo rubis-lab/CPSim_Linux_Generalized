@@ -21,7 +21,6 @@ void CAN_receiver::receive_can_messages()
 	TPCANMsg msg;
 	unsigned long long current_time;
 	int unread_count = 0;
-	
 	do
 	{
 		// Check the receive queue for new messages
@@ -101,7 +100,8 @@ void CAN_receiver::extract_variables(int msgId, unsigned char *data) {
 			}                                                
 			signed_signal = (int)(SIGNEX(unsigned_signal, 32));  
 			tmp_value = (double)signed_signal;                   
-			shared::rtU.read2 = ((tmp_value * 1.000000 + 0.000000) * 1.000000) + 0.000000;          
+			shared::rtU.read2 = ((tmp_value * 1.000000 + 0.000000) * 1.000000) + 0.000000;    
+			//std::cout << shared::rtU.read2 << std::endl;      
 			unsigned_signal = 0; /// STEER_VALUE
 			for (len = 32 - 1; len >= 0; --len) {            
 				int row = (32 + len) / 8;                      

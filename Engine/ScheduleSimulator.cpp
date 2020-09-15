@@ -2,6 +2,7 @@
 #include <climits>
 #include "ScheduleSimulator.h"
 #include "PriorityPolicy.h"
+#include "DiagramData.h"
 
 
 /**
@@ -407,11 +408,11 @@ void ScheduleSimulator::simulate_scheduling_on_real(EcuVector& ecu_vector, TaskV
             }
             is_best = !is_best;
         }
-        global_object::logger->print_job_execution_on_ECU(m_execution_order_b, m_execution_order_w, ecu_id);
-        m_execution_order_b.clear();
-        m_execution_order_w.clear();
+        //global_object::logger->print_job_execution_on_ECU(m_execution_order_b, m_execution_order_w, ecu_id);
+        //m_execution_order_b.clear();
+        //m_execution_order_w.clear();
     }
-    global_object::logger->log_job_vector_of_each_ECU_status(job_vectors_for_each_ECU);
+    //global_object::logger->log_job_vector_of_each_ECU_status(job_vectors_for_each_ECU);
     m_is_offline = false;
 }
 
@@ -475,12 +476,12 @@ void ScheduleSimulator::busy_period_analysis(JobVectorsForEachECU& job_vectors_f
                     //auto current = std::chrono::high_resolution_clock::now();
 
                     //int elapsed = std::chrono::duration_cast<std::chrono::seconds>(current - last).count();
-
-                    global_object::DiagramData diagram_data;
-                    diagram_data.time = utils::log_entries++;
-                    diagram_data.execution_time = 0;
-                    diagram_data.data = std::to_string(highest_job->get_est()) + ", ECU" + std::to_string(highest_job->get_ECU()->get_ECU_id()) + ": " + highest_job->get_task_name() + ", 1\n";
-                    global_object::diagram_data.push(diagram_data);
+                    utils::mtx.lock();
+                    std::shared_ptr<DiagramData> diagram = std::make_shared<DiagramData>( highest_job->get_est(), 0, std::to_string(highest_job->get_est()) + ", ECU" + std::to_string(highest_job->get_ECU()->get_ECU_id()) + ": " + highest_job->get_task_name() + ", 1\n");
+                    //diagram_data.time = utils::log_entries++;
+                    global_object::diagram_vector.push_back(std::move(diagram));
+                    utils::mtx.unlock();
+                    //global_object::diagram_data.push(diagram_data);
 
                     // if(elapsed >= utils::log_delay_seconds)
                     // {
@@ -600,13 +601,12 @@ void ScheduleSimulator::busy_period_analysis(JobVectorsForEachECU& job_vectors_f
                     {
                         //std::chrono::high_resolution_clock::time_point current = std::chrono::high_resolution_clock::now();
                         //int elapsed = std::chrono::duration_cast<std::chrono::seconds>(current - last).count();
-
-                        global_object::DiagramData diagram_data;
-                        diagram_data.time = utils::log_entries++;
-                        diagram_data.execution_time = highest_job->get_bcet();
-                        diagram_data.data = std::to_string(highest_job->get_eft()) + ", ECU" + std::to_string(highest_job->get_ECU()->get_ECU_id()) + ": " + highest_job->get_task_name() + ", 0\n";
-                        global_object::diagram_data.push(diagram_data);
-                        
+                        utils::mtx.lock();
+                        std::shared_ptr<DiagramData> diagram = std::make_shared<DiagramData>(highest_job->get_eft(), highest_job->get_bcet(),std::to_string(highest_job->get_eft()) + ", ECU" + std::to_string(highest_job->get_ECU()->get_ECU_id()) + ": " + highest_job->get_task_name() + ", 0\n" );
+                        //diagram_data.time = utils::log_entries++;
+                        global_object::diagram_vector.push_back(std::move(diagram));
+                        //global_object::diagram_data.push(diagram_data);
+                        utils::mtx.unlock();
                         // if(elapsed >= utils::log_delay_seconds)
                         // {
                             
@@ -618,13 +618,13 @@ void ScheduleSimulator::busy_period_analysis(JobVectorsForEachECU& job_vectors_f
             }
             if(!setWorstCase)
             {
-                m_execution_order_b.push_back(highest_job);
+                //m_execution_order_b.push_back(highest_job);
                 //if(highest_job->get_priority_policy() == PriorityPolicy::GPU)
                     //std::cout << "GPU JOB ADDED TO EXECUTION ORDER!!!!!1" << std::endl;
             }
             else
             {
-                m_execution_order_w.push_back(highest_job);
+                //m_execution_order_w.push_back(highest_job);
                 //if(highest_job->get_priority_policy() == PriorityPolicy::GPU)
                     //std::cout << "GPU JOB ADDED TO EXECUTION ORDER!!!!!1" << std::endl;
             }
