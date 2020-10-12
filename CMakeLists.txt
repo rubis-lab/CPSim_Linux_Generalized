@@ -28,7 +28,7 @@ SET ( SRC_FILES
         # set schedule_simulator files
         Engine/ScheduleSimulator.h Engine/ScheduleSimulator.cpp 
         # set schedule_generator files
-        Engile/ShceduleGenerator.h Engine/ScheduleGenerator.cpp
+        Engine/ScheduleGenerator.h Engine/ScheduleGenerator.cpp
         # set offline_guider files
         Engine/OfflineGuider.h Engine/OfflineGuider.cpp
         # set Executor files
