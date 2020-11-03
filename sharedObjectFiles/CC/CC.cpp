@@ -26,7 +26,7 @@ void sim_main()
   write6 = 0;
   read2 = read2 / 100 + 600000;
 
-  if(read4 > 5000) {
+  if(read4 > 6000) {
     
     write6 = read1;
 	

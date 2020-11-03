@@ -1,8 +1,10 @@
 #ifndef CAN_RECEIVER_H__
 #define CAN_RECEIVER_H__
 
+#ifdef CANMODE__
 #include <pcan.h>
 #include <libpcan.h>
+#endif
 #include <stdio.h>
 #include <sys/time.h>
 #include <unistd.h>

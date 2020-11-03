@@ -11,10 +11,12 @@
 #include <ctype.h>
 #include <errno.h>
 /**
- * NO CAN MODE
+ * CAN MODE
  */
+#ifdef CANMODE__
 #include <pcan.h>
 #include <libpcan.h>
+#endif
 /** This file is engine code of CPSim-Re engine
  * @file CANInterface.h
  * @author Seonghyeon Park
@@ -33,7 +35,7 @@ typedef struct
 	unsigned char DATA[8];      // data bytes, up to 8
 } TPCANMsg;
 #endif
-
+#ifdef CANMODE__
 /** CAN Message class
  * @class CAN_message
  * @brief This class is responsible for sending messages via CAN bus
@@ -41,7 +43,9 @@ typedef struct
 class CAN_message
 {
 private:
+
 	TPCANMsg m_message;
+
 	unsigned long long time;		// (expected) sending time
 	int channel;					// CAN bus channel
 	std::string _task_name;				// a task's name who tries to send this message
@@ -63,7 +67,7 @@ public:
 	std::string get_task_name();
 	void transmit_can_message(std::string);
 };
-
+#endif
 
 
 #endif

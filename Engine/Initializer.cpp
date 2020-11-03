@@ -3,11 +3,22 @@
 #include <cstdlib>
 #include <climits>
 #include <cmath>
-#include <pcan.h>
 #include <string.h>
 #include <sstream>
-#include <libpcan.h>
-
+#include <net/if.h>
+#include <sys/types.h>
+#include <sys/ioctl.h>
+#include <sys/socket.h>
+#include <netinet/ip.h>
+#include <netinet/in.h>
+#include <netdb.h>
+#ifdef CANMODE__
+    #include <pcan.h>
+    #include <libpcan.h>
+#endif
+#ifndef PORT
+#define PORT 13380
+#endif
 /** 
  *  This file is the cpp file for the Initializer class.
  *  @file Initializer.cpp
@@ -116,6 +127,7 @@ double Initializer::set_simulator_performance()
  * @warning none
  * @todo will be implemented at tomorrow
  */
+#ifdef CANMODE__
 void Initializer::can_interface_initalizer(int num_channel)
 {
 	// can connect
@@ -161,7 +173,41 @@ void Initializer::can_interface_initalizer(int num_channel)
     }
 
 }
+#endif
+void Initializer::ethernet_interface_initializer()
+{
+    struct hostent *SERVER_ENTRY = NULL;
+	struct sockaddr_in SERVER_ADDR;
+    struct timeval tv;
+    tv.tv_sec = 0;
+    tv.tv_usec = 5000;
+    // translate host name into peer's IP address
+	SERVER_ENTRY = gethostbyname( utils::ip_address.c_str() );
+	if( !SERVER_ENTRY ) {
+		std::cout << "IP ADDRESS INVALID" << utils::ip_address << std::endl;
+		exit(EXIT_FAILURE);
+	}
 
+	// build address data structure
+	bzero( (char*)&SERVER_ADDR, sizeof(SERVER_ADDR) );
+	SERVER_ADDR.sin_family = AF_INET;//AF: addredd family, for address structure
+	bcopy( SERVER_ENTRY->h_addr, (char*)&SERVER_ADDR.sin_addr, SERVER_ENTRY->h_length );
+	SERVER_ADDR.sin_port = htons( PORT );
+
+	// active open
+	if( ( utils::socket_EHTERNET = socket( PF_INET, SOCK_STREAM, 0 ) ) < 0 ){//PF: protocol family for creatomg socket
+		std::cout << "error" << std::endl;
+        close( utils::socket_EHTERNET );
+		exit( EXIT_FAILURE );
+	}
+    int recvTimeout = 5;
+    setsockopt(utils::socket_EHTERNET, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv, sizeof tv);
+	if( connect( utils::socket_EHTERNET, (struct sockaddr*)&SERVER_ADDR, sizeof( SERVER_ADDR ) ) < 0 ){
+		std::cout << "error" << std::endl;
+		close( utils::socket_EHTERNET );
+		exit(EXIT_FAILURE);
+	}
+}
 int Initializer::parsing_specificated_information()
 {
     return 0;
@@ -195,6 +241,7 @@ void Initializer::initialize(EcuVector& ecu_vector, TaskVector& task_vector, Job
         Specifier specifier;
         specifier.specify_the_system(ecu_vector, task_vector, utils::file_path);
         utils::simulator_performance = set_simulator_performance();
+#ifdef CANMODE__
         /**
          * CAN Network Initialization
          */
@@ -204,7 +251,15 @@ void Initializer::initialize(EcuVector& ecu_vector, TaskVector& task_vector, Job
             global_object::can_receiver = std::make_shared<CAN_receiver>();
             global_object::can_receiver->start_simulation_time();
         }
-
+#endif
+#ifdef ETHERNET_MODE__
+        /**
+         * Ethernet Network Initialization
+         */
+        ethernet_interface_initializer();
+        global_object::ethernet_receiver = std::make_shared<Ethernet_receiver>();
+        global_object::ethernet_receiver->start_simulation_time();
+#endif
         /**
          * ECU Vector Initialization
          */
@@ -277,7 +332,7 @@ void Initializer::initialize(EcuVector& ecu_vector, TaskVector& task_vector, Job
     }
     global_object::logger->log_task_vector_status(task_vector);
     global_object::logger->set_schedule_log_info(task_vector);
-
+#ifdef CANMODE__
     /**
      * CAN Receiver Thread Initialized
      */
@@ -285,6 +340,10 @@ void Initializer::initialize(EcuVector& ecu_vector, TaskVector& task_vector, Job
     {
         global_object::can_receiver_thread = std::make_shared<std::thread>(&CAN_receiver::receive_can_messages, global_object::can_receiver);
     }
+#endif
+#ifdef ETHERNET_MODE__
+    global_object::ethernet_receiver_thread = std::make_shared<std::thread>(&Ethernet_receiver::receive_messages, global_object::ethernet_receiver);
+#endif
 }
 
 void Initializer::random_task_generator(EcuVector& ecu_vector, TaskVector& task_vector, JobVectorsForEachECU& job_vectors_for_each_ECU, int task_num)

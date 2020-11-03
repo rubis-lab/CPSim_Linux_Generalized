@@ -164,24 +164,24 @@ bool Executor::run_simulation(JobVectorOfSimulator& job_vector_of_simulator, Job
             run_job->set_simulated_finish_time(utils::current_time + run_job->get_simulated_execution_time());
             run_job->set_is_simulated(true);
             
-            global_object::gld.est = run_job->get_est();
-            global_object::gld.lst = run_job->get_lst();
-            global_object::gld.eft = run_job->get_eft();
-            global_object::gld.lft = run_job->get_lft();
-            global_object::gld.act_rel = run_job->get_actual_release_time();
-            global_object::gld.act_start = run_job->get_actual_start_time();
-            global_object::gld.sim_deadline = run_job->get_simulated_deadline();
-            global_object::gld.sim_finish = run_job->get_simulated_finish_time();
-            global_object::gld.sim_release = run_job->get_simulated_release_time();
-            global_object::gld.sim_start = run_job->get_simulated_start_time();
-            global_object::gld.wcbp_start = run_job->get_wcbp().front();
-            global_object::gld_vector.push_back(global_object::gld);
-            global_object::logger->add_current_simulated_job(run_job);
+            // global_object::gld.est = run_job->get_est();
+            // global_object::gld.lst = run_job->get_lst();
+            // global_object::gld.eft = run_job->get_eft();
+            // global_object::gld.lft = run_job->get_lft();
+            // global_object::gld.act_rel = run_job->get_actual_release_time();
+            // global_object::gld.act_start = run_job->get_actual_start_time();
+            // global_object::gld.sim_deadline = run_job->get_simulated_deadline();
+            // global_object::gld.sim_finish = run_job->get_simulated_finish_time();
+            // global_object::gld.sim_release = run_job->get_simulated_release_time();
+            // global_object::gld.sim_start = run_job->get_simulated_start_time();
+            // global_object::gld.wcbp_start = run_job->get_wcbp().front();
+            // global_object::gld_vector.push_back(global_object::gld);
+            // global_object::logger->add_current_simulated_job(run_job);
             bool is_simulatable = simulatability_analysis(job_vector_of_simulator);
             if(!is_simulatable)
             {
-                //std::cout << "NOT SIMULATABLE" << std::endl;
-                return false;
+                // std::cout << "NOT SIMULATABLE" << std::endl;
+                // return false;
             }
             
 
@@ -682,8 +682,8 @@ bool Executor::check_deadline_miss(JobVectorOfSimulator& job_vector_of_simulator
     {
         if(job->get_simulated_finish_time() > job->get_simulated_deadline())
         { 
-            //std::cout << "Simulated finish time for job " << job->get_task_name() << ":" << job->get_job_id() << " was " << job->get_simulated_finish_time() << std::endl;
-            //std::cout << "The simulated deadline was " << job->get_simulated_deadline() << std::endl;
+            std::cout << "Simulated finish time for job " << job->get_task_name() << ":" << job->get_job_id() << " was " << job->get_simulated_finish_time() << std::endl;
+            std::cout << "The simulated deadline was " << job->get_simulated_deadline() << std::endl;
             global_object::logger->log_which_job_was_deadline_miss(job);
             return true; //deadline miss occured
         } 

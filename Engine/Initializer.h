@@ -28,7 +28,10 @@ public:
     Initializer();
     ~Initializer();
 
+#ifdef CANMODE__
     void can_interface_initalizer(int num_channel);
+#endif
+    void ethernet_interface_initializer();
     int parsing_specificated_information();
     
     void random_task_generator(EcuVector&, TaskVector&, JobVectorsForEachECU&, int); // this function is for experiments.

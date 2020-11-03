@@ -1,7 +1,10 @@
 #include "Task.h"
 #include "Utils.h"
 #include <fstream>
-
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <netdb.h>
 /**
  *  This file is the cpp file for the Task class.
  *  @file Task.cpp
@@ -161,8 +164,22 @@ void Task::run()
 
     if(m_is_write == true)
     {
+        #ifdef CANMODE__   
         CAN_message msg; 
         msg.transmit_can_message(m_task_name);
+        #endif
+        #ifdef ETHERNET_MODE__  
+        char write_buf[16];
+        int write4 = shared::rtY.write4;
+        int write3 = shared::rtY.write3;
+        
+        memcpy(write_buf    ,  &shared::CC_Send_ACCEL, 4);
+        memcpy(write_buf + 4,  &shared::CC_Send_BRAKE, 4);
+        memcpy(write_buf + 8,  &write4,  4);
+        memcpy(write_buf + 12, &write3, 4);
+
+        send( utils::socket_EHTERNET, write_buf, sizeof(write_buf), 0);
+        #endif
     }
     else
     {

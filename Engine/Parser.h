@@ -23,6 +23,8 @@ private:
     std::vector<std::vector<std::string>> m_ecu_info;
     std::vector<std::vector<std::string>> m_task_info;
     std::vector<std::vector<std::string>> m_can_info;
+    std::vector<std::vector<std::string>> m_eth_info;
+    
     
     int m_number_of_ECUs;
     int m_number_of_Task;

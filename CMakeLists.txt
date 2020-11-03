@@ -47,6 +47,8 @@ SET ( SRC_FILES
         Engine/CAN_message.h Engine/CAN_message.cpp
         # set CAN_receiver files
         Engine/CAN_receiver.h Engine/CAN_receiver.cpp
+        # set Ethernet_receiver files
+        Engine/Ethernet_receiver.h Engine/Ethernet_receiver.cpp
         # set Utils files
         Engine/Utils.h Engine/Utils.cpp
         # set JobNode files
@@ -86,4 +88,6 @@ SET ( CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BUILD_TYPE}/lib )
 SET ( CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BUILD_TYPE}/lib )
 
 # Add source files at here using this formats.
+# -DCANMODE__ -DETHERNET_MODE__
+add_definitions("-DETHERNET_MODE__ -DPORT=13380")
 add_executable ( ${OUTPUT_ELF} ${SRC_FILES})

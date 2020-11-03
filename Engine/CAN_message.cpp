@@ -14,7 +14,7 @@
 //pthread_mutex_t section_for_can_sending = PTHREAD_MUTEX_INITIALIZER;
 std::mutex ourMutex; // Any lock_guard can use this
 
-
+#ifdef CANMODE__
 CAN_message::CAN_message()
 {
 }
@@ -143,6 +143,14 @@ void CAN_message::transmit_can_message(std::string task_name)
 		}    
 	}
 
+	std::cout << "CC_SEND_ACCEL: " << shared::CC_Send_ACCEL << std::endl;
+	std::cout << "CC_SEND_BRAKE: " << shared::CC_Send_BRAKE << std::endl;
+	std::cout << shared::rtU.read2 << std::endl;
+	std::cout << shared::rtU.read1 << std::endl;
+	std::cout << "Write4: " << shared::rtY.write4 << std::endl;
+	std::cout << "Write3: " << shared::rtY.write3 << std::endl;
+	std::cout << std::endl;
+
 	msg.DATA[0] = can_buffer[0];
 	msg.DATA[1] = can_buffer[1];
 	msg.DATA[2] = can_buffer[2];
@@ -158,3 +166,4 @@ void CAN_message::transmit_can_message(std::string task_name)
 
 	}                                                                         
 }
+#endif

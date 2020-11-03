@@ -35,7 +35,6 @@
 #include "OfflineGuider.h"
 #include "Executor.h"
 #include "Utils.h"
-#define CANMODE
 
 /**
     @fn main(void)
@@ -87,8 +86,9 @@ int main(int argc, char *argv[])
         std::vector<std::vector<std::vector<std::shared_ptr<Job>>>> job_vectors_for_each_ECU;
         std::vector<std::shared_ptr<ECU> > ecu_vector;
         std::vector<std::shared_ptr<Task>> task_vector;
+#ifdef CANMODE__        
         std::vector<std::shared_ptr<CAN_message> > can_msg_vector;
-
+#endif
         Initializer initializer_module;
         if (argv[1] != NULL)
         {
@@ -129,26 +129,31 @@ int main(int argc, char *argv[])
             offline_guider.construct_job_precedence_graph(job_vectors_for_each_ECU);
             is_simulatable = executor.run_simulation(job_vector_of_simulator, job_vectors_for_each_ECU, utils::current_time);
             job_vector_of_simulator.clear();
-            for(auto someVector : job_vectors_for_each_ECU)
+            for(auto someVector : job_vectors_for_each_ECU){
                 someVector.clear();
-                job_vectors_for_each_ECU.clear();
-         }
-         is_simulatable ? ++simulatable_count : ++nonsimulatable_count;
-        if(utils::real_workload == false)
-        {
-            // Reset Globals
-            global_object::logger_thread = nullptr; // Removing logger_thread first as it holds a reference to logger func.
-            global_object::logger = nullptr;
-            global_object::gld_vector.clear();
-            job_vector_of_simulator.clear();
-            ecu_vector.clear();
-            task_vector.clear();
-            can_msg_vector.clear();
-            for(auto someVector : job_vectors_for_each_ECU)
-                someVector.clear();
+            }
             job_vectors_for_each_ECU.clear();
-            utils::current_time = 0;
-        }
+            if(is_simulatable == false)
+                std::cout << "not simulatable" << std::endl;
+         }
+        //  is_simulatable ? ++simulatable_count : ++nonsimulatable_count;
+        // if(utils::real_workload == false)
+        // {
+        //     // Reset Globals
+        //     global_object::logger_thread = nullptr; // Removing logger_thread first as it holds a reference to logger func.
+        //     global_object::logger = nullptr;
+        //     global_object::gld_vector.clear();
+        //     job_vector_of_simulator.clear();
+        //     ecu_vector.clear();
+        //     task_vector.clear();
+        //     #ifdef CANMODE__   
+        //     can_msg_vector.clear();
+        //     #endif
+        //     for(auto someVector : job_vectors_for_each_ECU)
+        //         someVector.clear();
+        //     job_vectors_for_each_ECU.clear();
+        //     utils::current_time = 0;
+        // }
     }
 
     if(utils::real_workload == false)

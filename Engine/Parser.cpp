@@ -50,12 +50,79 @@ std::vector<std::vector<std::string>> Parser::get_can_info()
  */
 void Parser::parse_system()
 {
-
+    /**
+     * FIND ETH INFORMATION AND STORE TO m_can_info
+     */
+    int eth_idx;
+    int start_point, end_point;
+    for(start_point = 0; start_point < m_xml_info.size(); start_point++)
+    {
+        std::string::size_type pos;
+        pos = m_xml_info.at(start_point).find("<ETHs>");
+        if(pos == std::string::npos)
+        {
+            continue;
+        }
+        else
+        {
+            start_point += 1;
+            break;
+            
+        }
+    }
+        for(end_point = 0; end_point < m_xml_info.size(); end_point++)
+    {
+        std::string::size_type pos;
+        pos = m_xml_info.at(end_point).find("</ETHs>");
+        if(pos == std::string::npos)
+        {
+            continue;
+        }
+        else
+        {
+            break;
+        }
+    }
+    for(eth_idx = start_point; eth_idx < end_point; eth_idx++)
+    {
+        std::string::size_type pos;
+        pos = m_xml_info.at(eth_idx).find("<ETH");
+        if(pos == std::string::npos)
+        {
+            continue;
+        }
+        else
+        {
+            std::vector<std::string> content;
+            for(int i = eth_idx; i < end_point; i++)
+            {
+                std::string::size_type pos_in;
+                pos_in = m_xml_info.at(i).find("</ETH"); 
+                if(pos_in == std::string::npos)
+                {
+                    content.push_back(m_xml_info.at(i));
+                }  
+                else
+                {
+                    break;
+                }
+                
+            }
+            m_eth_info.push_back(content);
+        }
+    }
+    
+    std::string::size_type pos_eth, pos_eth_end;
+    pos_eth = m_eth_info.at(0).at(0).find("IP");
+    if(pos_eth != std::string::npos)
+    {
+        pos_eth_end = m_eth_info.at(0).at(0).substr(pos_eth+4).find("\"");
+        utils::ip_address = m_eth_info.at(0).at(0).substr(pos_eth+4).substr(0,pos_eth_end);
+    }
     /**
      * FIND CAN INFORMATION AND STORE TO m_can_info
      */
     int can_idx;
-    int start_point, end_point;
     for(start_point = 0; start_point < m_xml_info.size(); start_point++)
     {
         std::string::size_type pos;

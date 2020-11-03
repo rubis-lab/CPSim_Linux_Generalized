@@ -18,6 +18,7 @@ unsigned long long CAN_receiver::getcurrenttime()
 
 void CAN_receiver::receive_can_messages()
 {
+	#ifdef CANMODE__
 	TPCANMsg msg;
 	unsigned long long current_time;
 	int unread_count = 0;
@@ -38,8 +39,8 @@ void CAN_receiver::receive_can_messages()
 				
 			}
 		}
-
 	} while(1);
+	#endif
 }
 
 void CAN_receiver::start_simulation_time()

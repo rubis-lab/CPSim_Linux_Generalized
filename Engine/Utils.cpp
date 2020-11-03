@@ -145,6 +145,7 @@ int utils::calculate_hyper_period(std::vector<std::shared_ptr<Task>>& task_set)
  * @warning none
  * @todo none
  */
+#ifdef CANMODE__   
 void utils::insert_can_msg(CanMsgVector& can_msg_vector, std::shared_ptr<CAN_message> input)
 {
 	// first element
@@ -165,11 +166,13 @@ void utils::insert_can_msg(CanMsgVector& can_msg_vector, std::shared_ptr<CAN_mes
 	}
 	can_msg_vector.push_back(input);		// push target to the last position
 }
-
+#endif   
 void utils::exit_simulation(int signo)
 {
 	std::cout << "Simulation End\n" << std::endl;
+	#ifdef CANMODE__
 	CAN_Close(can::hCAN1);
+	#endif
 	global_object::logger_thread->detach();
 	exit(signo);
 }

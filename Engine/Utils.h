@@ -18,6 +18,7 @@
 #include "ECU.h"
 #include "CAN_message.h"
 #include "CAN_receiver.h"
+#include "Ethernet_receiver.h"
 #include "Logger.h"
 #include "DiagramData.h"
 
@@ -38,8 +39,9 @@ typedef std::vector<std::shared_ptr<Job>> JobVectorOfSimulator;
 typedef std::vector<std::vector<std::vector<std::shared_ptr<Job>>>> JobVectorsForEachECU;
 typedef std::vector<std::shared_ptr<ECU> > EcuVector;
 typedef std::vector<std::shared_ptr<Task>> TaskVector;
+#ifdef CANMODE__   
 typedef std::vector<std::shared_ptr<CAN_message> > CanMsgVector;
-
+#endif
 
 namespace utils
 {
@@ -47,7 +49,9 @@ namespace utils
     inline std::string file_path = "/home/";
     inline std::string null_path = "";
     inline std::string cpsim_path = "";
+    inline std::string ip_address = "";
     inline int hyper_period = 0;
+    inline int socket_EHTERNET = 0;
     inline double current_time = 0; //simulation time(us)
     inline int number_of_ECUs = 0;
     inline int number_of_tasks = 0;
@@ -57,6 +61,7 @@ namespace utils
     inline int log_entries = 0;
     inline bool is_nocanmode = false;
     extern int shared_variable;
+
      
     inline double simple_mapping_function = 0.3;
     inline double simple_gpu_mapping_function = 10; // GPU Tasks take 10x longer to run on CPU than on GPU.
@@ -85,7 +90,9 @@ namespace utils
     bool first_release(std::shared_ptr<Job> pred, std::shared_ptr<Job> succ);
     void exit_simulation(int signo);
     void update_utils_variables();
+    #ifdef CANMODE__   
     void insert_can_msg(CanMsgVector&, std::shared_ptr<CAN_message> input);
+    #endif
 }
 
 // All .so files have access to these variables.
@@ -143,6 +150,8 @@ namespace global_object
     inline std::shared_ptr<std::thread> logger_thread;
     inline std::shared_ptr<CAN_receiver> can_receiver;
     inline std::shared_ptr<std::thread> can_receiver_thread;
+    inline std::shared_ptr<Ethernet_receiver> ethernet_receiver;
+    inline std::shared_ptr<std::thread> ethernet_receiver_thread;
     
 
     typedef struct LogData
@@ -167,7 +176,7 @@ namespace global_object
     // inline std::priority_queue<DiagramData> diagram_data;
     inline std::vector<std::shared_ptr<DiagramData>> diagram_vector;
 }
-
+#ifdef CANMODE__
 namespace can
 {
     inline HANDLE hCAN1;
@@ -178,5 +187,5 @@ namespace can
     inline __u16 wBTR0BTR1 = CAN_BAUD_500K;
     inline int nExtended = CAN_INIT_TYPE_ST;
 }
-
+#endif
 #endif

@@ -67,7 +67,8 @@ void Specifier::specify_the_system(EcuVector& ecu_vector, TaskVector& task_vecto
     utils::number_of_ECUs = specify_number_of_ECUs();
     utils::number_of_tasks = specify_number_of_tasks();
 
-    int task_idx, ecu_idx, can_idx;
+
+    int task_idx, ecu_idx, eth_idx;
     for(ecu_idx = 0; ecu_idx < m_parser.get_ecu_info().size(); ecu_idx++)
     {
         int ecu_id;
@@ -76,7 +77,7 @@ void Specifier::specify_the_system(EcuVector& ecu_vector, TaskVector& task_vecto
 
         for(int i = 0; i < m_parser.get_ecu_info().at(ecu_idx).size(); i++)
         {
-            std::string::size_type pos = m_parser.get_ecu_info().at(ecu_idx).at(i).find("ID");
+            std::string::size_type pos = m_parser.get_ecu_info().at(ecu_idx).at(i).find("IP");
             if(pos != std::string::npos)
             {
                 ecu_id = specify_ecu_id(m_parser.get_ecu_info().at(ecu_idx).at(i).substr(pos));
@@ -113,7 +114,7 @@ void Specifier::specify_the_system(EcuVector& ecu_vector, TaskVector& task_vecto
 
         for(int i = 0; i< m_parser.get_task_info().at(task_idx).size(); i++)
         {
-            std::string::size_type pos = m_parser.get_task_info().at(task_idx).at(i).find("ID");
+            std::string::size_type pos = m_parser.get_task_info().at(task_idx).at(i).find("IP");
             if(pos != std::string::npos)
             {
                 task_id = specify_task_name(m_parser.get_task_info().at(task_idx).at(i).substr(pos));
