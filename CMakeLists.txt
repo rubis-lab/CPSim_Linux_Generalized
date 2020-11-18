@@ -72,7 +72,8 @@ ADD_COMPILE_OPTIONS ( -std=c++1z )
 # SET ( CMAKE_EXE_LINKER_FLAGS "-static -Wl, --gc-sections" )
 
 # Common Linking Libraries
-LINK_LIBRARIES( dl pthread pcan)
+# Deprecated version : LINK_LIBRARIES( dl pthread pcan)
+LINK_LIBRARIES( dl pthread)
 
 # "Debug" Configruation options
 SET ( CMAKE_C_FLAGS_DEBUG "-DDEBUG -DC_FLAGS" )
