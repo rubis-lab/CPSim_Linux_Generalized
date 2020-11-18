@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.graphiti.ui.diagramTypes">
+      <diagramType
+            name="HyundaiConfiguratorGraphiti Diagram Type"
+            type="hyundaiConfiguratorGraphiti"
+            id="org.eclipse.hyundai.configurator.hyundaiConfiguratorGraphitiDiagramType">
+      </diagramType>
+   </extension>
+   <extension
+         point="org.eclipse.graphiti.ui.diagramTypeProviders">
+      <diagramTypeProvider
+            name="HyundaiConfiguratorGraphiti Diagram Type Provider"
+            class="org.eclipse.cpsim.configurator.diagram.HyundaiConfiguratorGraphitiDiagramTypeProvider"
+            id="org.eclipse.hyundai.configurator.hyundaiConfiguratorGraphitiDiagramTypeProvider">
+         <diagramType
+               id="org.eclipse.hyundai.configurator.hyundaiConfiguratorGraphitiDiagramType">
+         </diagramType>
+         <imageProvider
+            id="org.eclipse.hyundai.Diagram.CustomImageProvider">
+      	 </imageProvider>
+      </diagramTypeProvider>
+   </extension>
+   <extension
+         point="org.eclipse.graphiti.ui.imageProviders">
+      <imageProvider
+            class="org.eclipse.cpsim.Diagram.CustomImageProvider"
+            id="org.eclipse.hyundai.Diagram.CustomImageProvider">
+      </imageProvider>
+   </extension>
+   
+   <extension
+		 point="org.eclipse.ui.views.properties.tabbed.propertyContributor">
+		 <propertyContributor contributorId="hyundaiConfiguratorGraphiti.PropertyContributor">
+		 	<propertyCategory category="Graphiti">
+		 	</propertyCategory>
+		 </propertyContributor>
+	</extension>
+	<extension
+	      point="org.eclipse.ui.views.properties.tabbed.propertyTabs">
+	   <propertyTabs
+	          contributorId="hyundaiConfiguratorGraphiti.PropertyContributor">
+	   <propertyTab
+          category="Graphiti"
+          id="graphiti.main.tab"
+          label="Main">
+	    </propertyTab>
+	   </propertyTabs>
+	</extension>
+	<extension
+	      point="org.eclipse.ui.views.properties.tabbed.propertySections">
+	    <propertySections
+	          contributorId="hyundaiConfiguratorGraphiti.PropertyContributor">
+	        <propertySection
+	              class="org.eclipse.cpsim.configurator.property.HConfiguratorEClassSection"
+	              filter="org.eclipse.cpsim.configurator.property.HConfiguratorEClassFilter"
+	              id="graphiti.main.tab.emfclass"
+	              tab="graphiti.main.tab">
+	        </propertySection>
+	    </propertySections>
+	</extension>
+	
+	<extension point="org.eclipse.emf.ecore.generated_package">
+	<package uri="http:///org/eclipse/hyundai/configurator.ecore"
+		class="org.eclipse.cpsim.Diagram.DiagramPackage"
+		genModel="model/hyundai.genmodel"/>
+	</extension>
+	
+	<!--- Add Property Testers -->
+	<extension point="org.eclipse.core.expressions.propertyTesters">
+		<propertyTester
+			class="org.eclipse.cpsim.menu.simulation.PropertiesTester"
+			id="hyundaiConfiguratorGraphiti.propertytest1er1"
+			namespace="hyundaiConfiguratorGraphiti.propertytest1"
+			properties="SimulationOptionCheck,ResultAnalysisCheck,GenerateECUCheck,SMCheck,Design,Simulation,Implementation"
+			type="java.lang.Object">
+		</propertyTester>
+	</extension>
+	
+	<!--- Add new menu Start -->
+	 <extension
+         point="org.eclipse.ui.commands">
+      <!--- Menu button name -->
+      <category
+            name="Sample Category"
+            id="hyundaiConfiguratorGraphiti.commands.category">
+      </category>
+      <command
+            name="New Project"
+            categoryId="hyundaiConfiguratorGraphiti.commands.category"
+            id="hyundaiConfiguratorGraphiti.commands.NewProject">
+      </command>
+      <command
+            name="Import Project"
+            categoryId="hyundaiConfiguratorGraphiti.commands.category"
+            id="hyundaiConfiguratorGraphiti.commands.ImportProject">
+      </command>
+      <command
+            name="Program Path Settings"
+            categoryId="hyundaiConfiguratorGraphiti.commands.category"
+            id="hyundaiConfiguratorGraphiti.commands.DevelopmentSetting1">
+      </command>
+      <command
+            name="Reset Perspective"
+            categoryId="hyundaiConfiguratorGraphiti.commands.category"
+            id="hyundaiConfiguratorGraphiti.commands.ResetPerspective">
+      </command>
+      <command
+            name="Run Simulation"
+            categoryId="hyundaiConfiguratorGraphiti.commands.category"
+            id="hyundaiConfiguratorGraphiti.commands.RunStopSimulation">
+      </command>
+      <command
+            name="Simulation Options"
+            categoryId="hyundaiConfiguratorGraphiti.commands.category"
+            id="hyundaiConfiguratorGraphiti.commands.SimulationOptions">
+      </command>
+      <command
+            name="Result Analysis"
+            categoryId="hyundaiConfiguratorGraphiti.commands.category"
+            id="hyundaiConfiguratorGraphiti.commands.ResultAnalysisOptions1">
+      </command>
+      <command
+            name="Analyze Dynamic Memory"
+            categoryId="hyundaiConfiguratorGraphiti.commands.category"
+            id="hyundaiConfiguratorGraphiti.commands.AnalyzeDynamicMemory">
+   		<state
+         		class="org.eclipse.ui.handlers.RegistryToggleState:true"
+         		id="org.eclipse.ui.commands.toggleState">
+   		</state>
+      </command>
+      <command
+            name="Analyze Dynamic Memory"
+            categoryId="hyundaiConfiguratorGraphiti.commands.category"
+            id="hyundaiConfiguratorGraphiti.commands.AbstractAnalyzeDynamicMemory">
+      </command>
+      <command
+            name="Analyze System-Wide Runtime Behavior"
+            categoryId="hyundaiConfiguratorGraphiti.commands.category"
+            id="hyundaiConfiguratorGraphiti.commands.AnalyzeSystemWideRuntimeBehavior">
+   		<state
+         		class="org.eclipse.ui.handlers.RegistryToggleState:false"
+         		id="org.eclipse.ui.commands.toggleState">
+   		</state>
+      </command>
+      <command
+            name="Analyze System-Wide Runtime Behavior"
+            categoryId="hyundaiConfiguratorGraphiti.commands.category"
+            id="hyundaiConfiguratorGraphiti.commands.AbstractAnalyzeSystemWideRuntimeBehavior">
+      </command>
+      <command
+            name="Automatically Generate ECU Code"
+            categoryId="hyundaiConfiguratorGraphiti.commands.category"
+            id="hyundaiConfiguratorGraphiti.commands.AutomaticallyGenerateECUCode">
+      </command>
+      <command
+            name="Analyze Static Memory"
+            categoryId="hyundaiConfiguratorGraphiti.commands.category"
+            id="hyundaiConfiguratorGraphiti.commands.AnalyzeStaticMemory">
+      </command>
+   </extension>
+   
+   <!--- Menu button function -->
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            commandId="hyundaiConfiguratorGraphiti.commands.NewProject"
+            class="org.eclipse.cpsim.menu.design.NewProject">
+      </handler>
+      <handler
+            commandId="hyundaiConfiguratorGraphiti.commands.ImportProject"
+            class="org.eclipse.ui.internal.wizards.datatransfer.OpenFolderCommand">
+      </handler>
+      <handler
+            commandId="hyundaiConfiguratorGraphiti.commands.DevelopmentSetting1"
+            class="org.eclipse.cpsim.menu.design.DevelopmentSetting">
+      </handler>
+      <handler
+            commandId="hyundaiConfiguratorGraphiti.commands.ResetPerspective"
+            class="org.eclipse.cpsim.menu.design.ResetPerspective">
+      </handler>
+      <handler
+            commandId="hyundaiConfiguratorGraphiti.commands.RunStopSimulation"
+            class="org.eclipse.cpsim.menu.simulation.RunStopSimulation">
+            <enabledWhen>
+            	<with variable="activeEditorId">
+            		<equals
+            			value="org.eclipse.graphiti.ui.editor.DiagramEditor">
+            		</equals>
+            	</with>
+            </enabledWhen>
+      </handler>
+      <handler
+            commandId="hyundaiConfiguratorGraphiti.commands.SimulationOptions"
+            class="org.eclipse.cpsim.menu.simulation.SimulationOptions">
+            <enabledWhen>
+            	<and>
+     				<test
+     					forcePluginActivation="true"
+        				property="hyundaiConfiguratorGraphiti.propertytest1.SimulationOptionCheck">
+        			</test>
+        		
+            		<with variable="activeEditorId">
+            			<equals
+            				value="org.eclipse.graphiti.ui.editor.DiagramEditor">
+            			</equals>
+            		</with>
+            	</and>
+        	</enabledWhen>
+      </handler>
+      <handler
+            commandId="hyundaiConfiguratorGraphiti.commands.ResultAnalysisOptions1"
+            class="org.eclipse.cpsim.menu.simulation.ResultAnalysisOptions">
+            <enabledWhen>
+            	<and>
+     				<test
+     					forcePluginActivation="true"
+        				property="hyundaiConfiguratorGraphiti.propertytest1.ResultAnalysisCheck">
+        			</test>
+        		
+            		<with variable="activeEditorId">
+            			<equals
+            				value="org.eclipse.graphiti.ui.editor.DiagramEditor">
+            			</equals>
+            		</with>
+            	</and>
+        	</enabledWhen>
+      </handler>
+      <handler
+            commandId="hyundaiConfiguratorGraphiti.commands.AnalyzeDynamicMemory"
+            class="org.eclipse.cpsim.menu.simulation.AnalyzeDynamicMemoryButton">
+            <enabledWhen>
+            	<with variable="activeEditorId">
+            		<equals
+            			value="org.eclipse.graphiti.ui.editor.DiagramEditor">
+            		</equals>
+            	</with>
+            </enabledWhen>
+      </handler>
+      <handler
+            commandId="hyundaiConfiguratorGraphiti.commands.AbstractAnalyzeDynamicMemory"
+            class="org.eclipse.cpsim.menu.simulation.AnalyzeDynamicMemory">
+      </handler>
+      <handler
+            commandId="hyundaiConfiguratorGraphiti.commands.AnalyzeSystemWideRuntimeBehavior"
+            class="org.eclipse.cpsim.menu.simulation.AnalyzeSystemWideRuntimeBehaviorButton">
+            <enabledWhen>
+            	<with variable="activeEditorId">
+            		<equals
+            			value="org.eclipse.graphiti.ui.editor.DiagramEditor">
+            		</equals>
+            	</with>
+            </enabledWhen>
+      </handler>
+      <handler
+            commandId="hyundaiConfiguratorGraphiti.commands.AbstractAnalyzeSystemWideRuntimeBehavior"
+            class="org.eclipse.cpsim.menu.simulation.AnalyzeSystemWideRuntimeBehavior">
+            <visibleWhen>
+            	<with variable="activeEditorId">
+            		<equals
+            			value="Nonexistsvalue">
+            		</equals>
+            	</with>
+            </visibleWhen>
+      </handler>
+      <handler
+            commandId="hyundaiConfiguratorGraphiti.commands.AutomaticallyGenerateECUCode"
+            class="org.eclipse.cpsim.menu.implementation.AutomaticallyGenerateECUCode">
+            <enabledWhen>
+            	<and>
+     				<test
+     					forcePluginActivation="true"
+        				property="hyundaiConfiguratorGraphiti.propertytest1.GenerateECUCheck">
+        			</test>
+        		
+            		<with variable="activeEditorId">
+            			<equals
+            				value="org.eclipse.graphiti.ui.editor.DiagramEditor">
+            			</equals>
+            		</with>
+            	</and>
+        	</enabledWhen>
+      </handler>
+      <handler
+            commandId="hyundaiConfiguratorGraphiti.commands.AnalyzeStaticMemory"
+            class="org.eclipse.cpsim.menu.implementation.AnalyzeStaticMemory">
+            <enabledWhen>
+     			<test
+     				forcePluginActivation="true"
+        			property="hyundaiConfiguratorGraphiti.propertytest1.SMCheck">
+        		</test>
+        	</enabledWhen>
+      </handler>
+   </extension>
+   
+   <!--- Menu bar configuration -->
+   <extension
+         point="org.eclipse.ui.menus">
+   <!--- Add Hidden Menu -->
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
+         <menu
+               label="Hidden"
+               mnemonic="H"
+               id="hyundaiConfiguratorGraphiti.menus.Hidden">
+            <command
+                  commandId="hyundaiConfiguratorGraphiti.commands.AbstractAnalyzeDynamicMemory"
+                  id="hyundaiConfiguratorGraphiti.menus.AbstractAnalyzeDynamicMemory">
+            </command>
+            <command
+                  commandId="hyundaiConfiguratorGraphiti.commands.AbstractAnalyzeSystemWideRuntimeBehavior"
+                  id="hyundaiConfiguratorGraphiti.menus.AbstractAnalyzeSystemWideRuntimeBehavior">
+            </command>     
+            <visibleWhen>
+            	<with variable="activeEditorId">
+            		<equals
+            			value="Nonexistsvalue">
+            		</equals>
+            	</with>
+            </visibleWhen>
+         </menu>
+      </menuContribution>
+   <!--- Add Settings Menu -->
+   	  <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
+          <menu
+               label="Settings"
+               id="hyundaiConfiguratorGraphiti.menus.Settings">
+            <command
+                  commandId="hyundaiConfiguratorGraphiti.commands.DevelopmentSetting1"
+                  mnemonic="P"
+                  id="hyundaiConfiguratorGraphiti.menus.DevelopmentSetting">
+            </command>
+            <command
+                  commandId="hyundaiConfiguratorGraphiti.commands.ResetPerspective"
+                  mnemonic="R"
+                  id="hyundaiConfiguratorGraphiti.menus.ResetPerspective">
+            </command>
+         </menu>
+      </menuContribution>
+   <!--- Add Implementation Menu -->
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
+          <menu
+               label="Implementation"
+               mnemonic="I"
+               id="hyundaiConfiguratorGraphiti.menus.Implementation">
+            <command
+                  commandId="hyundaiConfiguratorGraphiti.commands.AutomaticallyGenerateECUCode"
+                  mnemonic="N"
+                  id="hyundaiConfiguratorGraphiti.menus.AutomaticallyGenerateECUCode">
+            </command>
+            <separator
+                  name="ImplementationSep1"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="hyundaiConfiguratorGraphiti.commands.AnalyzeStaticMemory"
+                  mnemonic="I"
+                  id="hyundaiConfiguratorGraphiti.menus.AnaylzeStaticMemory">
+            </command>
+            <visibleWhen>
+     			<test
+     				forcePluginActivation="true"
+        			property="hyundaiConfiguratorGraphiti.propertytest1.Implementation">
+        		</test>
+        	</visibleWhen>
+         </menu>
+      </menuContribution>
+   <!--- Add Simulation Menu -->
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
+         <menu
+               label="Simulation"
+               mnemonic="S"
+               id="hyundaiConfiguratorGraphiti.menus.Simulation">
+            <command
+                  commandId="hyundaiConfiguratorGraphiti.commands.RunStopSimulation"
+                  id="hyundaiConfiguratorGraphiti.menus.RunStopSimulation">
+            </command>
+            <separator
+                  name="SimulationSep1"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="hyundaiConfiguratorGraphiti.commands.AnalyzeDynamicMemory"
+                  style="toggle"
+                  id="hyundaiConfiguratorGraphiti.menus.AnalyzeDynamicMemory">
+            </command>
+            <command
+                  commandId="hyundaiConfiguratorGraphiti.commands.AnalyzeSystemWideRuntimeBehavior"
+                  style="toggle"
+                  id="hyundaiConfiguratorGraphiti.menus.AnalyzeSystemWideRuntimeBehavior">
+            </command>     
+            <separator
+                  name="SimulationSep2"
+                  visible="true">
+            </separator>        
+            <command
+                  commandId="hyundaiConfiguratorGraphiti.commands.SimulationOptions"
+                  mnemonic="O"
+                  id="hyundaiConfiguratorGraphiti.menus.SimulationOptions">
+            </command>
+            <command
+                  commandId="hyundaiConfiguratorGraphiti.commands.ResultAnalysisOptions1"
+                  mnemonic="R"
+                  id="hyundaiConfiguratorGraphiti.menus.ResultAnalysisOptions">
+            </command>
+            <visibleWhen>
+     			<test
+     				forcePluginActivation="true"
+        			property="hyundaiConfiguratorGraphiti.propertytest1.Simulation">
+        		</test>
+        	</visibleWhen>
+         </menu>
+      </menuContribution>
+   <!--- Add Design Menu -->
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
+          <menu
+               label="Design"
+               mnemonic="D"
+               id="hyundaiConfiguratorGraphiti.menus.Design">
+            <command
+                  commandId="hyundaiConfiguratorGraphiti.commands.NewProject"
+                  mnemonic="N"
+                  id="hyundaiConfiguratorGraphiti.menus.NewProject">
+            </command>
+            <command
+                  commandId="hyundaiConfiguratorGraphiti.commands.ImportProject"
+                  mnemonic="I"
+                  id="hyundaiConfiguratorGraphiti.menus.ImportProject">
+            </command>
+            <visibleWhen>
+     			<test
+     				forcePluginActivation="true"
+        			property="hyundaiConfiguratorGraphiti.propertytest1.Design">
+        		</test>
+        	</visibleWhen>
+         </menu>
+      </menuContribution>
+   </extension>
+   
+   <!--- Add new menu icons -->
+   <extension
+         point="org.eclipse.ui.commandImages">
+      <image
+            commandId="hyundaiConfiguratorGraphiti.commands.NewProject"
+            icon="$nl$/icons/new_wiz.png"/>
+      <image
+            commandId="hyundaiConfiguratorGraphiti.commands.ImportProject"
+            icon="$nl$/icons/import_wiz.png"/>
+      <image
+            commandId="hyundaiConfiguratorGraphiti.commands.RunStopSimulation"
+            icon="$nl$/icons/start_sim.png"/>
+   </extension>
+         
+	<!--- Add new menu End -->
+
+   <!--- Add new Perspective -->
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="org.eclipse.cpsim.perspective.PerspectiveFactory"
+            id="org.eclipse.hyundai.perspective.HyundaiPerspective"
+            name="Hyundai Diagram"/>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension targetID="org.eclipse.hyundai.perspective.HyundaiPerspective">
+         <view
+               id="org.eclipse.ui.navigator.ProjectExplorer"
+               relationship="stack"
+               relative="left"/>
+      </perspectiveExtension>
+   </extension>
+	<extension point="org.eclipse.ui.startup">
+		<startup class="org.eclipse.cpsim.startup.startclass" />
+	</extension>
+	
+</plugin>
