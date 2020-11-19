@@ -150,17 +150,8 @@ void ScheduleSimulator::simulate_scheduling_on_real(EcuVector& ecu_vector, TaskV
         }
     }
 
-    for(int ecu_id = 0; ecu_id < job_vectors_for_each_ECU.size(); ++ecu_id) 
-        for(int task_id = 0; task_id < job_vectors_for_each_ECU.at(ecu_id).size(); ++task_id)
-            for(auto job : job_vectors_for_each_ECU.at(ecu_id).at(task_id))
-            {
-                job->set_is_started(false);
-                job->set_is_finished(false);
-                job->set_is_preempted(false);
-                job->set_is_resumed(false);
-            }
-    
     int offset = global_hyper_period_start_point;
+    #ifdef GPUMODE__
     // ACCOUNT FOR GPU JOBS.
     // Schedule GPU JOBS.
     if(utils::enable_gpu_scheduling)
@@ -311,6 +302,7 @@ void ScheduleSimulator::simulate_scheduling_on_real(EcuVector& ecu_vector, TaskV
                     job->set_actual_release_time(job->get_est());
                 }
     }
+    #endif
     // Effectively, the result of this function is:
     // set_is_released(true)
     // bpet
@@ -329,35 +321,11 @@ void ScheduleSimulator::simulate_scheduling_on_real(EcuVector& ecu_vector, TaskV
         bool is_best = true;
         for (int i = 0; i < 2; i++) // First BCET, then WCET.
         {
-            //for (int ecu_id = 0; ecu_id < job_vectors_for_each_ECU.size(); ++ecu_id)
-            for(int task_id = 0; task_id < job_vectors_for_each_ECU.at(ecu_id).size(); ++task_id)
-                for (auto job : job_vectors_for_each_ECU.at(ecu_id).at(task_id))
-                {
-                    if (job->get_priority_policy() == PriorityPolicy::GPU) continue; // Init and Syncs are already scheduled.
-                    job->set_is_started(false);
-                    job->set_is_finished(false);
-                    job->set_is_preempted(false);
-                    job->set_is_resumed(false);
-                }
             int current_time_point = global_hyper_period_start_point;
-            //int current_time_point = -1;
-            // Find first free time slot.
-            //for (int i = 0; i < m_hyper_period; i++)
-            //    if (freeTimeSlots[i])
-            //    {
-            //        current_time_point = global_hyper_period_start_point + i;
-            //        break;
-            //    }
-            //if (current_time_point == -1)
-            //{
-                //std::cout << "COULD NOT FIND A TIME SLOT FOR CPU JOBS.\nSKIPPING ITERATION OF THIS FOR LOOP." << std::endl;
-            //    continue;
-            //}
             int busy_period_start_point = 0;
             //check_released_jobs_at_the_time_point
             while(current_time_point < (global_hyper_period_start_point + m_hyper_period))
             {
-                
                 busy_period_start_point = current_time_point;
                 
                 int sum_of_execution = 0;
@@ -370,7 +338,6 @@ void ScheduleSimulator::simulate_scheduling_on_real(EcuVector& ecu_vector, TaskV
                 for(int task_id = 0; task_id < job_vectors_for_each_ECU.at(ecu_id).size(); ++task_id)
                     for(auto job : job_vectors_for_each_ECU.at(ecu_id).at(task_id))
                     {
-                        //if(job->get_priority_policy() != PriorityPolicy::CPU) continue; // Only account for CPU jobs, maintain backwards compatability.
                         if((!job->get_is_finished()) && (job->get_actual_release_time() <= current_time_point))
                         {
                             job->set_is_released(true);
@@ -388,32 +355,15 @@ void ScheduleSimulator::simulate_scheduling_on_real(EcuVector& ecu_vector, TaskV
                     current_time_point += sum_of_execution;
                     is_idle = true;
                 }
-                // Skip to next available timeslot (not blocked by GPU).
-                /*bool found = false;
-                for (int i = (current_time_point - offset); i < m_hyper_period; i++)
-                    if (freeTimeSlots[i])
-                    {
-                        current_time_point = global_hyper_period_start_point + i;
-                        found = true;
-                        break;
-                    }
-                if (!found)
-                {
-                    //std::cout << "Could not find available time slot to continue execution.\nBreaking out of while loop." << std::endl;
-                    break;
-                }*/
+
                 if(current_time_point > (global_hyper_period_start_point + m_hyper_period))
                 {
-                    //std::cout << "CURRENT TIME OVER " << std::endl;
+
                 }
             }
             is_best = !is_best;
         }
-        //global_object::logger->print_job_execution_on_ECU(m_execution_order_b, m_execution_order_w, ecu_id);
-        //m_execution_order_b.clear();
-        //m_execution_order_w.clear();
     }
-    //global_object::logger->log_job_vector_of_each_ECU_status(job_vectors_for_each_ECU);
     m_is_offline = false;
 }
 

@@ -68,10 +68,21 @@ Job::Job(std::shared_ptr<Task> task, int job_id, int hyper_period_start)
     m_job_id = job_id;
     m_actual_release_time = calculate_release_time(task->get_period(), task->get_offset(), hyper_period_start);
     m_actual_deadline = calculate_absolute_deadline(m_actual_release_time, task->get_deadline());
-    m_actual_start_time = INT_MAX;
+    m_actual_start_time = -1;
+    m_actual_finish_time = -1;
+
     m_simulated_release_time = -1;
     m_simulated_start_time = -1;
     m_simulated_finish_time = -1;
+
+    m_is_preemptable = false;
+    m_is_preempted = false;
+    m_is_started = false;
+    m_is_finished = false;
+    m_is_resumed = false;
+    m_is_running = false;
+    m_is_released = false;
+    m_is_simulated = false;
 }
 
 /**

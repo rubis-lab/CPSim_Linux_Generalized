@@ -104,7 +104,7 @@ bool Executor::run_simulation(JobVectorOfSimulator& job_vector_of_simulator, Job
     assign_predecessors_successors(job_vector_of_simulator);
     assign_deadline_for_simulated_jobs(job_vector_of_simulator);
     assign_initial_actual_start_time(job_vector_of_simulator);
-    //global_object::logger->log_job_vector_of_simulator_status();
+    
     /**
      * Iterating Loop for running jobs in one HP
      */
