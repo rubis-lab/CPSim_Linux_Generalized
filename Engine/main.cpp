@@ -115,8 +115,8 @@ int main(int argc, char *argv[])
          */  
           
          bool is_simulatable = true;
-
-         while(utils::current_time < utils::simulation_termination_time && is_simulatable)
+        utils::simulator_start_time = std::chrono::steady_clock::now();     
+         while(utils::current_time < utils::simulation_termination_time && is_simulatable) // millisecond units
          {
              /** [Execute Jobs and Update the graph]
               * To start simulator,
@@ -133,6 +133,7 @@ int main(int argc, char *argv[])
             job_vectors_for_each_ECU.clear();
             if(is_simulatable == false)
                 std::cout << "not simulatable" << std::endl;
+            //std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - utils::simulator_start_time).count() << std::endl;
          }
         //  is_simulatable ? ++simulatable_count : ++nonsimulatable_count;
         // if(utils::real_workload == false)
@@ -153,7 +154,7 @@ int main(int argc, char *argv[])
         //     utils::current_time = 0;
         // }
     }
-
+    
     if(utils::real_workload == false)
     {
         std::cout << std::endl;

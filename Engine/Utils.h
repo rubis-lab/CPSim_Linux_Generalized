@@ -73,7 +73,8 @@ namespace utils
     inline bool is_experimental = true;
     inline bool real_workload = true;
     inline unsigned long long simulator_elapsed_time = 0;
-    inline unsigned long long simulation_termination_time = hyper_period * 1;         //10000000000
+    inline std::chrono::steady_clock::time_point simulator_start_time = std::chrono::steady_clock::now();
+    inline unsigned long long simulation_termination_time = hyper_period * 10000000000;         //10000000000
 
     inline int log_delay_seconds = 1;
 

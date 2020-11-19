@@ -357,6 +357,7 @@ std::vector<std::string> Specifier::specify_consumers(std::string line)
             }
             else
             {
+                consumers.push_back(line.substr(0, end_pos));
                 line = line.substr(end_pos + 1);   
             }
         }

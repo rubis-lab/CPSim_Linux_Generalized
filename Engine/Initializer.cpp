@@ -272,6 +272,20 @@ void Initializer::initialize(EcuVector& ecu_vector, TaskVector& task_vector, Job
         /**
          * Task Vector Initialization
          */
+        for(auto task : task_vector)
+        {
+            for(auto consumer : task_vector)
+            {
+                for(auto to_be_consumer : task->get_consumers_info())
+                {
+                    if(consumer->get_task_name() == to_be_consumer)
+                    {
+                        task->add_task_to_consumers(consumer);
+                        consumer->add_task_to_producers(task);
+                    }
+                }
+            }    
+        }
         for(int ecu_num =0; ecu_num < ecu_vector.size(); ecu_num++)
         {
             for(int i = 0; i < ecu_vector.at(ecu_num)->get_num_of_task(); i++)
@@ -317,7 +331,7 @@ void Initializer::initialize(EcuVector& ecu_vector, TaskVector& task_vector, Job
      * Global Hyper Period Initialization
      */
     utils::hyper_period = utils::calculate_hyper_period(task_vector);
-    
+    utils::simulation_termination_time = utils::hyper_period * 1;
     /**
      * Logger Thread Initialized
      */

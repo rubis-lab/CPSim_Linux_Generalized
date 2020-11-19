@@ -73,6 +73,7 @@ void ScheduleSimulator::simulate_scheduling_on_real(EcuVector& ecu_vector, TaskV
         m_hyper_period = utils::hyper_period;
         for(auto task : task_vector) // Incase simulate is run multiple times on same task set.
             task->set_priority(0);
+        #ifdef GPUMODE__
         // Assign GPU Priorities.
         int highest_gpu_priority = 0;
         if(utils::enable_gpu_scheduling)
@@ -93,7 +94,7 @@ void ScheduleSimulator::simulate_scheduling_on_real(EcuVector& ecu_vector, TaskV
                 }
             }
         }
-        //std::cout << "Highest GPU Priority is: " << highest_gpu_priority << std::endl;
+        #endif
         // Assign CPU Task Priorities
         for(auto task : task_vector)
         {
@@ -106,14 +107,14 @@ void ScheduleSimulator::simulate_scheduling_on_real(EcuVector& ecu_vector, TaskV
                     task->set_priority(task->get_priority() + 1);
             }
         }
-
+        #ifdef GPUMODE__
         if(utils::enable_gpu_scheduling)
             for(auto task : task_vector)
             {
                 if(task->get_priority_policy() != PriorityPolicy::CPU) continue;
                 task->set_priority(task->get_priority() + highest_gpu_priority);
             }
-
+        #endif
     }
     else
     {

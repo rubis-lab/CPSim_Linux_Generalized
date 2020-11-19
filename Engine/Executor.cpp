@@ -108,9 +108,9 @@ bool Executor::run_simulation(JobVectorOfSimulator& job_vector_of_simulator, Job
     /**
      * Iterating Loop for running jobs in one HP
      */
-
+    std::chrono::steady_clock::time_point hyper_period_start = std::chrono::steady_clock::now();
     std::vector<std::shared_ptr<Job>> simulation_ready_queue;
-    while(utils::current_time < end_time)
+    while(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - hyper_period_start).count() < utils::hyper_period)
     {
         bool is_idle = true;
         for (auto job : job_vector_of_simulator)
@@ -197,9 +197,17 @@ bool Executor::run_simulation(JobVectorOfSimulator& job_vector_of_simulator, Job
                 //starttime, get_ECUid: taskname, is started
                 
                 run_job->run();
+                if(run_job->get_last_elapsed_micro_sec() < run_job->get_simulated_execution_time()*1000)
+                {
+                    utils::current_time += run_job->get_simulated_execution_time();
+                    std::chrono::steady_clock::time_point job_start = std::chrono::steady_clock::now();
+                    while (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - job_start).count() < run_job->get_simulated_execution_time())
+                    {
+                        continue;
+                    }
+                }
                 // global_object::finished_job.push(run_job);
                 // Choose which one you think is best.
-                utils::current_time += run_job->get_simulated_execution_time();
                 //utils::current_time += run_job->get_last_elapsed_nano_sec();
                 //utils::current_time += run_job->get_last_elapsed_micro_sec();
                 //utils::current_time += run_job->get_last_elapsed_milli_sec();

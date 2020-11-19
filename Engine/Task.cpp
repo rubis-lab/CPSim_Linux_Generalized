@@ -162,7 +162,6 @@ void Task::run()
     m_casted_func();
     m_run_end = std::chrono::steady_clock::now();
 
-    //std::chrono::duration_cast<std::chrono::microseconds>(m_run_end - m_run_start).count() << std::endl;
     if(m_is_write == true)
     {
         #ifdef CANMODE__   
