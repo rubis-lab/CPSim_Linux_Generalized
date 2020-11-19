@@ -113,12 +113,10 @@ int main(int argc, char *argv[])
           * third, we need to consider those constraints(Physical Read Constraint, Physical Write Constraint, Producer-Consumer Constraint)
           * For this, we create offline guider, and make a graph data structure for representing all of the jobs' precedence relationship.
          */  
-         
-        
-         unsigned long long simulation_termination_time = utils::hyper_period * 10000000000;
+          
          bool is_simulatable = true;
 
-         while(utils::current_time < simulation_termination_time && is_simulatable)
+         while(utils::current_time < utils::simulation_termination_time && is_simulatable)
          {
              /** [Execute Jobs and Update the graph]
               * To start simulator,

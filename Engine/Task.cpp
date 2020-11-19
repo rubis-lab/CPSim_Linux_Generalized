@@ -1,5 +1,6 @@
 #include "Task.h"
 #include "Utils.h"
+#include <iostream>
 #include <fstream>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -160,8 +161,8 @@ void Task::run()
     m_run_start = std::chrono::steady_clock::now();
     m_casted_func();
     m_run_end = std::chrono::steady_clock::now();
-    //0, ECU0: SENSING, 0
 
+    //std::chrono::duration_cast<std::chrono::microseconds>(m_run_end - m_run_start).count() << std::endl;
     if(m_is_write == true)
     {
         #ifdef CANMODE__   

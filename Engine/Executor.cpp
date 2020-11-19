@@ -199,8 +199,9 @@ bool Executor::run_simulation(JobVectorOfSimulator& job_vector_of_simulator, Job
                 run_job->run();
                 // global_object::finished_job.push(run_job);
                 // Choose which one you think is best.
+                utils::current_time += run_job->get_simulated_execution_time();
                 //utils::current_time += run_job->get_last_elapsed_nano_sec();
-                utils::current_time += run_job->get_last_elapsed_micro_sec();
+                //utils::current_time += run_job->get_last_elapsed_micro_sec();
                 //utils::current_time += run_job->get_last_elapsed_milli_sec();
                 //utils::current_time += run_job->get_last_elapsed_seconds();
             }
@@ -217,7 +218,6 @@ bool Executor::run_simulation(JobVectorOfSimulator& job_vector_of_simulator, Job
         }
     }
     utils::current_time = end_time;
-    //global_object::logger->print_job_execution_schedule();
     return true;
 }
 
@@ -225,14 +225,15 @@ void Executor::change_execution_time(JobVectorOfSimulator& job_vector_of_simulat
 {
     for (auto job : job_vector_of_simulator)
     {
-        job->set_simulated_execution_time(job->get_actual_execution_time() * utils::simple_mapping_function);
+        job->set_simulated_execution_time(job->get_actual_execution_time() * utils::computer_modeling_mapping_function);
+        #ifdef GPUMODE__
         if(utils::execute_gpu_jobs_on_cpu)
         {
             if(job->penalty) // This job was a GPU job on the real system.
             {
                 double exec = job->get_gpu_wait_time() + 2;
                 exec *= utils::simple_gpu_mapping_function;
-                exec *= utils::simple_mapping_function;
+                exec *= utils::computer_modeling_mapping_function;
                 job->set_simulated_execution_time(exec);
                 //job->set_simulated_execution_time(job->get_simulated_execution_time() * utils::simple_gpu_mapping_function);
             }
@@ -242,7 +243,7 @@ void Executor::change_execution_time(JobVectorOfSimulator& job_vector_of_simulat
             //double execution_time_mapping_factor = (double)job->get_ECU()->get_gpu_performance() / utils::simulatorGPU_performance;
             //job->set_simulated_execution_time(job->get_actual_execution_time() * execution_time_mapping_factor);
             //job->set_simulated_gpu_wait_time(job->get_gpu_wait_time() * utils::simple_gpu_mapping_function);
-            job->set_simulated_gpu_wait_time(job->get_gpu_wait_time() * utils::simple_mapping_function);
+            job->set_simulated_gpu_wait_time(job->get_gpu_wait_time() * utils::computer_modeling_mapping_function);
             if(utils::execute_gpu_jobs_on_cpu)
             {
                 job->set_simulated_gpu_wait_time(job->get_simulated_gpu_wait_time() * utils::simple_gpu_mapping_function);
@@ -258,6 +259,7 @@ void Executor::change_execution_time(JobVectorOfSimulator& job_vector_of_simulat
                 //job->set_simulated_gpu_wait_time(job->get_gpu_wait_time() * utils::simple_gpu_mapping_function);
             }
         }
+        #endif
     }
 }
 

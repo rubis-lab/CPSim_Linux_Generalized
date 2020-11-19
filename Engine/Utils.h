@@ -63,7 +63,7 @@ namespace utils
     extern int shared_variable;
 
      
-    inline double simple_mapping_function = 0.3;
+    inline double computer_modeling_mapping_function = 0.1;
     inline double simple_gpu_mapping_function = 10; // GPU Tasks take 10x longer to run on CPU than on GPU.
     inline bool execute_gpu_jobs_on_cpu = false; // Used for comparing CPU vs GPU simulatability increase.
     inline bool enable_gpu_scheduling = false;
@@ -73,6 +73,7 @@ namespace utils
     inline bool is_experimental = true;
     inline bool real_workload = true;
     inline unsigned long long simulator_elapsed_time = 0;
+    inline unsigned long long simulation_termination_time = hyper_period * 1;         //10000000000
 
     inline int log_delay_seconds = 1;
 

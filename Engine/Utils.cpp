@@ -240,7 +240,7 @@ void utils::update_utils_variables()
 		var_file.ignore(256, '='); var_file >> utils::log_entries;
 
 		//double simple_mapping_function
-		var_file.ignore(256, '='); var_file >> utils::simple_mapping_function;
+		var_file.ignore(256, '='); var_file >> utils::computer_modeling_mapping_function;
 
 		//double_simple_gpu_mapping_function
 		var_file.ignore(256, '='); var_file >> utils::simple_gpu_mapping_function;

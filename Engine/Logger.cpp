@@ -109,7 +109,7 @@ void Logger::start_logging()
     utils::simulator_elapsed_time = 0;
 
     std::ofstream scheduling_log;
-    while (1)
+    while (utils::current_time < utils::simulation_termination_time)
     {
         scheduling_log.open(utils::cpsim_path + "/Log/scheduling.log", std::ios::app);    
         utils::mtx.lock();
@@ -127,9 +127,6 @@ void Logger::start_logging()
             }
             
             global_object::diagram_vector.erase(global_object::diagram_vector.begin() + min_idx);
-            //std::cout << current_data.data << std::endl;
-            // global_object::DiagramData current_data = global_object::diagram_data.top();
-            // global_object::diagram_data.pop();
             scheduling_log.write(current_data->get_data().c_str(), current_data->get_data().size());
             std::this_thread::sleep_for(std::chrono::milliseconds(current_data->get_execution_time()));
         }

@@ -57,7 +57,7 @@ void Ethernet_receiver::receive_messages()
 			// std::cout << shared::rtU.read1 << std::endl;
 			// std::cout << std::endl;
 		}
-	} while(1);
+	} while(utils::current_time < utils::simulation_termination_time);
 }
 
 void Ethernet_receiver::start_simulation_time()
