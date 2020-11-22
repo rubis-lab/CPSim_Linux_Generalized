@@ -21,6 +21,7 @@
 #include "Ethernet_receiver.h"
 #include "Logger.h"
 #include "DiagramData.h"
+#include "Delayed_Data.h"
 
 /** This file is engine code of CPSim-Re engine
  * @file RUBIS_Util.h
@@ -45,11 +46,14 @@ typedef std::vector<std::shared_ptr<CAN_message> > CanMsgVector;
 
 namespace utils
 {
-    inline std::mutex mtx;
+    inline std::mutex mtx_data_write;
+    inline std::mutex mtx_data_log;
+    
     inline std::string file_path = "/home/";
     inline std::string null_path = "";
     inline std::string cpsim_path = "";
     inline std::string ip_address = "";
+    
     inline int hyper_period = 0;
     inline int socket_EHTERNET = 0;
     inline double current_time = 0; //simulation time(milli second)
@@ -154,7 +158,7 @@ namespace global_object
     inline std::shared_ptr<std::thread> can_receiver_thread;
     inline std::shared_ptr<Ethernet_receiver> ethernet_receiver;
     inline std::shared_ptr<std::thread> ethernet_receiver_thread;
-    
+    inline std::vector<std::shared_ptr<DelayedData>> delayed_data_write;
 
     typedef struct LogData
     {

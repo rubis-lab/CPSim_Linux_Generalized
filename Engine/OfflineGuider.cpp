@@ -136,6 +136,7 @@ void OfflineGuider::construct_producer_job_sets(JobVectorsForEachECU& job_vector
 {
     current_job->get_job_set_pro_con_det().clear();
     current_job->get_job_set_pro_con_non_det().clear();
+
     std::shared_ptr<Job> deterministic_producer = nullptr;
     for (int i = 0; i < job_vectors_for_each_ECU.size(); i++)
         if(job_vectors_for_each_ECU.at(i).size() != 0)
@@ -176,6 +177,8 @@ void OfflineGuider::construct_producer_job_sets(JobVectorsForEachECU& job_vector
             }
         }
     }
-    if (deterministic_producer != nullptr)
+    if (deterministic_producer != nullptr){
+        current_job->set_producer_job(deterministic_producer);
         current_job->get_job_set_pro_con_det().push_back(deterministic_producer);
+    }
 }

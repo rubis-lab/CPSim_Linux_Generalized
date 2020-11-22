@@ -2,10 +2,7 @@
 #include "Utils.h"
 #include <iostream>
 #include <fstream>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <netdb.h>
+
 /**
  *  This file is the cpp file for the Task class.
  *  @file Task.cpp
@@ -158,71 +155,7 @@ void Task::loadFunction(std::string file_path, std::string function_name)
 
 void Task::run()
 {
-    if(m_is_read == true)
-    {
-        utils::mtx.lock();
-        m_run_start = std::chrono::steady_clock::now();
-        m_casted_func();
-        m_run_end = std::chrono::steady_clock::now();
-
-        m_data_read_buffer.at(0) = shared::CC_Recv_ACCEL_VALUE;
-        m_data_read_buffer.at(1) = shared::CC_Recv_TARGET_SPEED;
-        m_data_read_buffer.at(2) = shared::CC_Recv_CC_TRIGGER;
-        m_data_read_buffer.at(3) = shared::CC_Recv_SPEED;
-        m_data_read_buffer.at(4) = shared::rtU.read2;
-        m_data_read_buffer.at(5) = shared::rtU.read1;
-
-        utils::mtx.unlock();
-    }
-    else if(m_is_write == true)
-    {
-        utils::mtx.lock();
-        m_run_start = std::chrono::steady_clock::now();
-        m_casted_func();
-        m_run_end = std::chrono::steady_clock::now();
-        utils::mtx.unlock();
-        #ifdef CANMODE__   
-        CAN_message msg; 
-        msg.transmit_can_message(m_task_name);
-        #endif
-        #ifdef ETHERNET_MODE__  
-        char write_buf[16];
-        int write4 = shared::rtY.write4;
-        int write3 = shared::rtY.write3;
-        
-        memcpy(write_buf    ,  &shared::CC_Send_ACCEL, 4);
-        memcpy(write_buf + 4,  &shared::CC_Send_BRAKE, 4);
-        memcpy(write_buf + 8,  &write4,  4);
-        memcpy(write_buf + 12, &write3, 4);
-
-        send( utils::socket_EHTERNET, write_buf, sizeof(write_buf), 0);
-        #endif
-    }
-    else
-    {
-        
-    }
-    
-}
-
-long long Task::get_last_elapsed_nano_sec()
-{
-    return std::chrono::duration_cast<std::chrono::nanoseconds>(m_run_end - m_run_start).count();
-}
-
-long long Task::get_last_elapsed_micro_sec()
-{
-    return std::chrono::duration_cast<std::chrono::microseconds>(m_run_end - m_run_start).count();
-}
-
-long long Task::get_last_elapsed_milli_sec()
-{
-    return std::chrono::duration_cast<std::chrono::milliseconds>(m_run_end - m_run_start).count();
-}
-
-long long Task::get_last_elapsed_seconds()
-{
-    return std::chrono::duration_cast<std::chrono::seconds>(m_run_end - m_run_start).count();
+    m_casted_func();
 }
 
 Task::Task(std::string task_name, int period, int deadline, int wcet,

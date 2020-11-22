@@ -59,6 +59,10 @@ private:
     int m_wpet;
 
     std::array<int, 2> m_worst_case_busy_period;
+    std::array<int, 6> m_data_read_buffer;
+
+    std::shared_ptr<Job> m_producer_job;
+
     std::vector<std::shared_ptr<Job>> m_history_of_sim_deadline;
     std::vector<std::shared_ptr<Job>> m_job_set_start_det;
     std::vector<std::shared_ptr<Job>> m_job_set_start_non_det;
@@ -70,6 +74,10 @@ private:
     std::vector<std::shared_ptr<Job>> m_det_successors;
     std::vector<std::shared_ptr<Job>> m_non_det_predecessors;
     std::vector<std::shared_ptr<Job>> m_non_det_successors;
+    
+    std::chrono::steady_clock::time_point m_run_start;
+	std::chrono::steady_clock::time_point m_run_end;
+
 public:
     /**
      * Constructor & Destructor
@@ -80,6 +88,11 @@ public:
     /**
      * Getter & Setter
      */
+    long long get_last_elapsed_nano_sec();
+	long long get_last_elapsed_micro_sec();
+	long long get_last_elapsed_milli_sec();
+	long long get_last_elapsed_seconds();
+
     bool get_is_started();
     bool get_is_finished();
     bool get_is_preempted();
@@ -113,7 +126,10 @@ public:
     int get_wpet();    
 
     std::array<int, 2>& get_wcbp();
-    
+    std::array<int, 6> get_data_read_buffer();
+
+    std::shared_ptr<Job> get_producer_job();
+
     std::vector<std::shared_ptr<Job>>& get_job_set_start_det();
     std::vector<std::shared_ptr<Job>>& get_job_set_start_non_det();
     std::vector<std::shared_ptr<Job>>& get_job_set_finish_det();
@@ -156,6 +172,10 @@ public:
     void set_wpet(int);
     
     void set_wcbp(std::array<int, 2>&);
+    void set_data_read_buffer(std::array<int, 6>);
+
+    void set_producer_job(std::shared_ptr<Job>);
+
     void set_job_set_start_det(std::vector<std::shared_ptr<Job>>&);
     void set_job_set_start_non_det(std::vector<std::shared_ptr<Job>>&);
     void set_job_set_finish_det(std::vector<std::shared_ptr<Job>>&);
@@ -177,6 +197,7 @@ public:
     void update_simulated_deadline();
     double min_simulated_deadline_det_successor();
     void add_history(std::shared_ptr<Job>);
+    void run_function();
 
     bool operator<(const Job& other_job);
     bool operator>(const Job& other_job);

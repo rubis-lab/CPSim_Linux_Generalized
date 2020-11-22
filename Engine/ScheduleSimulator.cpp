@@ -342,7 +342,7 @@ void ScheduleSimulator::simulate_scheduling_on_real(EcuVector& ecu_vector, TaskV
                 else
                 {
                     busy_period_analysis(job_vectors_for_each_ECU, job_queue, busy_period_start_point, sum_of_execution, ecu_id, is_best);
-                    current_time_point += sum_of_execution;
+                    current_time_point = sum_of_execution;
                     is_idle = true;
                 }
             }
@@ -365,7 +365,7 @@ void ScheduleSimulator::busy_period_analysis(JobVectorsForEachECU& job_vectors_f
     }
     
     busy_start = highest_job->get_actual_release_time(); //set busy period start point as the highest priority job's release time.
-    busy_end = 0;
+    busy_end = busy_start;
     int last_start = 0;
     int last_execution_time = 0;
 
@@ -374,6 +374,7 @@ void ScheduleSimulator::busy_period_analysis(JobVectorsForEachECU& job_vectors_f
     // job_queue only contains jobs with CPU priority policy.
     while (job_queue.size() != 0)
     {
+
         bool is_idle = true;
         bool is_higher_job = false;
 
@@ -396,42 +397,42 @@ void ScheduleSimulator::busy_period_analysis(JobVectorsForEachECU& job_vectors_f
                 // GPU jobs already have a fully deterministicx EST variable set, we do not need to change it.
                 if(highest_job->get_priority_policy() == PriorityPolicy::CPU)
                 {
-                    if(highest_job->get_actual_release_time() >= (busy_start + busy_end))
+                    if(highest_job->get_actual_release_time() >= (busy_end))
                         highest_job->set_est(highest_job->get_actual_release_time());
+                    else if(highest_job->get_is_preempted())
+                    {
+                        
+                    }
                     else
                     {
-                        highest_job->set_est(busy_start + busy_end);
+                        highest_job->set_est(busy_end);
                     }
                 }
 
                 last_start = highest_job->get_est();
-
-                // if(is_best)
-                // {
-                //     //auto current = std::chrono::high_resolution_clock::now();
-
-                //     //int elapsed = std::chrono::duration_cast<std::chrono::seconds>(current - last).count();
-                //     utils::mtx.lock();
-                //     std::shared_ptr<DiagramData> diagram = std::make_shared<DiagramData>( highest_job->get_est(), 0, std::to_string(highest_job->get_est()) + ", ECU" + std::to_string(highest_job->get_ECU()->get_ECU_id()) + ": " + highest_job->get_task_name() + ", 1\n");
-                //     //diagram_data.time = utils::log_entries++;
-                //     global_object::diagram_vector.push_back(std::move(diagram));
-                //     utils::mtx.unlock();
-                // }
             }
             else
             {
                 // GPU jobs already have a fully deterministic LST variable set, we do not need to change it.
                 if (highest_job->get_priority_policy() == PriorityPolicy::CPU)
                 {
-                    if(highest_job->get_actual_release_time() >= (busy_start + busy_end))
+                    if(highest_job->get_actual_release_time() >= (busy_end))
                         highest_job->set_lst(highest_job->get_actual_release_time());
                     else
                     {
-                        highest_job->set_lst(busy_start + busy_end);
+                        highest_job->set_lst(busy_end);
                     }
                 }
                 last_start = highest_job->get_lst();
             }
+        }
+        else if(highest_job->get_est() == -1)
+        {
+            highest_job->set_est(busy_end);
+        }
+        else if(highest_job->get_lst() == -1)
+        {
+            highest_job->set_lst(busy_end);
         }
         // Can only happen if we just finished a higher prio job that is no longer in job queue that preempted this guy.
         if (highest_job->get_is_preempted() && highest_job->get_priority_policy() == PriorityPolicy::CPU) 
@@ -464,7 +465,7 @@ void ScheduleSimulator::busy_period_analysis(JobVectorsForEachECU& job_vectors_f
                     {
                         // See if newly discovered job has higher priority than us, in that case, pre-empty us.
                         //if (job->get_period() < highest_job->get_period())
-                        if(job->get_priority() < highest_job->get_priority()) // Need to check priority and not period to maintain compatability with gpu jobs.
+                        if(job->get_period() < highest_job->get_period()) // Need to check priority and not period to maintain compatability with gpu jobs.
                         {
                             highest_job->set_is_preempted(true);
                             if(is_best)
@@ -507,21 +508,15 @@ void ScheduleSimulator::busy_period_analysis(JobVectorsForEachECU& job_vectors_f
             {
                 if(is_best)
                 {
-                    highest_job->set_eft(busy_start + busy_end);
-                    
-                        // utils::mtx.lock();
-                        // std::shared_ptr<DiagramData> diagram = std::make_shared<DiagramData>(highest_job->get_eft(), highest_job->get_bcet(),std::to_string(highest_job->get_eft()) + ", ECU" + std::to_string(highest_job->get_ECU()->get_ECU_id()) + ": " + highest_job->get_task_name() + ", 0\n" );
-                        // global_object::diagram_vector.push_back(std::move(diagram));
-                        // utils::mtx.unlock();
-                    
+                    highest_job->set_eft(busy_end);    
                 }
                 else
                 {
                     std::array<int, 2> wcbp;
                     wcbp[0] = busy_start;
-                    wcbp[1] = busy_start + busy_end;
+                    wcbp[1] = busy_end;
 
-                    highest_job->set_lft(busy_start + busy_end);
+                    highest_job->set_lft(busy_end);
                     highest_job->set_wcbp(wcbp);
                 }
             }
@@ -553,7 +548,7 @@ void ScheduleSimulator::busy_period_analysis(JobVectorsForEachECU& job_vectors_f
                 next_job = job_queue.front();
                 for(auto job : job_queue)
                 {
-                    if(job->get_priority() < next_job->get_priority())
+                    if(job->get_period() < next_job->get_period())
                     {
                         next_job = job;
                     }
@@ -567,9 +562,6 @@ void ScheduleSimulator::busy_period_analysis(JobVectorsForEachECU& job_vectors_f
                         }
                 }
                 highest_job = next_job;
-                // GPU Jobs already has all these things set properly..Let's not mess them up.
-                if (highest_job->get_priority_policy() == PriorityPolicy::CPU)
-                    highest_job->set_est(busy_start + busy_end);
             }
             else
             {

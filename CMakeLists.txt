@@ -55,6 +55,8 @@ SET ( SRC_FILES
         Engine/JobNode.h Engine/JobNode.cpp
         # set DiagramData files
         Engine/DiagramData.h Engine/DiagramData.cpp
+        # set DelayedData files
+        Engine/Delayed_Data.h Engine/Delayed_Data.cpp
         # set CodeWrapper files
         Engine/CodeWrapper.h Engine/CodeWrapper.cpp
         )

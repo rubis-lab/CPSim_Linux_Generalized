@@ -4,6 +4,11 @@
 #include <cstdlib>
 #include <climits>
 #include <cmath>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <netdb.h>
+
 /** 
  *  This file is the cpp file for the Job class.
  *  @file Job.cpp
@@ -116,6 +121,25 @@ Job::Job(std::shared_ptr<Task> task, int job_id, int hyper_period_start)
 Job::~Job()
 {
     
+}
+long long Job::get_last_elapsed_nano_sec()
+{
+    return std::chrono::duration_cast<std::chrono::nanoseconds>(m_run_end - m_run_start).count();
+}
+
+long long Job::get_last_elapsed_micro_sec()
+{
+    return std::chrono::duration_cast<std::chrono::microseconds>(m_run_end - m_run_start).count();
+}
+
+long long Job::get_last_elapsed_milli_sec()
+{
+    return std::chrono::duration_cast<std::chrono::milliseconds>(m_run_end - m_run_start).count();
+}
+
+long long Job::get_last_elapsed_seconds()
+{
+    return std::chrono::duration_cast<std::chrono::seconds>(m_run_end - m_run_start).count();
 }
 bool Job::get_is_started()
 {
@@ -245,7 +269,14 @@ std::array<int, 2>& Job::get_wcbp()
 {
     return m_worst_case_busy_period;
 }
-
+std::array<int, 6> Job::get_data_read_buffer()
+{
+    return m_data_read_buffer;
+}
+std::shared_ptr<Job> Job::get_producer_job()
+{
+    return m_producer_job;
+}
 
 std::vector<std::shared_ptr<Job>>& Job::get_job_set_start_det()
 {
@@ -402,7 +433,14 @@ void Job::set_wcbp(std::array<int, 2>& wcbp)
 {
     m_worst_case_busy_period = wcbp;
 }
-
+void Job::set_data_read_buffer(std::array<int, 6> data_read_buffer)
+{
+    m_data_read_buffer = data_read_buffer;
+}
+void Job::set_producer_job(std::shared_ptr<Job> job)
+{
+    m_producer_job = job;
+}
 void Job::set_job_set_start_det(std::vector<std::shared_ptr<Job>>& job_set_start_det)
 {
     m_job_set_start_det = job_set_start_det;
@@ -530,4 +568,57 @@ std::vector<std::shared_ptr<Job>> Job::get_history()
 void Job::add_history(std::shared_ptr<Job> new_deadline)
 {
     m_history_of_sim_deadline.push_back(new_deadline);
+}
+
+void Job::run_function()
+{
+    if(get_is_read() == true)
+    {
+        m_run_start = std::chrono::steady_clock::now();
+        m_data_read_buffer.at(0) = shared::CC_Recv_ACCEL_VALUE;
+        m_data_read_buffer.at(1) = shared::CC_Recv_TARGET_SPEED;
+        m_data_read_buffer.at(2) = shared::CC_Recv_CC_TRIGGER;
+        m_data_read_buffer.at(3) = shared::CC_Recv_SPEED;
+        m_data_read_buffer.at(4) = shared::rtU.read2;
+        m_data_read_buffer.at(5) = shared::rtU.read1;
+
+        run();
+        m_run_end = std::chrono::steady_clock::now();
+    }
+    if(get_is_write() == true)
+    {
+        m_run_start = std::chrono::steady_clock::now();
+        if(m_producer_job != nullptr)
+        {
+            // shared::CC_Recv_ACCEL_VALUE = m_producer_job->get_data_read_buffer().at(0);
+            // shared::CC_Recv_TARGET_SPEED = m_producer_job->get_data_read_buffer().at(1);
+            // shared::CC_Recv_CC_TRIGGER = m_producer_job->get_data_read_buffer().at(2);
+            // shared::CC_Recv_SPEED = m_producer_job->get_data_read_buffer().at(3);
+            // shared::rtU.read2 = m_producer_job->get_data_read_buffer().at(4);
+            // shared::rtU.read1 = m_producer_job->get_data_read_buffer().at(5);
+            run();
+        }
+        else
+        {
+            run();
+        }
+        #ifdef CANMODE__   
+        CAN_message msg; 
+        msg.transmit_can_message(m_task_name);
+        #endif
+        #ifdef ETHERNET_MODE__  
+        
+        std::shared_ptr<DelayedData> delayed_data = std::make_shared<DelayedData>();
+        delayed_data->set_time(m_simulated_finish_time);
+        delayed_data->write4 = shared::rtY.write4;
+        delayed_data->write3 = shared::rtY.write3;
+        delayed_data->write2 = shared::CC_Send_BRAKE;
+        delayed_data->write1 = shared::CC_Send_ACCEL;
+        
+        global_object::delayed_data_write.push_back(std::move(delayed_data));
+        
+        #endif
+        m_run_end = std::chrono::steady_clock::now();
+    }
+    run();
 }

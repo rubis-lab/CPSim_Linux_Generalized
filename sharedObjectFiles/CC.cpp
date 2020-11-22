@@ -62,14 +62,14 @@ void sim_main()
   /********************************************/
   write5 = 0;
   write6 = 0;
-  read2 = read2 / 100 + 600000;
+  read2 = read2 / 100 + 10000000;
 
   if(read4 > 6000) {
     
     write6 = read1;
 	
-	if (read3 - read2 < 0)
-	  write6 = read2;
+	  if (read3 - read2 < 0)
+	    write6 = read2;
     else if(read3 > read2)
       write6 = 0;
   }
@@ -78,7 +78,7 @@ void sim_main()
   /***************** Data Write ***************/
   /********************************************/
   *CC_Send_BRAKE = write5;
-  *CC_Send_ACCEL = write6;
+  *CC_Send_ACCEL = write6 * 100;
 
 }
 

@@ -253,7 +253,7 @@ void Initializer::initialize(EcuVector& ecu_vector, TaskVector& task_vector, Job
          */
         ethernet_interface_initializer();
         global_object::ethernet_receiver = std::make_shared<Ethernet_receiver>();
-        global_object::ethernet_receiver->start_simulation_time();
+
 #endif
         /**
          * ECU Vector Initialization
@@ -326,7 +326,7 @@ void Initializer::initialize(EcuVector& ecu_vector, TaskVector& task_vector, Job
      * Global Hyper Period Initialization
      */
     utils::hyper_period = utils::calculate_hyper_period(task_vector);
-    utils::simulation_termination_time = utils::hyper_period * 1;
+    utils::simulation_termination_time = utils::hyper_period * 1000000000000;
     /**
      * Logger Thread Initialized
      */
@@ -339,7 +339,6 @@ void Initializer::initialize(EcuVector& ecu_vector, TaskVector& task_vector, Job
     {
         global_object::logger = std::make_shared<Logger>();
     }
-    global_object::logger->log_task_vector_status(task_vector);
     global_object::logger->set_schedule_log_info(task_vector);
 #ifdef CANMODE__
     /**
@@ -502,7 +501,7 @@ void Initializer::random_task_generator(EcuVector& ecu_vector, TaskVector& task_
             task_vector.push_back(std::move(sync));
         }
     }
-    // What is this?
+
     for(int ecu_num =0; ecu_num < ecu_vector.size(); ecu_num++)
     {
         for(int i = 0; i < task_num; i++)

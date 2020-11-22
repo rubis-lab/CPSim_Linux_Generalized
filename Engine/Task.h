@@ -53,9 +53,6 @@ private:
 	//#error "OS not recognised."
 	//#endif
 
-	std::chrono::steady_clock::time_point m_run_start;
-	std::chrono::steady_clock::time_point m_run_end;
-
 	std::string m_task_name;
 	int m_task_id;
 	int m_vector_idx;
@@ -67,7 +64,6 @@ private:
 	int m_priority;
 	bool m_is_read;
 	bool m_is_write;
-	std::array<int, 6> m_data_read_buffer;
 
 	int m_gpu_wait_time; // TIME RESERVED FOR EXECUTION ON GPU SIDE (WCET) .... (WAIT TIME BETWEEN INIT AND SYNC.)
 	double m_simulated_gpu_wait_time;
@@ -95,11 +91,6 @@ public:
     /**
      * Getter member functions
      */
-	long long get_last_elapsed_nano_sec();
-	long long get_last_elapsed_micro_sec();
-	long long get_last_elapsed_milli_sec();
-	long long get_last_elapsed_seconds();
-
 	std::string get_task_name();
 	int get_task_id();
 	int get_vector_idx();
@@ -116,6 +107,7 @@ public:
 	bool get_is_gpu_init();
 	bool get_is_gpu_sync();
 	PriorityPolicy get_priority_policy();
+	std::array<int, 6> get_data_read_buffer();
 
 	std::vector<std::shared_ptr<Task>> get_producers();
 	std::vector<std::shared_ptr<Task>> get_consumers();
@@ -147,6 +139,7 @@ public:
 	void set_consumers_info(std::vector<std::string>);
 	void set_ECU(std::shared_ptr<ECU>);
 	void set_priority(int);
+	void set_data_read_buffer(std::array<int, 6>);
 	
 	void add_task_to_consumers(std::shared_ptr<Task>);
 	void add_task_to_producers(std::shared_ptr<Task>);
@@ -162,8 +155,6 @@ public:
 //#endif
 	void loadFunction(std::string file_path, std::string function_name);
 	void run();
-	
-
 	bool penalty;
 };
 

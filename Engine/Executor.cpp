@@ -164,44 +164,38 @@ bool Executor::run_simulation(JobVectorOfSimulator& job_vector_of_simulator, Job
             }
             
             run_job->set_simulated_start_time(utils::current_time); 
-            run_job->set_simulated_finish_time(utils::current_time + run_job->get_simulated_execution_time());
-            run_job->set_is_simulated(true);
-            
+             
             bool is_simulatable = simulatability_analysis(job_vector_of_simulator);
             if(!is_simulatable)
             {
-                // std::cout << "NOT SIMULATABLE" << std::endl;
-                // return false;
+                std::cout << "NOT SIMULATABLE" << std::endl;
+                return false;
             }
             
-
-            /**
-             * If, this is a real mode simulator, use actual function code of task
-             * Else, this is synthetic work
-             
-             , so that we just add simulated execution time to current time;
-             */
-
             if (utils::real_workload)
             {
-                run_job->run();
-                if(run_job->get_last_elapsed_micro_sec() < run_job->get_simulated_execution_time()*1000)
+                run_job->set_simulated_execution_time(run_job->get_actual_execution_time() * utils::computer_modeling_mapping_function);
+                run_job->set_simulated_finish_time(utils::current_time + run_job->get_simulated_execution_time());
+                run_job->set_is_simulated(true);
+                run_job->run_function();
+                if(run_job->get_last_elapsed_milli_sec() < run_job->get_simulated_execution_time())
                 {
-                    utils::current_time += run_job->get_simulated_execution_time();
+                    utils::current_time += run_job->get_actual_execution_time() * utils::computer_modeling_mapping_function;
                     std::chrono::steady_clock::time_point job_start = std::chrono::steady_clock::now();
                     while (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - job_start).count() < run_job->get_simulated_execution_time())
                     {
                         continue;
                     }
                 }
-                // global_object::finished_job.push(run_job);
-                // Choose which one you think is best.
-                //utils::current_time += run_job->get_last_elapsed_nano_sec();
-                //utils::current_time += run_job->get_last_elapsed_micro_sec();
-                //utils::current_time += run_job->get_last_elapsed_milli_sec();
-                //utils::current_time += run_job->get_last_elapsed_seconds();
+                utils::mtx_data_log.lock();
+                std::shared_ptr<DiagramData> diagram_start = std::make_shared<DiagramData>( run_job->get_actual_start_time(), 0, std::to_string(run_job->get_actual_start_time()) + ", ECU" + std::to_string(run_job->get_ECU()->get_ECU_id()) + ": " + run_job->get_task_name() + ", 1\n");
+                global_object::diagram_vector.push_back(std::move(diagram_start));
+                std::shared_ptr<DiagramData> diagram_finish = std::make_shared<DiagramData>(run_job->get_actual_finish_time(), run_job->get_actual_execution_time(),std::to_string(run_job->get_actual_finish_time()) + ", ECU" + std::to_string(run_job->get_ECU()->get_ECU_id()) + ": " + run_job->get_task_name() + ", 0\n" );
+                global_object::diagram_vector.push_back(std::move(diagram_finish));
+                utils::mtx_data_log.unlock();
             }
             else utils::current_time += run_job->get_simulated_execution_time();
+            
             for(int i = 0; i < simulation_ready_queue.size(); i++)
             {
                 if(simulation_ready_queue.at(i) == run_job)
@@ -682,7 +676,6 @@ bool Executor::check_deadline_miss(JobVectorOfSimulator& job_vector_of_simulator
         { 
             std::cout << "Simulated finish time for job " << job->get_task_name() << ":" << job->get_job_id() << " was " << job->get_simulated_finish_time() << std::endl;
             std::cout << "The simulated deadline was " << job->get_simulated_deadline() << std::endl;
-            global_object::logger->log_which_job_was_deadline_miss(job);
             return true; //deadline miss occured
         } 
     }

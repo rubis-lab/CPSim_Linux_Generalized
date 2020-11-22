@@ -1,1 +1,1 @@
-# kill $(pidof CPSim-0.1.out)
+#kill $(pidof CPSim-0.1.out)
