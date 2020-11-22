@@ -90,17 +90,10 @@ int main(int argc, char *argv[])
         std::vector<std::shared_ptr<CAN_message> > can_msg_vector;
 #endif
         Initializer initializer_module;
-        if (argv[1] != NULL)
-        {
-            initializer_module.initialize(ecu_vector, task_vector, job_vectors_for_each_ECU, argv[1]);
-        }
-        else
-        {
-            initializer_module.initialize(ecu_vector, task_vector, job_vectors_for_each_ECU, utils::null_path);
-        }
-         ScheduleSimulator schedule_simulator_on_Real;
-         OfflineGuider offline_guider;
-         Executor executor;
+        initializer_module.initialize(ecu_vector, task_vector, job_vectors_for_each_ECU);
+        ScheduleSimulator schedule_simulator_on_Real;
+        OfflineGuider offline_guider;
+        Executor executor;
 
          /** [Generation of Real-Cyber System's Scheduling]
           * To run simulator, 
@@ -114,10 +107,10 @@ int main(int argc, char *argv[])
           * For this, we create offline guider, and make a graph data structure for representing all of the jobs' precedence relationship.
          */  
           
-         bool is_simulatable = true;
+        bool is_simulatable = true;
         utils::simulator_start_time = std::chrono::steady_clock::now();     
-         while(utils::current_time < utils::simulation_termination_time && is_simulatable) // millisecond units
-         {
+        while(utils::current_time < utils::simulation_termination_time && is_simulatable) // millisecond units
+        {
              /** [Execute Jobs and Update the graph]
               * To start simulator,
               * forth, we need to schedule those jobs' that is already inserted in the Job Precedence Graph.
@@ -133,8 +126,7 @@ int main(int argc, char *argv[])
             job_vectors_for_each_ECU.clear();
             if(is_simulatable == false)
                 std::cout << "not simulatable" << std::endl;
-            //std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - utils::simulator_start_time).count() << std::endl;
-         }
+        }
         //  is_simulatable ? ++simulatable_count : ++nonsimulatable_count;
         // if(utils::real_workload == false)
         // {

@@ -58,7 +58,7 @@ public:
 
     void assign_deadline_for_simulated_jobs(JobVectorOfSimulator&);
     void assign_predecessors_successors(JobVectorOfSimulator&);
-    void assign_initial_actual_start_time(JobVectorOfSimulator&);
+    void update_initialization(JobVectorOfSimulator&);
     bool check_deadline_miss(JobVectorOfSimulator&);
     bool simulatability_analysis(JobVectorOfSimulator&);
 };

@@ -70,9 +70,6 @@ void ScheduleSimulator::simulate_scheduling_on_real(EcuVector& ecu_vector, TaskV
          *  Generate scheduling simulation to refer to.
          *  Generated Scheduling Simulation Result will be stored to the utils:: 
          */
-        m_hyper_period = utils::hyper_period;
-        for(auto task : task_vector) // Incase simulate is run multiple times on same task set.
-            task->set_priority(0);
         #ifdef GPUMODE__
         // Assign GPU Priorities.
         int highest_gpu_priority = 0;
@@ -125,33 +122,23 @@ void ScheduleSimulator::simulate_scheduling_on_real(EcuVector& ecu_vector, TaskV
     /** 
      * Job instances generation for one HP
      */
-    // Get rid of previous simulation loops stuff.
-    //for(auto iter = task_vector.begin(); iter != task_vector.end(); iter ++ )
     for(int i = 0; i < task_vector.size(); ++i)
-    {   // #CRASH#
-        // Crash occurs in here when GPU is enabled.
-        // I think it is because
-        // Init and Sync jobs are two different tasks, but they have the same task ID as eachother.
-        // I am not sure.
-        // What is the best way to fix this?
-        //int task_idx = iter->get()->get_task_id();
+    {   
         int task_id = task_vector.at(i)->get_task_id();
         /**
          * number_of_jobs of this task in this hyper_period if offset is 0
          */
-        int num_of_jobs = m_hyper_period / task_vector.at(i)->get_period();//iter->get()->get_period();
+        int num_of_jobs = utils::hyper_period / task_vector.at(i)->get_period();//iter->get()->get_period();
         for(int job_id = 1; job_id <= num_of_jobs; job_id++)
         {
-            //std::shared_ptr<Job> job = std::make_shared<Job>(*iter, job_id);
             std::shared_ptr<Job> job = std::make_shared<Job>(task_vector.at(task_id), job_id, global_hyper_period_start_point);
             job->m_casted_func = task_vector.at(task_id)->m_casted_func;
             job_vectors_for_each_ECU.at(task_vector.at(i)->get_ECU()->get_ECU_id()).at(task_vector.at(i)->get_vector_idx()).push_back(std::move(job));
-            //job_vectors_for_each_ECU.at(iter->get()->get_ECU()->get_ECU_id()).at(task_idx).push_back(std::move(job));
         }
     }
 
-    int offset = global_hyper_period_start_point;
     #ifdef GPUMODE__
+    int offset = global_hyper_period_start_point;
     // ACCOUNT FOR GPU JOBS.
     // Schedule GPU JOBS.
     if(utils::enable_gpu_scheduling)
@@ -303,15 +290,7 @@ void ScheduleSimulator::simulate_scheduling_on_real(EcuVector& ecu_vector, TaskV
                 }
     }
     #endif
-    // Effectively, the result of this function is:
-    // set_is_released(true)
-    // bpet
-    // wpet
-    // est
-    // lst
-    // wcbp
-    // eft
-    // lft
+
     /**
      * Generate schedule each ECUs
      */
@@ -323,8 +302,19 @@ void ScheduleSimulator::simulate_scheduling_on_real(EcuVector& ecu_vector, TaskV
         {
             int current_time_point = global_hyper_period_start_point;
             int busy_period_start_point = 0;
+
+            for(int task_id = 0; task_id < job_vectors_for_each_ECU.at(ecu_id).size(); ++task_id)
+                for(auto job : job_vectors_for_each_ECU.at(ecu_id).at(task_id))
+                {
+                    job->set_is_released(false);
+                    job->set_is_finished(false);
+                    job->set_is_resumed(false);
+                    job->set_is_running(false);
+                    job->set_is_preempted(false);
+                }
+
             //check_released_jobs_at_the_time_point
-            while(current_time_point < (global_hyper_period_start_point + m_hyper_period))
+            while(current_time_point < (global_hyper_period_start_point + utils::hyper_period))
             {
                 busy_period_start_point = current_time_point;
                 
@@ -351,14 +341,9 @@ void ScheduleSimulator::simulate_scheduling_on_real(EcuVector& ecu_vector, TaskV
                 }
                 else
                 {
-                    busy_period_analysis(job_vectors_for_each_ECU, job_queue, busy_period_start_point, sum_of_execution, ecu_id, !is_best);
+                    busy_period_analysis(job_vectors_for_each_ECU, job_queue, busy_period_start_point, sum_of_execution, ecu_id, is_best);
                     current_time_point += sum_of_execution;
                     is_idle = true;
-                }
-
-                if(current_time_point > (global_hyper_period_start_point + m_hyper_period))
-                {
-
                 }
             }
             is_best = !is_best;
@@ -367,7 +352,7 @@ void ScheduleSimulator::simulate_scheduling_on_real(EcuVector& ecu_vector, TaskV
     m_is_offline = false;
 }
 
-void ScheduleSimulator::busy_period_analysis(JobVectorsForEachECU& job_vectors_for_each_ECU, std::vector<std::shared_ptr<Job>>& job_queue, int start, int& end, int ecu_id, bool setWorstCase)
+void ScheduleSimulator::busy_period_analysis(JobVectorsForEachECU& job_vectors_for_each_ECU, std::vector<std::shared_ptr<Job>>& job_queue, int busy_start, int& busy_end, int ecu_id, bool is_best)
 {
     std::shared_ptr<Job> highest_job = job_queue.front();
 
@@ -379,11 +364,10 @@ void ScheduleSimulator::busy_period_analysis(JobVectorsForEachECU& job_vectors_f
         }
     }
     
-    start = highest_job->get_actual_release_time(); //set busy period start point as the highest priority job's release time.
-    end = 0;
+    busy_start = highest_job->get_actual_release_time(); //set busy period start point as the highest priority job's release time.
+    busy_end = 0;
     int last_start = 0;
     int last_execution_time = 0;
-    
 
     // initial value of parameter "start" will always be at a location that is NOT occupied by GPU / Sync job.
 
@@ -407,58 +391,43 @@ void ScheduleSimulator::busy_period_analysis(JobVectorsForEachECU& job_vectors_f
         {
             highest_job->set_is_started(true);
             
-            if (!setWorstCase)
+            if (is_best)
             {
                 // GPU jobs already have a fully deterministicx EST variable set, we do not need to change it.
                 if(highest_job->get_priority_policy() == PriorityPolicy::CPU)
                 {
-                    if(highest_job->get_actual_release_time() >= (start + end))
+                    if(highest_job->get_actual_release_time() >= (busy_start + busy_end))
                         highest_job->set_est(highest_job->get_actual_release_time());
                     else
                     {
-                        highest_job->set_est(start + end);
+                        highest_job->set_est(busy_start + busy_end);
                     }
                 }
 
                 last_start = highest_job->get_est();
 
-                if(!setWorstCase)
-                {
-                    //auto current = std::chrono::high_resolution_clock::now();
+                // if(is_best)
+                // {
+                //     //auto current = std::chrono::high_resolution_clock::now();
 
-                    //int elapsed = std::chrono::duration_cast<std::chrono::seconds>(current - last).count();
-                    utils::mtx.lock();
-                    std::shared_ptr<DiagramData> diagram = std::make_shared<DiagramData>( highest_job->get_est(), 0, std::to_string(highest_job->get_est()) + ", ECU" + std::to_string(highest_job->get_ECU()->get_ECU_id()) + ": " + highest_job->get_task_name() + ", 1\n");
-                    //diagram_data.time = utils::log_entries++;
-                    global_object::diagram_vector.push_back(std::move(diagram));
-                    utils::mtx.unlock();
-                    //global_object::diagram_data.push(diagram_data);
-
-                    // if(elapsed >= utils::log_delay_seconds)
-                    // {
-                        // std::ofstream scheduling_log;
-                        // scheduling_log.open(utils::cpsim_path + "/Log/scheduling.log", std::ios::app);     
-                        // while(global_object::diagram_data.size() > 0)
-                        // {
-                        //     global_object::DiagramData current_data = global_object::diagram_data.top();
-                        //     global_object::diagram_data.pop();
-                        //     scheduling_log.write(current_data.data.c_str(), current_data.data.size());
-                        // }
-                        // scheduling_log.close();
-                    //     last = std::chrono::high_resolution_clock::now();
-                    // }
-                }
+                //     //int elapsed = std::chrono::duration_cast<std::chrono::seconds>(current - last).count();
+                //     utils::mtx.lock();
+                //     std::shared_ptr<DiagramData> diagram = std::make_shared<DiagramData>( highest_job->get_est(), 0, std::to_string(highest_job->get_est()) + ", ECU" + std::to_string(highest_job->get_ECU()->get_ECU_id()) + ": " + highest_job->get_task_name() + ", 1\n");
+                //     //diagram_data.time = utils::log_entries++;
+                //     global_object::diagram_vector.push_back(std::move(diagram));
+                //     utils::mtx.unlock();
+                // }
             }
             else
             {
                 // GPU jobs already have a fully deterministic LST variable set, we do not need to change it.
                 if (highest_job->get_priority_policy() == PriorityPolicy::CPU)
                 {
-                    if(highest_job->get_actual_release_time() >= (start+end))
+                    if(highest_job->get_actual_release_time() >= (busy_start + busy_end))
                         highest_job->set_lst(highest_job->get_actual_release_time());
                     else
                     {
-                        highest_job->set_lst(start + end);
+                        highest_job->set_lst(busy_start + busy_end);
                     }
                 }
                 last_start = highest_job->get_lst();
@@ -469,126 +438,103 @@ void ScheduleSimulator::busy_period_analysis(JobVectorsForEachECU& job_vectors_f
         {
             highest_job->set_is_preempted(false);
             highest_job->set_is_resumed(true);
-            if (!setWorstCase)
+            if (is_best)
             {
-                end += highest_job->get_bpet(); // subtract preempted time amount
+                busy_end += highest_job->get_bpet(); // subtract preempted time amount
             }
             else
             {
-                end += highest_job->get_wpet();
+                busy_end += highest_job->get_wpet();
             }
         }
         else
         {
-            setWorstCase ? last_execution_time = highest_job->get_wcet() : last_execution_time = highest_job->get_bcet();
-            end += last_execution_time;
+            is_best ? last_execution_time = highest_job->get_bcet() : last_execution_time = highest_job->get_wcet();
+            busy_end += last_execution_time;
         }
         
         for(int task_id = 0; task_id < job_vectors_for_each_ECU.at(ecu_id).size(); ++task_id)
-        for (auto job : job_vectors_for_each_ECU.at(ecu_id).at(task_id))
         {
-            if ((start <= job->get_actual_release_time()) && (job->get_actual_release_time() < end))
+            for (auto job : job_vectors_for_each_ECU.at(ecu_id).at(task_id))
             {
-                if (job->get_is_released() == true) continue; // Job is already in job_queue, ignore.
-                else
+                if ((busy_start <= job->get_actual_release_time()) && (job->get_actual_release_time() < busy_end))
                 {
-                    // See if newly discovered job has higher priority than us, in that case, pre-empty us.
-                    //if (job->get_period() < highest_job->get_period())
-                    if(job->get_priority() < highest_job->get_priority()) // Need to check priority and not period to maintain compatability with gpu jobs.
+                    if (job->get_is_released() == true) continue; // Job is already in job_queue, ignore.
+                    else
                     {
-                        highest_job->set_is_preempted(true);
-                        if(!setWorstCase)
-                            highest_job->set_bpet(highest_job->get_est() + highest_job->get_bcet() - job->get_actual_release_time());
-                        else
-                            highest_job->set_wpet(highest_job->get_lst() + highest_job->get_wcet() - job->get_actual_release_time());
-                        job->set_is_released(true);
-                        job->set_is_started(true);
-                        if (!setWorstCase)
-                            job->set_est(job->get_actual_release_time());
-                        else
-                            job->set_lst(job->get_actual_release_time());
-                        highest_job = job;
-                        
-                        is_higher_job = true;
-                        if (!setWorstCase)
-                            last_start = highest_job->get_est();
-                        else
-                            last_start = highest_job->get_lst();
-                        end = last_start;
-                        job_queue.push_back(highest_job);
-                        break;
-                    }
-                    else // Add newly discovered job to job_queue and resort to maintain priority order.
-                    {
-                        job->set_is_released(true);
-                        job_queue.push_back(job);
+                        // See if newly discovered job has higher priority than us, in that case, pre-empty us.
+                        //if (job->get_period() < highest_job->get_period())
+                        if(job->get_priority() < highest_job->get_priority()) // Need to check priority and not period to maintain compatability with gpu jobs.
+                        {
+                            highest_job->set_is_preempted(true);
+                            if(is_best)
+                                highest_job->set_bpet(highest_job->get_est() + highest_job->get_bcet() - job->get_actual_release_time());
+                            else
+                                highest_job->set_wpet(highest_job->get_lst() + highest_job->get_wcet() - job->get_actual_release_time());
+                            job->set_is_released(true);
+                            job->set_is_started(true);
+                            if (is_best)
+                                job->set_est(job->get_actual_release_time());
+                            else
+                                job->set_lst(job->get_actual_release_time());
+                            highest_job = job;
+                            
+                            is_higher_job = true;
+                            if (is_best)
+                                last_start = highest_job->get_est();
+                            else
+                                last_start = highest_job->get_lst();
+                            busy_end = last_start;
+                            job_queue.push_back(highest_job);
+                            break;
+                        }
+                        else // Add newly discovered job to job_queue and resort to maintain priority order.
+                        {
+                            job->set_is_released(true);
+                            job_queue.push_back(job);
+                        }
                     }
                 }
             }
         }
-
         if (is_higher_job)
         {
             continue;
         }
         else
         {
-            // GPU Jobs already has all these things set properly..Let's not mess them up.
             if (highest_job->get_priority_policy() == PriorityPolicy::CPU)
             {
-                if (setWorstCase)
+                if(is_best)
                 {
-                    std::array<int, 2> wcbp;
-                    wcbp[0] = start;
-                    wcbp[1] = start + end;
-
-                    highest_job->set_lft(start + end);
-                    highest_job->set_wcbp(wcbp);
-                }
-                else 
-                {
-                    highest_job->set_eft(start + end);
-                    if(!setWorstCase)
-                    {
-                        //std::chrono::high_resolution_clock::time_point current = std::chrono::high_resolution_clock::now();
-                        //int elapsed = std::chrono::duration_cast<std::chrono::seconds>(current - last).count();
-                        utils::mtx.lock();
-                        std::shared_ptr<DiagramData> diagram = std::make_shared<DiagramData>(highest_job->get_eft(), highest_job->get_bcet(),std::to_string(highest_job->get_eft()) + ", ECU" + std::to_string(highest_job->get_ECU()->get_ECU_id()) + ": " + highest_job->get_task_name() + ", 0\n" );
-                        //diagram_data.time = utils::log_entries++;
-                        global_object::diagram_vector.push_back(std::move(diagram));
-                        //global_object::diagram_data.push(diagram_data);
-                        utils::mtx.unlock();
-                        // if(elapsed >= utils::log_delay_seconds)
-                        // {
-                            
-                            //last = std::chrono::high_resolution_clock::now();
-                        //}
-                    }
+                    highest_job->set_eft(busy_start + busy_end);
+                    
+                        // utils::mtx.lock();
+                        // std::shared_ptr<DiagramData> diagram = std::make_shared<DiagramData>(highest_job->get_eft(), highest_job->get_bcet(),std::to_string(highest_job->get_eft()) + ", ECU" + std::to_string(highest_job->get_ECU()->get_ECU_id()) + ": " + highest_job->get_task_name() + ", 0\n" );
+                        // global_object::diagram_vector.push_back(std::move(diagram));
+                        // utils::mtx.unlock();
                     
                 }
-            }
-            if(!setWorstCase)
-            {
-                //m_execution_order_b.push_back(highest_job);
-                //if(highest_job->get_priority_policy() == PriorityPolicy::GPU)
-                    //std::cout << "GPU JOB ADDED TO EXECUTION ORDER!!!!!1" << std::endl;
-            }
-            else
-            {
-                //m_execution_order_w.push_back(highest_job);
-                //if(highest_job->get_priority_policy() == PriorityPolicy::GPU)
-                    //std::cout << "GPU JOB ADDED TO EXECUTION ORDER!!!!!1" << std::endl;
+                else
+                {
+                    std::array<int, 2> wcbp;
+                    wcbp[0] = busy_start;
+                    wcbp[1] = busy_start + busy_end;
+
+                    highest_job->set_lft(busy_start + busy_end);
+                    highest_job->set_wcbp(wcbp);
+                }
             }
             
             highest_job->set_is_started(false);
             highest_job->set_is_finished(true);
             
-            if(!setWorstCase && highest_job->get_actual_release_time() > highest_job->get_est())
+            if(is_best && highest_job->get_actual_release_time() > highest_job->get_est())
             {
                 std::cout << highest_job->get_task_id() << highest_job->get_job_id() << "EST ERROR!!!!" <<  highest_job->get_actual_release_time()<<" " << highest_job->get_est() <<std::endl;
             }
 
-            if(setWorstCase && highest_job->get_actual_release_time() > highest_job->get_lst())
+            if(!is_best && highest_job->get_actual_release_time() > highest_job->get_lst())
             {
                 std::cout << highest_job->get_task_id() << highest_job->get_job_id() << "LST ERROR!!!!"  <<  highest_job->get_actual_release_time() << " "<< highest_job->get_lst()<<std::endl;
             }
@@ -600,27 +546,36 @@ void ScheduleSimulator::busy_period_analysis(JobVectorsForEachECU& job_vectors_f
                     job_queue.erase(job_queue.begin() + i);
                 }
             }
-            std::shared_ptr<Job> next_job;
-            next_job = job_queue.front();
-            for(auto job : job_queue)
+            
+            if(!job_queue.size() == 0)
             {
-                if(job->get_priority() < next_job->get_priority())
+                std::shared_ptr<Job> next_job;
+                next_job = job_queue.front();
+                for(auto job : job_queue)
                 {
-                    next_job = job;
-                }
-            }
-            for(auto job : job_queue)
-            {
-                if(job->get_task_id() == next_job->get_task_id())
-                    if(job->get_job_id() < next_job->get_job_id() && !job->get_is_finished())
+                    if(job->get_priority() < next_job->get_priority())
                     {
                         next_job = job;
                     }
+                }
+                for(auto job : job_queue)
+                {
+                    if(job->get_task_id() == next_job->get_task_id())
+                        if((job->get_job_id() < next_job->get_job_id()) && (!job->get_is_finished()))
+                        {
+                            next_job = job;
+                        }
+                }
+                highest_job = next_job;
+                // GPU Jobs already has all these things set properly..Let's not mess them up.
+                if (highest_job->get_priority_policy() == PriorityPolicy::CPU)
+                    highest_job->set_est(busy_start + busy_end);
             }
-            highest_job = next_job;
-            // GPU Jobs already has all these things set properly..Let's not mess them up.
-            if (highest_job->get_priority_policy() == PriorityPolicy::CPU)
-                highest_job->set_est(start+end);
+            else
+            {
+                break;
+            }
+            
         }
     }
 

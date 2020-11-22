@@ -36,7 +36,7 @@ public:
     std::vector<std::string> specify_consumers(std::string);
     int specify_performance(std::string);
     std::string specify_mapping_functions(std::string);
-    void specify_the_system(EcuVector&, TaskVector&, std::string file_path);
+    void specify_the_system(EcuVector&, TaskVector&);
 };
 
 #endif

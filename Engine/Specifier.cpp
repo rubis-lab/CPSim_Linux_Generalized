@@ -61,7 +61,7 @@ Specifier::~Specifier()
  * @warning none
  * @todo none
  */
-void Specifier::specify_the_system(EcuVector& ecu_vector, TaskVector& task_vector, std::string file_path)
+void Specifier::specify_the_system(EcuVector& ecu_vector, TaskVector& task_vector)
 {
     m_parser.parse_xml_file();
     utils::number_of_ECUs = specify_number_of_ECUs();

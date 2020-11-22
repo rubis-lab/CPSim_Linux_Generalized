@@ -158,12 +158,29 @@ void Task::loadFunction(std::string file_path, std::string function_name)
 
 void Task::run()
 {
-    m_run_start = std::chrono::steady_clock::now();
-    m_casted_func();
-    m_run_end = std::chrono::steady_clock::now();
-
-    if(m_is_write == true)
+    if(m_is_read == true)
     {
+        utils::mtx.lock();
+        m_run_start = std::chrono::steady_clock::now();
+        m_casted_func();
+        m_run_end = std::chrono::steady_clock::now();
+
+        m_data_read_buffer.at(0) = shared::CC_Recv_ACCEL_VALUE;
+        m_data_read_buffer.at(1) = shared::CC_Recv_TARGET_SPEED;
+        m_data_read_buffer.at(2) = shared::CC_Recv_CC_TRIGGER;
+        m_data_read_buffer.at(3) = shared::CC_Recv_SPEED;
+        m_data_read_buffer.at(4) = shared::rtU.read2;
+        m_data_read_buffer.at(5) = shared::rtU.read1;
+
+        utils::mtx.unlock();
+    }
+    else if(m_is_write == true)
+    {
+        utils::mtx.lock();
+        m_run_start = std::chrono::steady_clock::now();
+        m_casted_func();
+        m_run_end = std::chrono::steady_clock::now();
+        utils::mtx.unlock();
         #ifdef CANMODE__   
         CAN_message msg; 
         msg.transmit_can_message(m_task_name);
@@ -227,6 +244,7 @@ Task::Task(std::string task_name, int period, int deadline, int wcet,
     m_is_write = is_write;
     m_producers_info = prodcuers;
     m_consumers_info = consumers;
+    m_priority = 0;
     m_priority_policy = policy;
     m_is_gpu_init = false;
     m_is_gpu_sync = false;
@@ -260,6 +278,7 @@ Task::Task(std::string task_name, int period, int deadline, int wcet,
     m_is_write = is_write;
     m_producers = prodcuers;
     m_consumers = consumers;
+    m_priority = 0;
     m_priority_policy = policy;
     m_is_gpu_init = false;
     m_is_gpu_sync = false;

@@ -40,7 +40,7 @@ public:
     void random_constraint_selector(TaskVector&, double, double);
 
     double set_simulator_performance();
-    void initialize(EcuVector&, TaskVector&, JobVectorsForEachECU&, std::string location);
+    void initialize(EcuVector&, TaskVector&, JobVectorsForEachECU&);
 };
 
 #endif

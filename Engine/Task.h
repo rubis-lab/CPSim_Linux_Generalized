@@ -67,6 +67,7 @@ private:
 	int m_priority;
 	bool m_is_read;
 	bool m_is_write;
+	std::array<int, 6> m_data_read_buffer;
 
 	int m_gpu_wait_time; // TIME RESERVED FOR EXECUTION ON GPU SIDE (WCET) .... (WAIT TIME BETWEEN INIT AND SYNC.)
 	double m_simulated_gpu_wait_time;

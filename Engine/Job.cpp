@@ -66,6 +66,7 @@ Job::Job(std::shared_ptr<Task> task, int job_id, int hyper_period_start)
     penalty = task->penalty;
     
     m_job_id = job_id;
+    m_actual_execution_time = -1;
     m_actual_release_time = calculate_release_time(task->get_period(), task->get_offset(), hyper_period_start);
     m_actual_deadline = calculate_absolute_deadline(m_actual_release_time, task->get_deadline());
     m_actual_start_time = -1;
@@ -74,15 +75,29 @@ Job::Job(std::shared_ptr<Task> task, int job_id, int hyper_period_start)
     m_simulated_release_time = -1;
     m_simulated_start_time = -1;
     m_simulated_finish_time = -1;
+    m_simulated_deadline = -1;
+    m_simulated_execution_time = -1;
 
     m_is_preemptable = false;
     m_is_preempted = false;
     m_is_started = false;
     m_is_finished = false;
+    m_is_best_analyzed = false;
+    m_is_worst_analyzed = false;
     m_is_resumed = false;
     m_is_running = false;
     m_is_released = false;
     m_is_simulated = false;
+
+    m_est = -1;
+    m_eft = -1;
+    m_lst = -1;
+    m_lft = -1;
+    m_wpet = -1;
+    m_bpet = -1;
+    m_worst_case_busy_period.at(0) = -1;
+    m_worst_case_busy_period.at(1) = -1;
+    
 }
 
 /**
@@ -129,6 +144,14 @@ bool Job::get_is_running()
 bool Job::get_is_simulated()
 {
     return m_is_simulated;
+}
+bool Job::get_is_best_analyzed()
+{
+    return m_is_best_analyzed;
+}
+bool Job::get_is_worst_analyzed()
+{
+    return m_is_worst_analyzed;
 }
 
 bool Job::operator<(const Job& other_job)
@@ -297,6 +320,14 @@ void Job::set_is_running(bool is_running)
 void Job::set_is_simulated(bool is_simulated)
 {
     m_is_simulated = is_simulated;
+}
+void Job::set_is_best_analyzed(bool is_best_analyzed)
+{
+    m_is_best_analyzed = is_best_analyzed;
+}
+void Job::set_is_worst_analyzed(bool is_worst_analyzed)
+{
+    m_is_worst_analyzed = is_worst_analyzed;
 }
 void Job::set_est(int est)
 {

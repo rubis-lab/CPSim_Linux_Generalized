@@ -226,20 +226,15 @@ int Initializer::parsing_specificated_information()
  * @warning none
  * @todo none
  */
-void Initializer::initialize(EcuVector& ecu_vector, TaskVector& task_vector, JobVectorsForEachECU& job_vectors_for_each_ECU, std::string location)
+void Initializer::initialize(EcuVector& ecu_vector, TaskVector& task_vector, JobVectorsForEachECU& job_vectors_for_each_ECU)
 {    
     /**
      * Speicification Initialization
      */
-    if (!location.empty())
-    {
-        utils::file_path = location;
-    }
-
     if(utils::real_workload == true)
     {
         Specifier specifier;
-        specifier.specify_the_system(ecu_vector, task_vector, utils::file_path);
+        specifier.specify_the_system(ecu_vector, task_vector);
         utils::simulator_performance = set_simulator_performance();
 #ifdef CANMODE__
         /**

@@ -29,6 +29,8 @@ private:
     bool m_is_preemptable; // true means originally CPU job, false means abstracted GPU job.
     bool m_is_started;
     bool m_is_finished;
+    bool m_is_best_analyzed;
+    bool m_is_worst_analyzed;
     bool m_is_preempted;
     bool m_is_resumed;
     bool m_is_released;
@@ -85,6 +87,8 @@ public:
     bool get_is_released();
     bool get_is_running();
     bool get_is_simulated();
+    bool get_is_best_analyzed();
+    bool get_is_worst_analyzed();
 
     int get_job_id();
     int get_actual_release_time();
@@ -128,6 +132,8 @@ public:
     void set_is_released(bool);
     void set_is_running(bool);
     void set_is_simulated(bool);
+    void set_is_best_analyzed(bool);
+    void set_is_worst_analyzed(bool);
     
     void set_job_id(int);
     void set_actual_release_time(int);

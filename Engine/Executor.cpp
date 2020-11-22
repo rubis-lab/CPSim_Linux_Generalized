@@ -99,12 +99,15 @@ bool Executor::run_simulation(JobVectorOfSimulator& job_vector_of_simulator, Job
 {
     double end_time = start_time + utils::hyper_period;
     move_ecus_jobs_to_simulator(job_vector_of_simulator, job_vectors_for_each_ECU); // Copies job vectors from ECUs to Sim.
-    random_execution_time_generator(job_vector_of_simulator); // Sets actual exec time on jobs in the Sim's job vectors.
-    change_execution_time(job_vector_of_simulator); // Sets the simulated exec time. Warning: Need to adapt for GPU by changing Init job's GPU WAIT TIME variable. Do we need to change the sync job aswell to accord for this..?
+    if (!utils::real_workload)
+    {
+        random_execution_time_generator(job_vector_of_simulator); // Sets actual exec time on jobs in the Sim's job vectors.
+        change_execution_time(job_vector_of_simulator); // Sets the simulated exec time.
+    }
+    
     assign_predecessors_successors(job_vector_of_simulator);
     assign_deadline_for_simulated_jobs(job_vector_of_simulator);
-    assign_initial_actual_start_time(job_vector_of_simulator);
-    
+    update_initialization(job_vector_of_simulator);
     /**
      * Iterating Loop for running jobs in one HP
      */
@@ -164,19 +167,6 @@ bool Executor::run_simulation(JobVectorOfSimulator& job_vector_of_simulator, Job
             run_job->set_simulated_finish_time(utils::current_time + run_job->get_simulated_execution_time());
             run_job->set_is_simulated(true);
             
-            // global_object::gld.est = run_job->get_est();
-            // global_object::gld.lst = run_job->get_lst();
-            // global_object::gld.eft = run_job->get_eft();
-            // global_object::gld.lft = run_job->get_lft();
-            // global_object::gld.act_rel = run_job->get_actual_release_time();
-            // global_object::gld.act_start = run_job->get_actual_start_time();
-            // global_object::gld.sim_deadline = run_job->get_simulated_deadline();
-            // global_object::gld.sim_finish = run_job->get_simulated_finish_time();
-            // global_object::gld.sim_release = run_job->get_simulated_release_time();
-            // global_object::gld.sim_start = run_job->get_simulated_start_time();
-            // global_object::gld.wcbp_start = run_job->get_wcbp().front();
-            // global_object::gld_vector.push_back(global_object::gld);
-            // global_object::logger->add_current_simulated_job(run_job);
             bool is_simulatable = simulatability_analysis(job_vector_of_simulator);
             if(!is_simulatable)
             {
@@ -194,8 +184,6 @@ bool Executor::run_simulation(JobVectorOfSimulator& job_vector_of_simulator, Job
 
             if (utils::real_workload)
             {
-                //starttime, get_ECUid: taskname, is started
-                
                 run_job->run();
                 if(run_job->get_last_elapsed_micro_sec() < run_job->get_simulated_execution_time()*1000)
                 {
@@ -708,7 +696,7 @@ bool Executor::simulatability_analysis(JobVectorOfSimulator& job_vector_of_simul
     return is_simulatable;
 }
 
-void Executor::assign_initial_actual_start_time(JobVectorOfSimulator& job_vector_of_simulator)
+void Executor::update_initialization(JobVectorOfSimulator& job_vector_of_simulator)
 {
     for(auto job : job_vector_of_simulator)
     {
@@ -716,16 +704,17 @@ void Executor::assign_initial_actual_start_time(JobVectorOfSimulator& job_vector
          * IF BUSY PERIOD START POINT IS SAME WITH RELEASE TIME
          * THAT JOB IS THE FIRST JOB OF THE BUSY PERIOD
          */
-        if(job->get_est() == job->get_actual_release_time())
+        if(job->get_est() == job->get_lst())
         {
-            job->set_actual_start_time(job->get_actual_release_time());
-            /**
-             * FOR CHECKING FUNCTIONALITY
-             */
-            if(!(job->get_actual_start_time() == job->get_lst()))
-            {
-                //std::cout << job->get_task_id()<<job->get_job_id() <<"MALFUNCTION" << std::endl;
-            }
+            job->set_actual_start_time(job->get_est());
+        }
+        if(job->get_eft() == job->get_lft())
+        {
+            job->set_actual_finish_time(job->get_eft());
+        }
+        if((job->get_est() == job->get_lst()) && (job->get_eft() == job->get_lft()))
+        {
+            job->set_actual_execution_time(job->get_eft() - job->get_est());
         }
     }
 }

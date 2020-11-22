@@ -48,14 +48,6 @@ void Ethernet_receiver::receive_messages()
 			shared::CC_Recv_SPEED = recv_speed;
 			shared::rtU.read2 = read2;
 			shared::rtU.read1 = read1;
-
-			// std::cout << shared::CC_Recv_ACCEL_VALUE << std::endl;
-			// std::cout << shared::CC_Recv_TARGET_SPEED << std::endl;
-			// std::cout << shared::CC_Recv_CC_TRIGGER << std::endl;
-			// std::cout << shared::CC_Recv_SPEED << std::endl;
-			// std::cout << shared::rtU.read2 << std::endl;
-			// std::cout << shared::rtU.read1 << std::endl;
-			// std::cout << std::endl;
 		}
 	} while(utils::current_time < utils::simulation_termination_time);
 }
