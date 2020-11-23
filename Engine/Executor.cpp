@@ -104,10 +104,19 @@ bool Executor::run_simulation(JobVectorOfSimulator& job_vector_of_simulator, Job
         random_execution_time_generator(job_vector_of_simulator); // Sets actual exec time on jobs in the Sim's job vectors.
         change_execution_time(job_vector_of_simulator); // Sets the simulated exec time.
     }
-    
+
     assign_predecessors_successors(job_vector_of_simulator);
     assign_deadline_for_simulated_jobs(job_vector_of_simulator);
     update_initialization(job_vector_of_simulator);
+
+    for(auto job : job_vector_of_simulator)
+    {
+        if(job->get_actual_start_time() < 0 || job->get_actual_finish_time() > job->get_actual_deadline())
+        {
+            std::cout << "UNSCHEDULABLE" << std::endl;
+            return false;
+        }
+    }
     /**
      * Iterating Loop for running jobs in one HP
      */

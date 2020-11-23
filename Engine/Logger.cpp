@@ -113,12 +113,12 @@ void Logger::start_logging()
             
             global_object::diagram_vector.erase(global_object::diagram_vector.begin() + min_idx);
             scheduling_log.write(current_data->get_data().c_str(), current_data->get_data().size());
-            std::this_thread::sleep_for(std::chrono::milliseconds(current_data->get_execution_time()));
         }
         scheduling_log.close();
         if(global_object::diagram_vector.size() > 100)
             global_object::diagram_vector.clear();
         utils::mtx_data_log.unlock();    
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }    
     
 }

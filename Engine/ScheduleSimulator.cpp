@@ -374,10 +374,23 @@ void ScheduleSimulator::busy_period_analysis(JobVectorsForEachECU& job_vectors_f
     // job_queue only contains jobs with CPU priority policy.
     while (job_queue.size() != 0)
     {
-
         bool is_idle = true;
         bool is_higher_job = false;
-
+        for(int task_id = 0; task_id < job_vectors_for_each_ECU.at(ecu_id).size(); ++task_id)
+        {
+            for (auto job : job_vectors_for_each_ECU.at(ecu_id).at(task_id))
+            {
+                if (job->get_actual_release_time() == busy_end)
+                    if (job->get_is_released() == true) continue; // Job is already in job_queue, ignore.
+                    else
+                    {
+                        if(job->get_period() < highest_job->get_period())
+                        {
+                            highest_job = job;
+                        }
+                    }
+            }
+        }
         // Finished jobs are popped from the queue so no need to check for if they are finished.
         for (auto job : job_queue) // Check if there is a started non-completed job.
         {

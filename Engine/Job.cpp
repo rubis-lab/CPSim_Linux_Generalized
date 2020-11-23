@@ -588,35 +588,26 @@ void Job::run_function()
     if(get_is_write() == true)
     {
         m_run_start = std::chrono::steady_clock::now();
-        if(m_producer_job != nullptr)
-        {
-            // shared::CC_Recv_ACCEL_VALUE = m_producer_job->get_data_read_buffer().at(0);
-            // shared::CC_Recv_TARGET_SPEED = m_producer_job->get_data_read_buffer().at(1);
-            // shared::CC_Recv_CC_TRIGGER = m_producer_job->get_data_read_buffer().at(2);
-            // shared::CC_Recv_SPEED = m_producer_job->get_data_read_buffer().at(3);
-            // shared::rtU.read2 = m_producer_job->get_data_read_buffer().at(4);
-            // shared::rtU.read1 = m_producer_job->get_data_read_buffer().at(5);
-            run();
-        }
-        else
-        {
-            run();
-        }
+        run();
+        
         #ifdef CANMODE__   
         CAN_message msg; 
         msg.transmit_can_message(m_task_name);
         #endif
         #ifdef ETHERNET_MODE__  
+
+        char write_buf[16];
+        int write4 = shared::rtY.write4;
+        int write3 = shared::rtY.write3;
+        int write2 = shared::CC_Send_BRAKE;
+        int write1 = shared::CC_Send_ACCEL;
+ 			
+        memcpy(write_buf,      &write1, 4);
+        memcpy(write_buf + 4,  &write2, 4);
+        memcpy(write_buf + 8,  &write4, 4);
+        memcpy(write_buf + 12, &write3, 4);
         
-        std::shared_ptr<DelayedData> delayed_data = std::make_shared<DelayedData>();
-        delayed_data->set_time(m_simulated_finish_time);
-        delayed_data->write4 = shared::rtY.write4;
-        delayed_data->write3 = shared::rtY.write3;
-        delayed_data->write2 = shared::CC_Send_BRAKE;
-        delayed_data->write1 = shared::CC_Send_ACCEL;
-        
-        global_object::delayed_data_write.push_back(std::move(delayed_data));
-        
+        send( utils::socket_EHTERNET, write_buf, sizeof(write_buf), 0);	
         #endif
         m_run_end = std::chrono::steady_clock::now();
     }
