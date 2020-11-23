@@ -55,40 +55,40 @@ void Ethernet_receiver::receive_messages()
 		{
 			continue;
 		}
-		// else
-		// {
+		else
+		{
 
-		// 	int min_idx = 0;
-		// 	utils::mtx_data_write.lock();
-		// 	std::shared_ptr<DelayedData> current_data = global_object::delayed_data_write.front();
-        //     for (int idx = 0; idx < global_object::delayed_data_write.size(); idx ++)
-        //     {
-        //         if(current_data->get_time() >  global_object::delayed_data_write.at(idx)->get_time())
-        //         {
-        //             current_data = global_object::delayed_data_write.at(idx);
-        //             min_idx = idx;
-        //         }
-        //     }
+			int min_idx = 0;
+			utils::mtx_data_write.lock();
+			std::shared_ptr<DelayedData> current_data = global_object::delayed_data_write.front();
+            for (int idx = 0; idx < global_object::delayed_data_write.size(); idx ++)
+            {
+                if(current_data->get_time() >  global_object::delayed_data_write.at(idx)->get_time())
+                {
+                    current_data = global_object::delayed_data_write.at(idx);
+                    min_idx = idx;
+                }
+            }
 			 
-        //     if(current_data->get_time() > utils::current_time)
-		// 	{
-		// 		continue;
-		// 	}
-		// 	char write_buf[16];
-		// 	int write4 = current_data->write4;
-		// 	int write3 = current_data->write3;
-		// 	int write2 = current_data->write2;
-		// 	int write1 = current_data->write1;
+            if(current_data->get_time() > utils::current_time)
+			{
+				continue;
+			}
+			char write_buf[16];
+			int write4 = current_data->write4;
+			int write3 = current_data->write3;
+			int write2 = current_data->write2;
+			int write1 = current_data->write1;
 			
-		// 	memcpy(write_buf,      &write1, 4);
-        // 	memcpy(write_buf + 4,  &write2, 4);
-        // 	memcpy(write_buf + 8,  &write4, 4);
-        // 	memcpy(write_buf + 12, &write3, 4);
+			memcpy(write_buf,      &write1, 4);
+        	memcpy(write_buf + 4,  &write2, 4);
+        	memcpy(write_buf + 8,  &write4, 4);
+        	memcpy(write_buf + 12, &write3, 4);
 			
-        //     global_object::delayed_data_write.erase(global_object::delayed_data_write.begin() + min_idx);
-		// 	utils::mtx_data_write.unlock();
-		// 	send( utils::socket_EHTERNET, write_buf, sizeof(write_buf), 0);	
-		// }
+            global_object::delayed_data_write.erase(global_object::delayed_data_write.begin() + min_idx);
+			utils::mtx_data_write.unlock();
+			send( utils::socket_EHTERNET, write_buf, sizeof(write_buf), 0);	
+		}
 	} while(utils::current_time < utils::simulation_termination_time);
 }
 

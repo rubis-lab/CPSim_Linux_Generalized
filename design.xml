@@ -7,7 +7,7 @@
         </ETH>
     </ETHs>
     <CAR IP="CAR">
-        <link rid="192.168.0.54" type="ETH"/>
+        <link rid="192.168.0.7" type="ETH"/>
     </CAR>
     <SWCs>
         <SWC BCET="10" IP="SENSING" Virtual="1" WCET="10" consumer="LK,CC" deadline="50" period="50" phase="0" readCon="1" writeCon="0">

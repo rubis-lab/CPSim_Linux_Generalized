@@ -70,7 +70,6 @@ Logger::~Logger()
 
 void Logger::set_schedule_log_info(std::vector<std::shared_ptr<Task>>& task_vector)
 {
-    std::cout << "Logging starts" << std::endl;
     std::ofstream scheduling_log;
     scheduling_log.open(utils::cpsim_path + "/Log/scheduling.log", std::ios::out);     
     std::string contents = "";
@@ -83,16 +82,13 @@ void Logger::set_schedule_log_info(std::vector<std::shared_ptr<Task>>& task_vect
         {
             contents += ", ";
         }
-         
     }
     scheduling_log.write(contents.c_str(), contents.size());
     scheduling_log.close();
-    
 }
+
 void Logger::start_logging()
 {
-    utils::simulator_elapsed_time = 0;
-
     std::ofstream scheduling_log;
     while (utils::current_time < utils::simulation_termination_time)
     {
@@ -118,7 +114,5 @@ void Logger::start_logging()
         if(global_object::diagram_vector.size() > 100)
             global_object::diagram_vector.clear();
         utils::mtx_data_log.unlock();    
-        std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }    
-    
 }
