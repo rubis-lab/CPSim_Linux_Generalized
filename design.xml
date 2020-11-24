@@ -10,7 +10,7 @@
         <link rid="192.168.0.54" type="ETH"/>
     </CAR>
     <SWCs>
-        <SWC BCET="20" IP="SENSING" Virtual="1" WCET="20" consumer="LK,CC" deadline="80" period="80" phase="0" readCon="1" writeCon="0">
+        <SWC BCET="10" IP="SENSING" Virtual="1" WCET="10" consumer="" deadline="100" period="100" phase="0" readCon="1" writeCon="0">
             <impl path="/home/park/git_base/CPSim_Linux_Generalized/sharedObjectFiles/SENSING/SENSING.cpp" type="MANUAL"/>
             <link idxCore="0" rid="ECU0" type="ECU"/>
         </SWC>
@@ -22,15 +22,15 @@
             <impl path="/home/park/git_base/CPSim_Linux_Generalized/sharedObjectFiles/CC/CC.cpp" type="MANUAL"/>
             <link idxCore="0" rid="ECU1" type="ECU"/>
         </SWC>
-        <SWC BCET="20" IP="BRAKE" Virtual="1" WCET="20" consumer="" deadline="80" period="80" phase="0" readCon="0" writeCon="0">
+        <SWC BCET="10" IP="BRAKE" Virtual="1" WCET="10" consumer="" deadline="100" period="100" phase="0" readCon="0" writeCon="0">
             <impl path="/home/park/git_base/CPSim_Linux_Generalized/sharedObjectFiles/SENSING/SENSING.cpp" type="MANUAL"/>
             <link idxCore="0" rid="ECU1" type="ECU"/>
         </SWC>
-        <SWC BCET="20" IP="POWER" Virtual="1" WCET="20" consumer="" deadline="80" period="80" phase="0" readCon="0" writeCon="0">
+        <SWC BCET="10" IP="POWER" Virtual="1" WCET="10" consumer="" deadline="100" period="100" phase="0" readCon="0" writeCon="0">
             <impl path="/home/park/Desktop/example.cpp" type="MANUAL"/>
             <link idxCore="0" rid="ECU1" type="ECU"/>
         </SWC>
-        <SWC BCET="20" IP="LOCALIZATION" Virtual="1" WCET="20" consumer="" deadline="80" period="80" phase="0" readCon="0" writeCon="0">
+        <SWC BCET="10" IP="LOCALIZATION" Virtual="1" WCET="10" consumer="" deadline="100" period="100" phase="0" readCon="0" writeCon="0">
             <impl path="/home/park/Desktop/example.cpp" type="MANUAL"/>
             <link idxCore="0" rid="ECU0" type="ECU"/>
         </SWC>

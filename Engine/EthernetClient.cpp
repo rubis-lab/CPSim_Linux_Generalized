@@ -14,6 +14,7 @@ void EthernetClient::ethernet_read_write()
 {
 	int read_buf[6];
 	int read_length;
+	int packet_cnt = 0;
 	global_object::tagged_data_read.clear();
 	global_object::delayed_data_write.clear();
 	do
@@ -48,9 +49,7 @@ void EthernetClient::ethernet_read_write()
 			tagged_data->data_read5 = read2;
 			tagged_data->data_read6 = read1;
 
-			utils::mtx_data_read.lock();
         	global_object::tagged_data_read.push_back(std::move(tagged_data));
-        	utils::mtx_data_read.unlock();
 		}
 		if(global_object::delayed_data_write.empty())
 		{
@@ -59,15 +58,9 @@ void EthernetClient::ethernet_read_write()
 		else
 		{
 			char write_buf[16];
-			utils::mtx_data_write.lock();
-			std::shared_ptr<DelayedData> current_data = global_object::delayed_data_write.front();
-			global_object::delayed_data_write.erase(global_object::delayed_data_write.begin());
-			utils::mtx_data_write.unlock();
-
-            if(current_data->data_time > utils::current_time)
-			{
-				continue;
-			}
+			std::shared_ptr<DelayedData> current_data = global_object::delayed_data_write.at(global_object::delayed_data_write.size()-1);
+			global_object::delayed_data_write.clear();
+			
 			int write4 = current_data->data_write4;
 			int write3 = current_data->data_write3;
 			int write2 = current_data->data_write2;
