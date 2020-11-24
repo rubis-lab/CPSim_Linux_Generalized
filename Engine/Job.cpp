@@ -601,13 +601,14 @@ void Job::run_function()
         #ifdef ETHERNET_MODE__  
 
         std::shared_ptr<DelayedData> delayed_data = std::make_shared<DelayedData>();
-        delayed_data->set_time(m_simulated_finish_time);
+        delayed_data->data_time = m_actual_finish_time;
         delayed_data->data_write4 = shared::rtY.write4;
         delayed_data->data_write3 = shared::rtY.write3;
         delayed_data->data_write2 = shared::CC_Send_BRAKE;
         delayed_data->data_write1 = shared::CC_Send_ACCEL;
-
+        utils::mtx_data_write.lock();
         global_object::delayed_data_write.push_back(std::move(delayed_data));
+        utils::mtx_data_write.unlock();
         #endif
     }
     m_run_end = std::chrono::steady_clock::now();

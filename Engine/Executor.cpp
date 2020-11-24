@@ -113,7 +113,7 @@ bool Executor::run_simulation(JobVectorOfSimulator& job_vector_of_simulator, Job
     {
         if(job->get_actual_start_time() < 0 || job->get_actual_finish_time() > job->get_actual_deadline())
         {
-            std::cout << job->get_task_name() << ", " << job->get_job_id() << "DEADLINE MISS" << std::endl;
+            std::cout <<"DEADLINE MISS IN REAL CYBER SYSTEM" << std::endl;
         }
     }
     /**

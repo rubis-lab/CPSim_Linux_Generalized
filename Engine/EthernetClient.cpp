@@ -51,24 +51,18 @@ void EthernetClient::ethernet_read_write()
 		}
 		else
 		{
-
 			int min_idx = 0;
+			char write_buf[16];
 			utils::mtx_data_write.lock();
 			std::shared_ptr<DelayedData> current_data = global_object::delayed_data_write.front();
-            for (int idx = 0; idx < global_object::delayed_data_write.size(); idx ++)
-            {
-                if(current_data->get_time() >  global_object::delayed_data_write.at(idx)->get_time())
-                {
-                    current_data = global_object::delayed_data_write.at(idx);
-                    min_idx = idx;
-                }
-            }
-			 
-            if(current_data->get_time() > utils::current_time)
+			global_object::delayed_data_write.erase(global_object::delayed_data_write.begin() + min_idx);
+			utils::mtx_data_write.unlock();
+
+            if(current_data->data_time > utils::current_time)
 			{
 				continue;
 			}
-			char write_buf[16];
+			std::cout << current_data->data_time << std::endl;
 			int write4 = current_data->data_write4;
 			int write3 = current_data->data_write3;
 			int write2 = current_data->data_write2;
@@ -79,8 +73,8 @@ void EthernetClient::ethernet_read_write()
         	memcpy(write_buf + 8,  &write4, 4);
         	memcpy(write_buf + 12, &write3, 4);
 			
-            global_object::delayed_data_write.erase(global_object::delayed_data_write.begin() + min_idx);
-			utils::mtx_data_write.unlock();
+            
+
 			send( utils::socket_EHTERNET, write_buf, sizeof(write_buf), 0);	
 		}
 	} while(utils::current_time < utils::simulation_termination_time);

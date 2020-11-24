@@ -7,9 +7,9 @@
 class DelayedData
 {
 private:
-	int m_time;
-
+	
 public:
+	int data_time;
 	int data_write1;
 	int data_write2;
 	int data_write3;
@@ -21,16 +21,12 @@ public:
 
 	bool operator < (const DelayedData& rhs) const
 	{
-		return this->m_time > rhs.m_time;
+		return this->data_time > rhs.data_time;
 	}
 
 	bool operator > (const DelayedData& rhs) const
 	{
-		return this->m_time < rhs.m_time;
+		return this->data_time < rhs.data_time;
 	}
-
-	int get_time();
-
-	void set_time(int);
 };
 #endif

@@ -3,21 +3,14 @@
 
 DelayedData::DelayedData()
 {
-
+	data_time = 0;
+	data_write1 = 0;
+	data_write2 = 0;
+	data_write3 = 0;
+	data_write4 = 0;
 }
 
 DelayedData::~DelayedData()
 {
 
-}
-
-int DelayedData::get_time()
-{
-	return m_time;
-}
-
-
-void DelayedData::set_time(int time)
-{
-	m_time = time;
 }
