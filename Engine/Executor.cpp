@@ -196,7 +196,7 @@ bool Executor::run_simulation(JobVectorOfSimulator& job_vector_of_simulator, Job
                     }
                 }
                 utils::mtx_data_log.lock();
-                std::shared_ptr<ScheduleData> diagram_start = std::make_shared<ScheduleData>( run_job->get_actual_start_time(), 0, std::to_string(run_job->get_actual_start_time()) + ", ECU" + std::to_string(run_job->get_ECU()->get_ECU_id()) + ": " + run_job->get_task_name() + ", 1\n");
+                std::shared_ptr<ScheduleData> diagram_start = std::make_shared<ScheduleData>(run_job->get_actual_start_time(), 0, std::to_string(run_job->get_actual_start_time()) + ", ECU" + std::to_string(run_job->get_ECU()->get_ECU_id()) + ": " + run_job->get_task_name() + ", 1\n");
                 global_object::schedule_data.push_back(std::move(diagram_start));
                 std::shared_ptr<ScheduleData> diagram_finish = std::make_shared<ScheduleData>(run_job->get_actual_finish_time(), run_job->get_actual_execution_time(),std::to_string(run_job->get_actual_finish_time()) + ", ECU" + std::to_string(run_job->get_ECU()->get_ECU_id()) + ": " + run_job->get_task_name() + ", 0\n" );
                 global_object::schedule_data.push_back(std::move(diagram_finish));
@@ -213,6 +213,7 @@ bool Executor::run_simulation(JobVectorOfSimulator& job_vector_of_simulator, Job
                 }
             }
             update_all(job_vector_of_simulator, run_job);
+            
         }
     }
     utils::current_time = end_time;

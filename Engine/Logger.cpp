@@ -90,7 +90,7 @@ void Logger::set_schedule_log_info(std::vector<std::shared_ptr<Task>>& task_vect
 void Logger::start_logging()
 {
     std::ofstream scheduling_log;
-    while (utils::current_time < utils::simulation_termination_time)
+    while (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - utils::simulator_start_time).count()  < utils::simulation_termination_time)
     {
         scheduling_log.open(utils::cpsim_path + "/Log/scheduling.log", std::ios::app);    
         utils::mtx_data_log.lock();
@@ -100,7 +100,7 @@ void Logger::start_logging()
             std::shared_ptr<ScheduleData> current_data = global_object::schedule_data.front();
             for (int idx = 0; idx < global_object::schedule_data.size(); idx ++)
             {
-                if(current_data->get_time() >  global_object::schedule_data.at(idx)->get_time())
+                if(current_data->get_time() > global_object::schedule_data.at(idx)->get_time())
                 {
                     current_data = global_object::schedule_data.at(idx);
                     min_idx = idx;
