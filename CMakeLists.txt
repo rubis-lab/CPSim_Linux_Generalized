@@ -55,6 +55,8 @@ SET ( SRC_FILES
         Engine/ScheduleData.h Engine/ScheduleData.cpp
         # set DelayedData files
         Engine/DelayedData.h Engine/DelayedData.cpp
+        # set TaggedData files
+        Engine/TaggedData.h Engine/TaggedData.cpp
         # set CodeWrapper files
         Engine/CodeWrapper.h Engine/CodeWrapper.cpp
         )

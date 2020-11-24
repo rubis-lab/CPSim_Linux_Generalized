@@ -612,6 +612,33 @@ Engine/Specifier.cpp.s:
 	$(MAKE) -f CMakeFiles/CPSim-0.1.out.dir/build.make CMakeFiles/CPSim-0.1.out.dir/Engine/Specifier.cpp.s
 .PHONY : Engine/Specifier.cpp.s
 
+Engine/TaggedData.o: Engine/TaggedData.cpp.o
+
+.PHONY : Engine/TaggedData.o
+
+# target to build an object file
+Engine/TaggedData.cpp.o:
+	$(MAKE) -f CMakeFiles/CPSim-0.1.out.dir/build.make CMakeFiles/CPSim-0.1.out.dir/Engine/TaggedData.cpp.o
+.PHONY : Engine/TaggedData.cpp.o
+
+Engine/TaggedData.i: Engine/TaggedData.cpp.i
+
+.PHONY : Engine/TaggedData.i
+
+# target to preprocess a source file
+Engine/TaggedData.cpp.i:
+	$(MAKE) -f CMakeFiles/CPSim-0.1.out.dir/build.make CMakeFiles/CPSim-0.1.out.dir/Engine/TaggedData.cpp.i
+.PHONY : Engine/TaggedData.cpp.i
+
+Engine/TaggedData.s: Engine/TaggedData.cpp.s
+
+.PHONY : Engine/TaggedData.s
+
+# target to generate assembly for a file
+Engine/TaggedData.cpp.s:
+	$(MAKE) -f CMakeFiles/CPSim-0.1.out.dir/build.make CMakeFiles/CPSim-0.1.out.dir/Engine/TaggedData.cpp.s
+.PHONY : Engine/TaggedData.cpp.s
+
 Engine/Task.o: Engine/Task.cpp.o
 
 .PHONY : Engine/Task.o
@@ -756,6 +783,9 @@ help:
 	@echo "... Engine/Specifier.o"
 	@echo "... Engine/Specifier.i"
 	@echo "... Engine/Specifier.s"
+	@echo "... Engine/TaggedData.o"
+	@echo "... Engine/TaggedData.i"
+	@echo "... Engine/TaggedData.s"
 	@echo "... Engine/Task.o"
 	@echo "... Engine/Task.i"
 	@echo "... Engine/Task.s"

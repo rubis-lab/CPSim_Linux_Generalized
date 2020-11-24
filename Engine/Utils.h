@@ -22,6 +22,7 @@
 #include "Logger.h"
 #include "ScheduleData.h"
 #include "DelayedData.h"
+#include "TaggedData.h"
 
 /** This file is engine code of CPSim-Re engine
  * @file RUBIS_Util.h
@@ -46,6 +47,7 @@ typedef std::vector<std::shared_ptr<CAN_message> > CanMsgVector;
 
 namespace utils
 {
+    inline std::mutex mtx_data_read;
     inline std::mutex mtx_data_write;
     inline std::mutex mtx_data_log;
     
@@ -153,6 +155,7 @@ namespace global_object
     inline std::shared_ptr<EthernetClient> ethernet_client;
     inline std::shared_ptr<std::thread> ethernet_client_thread;
     inline std::vector<std::shared_ptr<DelayedData>> delayed_data_write;
+    inline std::vector<std::shared_ptr<TaggedData>> tagged_data_read;
     inline std::vector<std::shared_ptr<ScheduleData>> schedule_data;
 }
 #ifdef CANMODE__
