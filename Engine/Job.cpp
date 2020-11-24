@@ -581,7 +581,7 @@ void Job::run_function()
             std::shared_ptr<TaggedData> current_data = global_object::tagged_data_read.at(global_object::tagged_data_read.size()-1);
             if(global_object::tagged_data_read.size() > 100)
 				global_object::tagged_data_read.clear();
-                
+
             shared::CC_Recv_ACCEL_VALUE = current_data->data_read1;
             shared::CC_Recv_TARGET_SPEED = current_data->data_read2;
             shared::CC_Recv_CC_TRIGGER = current_data->data_read3;
@@ -599,11 +599,8 @@ void Job::run_function()
         delayed_data->data_write3 = shared::rtY.write3;
         delayed_data->data_write2 = shared::CC_Send_BRAKE;
         delayed_data->data_write1 = shared::CC_Send_ACCEL;
-        if(utils::mtx_data_write.try_lock())
-	    {
-            global_object::delayed_data_write.push_back(std::move(delayed_data));
-            utils::mtx_data_write.unlock();
-        }
+        global_object::delayed_data_write.push_back(std::move(delayed_data));
+
         #endif
     }
     else if((get_is_read() == true) && (get_is_write() == false))
@@ -614,26 +611,16 @@ void Job::run_function()
 		}
         else
         {
-        //     int min_idx = global_object::tagged_data_read.size()-1;
-        //     utils::mtx_data_read.lock();
-        //     std::shared_ptr<TaggedData> current_data = global_object::tagged_data_read.at(global_object::tagged_data_read.size()-1);
-        //     for (int idx = global_object::tagged_data_read.size()-1; idx > 0; idx --)
-        //     {
-        //         if(current_data->data_time >= m_actual_start_time)
-        //         {
-        //             min_idx = idx;
-        //         }
-        //     }
-        //     current_data = global_object::tagged_data_read.at(min_idx);
-        //     global_object::tagged_data_read.erase(global_object::tagged_data_read.begin());
-        //     utils::mtx_data_read.unlock();
-            
-        //     shared::CC_Recv_ACCEL_VALUE = current_data->data_read1;
-        //     shared::CC_Recv_TARGET_SPEED = current_data->data_read2;
-        //     shared::CC_Recv_CC_TRIGGER = current_data->data_read3;
-        //     shared::CC_Recv_SPEED = current_data->data_read4;
-        //     shared::rtU.read2 = current_data->data_read5;
-        //     shared::rtU.read1 = current_data->data_read6;   
+            std::shared_ptr<TaggedData> current_data = global_object::tagged_data_read.at(global_object::tagged_data_read.size()-1);
+            if(global_object::tagged_data_read.size() > 100)
+				global_object::tagged_data_read.clear();
+                
+            shared::CC_Recv_ACCEL_VALUE = current_data->data_read1;
+            shared::CC_Recv_TARGET_SPEED = current_data->data_read2;
+            shared::CC_Recv_CC_TRIGGER = current_data->data_read3;
+            shared::CC_Recv_SPEED = current_data->data_read4;
+            shared::rtU.read2 = current_data->data_read5;
+            shared::rtU.read1 = current_data->data_read6;   
         }
         run();
     }
@@ -653,9 +640,8 @@ void Job::run_function()
         delayed_data->data_write3 = shared::rtY.write3;
         delayed_data->data_write2 = shared::CC_Send_BRAKE;
         delayed_data->data_write1 = shared::CC_Send_ACCEL;
-        utils::mtx_data_write.lock();
         global_object::delayed_data_write.push_back(std::move(delayed_data));
-        utils::mtx_data_write.unlock();
+
         #endif
     }
     m_run_end = std::chrono::steady_clock::now();
