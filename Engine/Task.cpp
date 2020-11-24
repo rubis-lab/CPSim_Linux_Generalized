@@ -98,10 +98,11 @@ void Task::loadFunction(std::string file_path, std::string function_name)
 #ifdef __linux__
     handle = dlopen(file_path.c_str(), RTLD_LAZY);
     if(handle != NULL)
-        std::cout << "Successfully loaded library." << std::endl;
+        std::cout << file_path << "'s Function Successfully Loaded" << std::endl;
     else
     {
-        std::cout << "Unsuccessfully loaded library." << std::endl;
+        std::cout << file_path << "'s Function Unsuccessfully Loaded, ERROR.." << std::endl;
+        std::cout << "Check the CPSim_Path or Code Path" << std::endl;
         std::cout << dlerror() << std::endl;
     }
     func = dlsym(handle, function_name.c_str()); //c_str() so we get \0 null terminator included in the string.

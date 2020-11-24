@@ -1,0 +1,21 @@
+
+    typedef struct LogData
+    {
+        int est;
+        int lst;
+        int eft;
+        int lft;
+        int act_rel;
+        int act_start;
+        int wcbp_start;
+        double sim_deadline;
+        double sim_release;
+        double sim_start;
+        double sim_finish;
+    } LogData;
+    inline LogData gld;
+    inline std::vector<LogData> gld_vector;
+    // std::to_string(highest_job->get_est()) + ", ECU" + std::to_string(highest_job->get_ECU()->get_ECU_id()) + ": " + highest_job->get_task_name() + ", 1\n";
+    // std::to_string(highest_job->get_eft()) + ", ECU" + std::to_string(highest_job->get_ECU()->get_ECU_id()) + ": " + highest_job->get_task_name() + ", 0\n";
+
+    // inline std::priority_queue<DiagramData> diagram_data;

@@ -1,4 +1,4 @@
-#include "LK.h" // Includes shared.h
+#include "LK.h"
 
 void sim_main()
 {

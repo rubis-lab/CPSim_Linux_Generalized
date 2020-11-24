@@ -18,10 +18,10 @@
 #include "ECU.h"
 #include "CAN_message.h"
 #include "CAN_receiver.h"
-#include "Ethernet_receiver.h"
+#include "EthernetClient.h"
 #include "Logger.h"
-#include "DiagramData.h"
-#include "Delayed_Data.h"
+#include "ScheduleData.h"
+#include "DelayedData.h"
 
 /** This file is engine code of CPSim-Re engine
  * @file RUBIS_Util.h
@@ -53,6 +53,7 @@ namespace utils
     inline std::string null_path = "";
     inline std::string cpsim_path = "";
     inline std::string ip_address = "";
+    inline std::string log_task = "";
     
     inline int hyper_period = 0;
     inline int socket_EHTERNET = 0;
@@ -105,12 +106,6 @@ namespace utils
 // (All .so files must include shared.h)
 namespace shared
 {
-    // typedef struct
-    // {
-    //     double w3;
-    //     double w4;
-    // } DW;
-    
     typedef struct
     {
         double w3;
@@ -151,36 +146,14 @@ namespace shared
 namespace global_object
 {
     inline std::shared_ptr<Job> running_job;
-    inline std::priority_queue<std::shared_ptr<Job>> finished_job;
     inline std::shared_ptr<Logger> logger;
     inline std::shared_ptr<std::thread> logger_thread;
     inline std::shared_ptr<CAN_receiver> can_receiver;
     inline std::shared_ptr<std::thread> can_receiver_thread;
-    inline std::shared_ptr<Ethernet_receiver> ethernet_receiver;
-    inline std::shared_ptr<std::thread> ethernet_receiver_thread;
+    inline std::shared_ptr<EthernetClient> ethernet_client;
+    inline std::shared_ptr<std::thread> ethernet_client_thread;
     inline std::vector<std::shared_ptr<DelayedData>> delayed_data_write;
-
-    typedef struct LogData
-    {
-        int est;
-        int lst;
-        int eft;
-        int lft;
-        int act_rel;
-        int act_start;
-        int wcbp_start;
-        double sim_deadline;
-        double sim_release;
-        double sim_start;
-        double sim_finish;
-    } LogData;
-    inline LogData gld;
-    inline std::vector<LogData> gld_vector;
-    // std::to_string(highest_job->get_est()) + ", ECU" + std::to_string(highest_job->get_ECU()->get_ECU_id()) + ": " + highest_job->get_task_name() + ", 1\n";
-    // std::to_string(highest_job->get_eft()) + ", ECU" + std::to_string(highest_job->get_ECU()->get_ECU_id()) + ": " + highest_job->get_task_name() + ", 0\n";
-
-    // inline std::priority_queue<DiagramData> diagram_data;
-    inline std::vector<std::shared_ptr<DiagramData>> diagram_vector;
+    inline std::vector<std::shared_ptr<ScheduleData>> schedule_data;
 }
 #ifdef CANMODE__
 namespace can

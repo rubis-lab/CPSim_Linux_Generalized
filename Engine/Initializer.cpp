@@ -107,7 +107,7 @@ double Initializer::set_simulator_performance()
         {
             std::stringstream ss_double(m_cpu_info.at(cpu_line).substr(12));
             ss_double >> cpu_performance;
-            std::cout << cpu_performance << std::endl;
+            std::cout << "YOUR CPU MAX PERFORMANCE : " << cpu_performance << " MHz"<< std::endl;
         }
     }
 
@@ -196,14 +196,14 @@ void Initializer::ethernet_interface_initializer()
 
 	// active open
 	if( ( utils::socket_EHTERNET = socket( PF_INET, SOCK_STREAM, 0 ) ) < 0 ){//PF: protocol family for creatomg socket
-		std::cout << "error" << std::endl;
+		std::cout << "SOCKET CREATION ERROR, CHECK IF YOU ALREADY USE THE SOCKET" << std::endl;
         close( utils::socket_EHTERNET );
 		exit( EXIT_FAILURE );
 	}
     int recvTimeout = 5;
     setsockopt(utils::socket_EHTERNET, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv, sizeof tv);
 	if( connect( utils::socket_EHTERNET, (struct sockaddr*)&SERVER_ADDR, sizeof( SERVER_ADDR ) ) < 0 ){
-		std::cout << "error" << std::endl;
+		std::cout << "CONNECTION ERROR, YOU MUST CONNECT WITH TORCS IN 5 SECONDS" << std::endl;
 		close( utils::socket_EHTERNET );
 		exit(EXIT_FAILURE);
 	}
@@ -252,7 +252,7 @@ void Initializer::initialize(EcuVector& ecu_vector, TaskVector& task_vector, Job
          * Ethernet Network Initialization
          */
         ethernet_interface_initializer();
-        global_object::ethernet_receiver = std::make_shared<Ethernet_receiver>();
+        global_object::ethernet_client = std::make_shared<EthernetClient>();
 
 #endif
         /**
@@ -350,7 +350,7 @@ void Initializer::initialize(EcuVector& ecu_vector, TaskVector& task_vector, Job
     }
 #endif
 #ifdef ETHERNET_MODE__
-    global_object::ethernet_receiver_thread = std::make_shared<std::thread>(&Ethernet_receiver::receive_messages, global_object::ethernet_receiver);
+    global_object::ethernet_client_thread = std::make_shared<std::thread>(&EthernetClient::ethernet_read_write, global_object::ethernet_client);
 #endif
 }
 
@@ -361,8 +361,6 @@ void Initializer::random_task_generator(EcuVector& ecu_vector, TaskVector& task_
         gpu_jobs = 0;
     for(int i = 0; i < task_num; i++)
     {
-        //if(gpu_jobs > 0)
-            //std::cout << "We have " << gpu_jobs << " GPU jobs left to add." << std::endl;
         std::string task_name = "TASK" + std::to_string(i);
         bool is_gpu_task = false;
         
@@ -373,7 +371,6 @@ void Initializer::random_task_generator(EcuVector& ecu_vector, TaskVector& task_
             {
                 --gpu_jobs;
                 is_gpu_task = true;
-                //std::cout << "Creating GPU Task." << std::endl;
             }
         }
 

@@ -1,7 +1,5 @@
-#include "CC.h" // Includes shared.h
+#include "CC.h" 
 
-// Shared with other .so file and our main program.
-//inline int shared_variable = 10;
 void sim_main()
 {
   unsigned int read1;

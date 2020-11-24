@@ -25,8 +25,6 @@ SET ( SRC_FILES
         Engine/Parser.h Engine/Parser.cpp
         # set Specifier files
         Engine/Specifier.h Engine/Specifier.cpp 
-        # set schedule_simulator files
-        Engine/ScheduleSimulator.h Engine/ScheduleSimulator.cpp 
         # set schedule_generator files
         Engine/ScheduleGenerator.h Engine/ScheduleGenerator.cpp
         # set offline_guider files
@@ -48,15 +46,15 @@ SET ( SRC_FILES
         # set CAN_receiver files
         Engine/CAN_receiver.h Engine/CAN_receiver.cpp
         # set Ethernet_receiver files
-        Engine/Ethernet_receiver.h Engine/Ethernet_receiver.cpp
+        Engine/EthernetClient.h Engine/EthernetClient.cpp
         # set Utils files
         Engine/Utils.h Engine/Utils.cpp
         # set JobNode files
         Engine/JobNode.h Engine/JobNode.cpp
-        # set DiagramData files
-        Engine/DiagramData.h Engine/DiagramData.cpp
+        # set ScheduleData files
+        Engine/ScheduleData.h Engine/ScheduleData.cpp
         # set DelayedData files
-        Engine/Delayed_Data.h Engine/Delayed_Data.cpp
+        Engine/DelayedData.h Engine/DelayedData.cpp
         # set CodeWrapper files
         Engine/CodeWrapper.h Engine/CodeWrapper.cpp
         )

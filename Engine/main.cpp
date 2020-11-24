@@ -31,7 +31,7 @@
     Header file lists.. in our simulator
 */
 #include "Initializer.h"
-#include "ScheduleSimulator.h"
+#include "ScheduleGenerator.h"
 #include "OfflineGuider.h"
 #include "Executor.h"
 #include "Utils.h"
@@ -60,12 +60,10 @@ int main(int argc, char *argv[])
     //int epochs = 1000;
     
     utils::cpsim_path = getenv("CPSIM_PATH");
-
     std::string command = "rm -rf "+ utils::cpsim_path+"/sharedObjectFiles/*.so"; 
     system(command.c_str());
     command = "rm -rf "+ utils::cpsim_path+"/sharedObjectFiles/*.cpp";
     system(command.c_str());
-    std::cout << "CPSIM_PATH : " << utils::cpsim_path << std::endl;
     utils::update_utils_variables();
     
     int epochs = 1;
@@ -91,7 +89,7 @@ int main(int argc, char *argv[])
 #endif
         Initializer initializer_module;
         initializer_module.initialize(ecu_vector, task_vector, job_vectors_for_each_ECU);
-        ScheduleSimulator schedule_simulator_on_Real;
+        ScheduleGenerator schedule_generator;
         OfflineGuider offline_guider;
         Executor executor;
 
@@ -116,7 +114,7 @@ int main(int argc, char *argv[])
               * forth, we need to schedule those jobs' that is already inserted in the Job Precedence Graph.
               * For this, we create executor which is responsible for 
              */
-            schedule_simulator_on_Real.simulate_scheduling_on_real(ecu_vector, task_vector, job_vectors_for_each_ECU, utils::current_time);
+            schedule_generator.generate_schedule(ecu_vector, task_vector, job_vectors_for_each_ECU, utils::current_time);
             offline_guider.construct_job_precedence_graph(job_vectors_for_each_ECU);
             is_simulatable = executor.run_simulation(job_vector_of_simulator, job_vectors_for_each_ECU, utils::current_time);
             job_vector_of_simulator.clear();

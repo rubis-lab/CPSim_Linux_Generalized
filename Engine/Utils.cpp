@@ -275,6 +275,10 @@ void utils::update_utils_variables()
 		//int real_ecu_num
 		var_file.ignore(256, '='); var_file >> utils::real_ecu_num;
 
+		//std::string log_task
+		var_file.ignore(256, '='); var_file >> utils::log_task;
+		utils::log_task.erase(remove( utils::log_task.begin(), utils::log_task.end(), '\"' ),utils::log_task.end());
+
 		var_file.close();
 	}
     else

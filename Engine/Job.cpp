@@ -4,10 +4,7 @@
 #include <cstdlib>
 #include <climits>
 #include <cmath>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <netdb.h>
+
 
 /** 
  *  This file is the cpp file for the Job class.
@@ -572,22 +569,29 @@ void Job::add_history(std::shared_ptr<Job> new_deadline)
 
 void Job::run_function()
 {
-    if(get_is_read() == true)
+    m_run_start = std::chrono::steady_clock::now();
+    if((get_is_read() == true) && (get_is_write() == true))
     {
-        m_run_start = std::chrono::steady_clock::now();
         m_data_read_buffer.at(0) = shared::CC_Recv_ACCEL_VALUE;
         m_data_read_buffer.at(1) = shared::CC_Recv_TARGET_SPEED;
         m_data_read_buffer.at(2) = shared::CC_Recv_CC_TRIGGER;
         m_data_read_buffer.at(3) = shared::CC_Recv_SPEED;
         m_data_read_buffer.at(4) = shared::rtU.read2;
         m_data_read_buffer.at(5) = shared::rtU.read1;
-
         run();
-        m_run_end = std::chrono::steady_clock::now();
     }
-    if(get_is_write() == true)
+    else if((get_is_read() == true) && (get_is_write() == false))
     {
-        m_run_start = std::chrono::steady_clock::now();
+        m_data_read_buffer.at(0) = shared::CC_Recv_ACCEL_VALUE;
+        m_data_read_buffer.at(1) = shared::CC_Recv_TARGET_SPEED;
+        m_data_read_buffer.at(2) = shared::CC_Recv_CC_TRIGGER;
+        m_data_read_buffer.at(3) = shared::CC_Recv_SPEED;
+        m_data_read_buffer.at(4) = shared::rtU.read2;
+        m_data_read_buffer.at(5) = shared::rtU.read1;
+        run();
+    }
+    else if((get_is_read() == false) && (get_is_write() == true))
+    {
         run();
         
         #ifdef CANMODE__   
@@ -596,20 +600,15 @@ void Job::run_function()
         #endif
         #ifdef ETHERNET_MODE__  
 
-        char write_buf[16];
-        int write4 = shared::rtY.write4;
-        int write3 = shared::rtY.write3;
-        int write2 = shared::CC_Send_BRAKE;
-        int write1 = shared::CC_Send_ACCEL;
- 			
-        memcpy(write_buf,      &write1, 4);
-        memcpy(write_buf + 4,  &write2, 4);
-        memcpy(write_buf + 8,  &write4, 4);
-        memcpy(write_buf + 12, &write3, 4);
-        
-        send( utils::socket_EHTERNET, write_buf, sizeof(write_buf), 0);	
+        std::shared_ptr<DelayedData> delayed_data = std::make_shared<DelayedData>();
+        delayed_data->set_time(m_simulated_finish_time);
+        delayed_data->data_write4 = shared::rtY.write4;
+        delayed_data->data_write3 = shared::rtY.write3;
+        delayed_data->data_write2 = shared::CC_Send_BRAKE;
+        delayed_data->data_write1 = shared::CC_Send_ACCEL;
+
+        global_object::delayed_data_write.push_back(std::move(delayed_data));
         #endif
-        m_run_end = std::chrono::steady_clock::now();
     }
-    run();
+    m_run_end = std::chrono::steady_clock::now();
 }

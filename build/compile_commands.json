@@ -26,11 +26,6 @@
 },
 {
   "directory": "/home/park/git_base/CPSim_Linux_Generalized/build",
-  "command": "/usr/bin/g++-7    -g   -DETHERNET_MODE__ -DPORT=13380 -std=c++1z -o CMakeFiles/CPSim-0.1.out.dir/Engine/ScheduleSimulator.cpp.o -c /home/park/git_base/CPSim_Linux_Generalized/Engine/ScheduleSimulator.cpp",
-  "file": "/home/park/git_base/CPSim_Linux_Generalized/Engine/ScheduleSimulator.cpp"
-},
-{
-  "directory": "/home/park/git_base/CPSim_Linux_Generalized/build",
   "command": "/usr/bin/g++-7    -g   -DETHERNET_MODE__ -DPORT=13380 -std=c++1z -o CMakeFiles/CPSim-0.1.out.dir/Engine/ScheduleGenerator.cpp.o -c /home/park/git_base/CPSim_Linux_Generalized/Engine/ScheduleGenerator.cpp",
   "file": "/home/park/git_base/CPSim_Linux_Generalized/Engine/ScheduleGenerator.cpp"
 },
@@ -81,8 +76,8 @@
 },
 {
   "directory": "/home/park/git_base/CPSim_Linux_Generalized/build",
-  "command": "/usr/bin/g++-7    -g   -DETHERNET_MODE__ -DPORT=13380 -std=c++1z -o CMakeFiles/CPSim-0.1.out.dir/Engine/Ethernet_receiver.cpp.o -c /home/park/git_base/CPSim_Linux_Generalized/Engine/Ethernet_receiver.cpp",
-  "file": "/home/park/git_base/CPSim_Linux_Generalized/Engine/Ethernet_receiver.cpp"
+  "command": "/usr/bin/g++-7    -g   -DETHERNET_MODE__ -DPORT=13380 -std=c++1z -o CMakeFiles/CPSim-0.1.out.dir/Engine/EthernetClient.cpp.o -c /home/park/git_base/CPSim_Linux_Generalized/Engine/EthernetClient.cpp",
+  "file": "/home/park/git_base/CPSim_Linux_Generalized/Engine/EthernetClient.cpp"
 },
 {
   "directory": "/home/park/git_base/CPSim_Linux_Generalized/build",
@@ -96,13 +91,13 @@
 },
 {
   "directory": "/home/park/git_base/CPSim_Linux_Generalized/build",
-  "command": "/usr/bin/g++-7    -g   -DETHERNET_MODE__ -DPORT=13380 -std=c++1z -o CMakeFiles/CPSim-0.1.out.dir/Engine/DiagramData.cpp.o -c /home/park/git_base/CPSim_Linux_Generalized/Engine/DiagramData.cpp",
-  "file": "/home/park/git_base/CPSim_Linux_Generalized/Engine/DiagramData.cpp"
+  "command": "/usr/bin/g++-7    -g   -DETHERNET_MODE__ -DPORT=13380 -std=c++1z -o CMakeFiles/CPSim-0.1.out.dir/Engine/ScheduleData.cpp.o -c /home/park/git_base/CPSim_Linux_Generalized/Engine/ScheduleData.cpp",
+  "file": "/home/park/git_base/CPSim_Linux_Generalized/Engine/ScheduleData.cpp"
 },
 {
   "directory": "/home/park/git_base/CPSim_Linux_Generalized/build",
-  "command": "/usr/bin/g++-7    -g   -DETHERNET_MODE__ -DPORT=13380 -std=c++1z -o CMakeFiles/CPSim-0.1.out.dir/Engine/Delayed_Data.cpp.o -c /home/park/git_base/CPSim_Linux_Generalized/Engine/Delayed_Data.cpp",
-  "file": "/home/park/git_base/CPSim_Linux_Generalized/Engine/Delayed_Data.cpp"
+  "command": "/usr/bin/g++-7    -g   -DETHERNET_MODE__ -DPORT=13380 -std=c++1z -o CMakeFiles/CPSim-0.1.out.dir/Engine/DelayedData.cpp.o -c /home/park/git_base/CPSim_Linux_Generalized/Engine/DelayedData.cpp",
+  "file": "/home/park/git_base/CPSim_Linux_Generalized/Engine/DelayedData.cpp"
 },
 {
   "directory": "/home/park/git_base/CPSim_Linux_Generalized/build",

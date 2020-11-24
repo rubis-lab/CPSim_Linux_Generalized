@@ -94,25 +94,25 @@ void Logger::start_logging()
     {
         scheduling_log.open(utils::cpsim_path + "/Log/scheduling.log", std::ios::app);    
         utils::mtx_data_log.lock();
-        if(global_object::diagram_vector.size() > 10)
+        if(global_object::schedule_data.size() > 10)
         {
             int min_idx = 0;
-            std::shared_ptr<DiagramData> current_data = global_object::diagram_vector.front();
-            for (int idx = 0; idx < global_object::diagram_vector.size(); idx ++)
+            std::shared_ptr<ScheduleData> current_data = global_object::schedule_data.front();
+            for (int idx = 0; idx < global_object::schedule_data.size(); idx ++)
             {
-                if(current_data->get_time() >  global_object::diagram_vector.at(idx)->get_time())
+                if(current_data->get_time() >  global_object::schedule_data.at(idx)->get_time())
                 {
-                    current_data = global_object::diagram_vector.at(idx);
+                    current_data = global_object::schedule_data.at(idx);
                     min_idx = idx;
                 }
             }
             
-            global_object::diagram_vector.erase(global_object::diagram_vector.begin() + min_idx);
+            global_object::schedule_data.erase(global_object::schedule_data.begin() + min_idx);
             scheduling_log.write(current_data->get_data().c_str(), current_data->get_data().size());
         }
         scheduling_log.close();
-        if(global_object::diagram_vector.size() > 100)
-            global_object::diagram_vector.clear();
+        if(global_object::schedule_data.size() > 100)
+            global_object::schedule_data.clear();
         utils::mtx_data_log.unlock();    
     }    
 }
