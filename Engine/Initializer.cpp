@@ -109,6 +109,17 @@ double Initializer::set_simulator_performance()
             ss_double >> cpu_performance;
             std::cout << "YOUR CPU MAX PERFORMANCE : " << cpu_performance << " MHz"<< std::endl;
         }
+        else
+        {
+            pos = m_cpu_info.at(cpu_line).find("CPU MHz:");
+            if(pos != std::string::npos)
+            {
+                std::stringstream ss_double(m_cpu_info.at(cpu_line).substr(12));
+                ss_double >> cpu_performance;
+                std::cout << "YOUR CPU MAX PERFORMANCE : " << cpu_performance << " MHz"<< std::endl;
+            }
+        }
+        
     }
 
     return cpu_performance;

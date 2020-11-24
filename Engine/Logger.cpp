@@ -111,8 +111,6 @@ void Logger::start_logging()
             scheduling_log.write(current_data->get_data().c_str(), current_data->get_data().size());
         }
         scheduling_log.close();
-        if(global_object::schedule_data.size() > 100)
-            global_object::schedule_data.clear();
         utils::mtx_data_log.unlock();    
     }    
 }
