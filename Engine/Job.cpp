@@ -577,12 +577,8 @@ void Job::run_function()
             std::shared_ptr<TaggedData> current_data = global_object::tagged_data_read.at(global_object::tagged_data_read.size()-1);
             global_object::tagged_data_read.clear();
         }
-        else
-        {
         run();
-
-        }
-        
+  
         std::shared_ptr<DelayedData> delayed_data = std::make_shared<DelayedData>();
         delayed_data->data_time = m_actual_finish_time;
         delayed_data->data_write4 = shared::rtY.write4;

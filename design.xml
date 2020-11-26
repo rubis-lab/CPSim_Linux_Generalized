@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><hyundaiDesignTool>
     <ETHs>
-        <ETH IP="192.168.0.54">
+        <ETH IP="192.168.0.99">
             <link rid="ECU0" type="ECU"/>
             <link rid="ECU1" type="ECU"/>
             <link rid="CAR" type="CAR"/>
