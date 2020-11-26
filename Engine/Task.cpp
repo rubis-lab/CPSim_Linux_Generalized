@@ -157,6 +157,19 @@ void Task::loadFunction(std::string file_path, std::string function_name)
 void Task::run()
 {
     m_casted_func();
+    #ifdef ETHERNET_MODE__  
+    char write_buf[16];
+    int write4 = shared::rtY.write4;
+    int write3 = shared::rtY.write3;
+    int write2 = shared::CC_Send_BRAKE;
+    int write1 = shared::CC_Send_ACCEL;
+
+    memcpy(write_buf,      &write1, 4);
+    memcpy(write_buf + 4,  &write2, 4);
+    memcpy(write_buf + 8,  &write4, 4);
+    memcpy(write_buf + 12, &write3, 4);
+    send( utils::socket_EHTERNET, write_buf, sizeof(write_buf), 0);	
+    #endif
 }
 
 Task::Task(std::string task_name, int period, int deadline, int wcet,

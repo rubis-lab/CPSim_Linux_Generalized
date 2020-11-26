@@ -116,6 +116,7 @@ bool Executor::run_simulation(JobVectorOfSimulator& job_vector_of_simulator, Job
             std::cout <<"DEADLINE MISS IN REAL CYBER SYSTEM" << std::endl;
         }
     }
+    //std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - utils::simulator_start_time).count() <<std::endl;
     /**
      * Iterating Loop for running jobs in one HP
      */
@@ -123,6 +124,7 @@ bool Executor::run_simulation(JobVectorOfSimulator& job_vector_of_simulator, Job
     std::vector<std::shared_ptr<Job>> simulation_ready_queue;
     while(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - hyper_period_start).count() < utils::hyper_period)
     {
+        std::chrono::steady_clock::time_point job_start = std::chrono::steady_clock::now();
         bool is_idle = true;
         for (auto job : job_vector_of_simulator)
         {
@@ -130,14 +132,14 @@ bool Executor::run_simulation(JobVectorOfSimulator& job_vector_of_simulator, Job
             {
                 if(job->get_is_read())
                 {
-                    if(utils::current_time < job->get_actual_start_time()) // This is right actual release time is the factor of read constraint check
+                    if(utils::current_time + std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - hyper_period_start).count()  < job->get_actual_start_time()) // This is right actual release time is the factor of read constraint check
                     {
                         continue;
                     }
                     else
                     {
                         job->set_is_released(true);
-                        job->set_simulated_release_time(utils::current_time);
+                        job->set_simulated_release_time(utils::current_time + std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - hyper_period_start).count());
                         simulation_ready_queue.push_back(job);
                         is_idle = false;   
                     }
@@ -145,7 +147,7 @@ bool Executor::run_simulation(JobVectorOfSimulator& job_vector_of_simulator, Job
                 else
                 {
                     job->set_is_released(true);
-                    job->set_simulated_release_time(utils::current_time);
+                    job->set_simulated_release_time(utils::current_time + std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - hyper_period_start).count());
                     simulation_ready_queue.push_back(job);    
                     is_idle = false; 
                 }
@@ -154,11 +156,10 @@ bool Executor::run_simulation(JobVectorOfSimulator& job_vector_of_simulator, Job
 
         if(is_idle && simulation_ready_queue.empty())
         {
-            utils::current_time+=0.1;
+
         }
         else
         {
-
             /**
              * Choose a job to run with EDF policy (eariest deadline first)
              */
@@ -171,30 +172,21 @@ bool Executor::run_simulation(JobVectorOfSimulator& job_vector_of_simulator, Job
                 }
             }
             
-            run_job->set_simulated_start_time(utils::current_time); 
+            run_job->set_simulated_start_time(utils::current_time + std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - hyper_period_start).count()); 
              
-            bool is_simulatable = simulatability_analysis(job_vector_of_simulator);
-            if(!is_simulatable)
-            {
-                std::cout << "NOT SIMULATABLE" << std::endl;
-                return false;
-            }
+            // bool is_simulatable = simulatability_analysis(job_vector_of_simulator);
+            // if(!is_simulatable)
+            // {
+            //     //std::cout << "NOT SIMULATABLE" << std::endl;
+            //     //return false;
+            // }
             
             if (utils::real_workload)
             {
                 run_job->set_simulated_execution_time(run_job->get_actual_execution_time() * utils::computer_modeling_mapping_function);
-                run_job->set_simulated_finish_time(utils::current_time + run_job->get_simulated_execution_time());
+                run_job->set_simulated_finish_time(utils::current_time + std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - hyper_period_start).count() + run_job->get_simulated_execution_time());
                 run_job->set_is_simulated(true);
                 run_job->run_function();
-                if(run_job->get_last_elapsed_milli_sec() < run_job->get_simulated_execution_time())
-                {
-                    utils::current_time += run_job->get_actual_execution_time() * utils::computer_modeling_mapping_function;
-                    std::chrono::steady_clock::time_point job_start = std::chrono::steady_clock::now();
-                    while (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - job_start).count() < run_job->get_simulated_execution_time())
-                    {
-                        continue;
-                    }
-                }
                 utils::mtx_data_log.lock();
                 std::shared_ptr<ScheduleData> diagram_start = std::make_shared<ScheduleData>(run_job->get_actual_start_time(), 0, std::to_string(run_job->get_actual_start_time()) + ", ECU" + std::to_string(run_job->get_ECU()->get_ECU_id()) + ": " + run_job->get_task_name() + ", 1\n");
                 global_object::schedule_data.push_back(std::move(diagram_start));
@@ -212,10 +204,11 @@ bool Executor::run_simulation(JobVectorOfSimulator& job_vector_of_simulator, Job
                     break;
                 }
             }
-            update_all(job_vector_of_simulator, run_job);
             
+            update_all(job_vector_of_simulator, run_job);
         }
     }
+
     utils::current_time = end_time;
     return true;
 }

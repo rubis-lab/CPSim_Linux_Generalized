@@ -114,9 +114,11 @@ int main(int argc, char *argv[])
               * forth, we need to schedule those jobs' that is already inserted in the Job Precedence Graph.
               * For this, we create executor which is responsible for 
              */
+            
             schedule_generator.generate_schedule(ecu_vector, task_vector, job_vectors_for_each_ECU, utils::current_time);
             offline_guider.construct_job_precedence_graph(job_vectors_for_each_ECU);
             is_simulatable = executor.run_simulation(job_vector_of_simulator, job_vectors_for_each_ECU, utils::current_time);
+            //std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - utils::simulator_start_time).count() <<std::endl;
             job_vector_of_simulator.clear();
             for(auto someVector : job_vectors_for_each_ECU){
                 someVector.clear();

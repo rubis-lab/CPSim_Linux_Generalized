@@ -40,6 +40,13 @@ void EthernetClient::ethernet_read_write()
 			memcpy(&read2, &read_buf[1], 4);
 			memcpy(&read1, &read_buf[3], 4);
 
+            shared::CC_Recv_ACCEL_VALUE = recv_accel;
+            shared::CC_Recv_TARGET_SPEED = recv_targe_speed;
+            shared::CC_Recv_CC_TRIGGER = recv_cc;
+            shared::CC_Recv_SPEED = recv_speed;
+            shared::rtU.read2 = read2;
+            shared::rtU.read1 = read1;   
+			
 			std::shared_ptr<TaggedData> tagged_data = std::make_shared<TaggedData>();
 			tagged_data->data_time = utils::current_time;
 			tagged_data->data_read1 = recv_accel;
@@ -50,28 +57,6 @@ void EthernetClient::ethernet_read_write()
 			tagged_data->data_read6 = read1;
 
         	global_object::tagged_data_read.push_back(std::move(tagged_data));
-		}
-		if(global_object::delayed_data_write.empty())
-		{
-			continue;
-		}
-		else
-		{
-			char write_buf[16];
-			std::shared_ptr<DelayedData> current_data = global_object::delayed_data_write.at(global_object::delayed_data_write.size()-1);
-			global_object::delayed_data_write.clear();
-			
-			int write4 = current_data->data_write4;
-			int write3 = current_data->data_write3;
-			int write2 = current_data->data_write2;
-			int write1 = current_data->data_write1;
-			
-			memcpy(write_buf,      &write1, 4);
-			memcpy(write_buf + 4,  &write2, 4);
-			memcpy(write_buf + 8,  &write4, 4);
-			memcpy(write_buf + 12, &write3, 4);
-			
-			send( utils::socket_EHTERNET, write_buf, sizeof(write_buf), 0);	
 		}
 	} while(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - utils::simulator_start_time).count() <  utils::simulation_termination_time);
 }
