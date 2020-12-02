@@ -1,6 +1,6 @@
-The system is: Linux - 4.15.0-123-generic - x86_64
+The system is: Linux - 4.19.84-microsoft-standard - x86_64
 Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
-Compiler: /usr/bin/gcc-7 
+Compiler: /usr/bin/cc 
 Build flags: 
 Id flags:  
 
@@ -10,10 +10,10 @@ The output was:
 
 Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
 
-The C compiler identification is GNU, found in "/home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/3.10.2/CompilerIdC/a.out"
+The C compiler identification is GNU, found in "/home/blackiron/git/CPSim_Linux_Generalized/build/CMakeFiles/3.10.2/CompilerIdC/a.out"
 
 Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
-Compiler: /usr/bin/g++-7 
+Compiler: /usr/bin/c++ 
 Build flags: 
 Id flags:  
 
@@ -23,35 +23,24 @@ The output was:
 
 Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
 
-The CXX compiler identification is GNU, found in "/home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/3.10.2/CompilerIdCXX/a.out"
+The CXX compiler identification is GNU, found in "/home/blackiron/git/CPSim_Linux_Generalized/build/CMakeFiles/3.10.2/CompilerIdCXX/a.out"
 
 Determining if the C compiler works passed with the following output:
-Change Dir: /home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp
+Change Dir: /home/blackiron/git/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_ebaed/fast"
-/usr/bin/make -f CMakeFiles/cmTC_ebaed.dir/build.make CMakeFiles/cmTC_ebaed.dir/build
-make[1]: 디렉터리 '/home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp' 들어감
-Building C object CMakeFiles/cmTC_ebaed.dir/testCCompiler.c.o
-/usr/bin/gcc-7    -o CMakeFiles/cmTC_ebaed.dir/testCCompiler.c.o   -c /home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp/testCCompiler.c
-Linking C executable cmTC_ebaed
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ebaed.dir/link.txt --verbose=1
-/usr/bin/gcc-7      CMakeFiles/cmTC_ebaed.dir/testCCompiler.c.o  -o cmTC_ebaed 
-make[1]: 디렉터리 '/home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp' 나감
+Run Build Command:"/usr/bin/ninja" "cmTC_eb87c"
+[1/2] Building C object CMakeFiles/cmTC_eb87c.dir/testCCompiler.c.o
+[2/2] Linking C executable cmTC_eb87c
 
 
 Detecting C compiler ABI info compiled with the following output:
-Change Dir: /home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp
+Change Dir: /home/blackiron/git/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_f11a1/fast"
-/usr/bin/make -f CMakeFiles/cmTC_f11a1.dir/build.make CMakeFiles/cmTC_f11a1.dir/build
-make[1]: 디렉터리 '/home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp' 들어감
-Building C object CMakeFiles/cmTC_f11a1.dir/CMakeCCompilerABI.c.o
-/usr/bin/gcc-7    -o CMakeFiles/cmTC_f11a1.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake-3.10/Modules/CMakeCCompilerABI.c
-Linking C executable cmTC_f11a1
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f11a1.dir/link.txt --verbose=1
-/usr/bin/gcc-7     -v CMakeFiles/cmTC_f11a1.dir/CMakeCCompilerABI.c.o  -o cmTC_f11a1 
+Run Build Command:"/usr/bin/ninja" "cmTC_941a3"
+[1/2] Building C object CMakeFiles/cmTC_941a3.dir/CMakeCCompilerABI.c.o
+[2/2] Linking C executable cmTC_941a3
 Using built-in specs.
-COLLECT_GCC=/usr/bin/gcc-7
+COLLECT_GCC=/usr/bin/cc
 COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper
 OFFLOAD_TARGET_NAMES=nvptx-none
 OFFLOAD_TARGET_DEFAULT=1
@@ -61,26 +50,20 @@ Thread model: posix
 gcc version 7.5.0 (Ubuntu 7.5.0-3ubuntu1~18.04) 
 COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/
 LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../:/lib/:/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_f11a1' '-mtune=generic' '-march=x86-64'
- /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/ccnEnm8h.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_f11a1 /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. CMakeFiles/cmTC_f11a1.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_f11a1' '-mtune=generic' '-march=x86-64'
-make[1]: 디렉터리 '/home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp' 나감
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_941a3' '-mtune=generic' '-march=x86-64'
+ /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/ccO9iZD5.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_941a3 /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. CMakeFiles/cmTC_941a3.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_941a3' '-mtune=generic' '-march=x86-64'
 
 
 Parsed C implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
-  ignore line: [Change Dir: /home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp]
+  ignore line: [Change Dir: /home/blackiron/git/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command:"/usr/bin/make" "cmTC_f11a1/fast"]
-  ignore line: [/usr/bin/make -f CMakeFiles/cmTC_f11a1.dir/build.make CMakeFiles/cmTC_f11a1.dir/build]
-  ignore line: [make[1]: 디렉터리 '/home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp' 들어감]
-  ignore line: [Building C object CMakeFiles/cmTC_f11a1.dir/CMakeCCompilerABI.c.o]
-  ignore line: [/usr/bin/gcc-7    -o CMakeFiles/cmTC_f11a1.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake-3.10/Modules/CMakeCCompilerABI.c]
-  ignore line: [Linking C executable cmTC_f11a1]
-  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f11a1.dir/link.txt --verbose=1]
-  ignore line: [/usr/bin/gcc-7     -v CMakeFiles/cmTC_f11a1.dir/CMakeCCompilerABI.c.o  -o cmTC_f11a1 ]
+  ignore line: [Run Build Command:"/usr/bin/ninja" "cmTC_941a3"]
+  ignore line: [[1/2] Building C object CMakeFiles/cmTC_941a3.dir/CMakeCCompilerABI.c.o]
+  ignore line: [[2/2] Linking C executable cmTC_941a3]
   ignore line: [Using built-in specs.]
-  ignore line: [COLLECT_GCC=/usr/bin/gcc-7]
+  ignore line: [COLLECT_GCC=/usr/bin/cc]
   ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper]
   ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none]
   ignore line: [OFFLOAD_TARGET_DEFAULT=1]
@@ -90,13 +73,13 @@ Parsed C implicit link information from above output:
   ignore line: [gcc version 7.5.0 (Ubuntu 7.5.0-3ubuntu1~18.04) ]
   ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/]
   ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../:/lib/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_f11a1' '-mtune=generic' '-march=x86-64']
-  link line: [ /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/ccnEnm8h.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_f11a1 /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. CMakeFiles/cmTC_f11a1.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_941a3' '-mtune=generic' '-march=x86-64']
+  link line: [ /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/ccO9iZD5.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_941a3 /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. CMakeFiles/cmTC_941a3.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o]
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/collect2] ==> ignore
     arg [-plugin] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so] ==> ignore
     arg [-plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper] ==> ignore
-    arg [-plugin-opt=-fresolution=/tmp/ccnEnm8h.res] ==> ignore
+    arg [-plugin-opt=-fresolution=/tmp/ccO9iZD5.res] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
     arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -114,7 +97,7 @@ Parsed C implicit link information from above output:
     arg [-znow] ==> ignore
     arg [-zrelro] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_f11a1] ==> ignore
+    arg [cmTC_941a3] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o] ==> ignore
@@ -126,7 +109,7 @@ Parsed C implicit link information from above output:
     arg [-L/usr/lib/x86_64-linux-gnu] ==> dir [/usr/lib/x86_64-linux-gnu]
     arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
     arg [-L/usr/lib/gcc/x86_64-linux-gnu/7/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/7/../../..]
-    arg [CMakeFiles/cmTC_f11a1.dir/CMakeCCompilerABI.c.o] ==> ignore
+    arg [CMakeFiles/cmTC_941a3.dir/CMakeCCompilerABI.c.o] ==> ignore
     arg [-lgcc] ==> lib [gcc]
     arg [--push-state] ==> ignore
     arg [--as-needed] ==> ignore
@@ -156,17 +139,11 @@ Parsed C implicit link information from above output:
 
 
 Detecting C [-std=c11] compiler features compiled with the following output:
-Change Dir: /home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp
+Change Dir: /home/blackiron/git/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_62325/fast"
-/usr/bin/make -f CMakeFiles/cmTC_62325.dir/build.make CMakeFiles/cmTC_62325.dir/build
-make[1]: 디렉터리 '/home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp' 들어감
-Building C object CMakeFiles/cmTC_62325.dir/feature_tests.c.o
-/usr/bin/gcc-7   -std=c11 -o CMakeFiles/cmTC_62325.dir/feature_tests.c.o   -c /home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/feature_tests.c
-Linking C executable cmTC_62325
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_62325.dir/link.txt --verbose=1
-/usr/bin/gcc-7      CMakeFiles/cmTC_62325.dir/feature_tests.c.o  -o cmTC_62325 
-make[1]: 디렉터리 '/home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp' 나감
+Run Build Command:"/usr/bin/ninja" "cmTC_ee476"
+[1/2] Building C object CMakeFiles/cmTC_ee476.dir/feature_tests.c.o
+[2/2] Linking C executable cmTC_ee476
 
 
     Feature record: C_FEATURE:1c_function_prototypes
@@ -176,17 +153,11 @@ make[1]: 디렉터리 '/home/park/git_base/CPSim_Linux_Generalized/build/CMakeFi
 
 
 Detecting C [-std=c99] compiler features compiled with the following output:
-Change Dir: /home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp
+Change Dir: /home/blackiron/git/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_63017/fast"
-/usr/bin/make -f CMakeFiles/cmTC_63017.dir/build.make CMakeFiles/cmTC_63017.dir/build
-make[1]: 디렉터리 '/home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp' 들어감
-Building C object CMakeFiles/cmTC_63017.dir/feature_tests.c.o
-/usr/bin/gcc-7   -std=c99 -o CMakeFiles/cmTC_63017.dir/feature_tests.c.o   -c /home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/feature_tests.c
-Linking C executable cmTC_63017
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_63017.dir/link.txt --verbose=1
-/usr/bin/gcc-7      CMakeFiles/cmTC_63017.dir/feature_tests.c.o  -o cmTC_63017 
-make[1]: 디렉터리 '/home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp' 나감
+Run Build Command:"/usr/bin/ninja" "cmTC_da181"
+[1/2] Building C object CMakeFiles/cmTC_da181.dir/feature_tests.c.o
+[2/2] Linking C executable cmTC_da181
 
 
     Feature record: C_FEATURE:1c_function_prototypes
@@ -196,17 +167,11 @@ make[1]: 디렉터리 '/home/park/git_base/CPSim_Linux_Generalized/build/CMakeFi
 
 
 Detecting C [-std=c90] compiler features compiled with the following output:
-Change Dir: /home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp
+Change Dir: /home/blackiron/git/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_6bc76/fast"
-/usr/bin/make -f CMakeFiles/cmTC_6bc76.dir/build.make CMakeFiles/cmTC_6bc76.dir/build
-make[1]: 디렉터리 '/home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp' 들어감
-Building C object CMakeFiles/cmTC_6bc76.dir/feature_tests.c.o
-/usr/bin/gcc-7   -std=c90 -o CMakeFiles/cmTC_6bc76.dir/feature_tests.c.o   -c /home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/feature_tests.c
-Linking C executable cmTC_6bc76
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6bc76.dir/link.txt --verbose=1
-/usr/bin/gcc-7      CMakeFiles/cmTC_6bc76.dir/feature_tests.c.o  -o cmTC_6bc76 
-make[1]: 디렉터리 '/home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp' 나감
+Run Build Command:"/usr/bin/ninja" "cmTC_3816a"
+[1/2] Building C object CMakeFiles/cmTC_3816a.dir/feature_tests.c.o
+[2/2] Linking C executable cmTC_3816a
 
 
     Feature record: C_FEATURE:1c_function_prototypes
@@ -214,32 +179,21 @@ make[1]: 디렉터리 '/home/park/git_base/CPSim_Linux_Generalized/build/CMakeFi
     Feature record: C_FEATURE:0c_static_assert
     Feature record: C_FEATURE:0c_variadic_macros
 Determining if the CXX compiler works passed with the following output:
-Change Dir: /home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp
+Change Dir: /home/blackiron/git/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_dca87/fast"
-/usr/bin/make -f CMakeFiles/cmTC_dca87.dir/build.make CMakeFiles/cmTC_dca87.dir/build
-make[1]: 디렉터리 '/home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp' 들어감
-Building CXX object CMakeFiles/cmTC_dca87.dir/testCXXCompiler.cxx.o
-/usr/bin/g++-7     -o CMakeFiles/cmTC_dca87.dir/testCXXCompiler.cxx.o -c /home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
-Linking CXX executable cmTC_dca87
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_dca87.dir/link.txt --verbose=1
-/usr/bin/g++-7       CMakeFiles/cmTC_dca87.dir/testCXXCompiler.cxx.o  -o cmTC_dca87 
-make[1]: 디렉터리 '/home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp' 나감
+Run Build Command:"/usr/bin/ninja" "cmTC_dd48b"
+[1/2] Building CXX object CMakeFiles/cmTC_dd48b.dir/testCXXCompiler.cxx.o
+[2/2] Linking CXX executable cmTC_dd48b
 
 
 Detecting CXX compiler ABI info compiled with the following output:
-Change Dir: /home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp
+Change Dir: /home/blackiron/git/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_93863/fast"
-/usr/bin/make -f CMakeFiles/cmTC_93863.dir/build.make CMakeFiles/cmTC_93863.dir/build
-make[1]: 디렉터리 '/home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp' 들어감
-Building CXX object CMakeFiles/cmTC_93863.dir/CMakeCXXCompilerABI.cpp.o
-/usr/bin/g++-7     -o CMakeFiles/cmTC_93863.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.10/Modules/CMakeCXXCompilerABI.cpp
-Linking CXX executable cmTC_93863
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_93863.dir/link.txt --verbose=1
-/usr/bin/g++-7      -v CMakeFiles/cmTC_93863.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_93863 
+Run Build Command:"/usr/bin/ninja" "cmTC_bad08"
+[1/2] Building CXX object CMakeFiles/cmTC_bad08.dir/CMakeCXXCompilerABI.cpp.o
+[2/2] Linking CXX executable cmTC_bad08
 Using built-in specs.
-COLLECT_GCC=/usr/bin/g++-7
+COLLECT_GCC=/usr/bin/c++
 COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper
 OFFLOAD_TARGET_NAMES=nvptx-none
 OFFLOAD_TARGET_DEFAULT=1
@@ -249,26 +203,20 @@ Thread model: posix
 gcc version 7.5.0 (Ubuntu 7.5.0-3ubuntu1~18.04) 
 COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/
 LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../:/lib/:/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_93863' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
- /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/ccZgr6yR.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_93863 /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. CMakeFiles/cmTC_93863.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_93863' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
-make[1]: 디렉터리 '/home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp' 나감
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_bad08' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+ /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/ccS5LHsM.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_bad08 /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. CMakeFiles/cmTC_bad08.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_bad08' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
 
 
 Parsed CXX implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
-  ignore line: [Change Dir: /home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp]
+  ignore line: [Change Dir: /home/blackiron/git/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command:"/usr/bin/make" "cmTC_93863/fast"]
-  ignore line: [/usr/bin/make -f CMakeFiles/cmTC_93863.dir/build.make CMakeFiles/cmTC_93863.dir/build]
-  ignore line: [make[1]: 디렉터리 '/home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp' 들어감]
-  ignore line: [Building CXX object CMakeFiles/cmTC_93863.dir/CMakeCXXCompilerABI.cpp.o]
-  ignore line: [/usr/bin/g++-7     -o CMakeFiles/cmTC_93863.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.10/Modules/CMakeCXXCompilerABI.cpp]
-  ignore line: [Linking CXX executable cmTC_93863]
-  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_93863.dir/link.txt --verbose=1]
-  ignore line: [/usr/bin/g++-7      -v CMakeFiles/cmTC_93863.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_93863 ]
+  ignore line: [Run Build Command:"/usr/bin/ninja" "cmTC_bad08"]
+  ignore line: [[1/2] Building CXX object CMakeFiles/cmTC_bad08.dir/CMakeCXXCompilerABI.cpp.o]
+  ignore line: [[2/2] Linking CXX executable cmTC_bad08]
   ignore line: [Using built-in specs.]
-  ignore line: [COLLECT_GCC=/usr/bin/g++-7]
+  ignore line: [COLLECT_GCC=/usr/bin/c++]
   ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper]
   ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none]
   ignore line: [OFFLOAD_TARGET_DEFAULT=1]
@@ -278,13 +226,13 @@ Parsed CXX implicit link information from above output:
   ignore line: [gcc version 7.5.0 (Ubuntu 7.5.0-3ubuntu1~18.04) ]
   ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/]
   ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../:/lib/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_93863' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
-  link line: [ /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/ccZgr6yR.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_93863 /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. CMakeFiles/cmTC_93863.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_bad08' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
+  link line: [ /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/ccS5LHsM.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_bad08 /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. CMakeFiles/cmTC_bad08.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o]
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/collect2] ==> ignore
     arg [-plugin] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so] ==> ignore
     arg [-plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper] ==> ignore
-    arg [-plugin-opt=-fresolution=/tmp/ccZgr6yR.res] ==> ignore
+    arg [-plugin-opt=-fresolution=/tmp/ccS5LHsM.res] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
     arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -302,7 +250,7 @@ Parsed CXX implicit link information from above output:
     arg [-znow] ==> ignore
     arg [-zrelro] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_93863] ==> ignore
+    arg [cmTC_bad08] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o] ==> ignore
@@ -314,7 +262,7 @@ Parsed CXX implicit link information from above output:
     arg [-L/usr/lib/x86_64-linux-gnu] ==> dir [/usr/lib/x86_64-linux-gnu]
     arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
     arg [-L/usr/lib/gcc/x86_64-linux-gnu/7/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/7/../../..]
-    arg [CMakeFiles/cmTC_93863.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+    arg [CMakeFiles/cmTC_bad08.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
     arg [-lstdc++] ==> lib [stdc++]
     arg [-lm] ==> lib [m]
     arg [-lgcc_s] ==> lib [gcc_s]
@@ -340,17 +288,11 @@ Parsed CXX implicit link information from above output:
 
 
 Detecting CXX [-std=c++1z] compiler features compiled with the following output:
-Change Dir: /home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp
+Change Dir: /home/blackiron/git/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_c4b5c/fast"
-/usr/bin/make -f CMakeFiles/cmTC_c4b5c.dir/build.make CMakeFiles/cmTC_c4b5c.dir/build
-make[1]: 디렉터리 '/home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp' 들어감
-Building CXX object CMakeFiles/cmTC_c4b5c.dir/feature_tests.cxx.o
-/usr/bin/g++-7    -std=c++1z -o CMakeFiles/cmTC_c4b5c.dir/feature_tests.cxx.o -c /home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_c4b5c
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c4b5c.dir/link.txt --verbose=1
-/usr/bin/g++-7       CMakeFiles/cmTC_c4b5c.dir/feature_tests.cxx.o  -o cmTC_c4b5c 
-make[1]: 디렉터리 '/home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp' 나감
+Run Build Command:"/usr/bin/ninja" "cmTC_9ccb9"
+[1/2] Building CXX object CMakeFiles/cmTC_9ccb9.dir/feature_tests.cxx.o
+[2/2] Linking CXX executable cmTC_9ccb9
 
 
     Feature record: CXX_FEATURE:1cxx_aggregate_default_initializers
@@ -413,17 +355,11 @@ make[1]: 디렉터리 '/home/park/git_base/CPSim_Linux_Generalized/build/CMakeFi
 
 
 Detecting CXX [-std=c++14] compiler features compiled with the following output:
-Change Dir: /home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp
+Change Dir: /home/blackiron/git/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_bc115/fast"
-/usr/bin/make -f CMakeFiles/cmTC_bc115.dir/build.make CMakeFiles/cmTC_bc115.dir/build
-make[1]: 디렉터리 '/home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp' 들어감
-Building CXX object CMakeFiles/cmTC_bc115.dir/feature_tests.cxx.o
-/usr/bin/g++-7    -std=c++14 -o CMakeFiles/cmTC_bc115.dir/feature_tests.cxx.o -c /home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_bc115
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_bc115.dir/link.txt --verbose=1
-/usr/bin/g++-7       CMakeFiles/cmTC_bc115.dir/feature_tests.cxx.o  -o cmTC_bc115 
-make[1]: 디렉터리 '/home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp' 나감
+Run Build Command:"/usr/bin/ninja" "cmTC_047cd"
+[1/2] Building CXX object CMakeFiles/cmTC_047cd.dir/feature_tests.cxx.o
+[2/2] Linking CXX executable cmTC_047cd
 
 
     Feature record: CXX_FEATURE:1cxx_aggregate_default_initializers
@@ -486,17 +422,11 @@ make[1]: 디렉터리 '/home/park/git_base/CPSim_Linux_Generalized/build/CMakeFi
 
 
 Detecting CXX [-std=c++11] compiler features compiled with the following output:
-Change Dir: /home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp
+Change Dir: /home/blackiron/git/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_ffa11/fast"
-/usr/bin/make -f CMakeFiles/cmTC_ffa11.dir/build.make CMakeFiles/cmTC_ffa11.dir/build
-make[1]: 디렉터리 '/home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp' 들어감
-Building CXX object CMakeFiles/cmTC_ffa11.dir/feature_tests.cxx.o
-/usr/bin/g++-7    -std=c++11 -o CMakeFiles/cmTC_ffa11.dir/feature_tests.cxx.o -c /home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_ffa11
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ffa11.dir/link.txt --verbose=1
-/usr/bin/g++-7       CMakeFiles/cmTC_ffa11.dir/feature_tests.cxx.o  -o cmTC_ffa11 
-make[1]: 디렉터리 '/home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp' 나감
+Run Build Command:"/usr/bin/ninja" "cmTC_d552d"
+[1/2] Building CXX object CMakeFiles/cmTC_d552d.dir/feature_tests.cxx.o
+[2/2] Linking CXX executable cmTC_d552d
 
 
     Feature record: CXX_FEATURE:0cxx_aggregate_default_initializers
@@ -559,17 +489,11 @@ make[1]: 디렉터리 '/home/park/git_base/CPSim_Linux_Generalized/build/CMakeFi
 
 
 Detecting CXX [-std=c++98] compiler features compiled with the following output:
-Change Dir: /home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp
+Change Dir: /home/blackiron/git/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_2ba2d/fast"
-/usr/bin/make -f CMakeFiles/cmTC_2ba2d.dir/build.make CMakeFiles/cmTC_2ba2d.dir/build
-make[1]: 디렉터리 '/home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp' 들어감
-Building CXX object CMakeFiles/cmTC_2ba2d.dir/feature_tests.cxx.o
-/usr/bin/g++-7    -std=c++98 -o CMakeFiles/cmTC_2ba2d.dir/feature_tests.cxx.o -c /home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_2ba2d
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2ba2d.dir/link.txt --verbose=1
-/usr/bin/g++-7       CMakeFiles/cmTC_2ba2d.dir/feature_tests.cxx.o  -o cmTC_2ba2d 
-make[1]: 디렉터리 '/home/park/git_base/CPSim_Linux_Generalized/build/CMakeFiles/CMakeTmp' 나감
+Run Build Command:"/usr/bin/ninja" "cmTC_1562c"
+[1/2] Building CXX object CMakeFiles/cmTC_1562c.dir/feature_tests.cxx.o
+[2/2] Linking CXX executable cmTC_1562c
 
 
     Feature record: CXX_FEATURE:0cxx_aggregate_default_initializers
