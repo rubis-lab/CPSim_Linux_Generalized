@@ -6,6 +6,12 @@
 #include "DelayedData.h"
 #include "TaggedData.h"
 
+struct Loggable
+{
+    long long time;
+    int job_ID;
+    std::string event_type;
+};
 
 /** This file is engine code of CPSim-Re engine
  * @file Logger.h
@@ -20,6 +26,7 @@ private:
     std::vector<double> m_current_time_buffer;
     bool read_write_log_is_init = false;
     bool real_cyber_event_log_is_init = false;
+    std::vector<Loggable> to_be_logged_list;
     
 public:
     /**

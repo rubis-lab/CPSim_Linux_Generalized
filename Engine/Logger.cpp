@@ -215,20 +215,43 @@ void Logger::student_2020_81520_real_cyber_event_logger(long long time, int job_
         real_cyber_event_log_is_init = true;
         real_cyber_event_log.open(utils::cpsim_path + "/Log/2020_81520_schedule.log", std::ios::out | std::ofstream::trunc);
         utils::mtx_data_log.lock();
-        std::string header = "[ TIME ] [ JOB ID ] [ EVENT TYPE ]\n";
+        std::string header = "[ TIME ] [ JOB ID ]                [ EVENT TYPE ]\n";
         real_cyber_event_log.write(header.c_str(), header.size());
         real_cyber_event_log.close();
         utils::mtx_data_log.unlock();
     }
 
-    real_cyber_event_log.open(utils::cpsim_path + "/Log/2020_81520_read_write.log", std::ios::app);
-    utils::mtx_data_log.lock();
+    // Save current info in a object, which is pushed to a list. This is to help with ordering in the log.
+    Loggable l = {time, job_id, event_type};
+    to_be_logged_list.push_back(l);
 
-    std::stringstream to_be_logged;
-    to_be_logged <<  std::to_string(time) << std::setw(19)  << std::to_string(job_id) << std::setw(11) << event_type << "\n";
-    std::string to_be_written = to_be_logged.str();
-    real_cyber_event_log.write(to_be_written.c_str(), to_be_written.size());  
+    // If we have more than 25 objects, we can take the one with the earliest time and add it to the log
+    if(to_be_logged_list.size() > 25){
+        int min_idx = 0;
+        Loggable current_data = to_be_logged_list.front();
+        for (int idx = 0; idx < to_be_logged_list.size(); idx ++)
+        {
+            if(current_data.time > to_be_logged_list.at(idx).time)
+            {
+                current_data = to_be_logged_list.at(idx);
+                min_idx = idx;
+            }    
+        }
+        
+        to_be_logged_list.erase(to_be_logged_list.begin() + min_idx);
 
-    real_cyber_event_log.close();
-    utils::mtx_data_log.unlock();
+        real_cyber_event_log.open(utils::cpsim_path + "/Log/2020_81520_schedule.log", std::ios::app);
+        utils::mtx_data_log.lock();
+
+        std::stringstream to_be_logged;
+        to_be_logged <<  std::setw(7) <<std::to_string(current_data.time) << std::setw(7) << "J" << std::to_string(current_data.job_ID) 
+            << std::setw(30) << current_data.event_type << "\n";
+        std::string to_be_written = to_be_logged.str();
+        real_cyber_event_log.write(to_be_written.c_str(), to_be_written.size());  
+
+        real_cyber_event_log.close();
+        utils::mtx_data_log.unlock();
+    }
+
+ 
 }
