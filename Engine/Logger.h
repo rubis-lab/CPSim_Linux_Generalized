@@ -19,6 +19,7 @@ private:
     std::vector<std::shared_ptr<Job>> m_execution_order_buffer;
     std::vector<double> m_current_time_buffer;
     bool read_write_log_is_init = false;
+    bool real_cyber_event_log_is_init = false;
     
 public:
     /**
@@ -44,6 +45,7 @@ public:
     void print_offline_guider_status();
     void set_schedule_log_info(std::vector<std::shared_ptr<Task>>&);
     void student_2020_81520_task_read_write_logger(std::string, std::shared_ptr<TaggedData>, std::shared_ptr<DelayedData>);
+    void student_2020_81520_real_cyber_event_logger(long long, int, std::string);
 };
 
 #endif

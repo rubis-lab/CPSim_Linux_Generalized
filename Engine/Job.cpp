@@ -578,6 +578,7 @@ void Job::run_function()
             std::shared_ptr<TaggedData> current_data = global_object::tagged_data_read.at(global_object::tagged_data_read.size()-1);
             global_object::tagged_data_read.clear();
 
+            current_data->data_time = m_actual_start_time;
             global_object::logger->student_2020_81520_task_read_write_logger(get_task_name(), current_data, NULL);
         }
         run();

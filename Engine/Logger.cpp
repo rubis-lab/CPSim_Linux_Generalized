@@ -120,6 +120,8 @@ void Logger::student_2020_81520_task_read_write_logger(std::string task_name, st
                                                         std::shared_ptr<DelayedData> delayed_data){
 
     std::ofstream read_write_log;
+
+    //Add header if it's not there already
     if(!read_write_log_is_init){
         read_write_log_is_init = true;
         read_write_log.open(utils::cpsim_path + "/Log/2020_81520_read_write.log", std::ios::out | std::ofstream::trunc);
@@ -130,20 +132,20 @@ void Logger::student_2020_81520_task_read_write_logger(std::string task_name, st
         utils::mtx_data_log.unlock();
     }
 
+    //Only log the task that has been set in settings
+    if(task_name == utils::log_task){
     read_write_log.open(utils::cpsim_path + "/Log/2020_81520_read_write.log", std::ios::app);
     utils::mtx_data_log.lock();
 
     //Logging for read
     if(tagged_data){
-        int data_length = tagged_data->data_read1 + tagged_data->data_read2 + tagged_data->data_read3 + 
-                            tagged_data->data_read4 + tagged_data->data_read5 + tagged_data->data_read6; 
         std::stringstream stream;
         stream << std::hex << "0x" << tagged_data->data_read1 << " 0x" << tagged_data->data_read2 << " 0x" 
             << tagged_data->data_read3 << " 0x" << tagged_data->data_read4 << " 0x" 
             << tagged_data->data_read5 << " 0x" << tagged_data->data_read6 << std::dec;
         std::stringstream to_be_logged;
         to_be_logged <<  task_name << std::setw(19)  << std::to_string(tagged_data->data_time)<< std::setw(11) << 
-                            "READ" << std::setw(19) << std::to_string(data_length) << "\t\t" << stream.str() << "\n";
+                            "READ" << std::setw(19) << std::to_string(24) << "\t\t" << stream.str() << "\n";
 
         std::string to_be_written = to_be_logged.str();
         read_write_log.write(to_be_written.c_str(), to_be_written.size());  
@@ -158,12 +160,40 @@ void Logger::student_2020_81520_task_read_write_logger(std::string task_name, st
             << delayed_data->data_write3 << " 0x" << delayed_data->data_write4 << std::dec;
         std::stringstream to_be_logged;
         to_be_logged <<  task_name << std::setw(19)  << std::to_string(delayed_data->data_time)<< std::setw(11) << 
-                                     "WRITE" << std::setw(19) << std::to_string(data_length) << "\t\t" << stream.str() << "\n";
+                                     "WRITE" << std::setw(19) << std::to_string(16) << "\t\t" << stream.str() << "\n";
 
         std::string to_be_written = to_be_logged.str();
         read_write_log.write(to_be_written.c_str(), to_be_written.size()); 
     }
 
     read_write_log.close();
+    utils::mtx_data_log.unlock();
+    }
+}
+
+void Logger::student_2020_81520_real_cyber_event_logger(long long time, int job_id, std::string event_type)
+{
+    std::ofstream real_cyber_event_log;
+
+    //Add header if it's not there already
+    if(!real_cyber_event_log_is_init){
+        real_cyber_event_log_is_init = true;
+        real_cyber_event_log.open(utils::cpsim_path + "/Log/2020_81520_schedule.log", std::ios::out | std::ofstream::trunc);
+        utils::mtx_data_log.lock();
+        std::string header = "[ TIME ] [ JOB ID ] [ EVENT TYPE ]\n";
+        real_cyber_event_log.write(header.c_str(), header.size());
+        real_cyber_event_log.close();
+        utils::mtx_data_log.unlock();
+    }
+
+    real_cyber_event_log.open(utils::cpsim_path + "/Log/2020_81520_read_write.log", std::ios::app);
+    utils::mtx_data_log.lock();
+
+    std::stringstream to_be_logged;
+    to_be_logged <<  std::to_string(time) << std::setw(19)  << std::to_string(job_id) << std::setw(11) << event_type << "\n";
+    std::string to_be_written = to_be_logged.str();
+    real_cyber_event_log.write(to_be_written.c_str(), to_be_written.size());  
+
+    real_cyber_event_log.close();
     utils::mtx_data_log.unlock();
 }
