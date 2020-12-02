@@ -570,21 +570,27 @@ void Job::add_history(std::shared_ptr<Job> new_deadline)
 void Job::run_function()
 {
     m_run_start = std::chrono::steady_clock::now();
+    
     if((get_is_read() == true) && (get_is_write() == true))
     {
         if(!global_object::tagged_data_read.empty())
         {
             std::shared_ptr<TaggedData> current_data = global_object::tagged_data_read.at(global_object::tagged_data_read.size()-1);
             global_object::tagged_data_read.clear();
+
+            global_object::logger->student_2020_81520_task_read_write_logger(get_task_name(), current_data, NULL);
         }
         run();
-  
+
+        
         std::shared_ptr<DelayedData> delayed_data = std::make_shared<DelayedData>();
         delayed_data->data_time = m_actual_finish_time;
         delayed_data->data_write4 = shared::rtY.write4;
         delayed_data->data_write3 = shared::rtY.write3;
         delayed_data->data_write2 = shared::CC_Send_BRAKE;
         delayed_data->data_write1 = shared::CC_Send_ACCEL;
+
+        global_object::logger->student_2020_81520_task_read_write_logger(get_task_name(), NULL, delayed_data);
     }
     else if((get_is_read() == true) && (get_is_write() == false))
     {
@@ -592,6 +598,8 @@ void Job::run_function()
         {
             std::shared_ptr<TaggedData> current_data = global_object::tagged_data_read.at(global_object::tagged_data_read.size()-1);
             global_object::tagged_data_read.clear();
+
+            global_object::logger->student_2020_81520_task_read_write_logger(get_task_name(), current_data, NULL);
         }
         run();
     }
@@ -611,6 +619,8 @@ void Job::run_function()
         delayed_data->data_write3 = shared::rtY.write3;
         delayed_data->data_write2 = shared::CC_Send_BRAKE;
         delayed_data->data_write1 = shared::CC_Send_ACCEL;
+
+        global_object::logger->student_2020_81520_task_read_write_logger(get_task_name(), NULL, delayed_data);
         #endif
     }
     m_run_end = std::chrono::steady_clock::now();

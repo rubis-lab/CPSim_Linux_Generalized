@@ -8,6 +8,7 @@
 #include <iomanip>
 #include <climits>
 #include <mutex>
+#include <sstream>
 
 /**
  *  This file is the cpp file for the Logger class.
@@ -113,4 +114,56 @@ void Logger::start_logging()
         scheduling_log.close();
         utils::mtx_data_log.unlock();    
     }    
+}
+
+void Logger::student_2020_81520_task_read_write_logger(std::string task_name, std::shared_ptr<TaggedData> tagged_data, 
+                                                        std::shared_ptr<DelayedData> delayed_data){
+
+    std::ofstream read_write_log;
+    if(!read_write_log_is_init){
+        read_write_log_is_init = true;
+        read_write_log.open(utils::cpsim_path + "/Log/2020_81520_read_write.log", std::ios::out | std::ofstream::trunc);
+        utils::mtx_data_log.lock();
+        std::string header = "[ TASK NAME ] [ TIME ] [ READ/WRITE ] [ DATA LENGTH ] [ RAW DATA ]\n";
+        read_write_log.write(header.c_str(), header.size());
+        read_write_log.close();
+        utils::mtx_data_log.unlock();
+    }
+
+    read_write_log.open(utils::cpsim_path + "/Log/2020_81520_read_write.log", std::ios::app);
+    utils::mtx_data_log.lock();
+
+    //Logging for read
+    if(tagged_data){
+        int data_length = tagged_data->data_read1 + tagged_data->data_read2 + tagged_data->data_read3 + 
+                            tagged_data->data_read4 + tagged_data->data_read5 + tagged_data->data_read6; 
+        std::stringstream stream;
+        stream << std::hex << "0x" << tagged_data->data_read1 << " 0x" << tagged_data->data_read2 << " 0x" 
+            << tagged_data->data_read3 << " 0x" << tagged_data->data_read4 << " 0x" 
+            << tagged_data->data_read5 << " 0x" << tagged_data->data_read6 << std::dec;
+        std::stringstream to_be_logged;
+        to_be_logged <<  task_name << std::setw(19)  << std::to_string(tagged_data->data_time)<< std::setw(11) << 
+                            "READ" << std::setw(19) << std::to_string(data_length) << "\t\t" << stream.str() << "\n";
+
+        std::string to_be_written = to_be_logged.str();
+        read_write_log.write(to_be_written.c_str(), to_be_written.size());  
+    }
+
+    //Logging for write
+    if(delayed_data){
+        
+        int data_length = delayed_data->data_write1 + delayed_data->data_write2 + delayed_data->data_write3 + delayed_data->data_write4; 
+        std::stringstream stream;
+        stream << std::hex << "0x" << delayed_data->data_write1 << " 0x" << delayed_data->data_write2 << " 0x" 
+            << delayed_data->data_write3 << " 0x" << delayed_data->data_write4 << std::dec;
+        std::stringstream to_be_logged;
+        to_be_logged <<  task_name << std::setw(19)  << std::to_string(delayed_data->data_time)<< std::setw(11) << 
+                                     "WRITE" << std::setw(19) << std::to_string(data_length) << "\t\t" << stream.str() << "\n";
+
+        std::string to_be_written = to_be_logged.str();
+        read_write_log.write(to_be_written.c_str(), to_be_written.size()); 
+    }
+
+    read_write_log.close();
+    utils::mtx_data_log.unlock();
 }
