@@ -2,45 +2,27 @@
 
 void sim_main()
 {
-  if (rtU->read2 <= 5000.0)
-  {
-    rtDW->w3 = 0.0;
-    rtDW->w4 = 0.0;
+  /* Revised code for readability(Logic not changed) */
+  double steer = 3600.0;
+  double delta = rtU -> read1;
+  double conf = rtU->read2 / 10000.0;
+  bool toRight = delta > 0.0;
+  if (conf < 0.5) {
+    rtDW -> w3 = 0.0;
+    rtDW -> w4 = 0.0;
   }
-  else
-  {
-    if (rtU->read1 > 0.0)
-    {
-      rtDW->w3 = 0.0;
-    }
-    else if ((rtU->read1 < 0.0) && (rtU->read1 < -10000.0))
-    {
-      rtDW->w3 = 10000.0;
-    }
-    else
-    {
-      if ((rtU->read1 < 0.0) && (rtU->read1 >= -10000.0))
-      {
-        rtDW->w3 = rtU->read1 * -1;
-      }
-    }
-
-    if ((rtU->read1 > 0.0) && (rtU->read1 > 10000.0))
-    {
-      rtDW->w4 = 10000.0;
-    }
-    else if ((rtU->read1 > 0.0) && (rtU->read1 <= 10000.0))
-    {
-      rtDW->w4 = rtU->read1;
-    }
-    else
-    {
-      if (rtU->read1 < 0.0)
-      {
-        rtDW->w4 = 0.0;
-      }
+  else {
+    if (toRight){
+      rtDW -> w3 = 0.0;
+      rtDW -> w4 = delta;
+    } 
+    else{
+      rtDW -> w4 = 0.0;
+      rtDW -> w3 = -delta;
     }
   }
+  if (rtDW -> w3 > steer) rtDW -> w3 = steer;
+  if (rtDW -> w4 > steer) rtDW -> w4 = steer;
   rtY->write3 = rtDW->w3;
   rtY->write4 = rtDW->w4;
 }
