@@ -107,12 +107,13 @@ bool Executor::run_simulation(JobVectorOfSimulator& job_vector_of_simulator, Job
 
     assign_predecessors_successors(job_vector_of_simulator);
     assign_deadline_for_simulated_jobs(job_vector_of_simulator);
-    update_initialization(job_vector_of_simulator);
+    update_initialization(job_vector_of_simulator); // Set actual start and finish time
 
     for(auto job : job_vector_of_simulator)
     {
         if(job->get_actual_start_time() < 0 || job->get_actual_finish_time() > job->get_actual_deadline())
         {
+            global_object::logger->real_cyber_event_logger_2014_11235((long long)job->get_actual_deadline(), job->get_task_id(), "FINISHED (DEADLINE MISSED)");
             std::cout <<"DEADLINE MISS IN REAL CYBER SYSTEM" << std::endl;
         }
     }
@@ -141,7 +142,8 @@ bool Executor::run_simulation(JobVectorOfSimulator& job_vector_of_simulator, Job
                         job->set_is_released(true);
                         job->set_simulated_release_time(utils::current_time + std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - hyper_period_start).count());
                         simulation_ready_queue.push_back(job);
-                        is_idle = false;   
+                        is_idle = false;
+                        global_object::logger->real_cyber_event_logger_2014_11235((long long)job->get_actual_release_time(), job->get_task_id(), "RELEASED");   
                     }
                 }
                 else
@@ -150,6 +152,7 @@ bool Executor::run_simulation(JobVectorOfSimulator& job_vector_of_simulator, Job
                     job->set_simulated_release_time(utils::current_time + std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - hyper_period_start).count());
                     simulation_ready_queue.push_back(job);    
                     is_idle = false; 
+                    global_object::logger->real_cyber_event_logger_2014_11235((long long)job->get_actual_release_time(), job->get_task_id(), "RELEASED");  
                 }
             }
         }
@@ -173,8 +176,8 @@ bool Executor::run_simulation(JobVectorOfSimulator& job_vector_of_simulator, Job
             }
             
             run_job->set_simulated_start_time(utils::current_time + std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - hyper_period_start).count()); 
-             
-            // bool is_simulatable = simulatability_analysis(job_vector_of_simulator);
+
+            // bool is_simulatable = simulatability_analysis(job_vector_of_simulator);s(job_vector_of_simulator);
             // if(!is_simulatable)
             // {
             //     //std::cout << "NOT SIMULATABLE" << std::endl;
@@ -190,8 +193,11 @@ bool Executor::run_simulation(JobVectorOfSimulator& job_vector_of_simulator, Job
                 utils::mtx_data_log.lock();
                 std::shared_ptr<ScheduleData> diagram_start = std::make_shared<ScheduleData>(run_job->get_actual_start_time(), 0, std::to_string(run_job->get_actual_start_time()) + ", ECU" + std::to_string(run_job->get_ECU()->get_ECU_id()) + ": " + run_job->get_task_name() + ", 1\n");
                 global_object::schedule_data.push_back(std::move(diagram_start));
+                global_object::logger->real_cyber_event_logger_2014_11235((long long)run_job->get_actual_start_time(), run_job->get_task_id(), "STARTED");
+                
                 std::shared_ptr<ScheduleData> diagram_finish = std::make_shared<ScheduleData>(run_job->get_actual_finish_time(), run_job->get_actual_execution_time(),std::to_string(run_job->get_actual_finish_time()) + ", ECU" + std::to_string(run_job->get_ECU()->get_ECU_id()) + ": " + run_job->get_task_name() + ", 0\n" );
                 global_object::schedule_data.push_back(std::move(diagram_finish));
+                global_object::logger->real_cyber_event_logger_2014_11235((long long)run_job->get_actual_finish_time(), run_job->get_task_id(), "FINISHED");
                 utils::mtx_data_log.unlock();
             }
             else utils::current_time += run_job->get_simulated_execution_time();

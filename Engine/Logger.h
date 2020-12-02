@@ -2,7 +2,9 @@
 #define LOGGER_H__
 #include <iostream>
 #include <vector>
+#include <mutex>
 #include "Job.h"
+#include "ScheduleData.h"
 
 
 /** This file is engine code of CPSim-Re engine
@@ -16,6 +18,8 @@ class Logger{
 private:
     std::vector<std::shared_ptr<Job>> m_execution_order_buffer;
     std::vector<double> m_current_time_buffer;
+    std::vector<std::shared_ptr<ScheduleData>> eventBuffer;
+    std::mutex event_mutex;
     
 public:
     /**
@@ -40,6 +44,8 @@ public:
     void print_job_execution_schedule();
     void print_offline_guider_status();
     void set_schedule_log_info(std::vector<std::shared_ptr<Task>>&);
+    void task_read_write_logger_2014_11235(std::string task_name);
+    void real_cyber_event_logger_2014_11235(long long time, int job_id, std::string event_type);
 };
 
 #endif
