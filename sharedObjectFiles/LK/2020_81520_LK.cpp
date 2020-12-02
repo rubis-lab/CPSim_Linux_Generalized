@@ -15,7 +15,7 @@ void sim_main()
     }
     else if ((rtU->read1 < 0.0) && (rtU->read1 < -10000.0))
     {
-      rtDW->w3 = 2000.0;
+      rtDW->w3 = 2500.0;
     }
     else
     {
@@ -27,7 +27,7 @@ void sim_main()
 
     if ((rtU->read1 > 0.0) && (rtU->read1 > 10000.0))
     {
-      rtDW->w4 = 2000.0;
+      rtDW->w4 = 2500.0;
     }
     else if ((rtU->read1 > 0.0) && (rtU->read1 <= 10000.0))
     {
