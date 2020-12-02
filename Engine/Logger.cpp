@@ -140,12 +140,33 @@ void Logger::student_2020_81520_task_read_write_logger(std::string task_name, st
     //Logging for read
     if(tagged_data){
         std::stringstream stream;
-        stream << std::hex << "0x" << tagged_data->data_read1 << " 0x" << tagged_data->data_read2 << " 0x" 
-            << tagged_data->data_read3 << " 0x" << tagged_data->data_read4 << " 0x" 
-            << tagged_data->data_read5 << " 0x" << tagged_data->data_read6 << std::dec;
+        stream << std::hex << "0x" << std::setw(2) << std::setfill('0') << ((tagged_data->data_read1 >> 24) & 0xFF) << " 0x" <<   
+            std::setw(2) << std::setfill('0') << ((tagged_data->data_read1>> 16) & 0xFF) << " 0x" <<   
+            std::setw(2) << std::setfill('0') << ((tagged_data->data_read1 >> 8) & 0xFF) << " 0x" <<   
+            std::setw(2) << std::setfill('0') << ((tagged_data->data_read1) & 0xFF) << " 0x" <<   
+            std::setw(2) << std::setfill('0') << ((tagged_data->data_read2 >> 24) & 0xFF) << " 0x" <<   
+            std::setw(2) << std::setfill('0') << ((tagged_data->data_read2>> 16) & 0xFF) << " 0x" <<   
+            std::setw(2) << std::setfill('0') << ((tagged_data->data_read2 >> 8) & 0xFF) << " 0x" <<   
+            std::setw(2) << std::setfill('0') << ((tagged_data->data_read2) & 0xFF) << " 0x" << 
+            std::setw(2) << std::setfill('0') << ((tagged_data->data_read3 >> 24) & 0xFF) << " 0x" <<   
+            std::setw(2) << std::setfill('0') << ((tagged_data->data_read3>> 16) & 0xFF) << " 0x" <<   
+            std::setw(2) << std::setfill('0') << ((tagged_data->data_read3 >> 8) & 0xFF) << " 0x" <<   
+            std::setw(2) << std::setfill('0') << ((tagged_data->data_read3) & 0xFF) << " 0x" <<   
+            std::setw(2) << std::setfill('0') << ((tagged_data->data_read4 >> 24) & 0xFF) << " 0x" <<   
+            std::setw(2) << std::setfill('0') << ((tagged_data->data_read4>> 16) & 0xFF) << " 0x" <<   
+            std::setw(2) << std::setfill('0') << ((tagged_data->data_read4 >> 8) & 0xFF) << " 0x" <<   
+            std::setw(2) << std::setfill('0') << ((tagged_data->data_read4) & 0xFF) << " 0x" <<
+            std::setw(2) << std::setfill('0') << ((tagged_data->data_read5 >> 24) & 0xFF) << " 0x" <<   
+            std::setw(2) << std::setfill('0') << ((tagged_data->data_read5>> 16) & 0xFF) << " 0x" <<   
+            std::setw(2) << std::setfill('0') << ((tagged_data->data_read5 >> 8) & 0xFF) << " 0x" <<   
+            std::setw(2) << std::setfill('0') << ((tagged_data->data_read5) & 0xFF) << " 0x" <<
+            std::setw(2) << std::setfill('0') << ((tagged_data->data_read6 >> 24) & 0xFF) << " 0x" <<   
+            std::setw(2) << std::setfill('0') << ((tagged_data->data_read6>> 16) & 0xFF) << " 0x" <<   
+            std::setw(2) << std::setfill('0') << ((tagged_data->data_read6 >> 8) & 0xFF) << " 0x" <<   
+            std::setw(2) << std::setfill('0') << ((tagged_data->data_read6) & 0xFF) << std::dec;
         std::stringstream to_be_logged;
         to_be_logged <<  task_name << std::setw(19)  << std::to_string(tagged_data->data_time)<< std::setw(11) << 
-                            "READ" << std::setw(19) << std::to_string(24) << "\t\t" << stream.str() << "\n";
+                            "READ" << std::setw(14) << std::to_string(24) << "\t\t" << stream.str() << "\n";
 
         std::string to_be_written = to_be_logged.str();
         read_write_log.write(to_be_written.c_str(), to_be_written.size());  
@@ -153,14 +174,28 @@ void Logger::student_2020_81520_task_read_write_logger(std::string task_name, st
 
     //Logging for write
     if(delayed_data){
-        
-        int data_length = delayed_data->data_write1 + delayed_data->data_write2 + delayed_data->data_write3 + delayed_data->data_write4; 
+
         std::stringstream stream;
-        stream << std::hex << "0x" << delayed_data->data_write1 << " 0x" << delayed_data->data_write2 << " 0x" 
-            << delayed_data->data_write3 << " 0x" << delayed_data->data_write4 << std::dec;
+        stream << std::hex << "0x" << std::setw(2) << std::setfill('0') << ((delayed_data->data_write1 >> 24) & 0xFF) << " 0x" <<   
+            std::setw(2) << std::setfill('0') << ((delayed_data->data_write1 >> 16) & 0xFF) << " 0x" <<   
+            std::setw(2) << std::setfill('0') << ((delayed_data->data_write1 >> 8) & 0xFF) << " 0x" <<   
+            std::setw(2) << std::setfill('0') << ((delayed_data->data_write1) & 0xFF) << " 0x" <<   
+            std::setw(2) << std::setfill('0') << ((delayed_data->data_write2 >> 24) & 0xFF) << " 0x" <<      
+            std::setw(2) << std::setfill('0') << ((delayed_data->data_write2 >> 16) & 0xFF) << " 0x" <<   
+            std::setw(2) << std::setfill('0') << ((delayed_data->data_write2 >> 8) & 0xFF) << " 0x" <<   
+            std::setw(2) << std::setfill('0') << ((delayed_data->data_write2) & 0xFF) << " 0x" <<   
+            std::setw(2) << std::setfill('0') << ((delayed_data->data_write3 >> 24) & 0xFF) << " 0x" <<      
+            std::setw(2) << std::setfill('0') << ((delayed_data->data_write3 >> 16) & 0xFF) << " 0x" <<   
+            std::setw(2) << std::setfill('0') << ((delayed_data->data_write3 >> 8) & 0xFF) << " 0x" <<   
+            std::setw(2) << std::setfill('0') << ((delayed_data->data_write3) & 0xFF) << " 0x" <<    
+            std::setw(2) << std::setfill('0') << ((delayed_data->data_write4 >> 24) & 0xFF) << " 0x" <<      
+            std::setw(2) << std::setfill('0') << ((delayed_data->data_write4 >> 16) & 0xFF) << " 0x" <<   
+            std::setw(2) << std::setfill('0') << ((delayed_data->data_write4 >> 8) & 0xFF) << " 0x" <<   
+            std::setw(2) << std::setfill('0') << ((delayed_data->data_write4) & 0xFF) << std::dec;
+        
         std::stringstream to_be_logged;
         to_be_logged <<  task_name << std::setw(19)  << std::to_string(delayed_data->data_time)<< std::setw(11) << 
-                                     "WRITE" << std::setw(19) << std::to_string(16) << "\t\t" << stream.str() << "\n";
+                                     "WRITE" << std::setw(14) << std::to_string(16) << "\t\t" << stream.str() << "\n";
 
         std::string to_be_written = to_be_logged.str();
         read_write_log.write(to_be_written.c_str(), to_be_written.size()); 
