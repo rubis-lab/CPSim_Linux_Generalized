@@ -116,7 +116,7 @@ void Logger::start_logging()
     }    
 }
 
-void Logger::student_2020_81520_task_read_write_logger(std::string task_name, std::shared_ptr<TaggedData> tagged_data, 
+void Logger::_2020_81520_task_read_write_logger(std::string task_name, std::shared_ptr<TaggedData> tagged_data, 
                                                         std::shared_ptr<DelayedData> delayed_data){
 
     std::ofstream read_write_log;
@@ -206,7 +206,7 @@ void Logger::student_2020_81520_task_read_write_logger(std::string task_name, st
     }
 }
 
-void Logger::student_2020_81520_real_cyber_event_logger(long long time, int job_id, std::string event_type)
+void Logger::_2020_81520_real_cyber_event_logger(long long time, int job_id, std::string event_type)
 {
     std::ofstream real_cyber_event_log;
 

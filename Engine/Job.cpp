@@ -579,7 +579,7 @@ void Job::run_function()
             global_object::tagged_data_read.clear();
 
             current_data->data_time = m_actual_start_time;
-            global_object::logger->student_2020_81520_task_read_write_logger(get_task_name(), current_data, NULL);
+            global_object::logger->_2020_81520_task_read_write_logger(get_task_name(), current_data, NULL);
         }
         run();
 
@@ -591,7 +591,7 @@ void Job::run_function()
         delayed_data->data_write2 = shared::CC_Send_BRAKE;
         delayed_data->data_write1 = shared::CC_Send_ACCEL;
 
-        global_object::logger->student_2020_81520_task_read_write_logger(get_task_name(), NULL, delayed_data);
+        global_object::logger->_2020_81520_task_read_write_logger(get_task_name(), NULL, delayed_data);
     }
     else if((get_is_read() == true) && (get_is_write() == false))
     {
@@ -600,7 +600,7 @@ void Job::run_function()
             std::shared_ptr<TaggedData> current_data = global_object::tagged_data_read.at(global_object::tagged_data_read.size()-1);
             global_object::tagged_data_read.clear();
 
-            global_object::logger->student_2020_81520_task_read_write_logger(get_task_name(), current_data, NULL);
+            global_object::logger->_2020_81520_task_read_write_logger(get_task_name(), current_data, NULL);
         }
         run();
     }

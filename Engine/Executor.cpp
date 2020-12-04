@@ -148,7 +148,7 @@ bool Executor::run_simulation(JobVectorOfSimulator& job_vector_of_simulator, Job
                         int n = job->get_job_id();
                         int len = n ? 0:1; 
                         while (n) { len++, n/=10; }
-                        global_object::logger->student_2020_81520_real_cyber_event_logger(job->get_actual_release_time(), (job->get_task_id()+1)*(pow(10,len)) + job->get_job_id(), "RELEASED");   
+                        global_object::logger->_2020_81520_real_cyber_event_logger(job->get_actual_release_time(), (job->get_task_id()+1)*(pow(10,len)) + job->get_job_id(), "RELEASED");   
                     }
                 }
                 else
@@ -162,7 +162,7 @@ bool Executor::run_simulation(JobVectorOfSimulator& job_vector_of_simulator, Job
                     int n = job->get_job_id();
                     int len = n ? 0:1; 
                     while (n) { len++, n/=10; }
-                    global_object::logger->student_2020_81520_real_cyber_event_logger(job->get_actual_release_time(), (job->get_task_id()+1)*(pow(10,len)) + job->get_job_id(), "RELEASED");
+                    global_object::logger->_2020_81520_real_cyber_event_logger(job->get_actual_release_time(), (job->get_task_id()+1)*(pow(10,len)) + job->get_job_id(), "RELEASED");
                 }
             }
         }
@@ -191,7 +191,7 @@ bool Executor::run_simulation(JobVectorOfSimulator& job_vector_of_simulator, Job
             int n = run_job->get_job_id();
             int len = n ? 0:1; 
             while (n) { len++, n/=10; }
-            global_object::logger->student_2020_81520_real_cyber_event_logger(run_job->get_actual_start_time(), (run_job->get_task_id()+1)*(pow(10,len)) + run_job->get_job_id(), "STARTED");
+            global_object::logger->_2020_81520_real_cyber_event_logger(run_job->get_actual_start_time(), (run_job->get_task_id()+1)*(pow(10,len)) + run_job->get_job_id(), "STARTED");
             
 
             // bool is_simulatable = simulatability_analysis(job_vector_of_simulator);
@@ -218,11 +218,11 @@ bool Executor::run_simulation(JobVectorOfSimulator& job_vector_of_simulator, Job
                 if(run_job->get_actual_finish_time() > run_job->get_actual_deadline())
                 {
                     // Log Job Finish (with missed deadline)
-                    global_object::logger->student_2020_81520_real_cyber_event_logger(run_job->get_actual_finish_time(), (run_job->get_task_id()+1)*(pow(10,len)) + run_job->get_job_id(), "FINISHED (DEADLINE MISSED)");
+                    global_object::logger->_2020_81520_real_cyber_event_logger(run_job->get_actual_finish_time(), (run_job->get_task_id()+1)*(pow(10,len)) + run_job->get_job_id(), "FINISHED (DEADLINE MISSED)");
                 }
                 else{
                     // Log Job Finish
-                    global_object::logger->student_2020_81520_real_cyber_event_logger(run_job->get_actual_finish_time(), (run_job->get_task_id()+1)*(pow(10,len)) + run_job->get_job_id(), "FINISHED");
+                    global_object::logger->_2020_81520_real_cyber_event_logger(run_job->get_actual_finish_time(), (run_job->get_task_id()+1)*(pow(10,len)) + run_job->get_job_id(), "FINISHED");
                 }
             }
             else utils::current_time += run_job->get_simulated_execution_time();

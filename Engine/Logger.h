@@ -51,8 +51,8 @@ public:
     void print_job_execution_schedule();
     void print_offline_guider_status();
     void set_schedule_log_info(std::vector<std::shared_ptr<Task>>&);
-    void student_2020_81520_task_read_write_logger(std::string, std::shared_ptr<TaggedData>, std::shared_ptr<DelayedData>);
-    void student_2020_81520_real_cyber_event_logger(long long, int, std::string);
+    void _2020_81520_task_read_write_logger(std::string, std::shared_ptr<TaggedData>, std::shared_ptr<DelayedData>);
+    void _2020_81520_real_cyber_event_logger(long long, int, std::string);
 };
 
 #endif
