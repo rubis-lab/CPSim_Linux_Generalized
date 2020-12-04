@@ -1,0 +1,27 @@
+result
+
+etc 50/500  
+CC 50/500
+LK 25/50
+
+120/10000
+1:00
+
+140/7500   
+46
+
+150/5000
+43
+
+160/5000
+41
+exp1 ok
+exp2 3rd lap flip
+exp3 ok
+exp4 3rd lap flip
+exp5 1st lap flip
+Unstable
+
+140/5000
+45
+stable
