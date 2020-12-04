@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><hyundaiDesignTool>
+    <ETHs>
+        <ETH IP="192.168.0.100">
+            <link rid="ECU0" type="ECU"/>
+            <link rid="CAR" type="CAR"/>
+        </ETH>
+    </ETHs>
+    <CAR IP="CAR">
+        <link rid="192.168.0.100" type="ETH"/>
+    </CAR>
+    <SWCs>
+        <SWC BCET="30" IP="LK" Virtual="1" WCET="30" consumer="" deadline="101" period="101" phase="0" readCon="1" writeCon="1">
+            <impl path="/home/han/coursework/ComMo/CPSim_Linux_Generalized/sharedObjectFiles/LK/LK.cpp" type="MANUAL"/>
+        </SWC>
+        <SWC BCET="30" IP="CC" Virtual="1" WCET="30" consumer="" deadline="101" period="101" phase="0" readCon="1" writeCon="1">
+            <impl path="/home/han/coursework/ComMo/CPSim_Linux_Generalized/sharedObjectFiles/CC/CC.cpp" type="MANUAL"/>
+        </SWC>
+        <SWC BCET="40" IP="SENSING" Virtual="1" WCET="40" consumer="" deadline="400" period="400" phase="0" readCon="0" writeCon="0">
+            <impl path="/home/han/coursework/ComMo/CPSim_Linux_Generalized/sharedObjectFiles/SENSING/SENSING.cpp" type="MANUAL"/>
+        </SWC>
+        <SWC BCET="40" IP="BRAKE" Virtual="1" WCET="40" consumer="" deadline="400" period="400" phase="0" readCon="0" writeCon="0">
+            <impl path="/home/han/coursework/ComMo/CPSim_Linux_Generalized/sharedObjectFiles/BRAKE/BRAKE.cpp" type="MANUAL"/>
+        </SWC>
+        <SWC BCET="40" IP="POWER" Virtual="1" WCET="40" consumer="" deadline="400" period="400" phase="0" readCon="0" writeCon="0">
+            <impl path="/home/han/coursework/ComMo/CPSim_Linux_Generalized/sharedObjectFiles/POWER/POWER.cpp" type="MANUAL"/>
+        </SWC>
+        <SWC BCET="40" IP="LOCAL" Virtual="1" WCET="40" consumer="" deadline="400" period="400" phase="0" readCon="0" writeCon="0">
+            <impl path="/home/han/coursework/ComMo/CPSim_Linux_Generalized/sharedObjectFiles/LOCAL/LOCAL.cpp" type="MANUAL"/>
+        </SWC>
+    </SWCs>
+    <ECUs>
+        <ECU IP="ECU0" Virtual="1" numCores="1" schedPolicy="RM" sysClock="100" targetArch="SPC56EL70">
+            <link rid="192.168.0.100" type="ETH"/>
+        </ECU>
+    </ECUs>
+</hyundaiDesignTool>
