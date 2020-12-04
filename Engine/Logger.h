@@ -25,6 +25,11 @@ public:
     ~Logger();
 
     /**
+     * My Logging Function 
+     */
+    void task_read_write_logger(std::string task_name);
+
+    /**
      * Getter & Setter
      */
 
