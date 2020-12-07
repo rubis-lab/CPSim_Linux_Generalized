@@ -4,6 +4,7 @@
 #include <memory>
 #include <map>
 #include <iostream>
+#include <sstream>
 
 /** 
  *  This file is the header file for the Job class.

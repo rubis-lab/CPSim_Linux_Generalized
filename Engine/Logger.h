@@ -1,7 +1,9 @@
 #ifndef LOGGER_H__
 #define LOGGER_H__
 #include <iostream>
+#include <sstream>
 #include <vector>
+#include <algorithm>
 #include "Job.h"
 
 
@@ -16,6 +18,11 @@ class Logger{
 private:
     std::vector<std::shared_ptr<Job>> m_execution_order_buffer;
     std::vector<double> m_current_time_buffer;
+    // a vector that contains the index of jobs
+    std::vector<int> job_instance_number_release;
+    std::vector<int> job_instance_number_finish;
+    std::vector<int> job_instance_number_start;
+    std::vector<char *> log_vector;
     
 public:
     /**
@@ -40,6 +47,10 @@ public:
     void print_job_execution_schedule();
     void print_offline_guider_status();
     void set_schedule_log_info(std::vector<std::shared_ptr<Task>>&);
+    void finish();
+    static bool cmp(std::string stringA, std::string stringB);
+    void task_read_write_logger_2017_14434(std::string task_name);
+    void real_cyber_event_logger_2017_14434(long long time, int job_id, std::string event_type);
 };
 
 #endif

@@ -4,8 +4,8 @@
 #include <cstdlib>
 #include <climits>
 #include <cmath>
-
-
+ 
+ 
 /** 
  *  This file is the cpp file for the Job class.
  *  @file Job.cpp
@@ -14,7 +14,7 @@
  *  @date 2020-03-31
  *  
  */
-
+ 
 /**
  * @fn Job::Job()
  * @brief the function of basic constructor of Job
@@ -30,9 +30,9 @@
  */
 Job::Job()
 {
-
+ 
 }
-
+ 
 /**
  * @fn Job::Job()
  * @brief the function of basic constructor of Job
@@ -73,13 +73,13 @@ Job::Job(std::shared_ptr<Task> task, int job_id, int hyper_period_start)
     m_actual_deadline = calculate_absolute_deadline(m_actual_release_time, task->get_deadline());
     m_actual_start_time = -1;
     m_actual_finish_time = -1;
-
+ 
     m_simulated_release_time = -1;
     m_simulated_start_time = -1;
     m_simulated_finish_time = -1;
     m_simulated_deadline = -1;
     m_simulated_execution_time = -1;
-
+ 
     m_is_preemptable = false;
     m_is_preempted = false;
     m_is_started = false;
@@ -90,7 +90,7 @@ Job::Job(std::shared_ptr<Task> task, int job_id, int hyper_period_start)
     m_is_running = false;
     m_is_released = false;
     m_is_simulated = false;
-
+ 
     m_est = -1;
     m_eft = -1;
     m_lst = -1;
@@ -99,9 +99,8 @@ Job::Job(std::shared_ptr<Task> task, int job_id, int hyper_period_start)
     m_bpet = -1;
     m_worst_case_busy_period.at(0) = -1;
     m_worst_case_busy_period.at(1) = -1;
-    
 }
-
+ 
 /**
  * @fn Job::~Job()
  * @brief the function of basic destroyer of Job
@@ -123,17 +122,17 @@ long long Job::get_last_elapsed_nano_sec()
 {
     return std::chrono::duration_cast<std::chrono::nanoseconds>(m_run_end - m_run_start).count();
 }
-
+ 
 long long Job::get_last_elapsed_micro_sec()
 {
     return std::chrono::duration_cast<std::chrono::microseconds>(m_run_end - m_run_start).count();
 }
-
+ 
 long long Job::get_last_elapsed_milli_sec()
 {
     return std::chrono::duration_cast<std::chrono::milliseconds>(m_run_end - m_run_start).count();
 }
-
+ 
 long long Job::get_last_elapsed_seconds()
 {
     return std::chrono::duration_cast<std::chrono::seconds>(m_run_end - m_run_start).count();
@@ -174,22 +173,22 @@ bool Job::get_is_worst_analyzed()
 {
     return m_is_worst_analyzed;
 }
-
+ 
 bool Job::operator<(const Job& other_job)
 {
     return this->m_actual_deadline < other_job.m_actual_deadline;
 }
-
+ 
 bool Job::operator>(const Job& other_job)
 {
     return this->m_actual_deadline > other_job.m_actual_deadline;
 }
-
+ 
 int Job::get_job_id()
 {
     return m_job_id;
 }
-
+ 
 int Job::get_actual_release_time()
 {
     return m_actual_release_time;
@@ -202,32 +201,32 @@ int Job::get_actual_start_time()
 {
     return m_actual_start_time;
 }
-
+ 
 int Job::get_actual_finish_time()
 {
     return m_actual_finish_time;
 }  
-
+ 
 int Job::get_actual_execution_time()
 {
     return m_actual_execution_time;
 }
-
+ 
 int Job::get_est()
 {
     return m_est;
 }
-
+ 
 int Job::get_lst()
 {
     return m_lst;
 }
-
+ 
 int Job::get_eft()
 {
     return m_eft;
 }
-
+ 
 int Job::get_lft()
 {
     return m_lft;
@@ -240,7 +239,7 @@ int Job::get_wpet()
 {
     return m_wpet;
 }
-
+ 
 double Job::get_simulated_release_time()
 {
     return std::floor(m_simulated_release_time*10)/10;
@@ -261,10 +260,11 @@ double Job::get_simulated_execution_time()
 {
     return std::floor(m_simulated_execution_time*10)/10;
 }
-
+ 
 std::array<int, 2>& Job::get_wcbp()
 {
-    return m_worst_case_busy_period;
+   return m_worst_case_busy_period;
+
 }
 std::array<int, 6> Job::get_data_read_buffer()
 {
@@ -274,12 +274,12 @@ std::shared_ptr<Job> Job::get_producer_job()
 {
     return m_producer_job;
 }
-
+ 
 std::vector<std::shared_ptr<Job>>& Job::get_job_set_start_det()
 {
     return m_job_set_start_det;
 }
-
+ 
 std::vector<std::shared_ptr<Job>>& Job::get_job_set_start_non_det()
 {
     return m_job_set_start_non_det;
@@ -288,7 +288,7 @@ std::vector<std::shared_ptr<Job>>& Job::get_job_set_finish_det()
 {
     return m_job_set_finish_det;
 }
-
+ 
 std::vector<std::shared_ptr<Job>>& Job::get_job_set_finish_non_det()
 {
     return m_job_set_finish_non_det;
@@ -297,7 +297,7 @@ std::vector<std::shared_ptr<Job>>& Job::get_job_set_pro_con_det()
 {
     return m_job_set_pro_con_det;
 }
-
+ 
 std::vector<std::shared_ptr<Job>>& Job::get_job_set_pro_con_non_det()
 {
     return m_job_set_pro_con_non_det;
@@ -306,7 +306,7 @@ std::vector<std::shared_ptr<Job>>& Job::get_det_prdecessors()
 {
     return m_det_predecessors;
 }
-
+ 
 std::vector<std::shared_ptr<Job>>& Job::get_det_successors()
 {
     return m_det_successors;
@@ -315,12 +315,12 @@ std::vector<std::shared_ptr<Job>>& Job::get_non_det_prdecessors()
 {
     return m_non_det_predecessors;
 }
-
+ 
 std::vector<std::shared_ptr<Job>>& Job::get_non_det_successors()
 {
     return m_non_det_successors;
 }
-
+ 
 void Job::set_is_started(bool is_started)
 {
     m_is_started = is_started;
@@ -341,6 +341,7 @@ void Job::set_is_released(bool is_released)
 {
     m_is_released = is_released;
 }
+
 void Job::set_is_running(bool is_running)
 {
     m_is_running = is_running;
@@ -371,7 +372,7 @@ void Job::set_eft(int eft)
 }
 void Job::set_lft(int lft)
 {
-    m_lft = lft;
+   m_lft = lft;
 }
 void Job::set_bpet(int bpet)
 {
@@ -381,7 +382,7 @@ void Job::set_wpet(int wpet)
 {
     m_wpet = wpet;
 }
-
+ 
 void Job::set_actual_release_time(int release_time)
 {
     m_actual_release_time = release_time;
@@ -390,7 +391,7 @@ void Job::set_actual_deadline(int a_deadline)
 {
     m_actual_deadline = a_deadline;
 }
-
+ 
 void Job::set_actual_start_time(int actual_start_time)
 {
     m_actual_start_time = actual_start_time;
@@ -401,9 +402,9 @@ void Job::set_actual_finish_time(int actual_finish_time)
 }
 void Job::set_actual_execution_time(int original_execution_time)
 {
-    m_actual_execution_time = original_execution_time;
+   m_actual_execution_time = original_execution_time;
 }
-
+ 
 void Job::set_simulated_release_time(double simulated_release_time)
 {
     m_simulated_release_time = std::floor(simulated_release_time*10)/10;
@@ -424,8 +425,8 @@ void Job::set_simulated_execution_time(double simulated_execution_time)
 {
     m_simulated_execution_time = std::floor(simulated_execution_time*10)/10;
 }
-
-
+ 
+ 
 void Job::set_wcbp(std::array<int, 2>& wcbp)
 {
     m_worst_case_busy_period = wcbp;
@@ -470,6 +471,7 @@ void Job::set_det_successors(std::vector<std::shared_ptr<Job>>& successors)
 {
     m_det_successors = successors;
 }
+
 void Job::set_non_det_predecessors(std::vector<std::shared_ptr<Job>>& predecessors)
 {
     m_non_det_predecessors = predecessors;
@@ -477,9 +479,8 @@ void Job::set_non_det_predecessors(std::vector<std::shared_ptr<Job>>& predecesso
 void Job::set_non_det_successors(std::vector<std::shared_ptr<Job>>& successors)
 {
     m_non_det_successors = successors;
-}
-
-
+} 
+ 
 int Job::calculate_release_time(int period, int offset, int hyper_period_start)
 {
     /**
@@ -487,12 +488,12 @@ int Job::calculate_release_time(int period, int offset, int hyper_period_start)
      */
     return (period * (m_job_id - 1)) + offset + hyper_period_start;
 }
-
+ 
 int Job::calculate_absolute_deadline(int release_time, int r_deadline)
 {
     return release_time + r_deadline;
 }
-
+ 
 void Job::initialize_simulated_deadline()
 {
     if(this->get_is_write())
@@ -513,8 +514,7 @@ void Job::update_simulated_deadline()
     if(m_is_simulated == false || m_is_released == false)
     {
         if(this->get_is_write())
-        {
-            
+        {   
             m_simulated_deadline = static_cast<double>(m_eft);
             if(m_simulated_deadline == 0)
             {
@@ -531,6 +531,7 @@ void Job::update_simulated_deadline()
         }
     }
 }
+
 double Job::min_simulated_deadline_det_successor()
 {
     double min_value = INT_MAX;
@@ -569,36 +570,87 @@ void Job::add_history(std::shared_ptr<Job> new_deadline)
 
 void Job::run_function()
 {
+    //std::string init = "[TASK NAME][TIME][READ/WRITE][DATA LENGTH][RAW DATA]";
+    Logger logger;
+    std::ostringstream readStringStream;
+    std::ostringstream writeStringStream;
+    bool logging = utils::log_task == get_task_name();
     m_run_start = std::chrono::steady_clock::now();
     if((get_is_read() == true) && (get_is_write() == true))
     {
         if(!global_object::tagged_data_read.empty())
         {
             std::shared_ptr<TaggedData> current_data = global_object::tagged_data_read.at(global_object::tagged_data_read.size()-1);
+            if(logging) {
+                int num_bytes = 0;
+                if(current_data->data_read1) num_bytes += 4;
+                if(current_data->data_read2) num_bytes += 4;
+                if(current_data->data_read3) num_bytes += 4;
+                if(current_data->data_read4) num_bytes += 4;
+                if(current_data->data_read5) num_bytes += 4;
+                if(current_data->data_read6) num_bytes += 4;
+
+                char *str;
+                int ret = asprintf(&str, "%-12s%-6d%-12s%-12d 0x%-2x 0x%-2x 0x%-2x 0x%-2x 0x%-2x 0x%-2x\n", get_task_name().c_str(), (int) (utils::current_time / 1000), 
+                    "READ", num_bytes, current_data->data_read1, current_data->data_read2, current_data->data_read3, 
+                        current_data->data_read4, current_data->data_read5, current_data->data_read6);
+                if(ret != -1) readStringStream << str;
+            }
             global_object::tagged_data_read.clear();
         }
+
         run();
-  
         std::shared_ptr<DelayedData> delayed_data = std::make_shared<DelayedData>();
         delayed_data->data_time = m_actual_finish_time;
         delayed_data->data_write4 = shared::rtY.write4;
         delayed_data->data_write3 = shared::rtY.write3;
         delayed_data->data_write2 = shared::CC_Send_BRAKE;
         delayed_data->data_write1 = shared::CC_Send_ACCEL;
+
+        if(logging) {
+            char *str;
+            int num_bytes = 0;
+            if(delayed_data->data_write4) num_bytes += 4;
+            if(delayed_data->data_write3) num_bytes += 4; 
+            if(delayed_data->data_write2) num_bytes += 4; 
+            if(delayed_data->data_write1) num_bytes += 4; 
+            int ret = asprintf(&str, "%-12s%-6d%-12s%-12d 0x%-2x 0x%-2x 0x%-2x 0x%-2x\n", get_task_name().c_str(), (int) (utils::current_time / 1000), 
+                "WRITE", num_bytes, delayed_data->data_write1, delayed_data->data_write2, 
+                    delayed_data->data_write3, delayed_data->data_write4);
+            if(ret != -1) readStringStream << str;
+        }
     }
     else if((get_is_read() == true) && (get_is_write() == false))
     {
         if(!global_object::tagged_data_read.empty())
         {
             std::shared_ptr<TaggedData> current_data = global_object::tagged_data_read.at(global_object::tagged_data_read.size()-1);
+            if(logging) {
+
+                int num_bytes = 0;
+
+                if(current_data->data_read1) num_bytes += 4;
+                if(current_data->data_read2) num_bytes += 4;
+                if(current_data->data_read3) num_bytes += 4;
+                if(current_data->data_read4) num_bytes += 4;
+                if(current_data->data_read5) num_bytes += 4;
+                if(current_data->data_read6) num_bytes += 4;
+                char *str;
+                int ret = asprintf(&str, "%-12s%-6d%-12s%-12d 0x%-2x 0x%-2x 0x%-2x 0x%-2x 0x%-2x 0x%-2x\n", get_task_name().c_str(), (int) (utils::current_time / 1000), 
+                    "READ", num_bytes, current_data->data_read1, current_data->data_read2, current_data->data_read3, 
+                        current_data->data_read4, current_data->data_read5, current_data->data_read6);
+                if(ret != -1) readStringStream << str;
+            }
             global_object::tagged_data_read.clear();
         }
         run();
     }
+
     else if((get_is_read() == false) && (get_is_write() == true))
+
     {
         run();
-        
+
         #ifdef CANMODE__   
         CAN_message msg; 
         msg.transmit_can_message(m_task_name);
@@ -606,12 +658,28 @@ void Job::run_function()
         #ifdef ETHERNET_MODE__  
 
         std::shared_ptr<DelayedData> delayed_data = std::make_shared<DelayedData>();
+
         delayed_data->data_time = m_actual_finish_time;
         delayed_data->data_write4 = shared::rtY.write4;
         delayed_data->data_write3 = shared::rtY.write3;
         delayed_data->data_write2 = shared::CC_Send_BRAKE;
         delayed_data->data_write1 = shared::CC_Send_ACCEL;
+
+        if(logging) {
+            char *str;
+            int num_bytes = 0;
+            if(delayed_data->data_write4) num_bytes += 4; 
+            if(delayed_data->data_write3) num_bytes += 4; 
+            if(delayed_data->data_write2) num_bytes += 4; 
+            if(delayed_data->data_write1) num_bytes += 4; 
+
+            int ret = asprintf(&str, "%-12s%-6d%-12s%-12d 0x%-2x 0x%-2x 0x%-2x 0x%-2x 0x%-2x\n", get_task_name().c_str(), (int) (utils::current_time / 1000), 
+                "WRITE", num_bytes, delayed_data->data_time, delayed_data->data_write1, delayed_data->data_write2, 
+                    delayed_data->data_write3, delayed_data->data_write4);
+            if(ret != -1) readStringStream << str;
+        }
         #endif
     }
     m_run_end = std::chrono::steady_clock::now();
+    logger.task_read_write_logger_2017_14434(readStringStream.str());
 }
