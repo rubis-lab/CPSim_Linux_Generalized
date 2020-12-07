@@ -32,14 +32,7 @@
  */
 Logger::Logger()
 {
-    std::vector<int> vect(6, 0);
-    job_instance_number_release = vect;
-
-    std::vector<int> vect1(6, 0);
-    job_instance_number_finish = vect1;
-
-    std::vector<int> vect2(6, 0);
-    job_instance_number_start = vect2;
+   
 }
  
 /**
@@ -98,14 +91,14 @@ void Logger::real_cyber_event_logger_2017_14434(long long time, int job_id, std:
     char *str;
     int job_idx;
     if(event_type.find("FINISHED") != std::string::npos) {
-        job_idx = job_instance_number_finish.at(job_id);
-        job_instance_number_finish.at(job_id)++;
+        job_idx = global_object::job_instance_number_finish.at(job_id);
+        global_object::job_instance_number_finish.at(job_id)++;
     } else if(event_type.find("RELEASED") != std::string::npos) {
-        job_idx = job_instance_number_release.at(job_id);
-        job_instance_number_release.at(job_id)++;
+        job_idx = global_object::job_instance_number_release.at(job_id);
+        global_object::job_instance_number_release.at(job_id)++;
     } else if(event_type.find("STARTED") != std::string::npos) {
-        job_idx = job_instance_number_start.at(job_id);
-        job_instance_number_start.at(job_id)++;
+        job_idx = global_object::job_instance_number_start.at(job_id);
+        global_object::job_instance_number_start.at(job_id)++;
     } else {
         // error
         job_idx = -1;

@@ -19,9 +19,6 @@ private:
     std::vector<std::shared_ptr<Job>> m_execution_order_buffer;
     std::vector<double> m_current_time_buffer;
     // a vector that contains the index of jobs
-    std::vector<int> job_instance_number_release;
-    std::vector<int> job_instance_number_finish;
-    std::vector<int> job_instance_number_start;
     std::vector<char *> log_vector;
     
 public:
