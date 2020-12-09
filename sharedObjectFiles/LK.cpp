@@ -42,6 +42,7 @@ extern "C" void sim_main();
 
 void sim_main()
 {
+  /* Revised code for readability(Logic not changed) */
   double steer = 3600.0;
   double delta = rtU -> read1;
   double conf = rtU->read2 / 10000.0;

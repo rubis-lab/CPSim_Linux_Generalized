@@ -1,4 +1,4 @@
-# Install script for directory: /home/seonghwan/CM/project/CPSim_Linux_Generalized
+# Install script for directory: /mnt/c/Users/csh36/Desktop/CM/CPSim_Linux_Generalized
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/seonghwan/CM/project/CPSim_Linux_Generalized/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/mnt/c/Users/csh36/Desktop/CM/CPSim_Linux_Generalized/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
