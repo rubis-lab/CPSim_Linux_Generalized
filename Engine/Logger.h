@@ -3,6 +3,11 @@
 #include <iostream>
 #include <vector>
 #include "Job.h"
+#include "TaggedData.h"
+#include "DelayedData.h"
+#include <functional>
+#include <queue>
+#include <mutex>
 
 
 /** This file is engine code of CPSim-Re engine
@@ -12,11 +17,29 @@
  * @date 2020-04-30
  * @brief Codes for Engine-Logger 
 */
+
+struct event_entry
+{
+    long long time;
+    int job_id;
+    std::string log_entry;
+};
+
+struct cmp{
+    bool operator()(event_entry t, event_entry u){
+        if (t.time == u.time){
+            return t.job_id > u.job_id;
+        }
+        return t.time > u.time;
+    }
+};
+
 class Logger{
 private:
     std::vector<std::shared_ptr<Job>> m_execution_order_buffer;
     std::vector<double> m_current_time_buffer;
-    
+    std::mutex mtx_event_log;
+    std::priority_queue<event_entry, std::vector<event_entry>, cmp> event_entry_buffer;
 public:
     /**
      * Constructors and Destructors
@@ -41,6 +64,8 @@ public:
     void print_offline_guider_status();
     void set_schedule_log_info(std::vector<std::shared_ptr<Task>>&);
     void _2018_11940_task_read_write_logger(std::string);
+    std::string _2018_11940_gen_read_log_entry(std::string, std::shared_ptr<TaggedData>, int);
+    std::string _2018_11940_gen_write_log_entry(std::string, std::shared_ptr<DelayedData>, int);
     void _2018_11940_real_cyber_event_logger(long long, int, std::string);
 };
 

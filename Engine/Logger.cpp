@@ -33,7 +33,27 @@
  */
 Logger::Logger()
 {
-    
+    std::ofstream read_write_log, event_log;
+
+    read_write_log.open(utils::cpsim_path + "/Log/2018_11940_read_write.log", std::ios::out|std::ios::trunc);
+
+    if(!read_write_log){
+        std::cerr << "Cannot create " << utils::cpsim_path + "/Log/2018_11940_read_write.log" << "." << std::endl;
+        exit(1);
+    }
+
+    read_write_log << "[ TASK NAME ] [    TIME    ] [ READ/WRITE ] [ DATA LENGTH ] [  RAW DATA  ]\n";   // 13 14 14 15 14
+    read_write_log.close();
+
+    event_log.open(utils::cpsim_path + "/Log/2018_11940_event.log", std::ios::out|std::ios::trunc);
+
+    if(!event_log){
+        std::cerr << "Cannot create " << utils::cpsim_path + "/Log/2018_11940_event.log" << "." << std::endl;
+        exit(1);
+    }
+
+    event_log << "[    TIME    ] [   JOB ID   ] [ EVENT TYPE ]\n"; // 14 14 14
+    event_log.close();
 }
 
 /**
@@ -115,12 +135,86 @@ void Logger::start_logging()
     }    
 }
 
-void Logger::_2018_11940_task_read_write_logger(std::string task_name)
+std::string Logger::_2018_11940_gen_read_log_entry(std::string task_name, std::shared_ptr<TaggedData> current_data, int size)
 {
+    std::stringstream data_hex;
 
+    data_hex << std::hex << "0x" << current_data -> data_read1 << " "
+                << std::hex << "0x" << current_data -> data_read2 << " "
+                << std::hex << "0x" << current_data -> data_read3 << " "
+                << std::hex << "0x" << current_data -> data_read4 << " "
+                << std::hex << "0x" << current_data -> data_read5 << " "
+                << std::hex << "0x" << current_data -> data_read6 << " "
+                << std::endl;
+ 
+
+    std::stringstream log_entry;
+    log_entry << std::left << std::setw(14) << task_name;
+    log_entry << std::left << std::setw(15) << std::to_string(current_data -> data_time);
+    log_entry << std::left << std::setw(15) << "READ";
+    log_entry << std::left << std::setw(16) << std::to_string(size);
+        
+    return log_entry.str() + data_hex.str();
+}
+
+std::string Logger::_2018_11940_gen_write_log_entry(std::string task_name, std::shared_ptr<DelayedData> delayed_data, int size)
+{
+    std::stringstream data_hex;
+
+    data_hex << std::hex << "0x" << delayed_data -> data_write1 << " "
+                << std::hex << "0x" << delayed_data -> data_write2 << " "
+                << std::hex << "0x" << delayed_data -> data_write3 << " "
+                << std::hex << "0x" << delayed_data -> data_write4 << " "
+                << std::endl;
+ 
+    std::stringstream log_entry;
+    log_entry << std::left << std::setw(14) << task_name;
+    log_entry << std::left << std::setw(15) << std::to_string(delayed_data -> data_time);
+    log_entry << std::left << std::setw(15) << "WRITE";
+    log_entry << std::left << std::setw(16) << std::to_string(size);
+        
+    return log_entry.str() + data_hex.str();
+}
+
+
+void Logger::_2018_11940_task_read_write_logger(std::string task_log){
+    std::ofstream read_write_log;
+    std::string logdir = utils::cpsim_path + "/Log/2018_11940_read_write.log";
+    read_write_log.open(logdir, std::ios::app);
+    
+    if(!read_write_log){
+        std::cerr << "Cannot open " << logdir << "." << std::endl;
+        exit(1);
+    }
+    
+    read_write_log << task_log;
+    read_write_log.close();
+    return;
 }
 
 void Logger::_2018_11940_real_cyber_event_logger(long long time, int job_id, std::string event_type)
 {
-    
+    std::stringstream log_entry;
+    log_entry << std::left << std::setw(15) << std::to_string(time);
+    log_entry << std::left << std::setw(15) << "J" + std::to_string(job_id);
+    log_entry << std::left << std::setw(15) << event_type;
+
+    event_entry entry = {time, job_id, log_entry.str()};
+    event_entry_buffer.push(entry);
+
+    while (event_entry_buffer.size() > 50){
+        std::ofstream event_log;
+        std::string logdir = utils::cpsim_path + "/Log/2018_11940_event.log";
+        event_log.open(logdir, std::ios::app);
+        
+        if(!event_log){
+            std::cerr << "Cannot open " << logdir << "." << std::endl;
+            exit(1);
+        }
+
+        event_log << event_entry_buffer.top().log_entry << std::endl;
+        event_entry_buffer.pop();
+        event_log.close();    
+    }
+    return;
 }

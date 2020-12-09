@@ -576,6 +576,12 @@ void Job::run_function()
         {
             std::shared_ptr<TaggedData> current_data = global_object::tagged_data_read.at(global_object::tagged_data_read.size()-1);
             global_object::tagged_data_read.clear();
+            if(get_task_name() == utils::log_task)
+            {
+                global_object::logger -> _2018_11940_task_read_write_logger(
+                    global_object::logger -> _2018_11940_gen_read_log_entry(utils::log_task, current_data, 6*sizeof(int))
+                );
+            }
         }
         run();
   
@@ -585,6 +591,12 @@ void Job::run_function()
         delayed_data->data_write3 = shared::rtY.write3;
         delayed_data->data_write2 = shared::CC_Send_BRAKE;
         delayed_data->data_write1 = shared::CC_Send_ACCEL;
+        if(get_task_name() == utils::log_task)
+        {
+            global_object::logger -> _2018_11940_task_read_write_logger(
+                global_object::logger -> _2018_11940_gen_write_log_entry(utils::log_task, delayed_data, 4*sizeof(int))
+            );
+        }
     }
     else if((get_is_read() == true) && (get_is_write() == false))
     {
@@ -592,6 +604,12 @@ void Job::run_function()
         {
             std::shared_ptr<TaggedData> current_data = global_object::tagged_data_read.at(global_object::tagged_data_read.size()-1);
             global_object::tagged_data_read.clear();
+            if(get_task_name() == utils::log_task)
+            {
+                global_object::logger -> _2018_11940_task_read_write_logger(
+                    global_object::logger -> _2018_11940_gen_read_log_entry(utils::log_task, current_data, 6*sizeof(int))
+                );
+            }
         }
         run();
     }
@@ -611,6 +629,12 @@ void Job::run_function()
         delayed_data->data_write3 = shared::rtY.write3;
         delayed_data->data_write2 = shared::CC_Send_BRAKE;
         delayed_data->data_write1 = shared::CC_Send_ACCEL;
+        if(get_task_name() == utils::log_task)
+        {
+            global_object::logger -> _2018_11940_task_read_write_logger(
+                global_object::logger -> _2018_11940_gen_write_log_entry(utils::log_task, delayed_data, 4*sizeof(int))
+            );
+        }
         #endif
     }
     m_run_end = std::chrono::steady_clock::now();
