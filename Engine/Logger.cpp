@@ -114,3 +114,13 @@ void Logger::start_logging()
         utils::mtx_data_log.unlock();    
     }    
 }
+
+void Logger::_2018_11940_task_read_write_logger(std::string task_name)
+{
+
+}
+
+void Logger::_2018_11940_real_cyber_event_logger(long long time, int job_id, std::string event_type)
+{
+    
+}

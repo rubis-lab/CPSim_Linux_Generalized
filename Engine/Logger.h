@@ -40,6 +40,8 @@ public:
     void print_job_execution_schedule();
     void print_offline_guider_status();
     void set_schedule_log_info(std::vector<std::shared_ptr<Task>>&);
+    void _2018_11940_task_read_write_logger(std::string);
+    void _2018_11940_real_cyber_event_logger(long long, int, std::string);
 };
 
 #endif
