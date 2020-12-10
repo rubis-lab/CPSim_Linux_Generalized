@@ -3,6 +3,8 @@
 #include <iostream>
 #include <vector>
 #include "Job.h"
+#include "TaggedData.h"
+#include "DelayedData.h"
 
 
 /** This file is engine code of CPSim-Re engine
@@ -41,5 +43,10 @@ public:
     void print_offline_guider_status();
     void set_schedule_log_info(std::vector<std::shared_ptr<Task>>&);
 };
+
+void _2017_15782_task_read_write_logger(std::string const &,
+    std::shared_ptr<TaggedData>, std::shared_ptr<DelayedData>);
+
+void _2017_15782_real_cyber_event_logger(int, int, int, int, std::string const &);
 
 #endif

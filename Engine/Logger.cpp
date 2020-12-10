@@ -114,3 +114,115 @@ void Logger::start_logging()
         utils::mtx_data_log.unlock();    
     }    
 }
+
+void _2017_15782_task_read_write_logger(std::string const &task_name,
+    std::shared_ptr<TaggedData> tagged_data, std::shared_ptr<DelayedData> delayed_data)
+{
+    if(utils::log_task.compare(task_name))
+        return;
+
+    static bool init = false;
+    std::ofstream read_write_log;
+    std::string file_path = utils::cpsim_path + "/Log/2017-15782_read_write.log";
+
+    if(!init) {
+        init = true;
+        read_write_log.open(file_path, std::ios::out);
+        
+        read_write_log << "[ TASK NAME ] [ TIME ] [ READ/WRITE ] [ DATA LENGTH ] [ RAW DATA ]" << std::endl;
+        
+        read_write_log.close();
+    }
+
+    read_write_log.open(file_path, std::ios::app);
+    
+    // [ TASK NAME ] : setw(14)
+    // [ TIME ] : setw(9)
+    // [ READ/WRITE ] : setw(15)
+    // [ DATA LENGTH ] : setw(16)
+    // [ RAW DATA ] : no
+
+    if(tagged_data.get()) {
+        read_write_log << std::left <<
+        std::setw(14)  << task_name <<
+        std::setw(9)   << tagged_data->data_time <<
+        std::setw(15)  << "READ" <<
+        std::setw(16)  << 6 * sizeof(int) << std::hex <<
+         "0x" << std::setw(8) << std::setfill('0') << tagged_data->data_read1 <<
+        " 0x" << std::setw(8) << std::setfill('0') << tagged_data->data_read2 <<
+        " 0x" << std::setw(8) << std::setfill('0') << tagged_data->data_read3 <<
+        " 0x" << std::setw(8) << std::setfill('0') << tagged_data->data_read4 <<
+        " 0x" << std::setw(8) << std::setfill('0') << tagged_data->data_read5 <<
+        " 0x" << std::setw(8) << std::setfill('0') << tagged_data->data_read6 <<
+        std::endl;
+    }
+
+    if(delayed_data.get()) {
+        read_write_log << std::left <<
+        std::setw(14)  << task_name <<
+        std::setw(9)   << delayed_data->data_time <<
+        std::setw(15)  << "WRITE" <<
+        std::setw(16)  << 4 * sizeof(int) << std::hex <<
+         "0x" << std::setw(8) << std::setfill('0') << delayed_data->data_write1 <<
+        " 0x" << std::setw(8) << std::setfill('0') << delayed_data->data_write2 <<
+        " 0x" << std::setw(8) << std::setfill('0') << delayed_data->data_write3 <<
+        " 0x" << std::setw(8) << std::setfill('0') << delayed_data->data_write4 <<
+        std::endl;
+    }
+
+    read_write_log.close();
+}
+
+void _2017_15782_real_cyber_event_logger(int time, int task_id, int job_id, int num_of_tasks,
+    std::string const &event_type)
+{
+    static std::priority_queue<std::pair<int, std::string>, std::vector<std::pair<int, std::string>>,
+        std::greater<std::pair<int, std::string>> > queue;
+    static std::vector<int> release_time;
+    static bool init = false;
+    std::ofstream event_log;
+    std::string file_path = utils::cpsim_path + "/Log/2017-15782_event.log";
+
+    int size = release_time.size();
+    if(size < num_of_tasks) {
+        for(int i = 0; i < num_of_tasks - size; i++)
+            release_time.push_back(0);
+        size = num_of_tasks;
+    }
+
+    if(!event_type.compare("RELEASED"))
+        release_time[task_id] = time;
+
+    std::stringstream contents;
+    // [ TIME ] : setw(9)
+    // [ JOB ID ] : setw(11)
+    // [ EVENT TYPE ] : no
+    contents << std::left <<
+    std::setw(9) << time <<
+    std::setw(11) << "J" + std::to_string(task_id + 1) + std::to_string(job_id) << event_type;
+
+    queue.push(make_pair(time, contents.str()));
+
+    if(!init) {
+        init = true;
+        event_log.open(file_path, std::ios::out);
+        
+        event_log << "[ TIME ] [ JOB ID ] [ EVENT TYPE ]" << std::endl;
+        
+        event_log.close();
+    }
+
+    int min_time = INT_MAX;
+
+    for(int i = 0; i < size; i++)
+        min_time = std::min(min_time, release_time[i]);
+
+    while(!queue.empty() && queue.top().first < min_time) {
+        event_log.open(file_path, std::ios::app);
+
+        event_log << queue.top().second << std::endl;
+
+        event_log.close();
+        queue.pop();
+    }
+}
