@@ -575,7 +575,8 @@ void Job::run_function()
         if(!global_object::tagged_data_read.empty())
         {
             std::shared_ptr<TaggedData> current_data = global_object::tagged_data_read.at(global_object::tagged_data_read.size()-1);
-            global_object::tagged_data_read.clear();
+            global_object::logger->_2020_90247_task_read_write_logger(get_task_name(), global_object::tagged_data_read.at(global_object::tagged_data_read.size()-1), std::make_shared<DelayedData>(), 0);
+			global_object::tagged_data_read.clear();
         }
         run();
   
@@ -585,13 +586,16 @@ void Job::run_function()
         delayed_data->data_write3 = shared::rtY.write3;
         delayed_data->data_write2 = shared::CC_Send_BRAKE;
         delayed_data->data_write1 = shared::CC_Send_ACCEL;
+        
+        global_object::logger->_2020_90247_task_read_write_logger(get_task_name(), nullptr, std::make_shared<DelayedData>(), 1);
     }
     else if((get_is_read() == true) && (get_is_write() == false))
     {
         if(!global_object::tagged_data_read.empty())
         {
             std::shared_ptr<TaggedData> current_data = global_object::tagged_data_read.at(global_object::tagged_data_read.size()-1);
-            global_object::tagged_data_read.clear();
+            global_object::logger->_2020_90247_task_read_write_logger(get_task_name(), global_object::tagged_data_read.at(global_object::tagged_data_read.size()-1), std::make_shared<DelayedData>(), 0);
+			global_object::tagged_data_read.clear();
         }
         run();
     }
@@ -612,6 +616,7 @@ void Job::run_function()
         delayed_data->data_write2 = shared::CC_Send_BRAKE;
         delayed_data->data_write1 = shared::CC_Send_ACCEL;
         #endif
+        global_object::logger->_2020_90247_task_read_write_logger(get_task_name(), nullptr, std::make_shared<DelayedData>(), 1);
     }
     m_run_end = std::chrono::steady_clock::now();
 }
