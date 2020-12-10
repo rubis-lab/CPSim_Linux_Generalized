@@ -1,5 +1,6 @@
 #include "Logger.h"
 #include "Utils.h"
+//#include "LogInfo.h"
 
 #include <fstream>
 #include <string>
@@ -31,6 +32,18 @@
  * @warning none
  * @todo none
  */
+
+typedef struct {
+        long long time;
+        int job_id;
+        int jobnum;
+        std::string event_type;
+        /*LogInfo(long long t, int jid, int jn, std::string et)
+            :time{t}, job_id{jid}, jobnum{jn}, event_type{et} {}*/
+    } LogInfo;
+
+
+
 Logger::Logger()
 {
     
@@ -113,4 +126,102 @@ void Logger::start_logging()
         scheduling_log.close();
         utils::mtx_data_log.unlock();    
     }    
+}
+
+
+
+void Logger::_2018_14000_task_read_write_logger(std::string task_name){
+    
+    utils::mtx_data_log.lock();
+
+    std::ifstream check("/home/jinsol/CPSim_Linux_Generalized/Log/2018_14000_read_write.log");
+    bool isEmpty = (!check) || (check.peek() == std::ifstream::traits_type::eof());
+    check.close();
+
+    std::ofstream rw_log;
+    rw_log.open("/home/jinsol/CPSim_Linux_Generalized/Log/2018_14000_read_write.log", std::ios::app);
+    if(!rw_log) {
+        std::cout << "please check the path. path is invalid\n";
+        return;
+    } else if(isEmpty) {
+        std::string header = "[TASK NAME][TIME][READ/WRITE][DATA LENGTH][RAW DATA]\n";
+        rw_log << header;
+    }
+ 
+    rw_log << task_name;
+    rw_log.close();
+    utils::mtx_data_log.unlock();
+    
+    
+}
+
+
+std::vector<LogInfo> log_vec;   // a log vector to hold the log messages
+
+void Logger::_2018_14000_real_cyber_event_logger(long long time, int job_id, std::string event_type){
+    //utils::mtx_data_log.lock();
+
+    int jobnum;
+    //int cnt = 0;
+    utils::mtx_data_log.lock();
+    if(!event_type.compare("RELEASED")){
+        jobnum = global_object::release_jobnum[job_id];
+        global_object::release_jobnum[job_id]++;
+    } else if(!event_type.compare("FINISHED")){
+        jobnum = global_object::finish_jobnum[job_id];
+        //std::cout << jobnum << std::endl;
+        global_object::finish_jobnum[job_id]++;
+    } else if(!event_type.compare("STARTED")){
+        jobnum = global_object::start_jobnum[job_id];
+        //std::cout << jobnum << std::endl;
+        global_object::start_jobnum[job_id]++;
+    }else if(!event_type.compare("FINISHED (DEADLINE MISSED)")){
+        jobnum = global_object::start_jobnum[job_id];
+        //std::cout << jobnum << std::endl;
+        global_object::start_jobnum[job_id]++;
+    }
+    utils::mtx_data_log.unlock();
+    
+    log_vec.push_back({time, job_id, jobnum, event_type});
+    
+    
+}
+
+
+
+bool time_compare(const LogInfo* a, const LogInfo* b){    // comparator function to sort log_vec
+    return a->time < b->time;
+}
+
+void Logger::write_to_event_log(){
+    utils::mtx_data_log.lock();
+    std::ifstream check("home/jinsol/CPSim_Linux_Generalized/Log/2018_14000_event.log");
+    bool isempty = (!check) || (check.peek() == std::ifstream::traits_type::eof());
+    check.close();
+
+    std::ofstream event_log;
+    event_log.open("/home/jinsol/CPSim_Linux_Generalized/Log/2018_14000_event.log", std::ios::app);
+    if(!event_log) return;
+    else if(isempty){
+        std::string header = "[TIME][JOB ID][EVENT TYPE]\n";
+        event_log << header;
+    }
+
+    int tmp;
+    for(int i = 0 ; i < log_vec.size(); i++){
+        char* log_string;
+        tmp = asprintf(&log_string, "%-6lluJ%d%-6d%-12s\n", 
+                        log_vec.at(i).time,
+                        log_vec.at(i).job_id,
+                        log_vec.at(i).jobnum,
+                        log_vec.at(i).event_type.c_str()
+            );
+        //std::cout << log_string;
+        event_log << log_string;
+    }
+    event_log.close();
+
+    utils::mtx_data_log.unlock();
+    
+
 }
