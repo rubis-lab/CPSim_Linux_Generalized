@@ -157,6 +157,10 @@ namespace global_object
     inline std::vector<std::shared_ptr<DelayedData>> delayed_data_write;
     inline std::vector<std::shared_ptr<TaggedData>> tagged_data_read;
     inline std::vector<std::shared_ptr<ScheduleData>> schedule_data;
+
+    inline int release_jobnum[6] = {0};
+    inline int start_jobnum[6] = {0};
+    inline int finish_jobnum[6] = {0};
 }
 #ifdef CANMODE__
 namespace can
