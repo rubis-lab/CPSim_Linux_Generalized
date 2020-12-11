@@ -11,7 +11,7 @@ CPU family:          6
 Model:               158
 Model name:          Intel(R) Core(TM) i9-9900KS CPU @ 4.00GHz
 Stepping:            13
-CPU MHz:             4008.013
+CPU MHz:             4008.012
 BogoMIPS:            8016.02
 Hypervisor vendor:   Microsoft
 Virtualization type: full

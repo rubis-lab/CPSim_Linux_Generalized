@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?><hyundaiDesignTool>
     <ETHs>
-        <ETH IP="172.23.128.1">
+        <ETH IP="172.24.48.1">
             <link rid="ECU0" type="ECU"/>
             <link rid="CAR" type="CAR"/>
         </ETH>
     </ETHs>
     <CAR IP="CAR">
-        <link rid="172.23.128.1" type="ETH"/>
+        <link rid="172.24.48.1" type="ETH"/>
     </CAR>
     <SWCs>
         <SWC BCET="25" IP="CC" Virtual="1" WCET="25" consumer="" deadline="125" period="125" phase="0" readCon="1" writeCon="1">

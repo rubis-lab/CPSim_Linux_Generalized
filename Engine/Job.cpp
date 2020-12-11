@@ -99,7 +99,12 @@ Job::Job(std::shared_ptr<Task> task, int job_id, int hyper_period_start)
     m_bpet = -1;
     m_worst_case_busy_period.at(0) = -1;
     m_worst_case_busy_period.at(1) = -1;
-    
+
+    this->log_flag = false;
+    if(get_task_name() == utils::log_task)
+    {
+        this->log_flag = true;
+    }
 }
 
 /**
@@ -569,12 +574,16 @@ void Job::add_history(std::shared_ptr<Job> new_deadline)
 
 void Job::run_function()
 {
+    std::string dataType = "";
     m_run_start = std::chrono::steady_clock::now();
     if((get_is_read() == true) && (get_is_write() == true))
     {
         if(!global_object::tagged_data_read.empty())
         {
             std::shared_ptr<TaggedData> current_data = global_object::tagged_data_read.at(global_object::tagged_data_read.size()-1);
+            if(log_flag){
+                global_object::logger->_2020_90632_task_read_write_logger(current_data);
+            }
             global_object::tagged_data_read.clear();
         }
         run();
@@ -585,12 +594,18 @@ void Job::run_function()
         delayed_data->data_write3 = shared::rtY.write3;
         delayed_data->data_write2 = shared::CC_Send_BRAKE;
         delayed_data->data_write1 = shared::CC_Send_ACCEL;
+        if(log_flag){
+            global_object::logger->_2020_90632_task_read_write_logger(delayed_data);
+        }
     }
     else if((get_is_read() == true) && (get_is_write() == false))
     {
         if(!global_object::tagged_data_read.empty())
         {
             std::shared_ptr<TaggedData> current_data = global_object::tagged_data_read.at(global_object::tagged_data_read.size()-1);
+            if(log_flag){
+                global_object::logger->_2020_90632_task_read_write_logger(current_data);
+            }
             global_object::tagged_data_read.clear();
         }
         run();
@@ -611,6 +626,9 @@ void Job::run_function()
         delayed_data->data_write3 = shared::rtY.write3;
         delayed_data->data_write2 = shared::CC_Send_BRAKE;
         delayed_data->data_write1 = shared::CC_Send_ACCEL;
+        if(log_flag){
+            global_object::logger->_2020_90632_task_read_write_logger(delayed_data);
+        }
         #endif
     }
     m_run_end = std::chrono::steady_clock::now();

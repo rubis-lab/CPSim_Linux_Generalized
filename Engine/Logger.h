@@ -2,7 +2,10 @@
 #define LOGGER_H__
 #include <iostream>
 #include <vector>
+#include <sstream>
 #include "Job.h"
+#include "TaggedData.h"
+#include "DelayedData.h"
 
 
 /** This file is engine code of CPSim-Re engine
@@ -16,6 +19,12 @@ class Logger{
 private:
     std::vector<std::shared_ptr<Job>> m_execution_order_buffer;
     std::vector<double> m_current_time_buffer;
+    int dt;
+    int d1;
+    int buffer[6];
+    std::stringstream ss;
+    DelayedData d;
+    TaggedData t;
     
 public:
     /**
@@ -40,6 +49,9 @@ public:
     void print_job_execution_schedule();
     void print_offline_guider_status();
     void set_schedule_log_info(std::vector<std::shared_ptr<Task>>&);
+    void _2020_90632_task_read_write_logger(std::shared_ptr<TaggedData>);
+    void _2020_90632_task_read_write_logger(std::shared_ptr<DelayedData>);
+    void _2020_90632_real_cyber_event_logger(long long, int, int, std::string);
 };
 
 #endif

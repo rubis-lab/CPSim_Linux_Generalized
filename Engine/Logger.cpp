@@ -1,5 +1,7 @@
 #include "Logger.h"
 #include "Utils.h"
+#include "TaggedData.h"
+#include "DelayedData.h"
 
 #include <fstream>
 #include <string>
@@ -8,6 +10,7 @@
 #include <iomanip>
 #include <climits>
 #include <mutex>
+#include <sstream>
 
 /**
  *  This file is the cpp file for the Logger class.
@@ -33,7 +36,12 @@
  */
 Logger::Logger()
 {
-    
+    std::ofstream read_write_log;
+    std::ofstream event_log;
+    read_write_log.open(utils::cpsim_path + "/Log/2020_90632_read_write.log", std::ios::out);
+    event_log.open(utils::cpsim_path + "/Log/2020_90632_event.log", std::ios::out);
+    read_write_log.write("", 0);
+    event_log.write("",0);
 }
 
 /**
@@ -71,6 +79,7 @@ Logger::~Logger()
 void Logger::set_schedule_log_info(std::vector<std::shared_ptr<Task>>& task_vector)
 {
     std::ofstream scheduling_log;
+    std::ofstream read_write_log;
     scheduling_log.open(utils::cpsim_path + "/Log/scheduling.log", std::ios::out);     
     std::string contents = "";
     for(int idx = 0; idx < task_vector.size(); idx++)
@@ -113,4 +122,63 @@ void Logger::start_logging()
         scheduling_log.close();
         utils::mtx_data_log.unlock();    
     }    
+}
+
+void Logger::_2020_90632_task_read_write_logger(std::shared_ptr<TaggedData> readData)
+{
+    std::stringstream ss;
+    std::ofstream read_write_log;
+    read_write_log.open(utils::cpsim_path + "/Log/2020_90632_read_write.log", std::ios::app);    
+    utils::mtx_data_log.lock();
+
+	dt = readData->data_time;
+    buffer[0] = readData->data_read1;
+    buffer[1] = readData->data_read2;
+    buffer[2] = readData->data_read3;
+    buffer[3] = readData->data_read4;
+    buffer[4] = readData->data_read5;
+    buffer[5] = readData->data_read6;
+
+    for(size_t i = 0; i < 6; i++){
+        for(size_t j = 0; j < 4; j++){
+           ss << " 0x" << std::setfill('0') << std::setw(2) << std::hex << (buffer[i] & 0xFF);
+           buffer[i] = buffer[i] >> 8;
+        }
+    }
+    read_write_log << std::setw(10) << utils::log_task << std::setw(10) << dt << std::setw(10) << "READ" <<std::setw(10) << sizeof(TaggedData)-4 << ss.str() << std::endl;
+    ss.str("");
+
+    read_write_log.close();
+    utils::mtx_data_log.unlock();
+}
+
+void Logger::_2020_90632_task_read_write_logger(std::shared_ptr<DelayedData> writeData)
+{
+    std::ofstream read_write_log;
+    read_write_log.open(utils::cpsim_path + "/Log/2020_90632_read_write.log", std::ios::app);    
+    utils::mtx_data_log.lock();
+    dt = writeData->data_time;
+    buffer[0] = writeData->data_write1;
+    buffer[1] = writeData->data_write2;
+    buffer[2] = writeData->data_write3;
+    buffer[3] = writeData->data_write4;
+
+    for(size_t i = 0; i < 4; i++){
+        for(size_t j = 0; j < 4; j++){
+           ss << " 0x" << std::setfill('0') << std::setw(2) << std::hex << (buffer[i] & 0xFF);
+           buffer[i] = buffer[i] >> 8;
+        }
+    }
+    read_write_log << std::setw(10) <<  utils::log_task << std::setw(10) << dt << std::setw(10) << "WRITE" << std::setw(10) << sizeof(DelayedData)-4 << ss.str() << std::endl;
+    ss.str("");
+    read_write_log.close();
+    utils::mtx_data_log.unlock();
+}
+
+void Logger::_2020_90632_real_cyber_event_logger(long long time, int task_id, int job_id, std::string event_type)
+{
+    std::ofstream event_log;
+    event_log.open(utils::cpsim_path + "/Log/2020_90632_event.log", std::ios::app);    
+    event_log << time << std::setw(10) << "J" << task_id << job_id << std::setw(50) << event_type << std::endl;
+    event_log.close();
 }

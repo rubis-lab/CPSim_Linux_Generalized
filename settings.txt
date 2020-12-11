@@ -20,4 +20,4 @@ real_workload = true
 log_delay_seconds = 1
 real_task_num = 0
 real_ecu_num = 0
-log_task = "LK"
+log_task = "CC"
