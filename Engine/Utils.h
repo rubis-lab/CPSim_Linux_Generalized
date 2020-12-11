@@ -53,13 +53,14 @@ namespace utils
     
     inline std::string file_path = "/home/";
     inline std::string null_path = "";
+    
     inline std::string cpsim_path = "";
     inline std::string ip_address = "";
     inline std::string log_task = "";
     
     inline int hyper_period = 0;
     inline int socket_EHTERNET = 0;
-    inline double current_time = 0; //simulation time(milli second)
+    inline double current_time = 0;
     inline int number_of_ECUs = 0;
     inline int number_of_tasks = 0;
     inline int simulator_performance = 3000;
@@ -157,6 +158,12 @@ namespace global_object
     inline std::vector<std::shared_ptr<DelayedData>> delayed_data_write;
     inline std::vector<std::shared_ptr<TaggedData>> tagged_data_read;
     inline std::vector<std::shared_ptr<ScheduleData>> schedule_data;
+    /**
+     * My namespace object
+     */
+    inline int release_vec[6] = {0};
+    inline int finish_vec[6] = {0};
+    inline int start_vec[6] = {0};
 }
 #ifdef CANMODE__
 namespace can
