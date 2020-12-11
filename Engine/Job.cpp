@@ -5,7 +5,6 @@
 #include <climits>
 #include <cmath>
 
-
 /** 
  *  This file is the cpp file for the Job class.
  *  @file Job.cpp
@@ -570,12 +569,19 @@ void Job::add_history(std::shared_ptr<Job> new_deadline)
 void Job::run_function()
 {
     m_run_start = std::chrono::steady_clock::now();
+    // read_write.log is only interested in the case where get_is_read() and get_is_write() are both true
     if((get_is_read() == true) && (get_is_write() == true))
     {
         if(!global_object::tagged_data_read.empty())
         {
             std::shared_ptr<TaggedData> current_data = global_object::tagged_data_read.at(global_object::tagged_data_read.size()-1);
             global_object::tagged_data_read.clear();
+            // write read_write.log only when current task matches utils::log_task
+            if(this->get_task_name() == utils::log_task){
+                // deal with tagged_data
+                std::string content = global_object::logger->tagged_data_logger(current_data);
+                global_object::logger->_2014_11561_task_read_write_logger(content);
+            }
         }
         run();
   
@@ -585,6 +591,13 @@ void Job::run_function()
         delayed_data->data_write3 = shared::rtY.write3;
         delayed_data->data_write2 = shared::CC_Send_BRAKE;
         delayed_data->data_write1 = shared::CC_Send_ACCEL;
+        //  write read_write.log only when current task matches utils::log_task
+        if(this->get_task_name() == utils::log_task){
+            // deal with delayed_data
+            std::string content = global_object::logger->delayed_data_logger(delayed_data);
+            global_object::logger->_2014_11561_task_read_write_logger(content);
+        }
+
     }
     else if((get_is_read() == true) && (get_is_write() == false))
     {
