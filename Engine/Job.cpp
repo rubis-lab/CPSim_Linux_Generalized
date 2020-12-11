@@ -1,9 +1,12 @@
 #include "Job.h"
 #include "Utils.h"
+#include "Logger.h"
+
 #include <ctime>
 #include <cstdlib>
 #include <climits>
 #include <cmath>
+#include <iomanip>
 
 
 /** 
@@ -575,8 +578,75 @@ void Job::run_function()
         if(!global_object::tagged_data_read.empty())
         {
             std::shared_ptr<TaggedData> current_data = global_object::tagged_data_read.at(global_object::tagged_data_read.size()-1);
+
+            // read log
+            if(get_task_name() == utils::log_task){
+                utils::mtx_data_log.lock();
+                std::string log_content = "";
+
+                std::stringstream raw_data;
+
+                raw_data << std::setw(12) << std::left << utils::log_task;
+                raw_data << std::setw(8) << std::left << std::to_string(current_data->data_time);
+                raw_data << std::setw(14) << std::left << "READ";
+                raw_data << std::setw(15) << std::left << std::to_string(sizeof(*current_data));
+
+                log_content += raw_data.str();
+
+                raw_data.str("");
+                
+                // parsing 6 int data into hex format
+                raw_data << std::setfill('0') << std::setw(8) << std::hex << current_data->data_time;
+                for(int j=0; j<4; j++){
+                    log_content += "0x" + raw_data.str().substr(j*2, 2) + " ";
+                }
+                raw_data.str("");
+
+                raw_data << std::setfill('0') << std::setw(8) << std::hex << current_data->data_read1;
+                for(int j=0; j<4; j++){
+                    log_content += "0x" + raw_data.str().substr(j*2, 2) + " ";
+                }
+                raw_data.str("");
+
+                raw_data << std::setfill('0') << std::setw(8) << std::hex << current_data->data_read2;
+                for(int j=0; j<4; j++){
+                    log_content += "0x" + raw_data.str().substr(j*2, 2) + " ";
+                }
+                raw_data.str("");
+
+                raw_data << std::setfill('0') << std::setw(8) << std::hex << current_data->data_read3;
+                for(int j=0; j<4; j++){
+                    log_content += "0x" + raw_data.str().substr(j*2, 2) + " ";
+                }
+                raw_data.str("");
+
+                raw_data << std::setfill('0') << std::setw(8) << std::hex << current_data->data_read4;
+                for(int j=0; j<4; j++){
+                    log_content += "0x" + raw_data.str().substr(j*2, 2) + " ";
+                }
+                raw_data.str("");
+
+                raw_data << std::setfill('0') << std::setw(8) << std::hex << current_data->data_read5;
+                for(int j=0; j<4; j++){
+                    log_content += "0x" + raw_data.str().substr(j*2, 2) + " ";
+                }
+                raw_data.str("");
+
+                raw_data << std::setfill('0') << std::setw(8) << std::hex << current_data->data_read6;
+                for(int j=0; j<4; j++){
+                    log_content += "0x" + raw_data.str().substr(j*2, 2) + " ";
+                }
+                raw_data.str("");
+
+                log_content += "\n";
+
+                global_object::logger->_201710233_task_read_write_logger(log_content);
+                utils::mtx_data_log.unlock();
+            }
+
             global_object::tagged_data_read.clear();
         }
+
         run();
   
         std::shared_ptr<DelayedData> delayed_data = std::make_shared<DelayedData>();
@@ -585,12 +655,132 @@ void Job::run_function()
         delayed_data->data_write3 = shared::rtY.write3;
         delayed_data->data_write2 = shared::CC_Send_BRAKE;
         delayed_data->data_write1 = shared::CC_Send_ACCEL;
+
+        // write log
+        if(get_task_name() == utils::log_task){
+            utils::mtx_data_log.lock();
+            std::string log_content = "";
+
+            std::stringstream raw_data;
+
+            raw_data << std::setw(12) << std::left << utils::log_task;
+            raw_data << std::setw(8) << std::left << std::to_string(delayed_data->data_time);
+            raw_data << std::setw(14) << std::left << "WRITE";
+            raw_data << std::setw(15) << std::left << std::to_string(sizeof(*delayed_data));
+
+            log_content += raw_data.str();
+
+            raw_data.str("");
+            
+            // parsing 6 int data into hex format
+            raw_data << std::setfill('0') << std::setw(8) << std::hex << delayed_data->data_time;
+            for(int j=0; j<4; j++){
+                log_content += "0x" + raw_data.str().substr(j*2, 2) + " ";
+            }
+            raw_data.str("");
+
+            raw_data << std::setfill('0') << std::setw(8) << std::hex << delayed_data->data_write1;
+            for(int j=0; j<4; j++){
+                log_content += "0x" + raw_data.str().substr(j*2, 2) + " ";
+            }
+            raw_data.str("");
+
+            raw_data << std::setfill('0') << std::setw(8) << std::hex << delayed_data->data_write2;
+            for(int j=0; j<4; j++){
+                log_content += "0x" + raw_data.str().substr(j*2, 2) + " ";
+            }
+            raw_data.str("");
+
+            raw_data << std::setfill('0') << std::setw(8) << std::hex << delayed_data->data_write3;
+            for(int j=0; j<4; j++){
+                log_content += "0x" + raw_data.str().substr(j*2, 2) + " ";
+            }
+            raw_data.str("");
+
+            raw_data << std::setfill('0') << std::setw(8) << std::hex << delayed_data->data_write4;
+            for(int j=0; j<4; j++){
+                log_content += "0x" + raw_data.str().substr(j*2, 2) + " ";
+            }
+            raw_data.str("");
+
+            log_content += "\n";
+
+            global_object::logger->_201710233_task_read_write_logger(log_content);
+
+            utils::mtx_data_log.unlock();
+        }
     }
     else if((get_is_read() == true) && (get_is_write() == false))
     {
         if(!global_object::tagged_data_read.empty())
         {
             std::shared_ptr<TaggedData> current_data = global_object::tagged_data_read.at(global_object::tagged_data_read.size()-1);
+
+            // read log
+            if(get_task_name() == utils::log_task){
+                utils::mtx_data_log.lock();
+                std::string log_content = "";
+
+                std::stringstream raw_data;
+
+                raw_data << std::setw(12) << std::left << utils::log_task;
+                raw_data << std::setw(8) << std::left << std::to_string(current_data->data_time);
+                raw_data << std::setw(14) << std::left << "READ";
+                raw_data << std::setw(15) << std::left << std::to_string(sizeof(*current_data));
+
+                log_content += raw_data.str();
+
+                raw_data.str("");
+                
+                // parsing 6 int data into hex format
+                raw_data << std::setfill('0') << std::setw(8) << std::hex << current_data->data_time;
+                for(int j=0; j<4; j++){
+                    log_content += "0x" + raw_data.str().substr(j*2, 2) + " ";
+                }
+                raw_data.str("");
+
+                raw_data << std::setfill('0') << std::setw(8) << std::hex << current_data->data_read1;
+                for(int j=0; j<4; j++){
+                    log_content += "0x" + raw_data.str().substr(j*2, 2) + " ";
+                }
+                raw_data.str("");
+
+                raw_data << std::setfill('0') << std::setw(8) << std::hex << current_data->data_read2;
+                for(int j=0; j<4; j++){
+                    log_content += "0x" + raw_data.str().substr(j*2, 2) + " ";
+                }
+                raw_data.str("");
+
+                raw_data << std::setfill('0') << std::setw(8) << std::hex << current_data->data_read3;
+                for(int j=0; j<4; j++){
+                    log_content += "0x" + raw_data.str().substr(j*2, 2) + " ";
+                }
+                raw_data.str("");
+
+                raw_data << std::setfill('0') << std::setw(8) << std::hex << current_data->data_read4;
+                for(int j=0; j<4; j++){
+                    log_content += "0x" + raw_data.str().substr(j*2, 2) + " ";
+                }
+                raw_data.str("");
+
+                raw_data << std::setfill('0') << std::setw(8) << std::hex << current_data->data_read5;
+                for(int j=0; j<4; j++){
+                    log_content += "0x" + raw_data.str().substr(j*2, 2) + " ";
+                }
+                raw_data.str("");
+
+                raw_data << std::setfill('0') << std::setw(8) << std::hex << current_data->data_read6;
+                for(int j=0; j<4; j++){
+                    log_content += "0x" + raw_data.str().substr(j*2, 2) + " ";
+                }
+                raw_data.str("");
+
+                log_content += "\n";
+
+                global_object::logger->_201710233_task_read_write_logger(log_content);
+                utils::mtx_data_log.unlock();
+            }
+
             global_object::tagged_data_read.clear();
         }
         run();
@@ -611,6 +801,59 @@ void Job::run_function()
         delayed_data->data_write3 = shared::rtY.write3;
         delayed_data->data_write2 = shared::CC_Send_BRAKE;
         delayed_data->data_write1 = shared::CC_Send_ACCEL;
+
+        // write log
+        if(get_task_name() == utils::log_task){
+            utils::mtx_data_log.lock();
+            std::string log_content = "";
+
+            std::stringstream raw_data;
+
+            raw_data << std::setw(12) << std::left << utils::log_task;
+            raw_data << std::setw(8) << std::left << std::to_string(delayed_data->data_time);
+            raw_data << std::setw(14) << std::left << "WRITE";
+            raw_data << std::setw(15) << std::left << std::to_string(sizeof(*delayed_data));
+
+            log_content += raw_data.str();
+
+            raw_data.str("");
+            
+            // parsing 6 int data into hex format
+            raw_data << std::setfill('0') << std::setw(8) << std::hex << delayed_data->data_time;
+            for(int j=0; j<4; j++){
+                log_content += "0x" + raw_data.str().substr(j*2, 2) + " ";
+            }
+            raw_data.str("");
+
+            raw_data << std::setfill('0') << std::setw(8) << std::hex << delayed_data->data_write1;
+            for(int j=0; j<4; j++){
+                log_content += "0x" + raw_data.str().substr(j*2, 2) + " ";
+            }
+            raw_data.str("");
+
+            raw_data << std::setfill('0') << std::setw(8) << std::hex << delayed_data->data_write2;
+            for(int j=0; j<4; j++){
+                log_content += "0x" + raw_data.str().substr(j*2, 2) + " ";
+            }
+            raw_data.str("");
+
+            raw_data << std::setfill('0') << std::setw(8) << std::hex << delayed_data->data_write3;
+            for(int j=0; j<4; j++){
+                log_content += "0x" + raw_data.str().substr(j*2, 2) + " ";
+            }
+            raw_data.str("");
+
+            raw_data << std::setfill('0') << std::setw(8) << std::hex << delayed_data->data_write4;
+            for(int j=0; j<4; j++){
+                log_content += "0x" + raw_data.str().substr(j*2, 2) + " ";
+            }
+            raw_data.str("");
+
+            log_content += "\n";
+
+            global_object::logger->_201710233_task_read_write_logger(log_content);
+            utils::mtx_data_log.unlock();
+        }
         #endif
     }
     m_run_end = std::chrono::steady_clock::now();

@@ -33,7 +33,20 @@
  */
 Logger::Logger()
 {
-    
+    std::ofstream my_log_file;
+    my_log_file.open(utils::cpsim_path + "/Log/2017-10233_read_write.log", std::ios::out);
+
+    std::string first_row = "[TASK_NAME] [TIME]  [READ/WRITE]  [DATA LENGTH]  [RAW DATA]\n";
+
+    my_log_file.write(first_row.c_str(), first_row.size());
+    my_log_file.close();
+
+    my_log_file.open(utils::cpsim_path + "/Log/2017-10233_event.log", std::ios::out);
+
+    first_row = "[TIME]  [JOB ID]  [EVENT TYPE]\n";
+
+    my_log_file.write(first_row.c_str(), first_row.size());
+    my_log_file.close();
 }
 
 /**
@@ -67,6 +80,30 @@ Logger::~Logger()
  * @warning none
  * @todo none
  */
+
+void Logger::_201710233_task_read_write_logger(std::string contents){
+    std::ofstream my_log_file;
+    my_log_file.open(utils::cpsim_path + "/Log/2017-10233_read_write.log", std::ios::out | std::ios::app);
+
+    my_log_file.write(contents.c_str(), contents.size());
+    my_log_file.close();
+}
+
+void Logger::_201710233_real_cyber_event_logger(long long time, int job_id, std::string event_type){
+    std::ofstream my_log_file;
+    my_log_file.open(utils::cpsim_path + "/Log/2017-10233_event.log", std::ios::out | std::ios::app);
+
+    std::stringstream contents_stream;
+
+    contents_stream << std::setw(8) << std::left << std::to_string(time);
+    contents_stream << std::setw(10) << std::left << std::to_string(job_id);
+    contents_stream << event_type + "\n";
+
+    std::string contents = contents_stream.str();
+
+    my_log_file.write(contents.c_str(), contents.size());
+    my_log_file.close();
+}
 
 void Logger::set_schedule_log_info(std::vector<std::shared_ptr<Task>>& task_vector)
 {
