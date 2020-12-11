@@ -176,9 +176,9 @@ void Logger::_2018_14000_real_cyber_event_logger(long long time, int job_id, std
         //std::cout << jobnum << std::endl;
         global_object::start_jobnum[job_id]++;
     }else if(!event_type.compare("FINISHED (DEADLINE MISSED)")){
-        jobnum = global_object::start_jobnum[job_id];
+        jobnum = global_object::finish_jobnum[job_id];
         //std::cout << jobnum << std::endl;
-        global_object::start_jobnum[job_id]++;
+        global_object::finish_jobnum[job_id]++;
     }
     utils::mtx_data_log.unlock();
     
