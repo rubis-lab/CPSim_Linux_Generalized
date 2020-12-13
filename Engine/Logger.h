@@ -3,7 +3,6 @@
 #include <iostream>
 #include <vector>
 #include "Job.h"
-//#include "LogInfo.h"
 
 
 
@@ -19,7 +18,9 @@ class Logger{
 private:
     std::vector<std::shared_ptr<Job>> m_execution_order_buffer;
     std::vector<double> m_current_time_buffer;
-    int rw_init = 0;
+    bool rw_init = false;
+    bool cyber_init = false;
+    //bool rw_log_init = false;
     
 public:
     /**
@@ -53,6 +54,7 @@ public:
     void _2017_13400_task_read_write_logger(std::string); 
     void _2017_13400_real_cyber_event_logger(long long, int, std::string);  
     void update(); 
+    int determine_jnum(int, std::string );
 };
 
 #endif

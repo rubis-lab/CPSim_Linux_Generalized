@@ -1,6 +1,5 @@
 #include "Logger.h"
 #include "Utils.h"
-//#include "LogInfo.h"
 
 #include <fstream>
 #include <string>
@@ -131,18 +130,19 @@ void Logger::start_logging()
 void Logger::_2017_13400_task_read_write_logger(std::string task_name){
     utils::mtx_data_log.lock();
 
-    std::ifstream checker(utils::cpsim_path + "/Log/2017_13400_read_write.log");
-    bool isEmpty = (!checker) || (checker.peek() == std::ifstream::traits_type::eof());
-    checker.close();
-
     std::ofstream writer;
-    writer.open(utils::cpsim_path + "/Log/2017_13400_read_write.log", std::ios::app);
+    if(!rw_init){
+        rw_init = true;
+        writer.open("/home/jinsol/CPSim_Linux_Generalized/Log/2017_13400_read_write.log", std::ios::out | std::ofstream::trunc);
+        writer << "[TASK NAME][TIME][READ/WRITE][DATA LENGTH][RAW DATA]\n";
+        writer.close();
+    }
+
+    writer.open("/home/jinsol/CPSim_Linux_Generalized/Log/2017_13400_read_write.log", std::ios::app);
     if(!writer) {
         std::cout << "ERROR : Invalid path to open the file.\n";
         return;
-    } else if(isEmpty) {
-        writer << "[TASK NAME][TIME][READ/WRITE][DATA LENGTH][RAW DATA]\n";
-    }
+    } 
     writer << task_name;
     writer.close();
     
@@ -151,23 +151,26 @@ void Logger::_2017_13400_task_read_write_logger(std::string task_name){
 
 std::vector<LogData> log_data_list; 
 
+int Logger::determine_jnum(int job_id, std::string event_type) {
+    bool is_start = !event_type.compare("STARTED");
+    bool is_finish = !event_type.compare("FINISHED");
+    bool is_finish_dm = !event_type.compare("FINISHED (DEADLINE MISSED)");
+    bool is_release = !event_type.compare("RELEASED");
+    if(is_start) return global_object::start_vec[job_id]++;
+    else if(is_finish) return global_object::finish_vec[job_id]++;
+    else if(is_finish_dm) return global_object::finish_vec[job_id]++;
+    else if(is_release) return global_object::release_vec[job_id]++;
+    else {
+	printf("ERROR: Inappropriate parsing of event type");
+	return -1;
+    }
+}
+
 void Logger::_2017_13400_real_cyber_event_logger(long long time, int job_id, std::string event_type){
     int jnum = 0;
     utils::mtx_data_log.lock();
 
-    if(!event_type.compare("STARTED")) {
-        jnum = global_object::start_vec[job_id];
-        global_object::start_vec[job_id]++;
-    } else if(!event_type.compare("FINISHED")) {
-        jnum = global_object::finish_vec[job_id];
-        global_object::finish_vec[job_id]++;
-    } else if(!event_type.compare("FINISHED (DEADLINE MISSED)")) {
-        jnum = global_object::finish_vec[job_id];
-        global_object::finish_vec[job_id]++;
-    } else if(!event_type.compare("RELEASED")) {
-        jnum = global_object::release_vec[job_id];
-        global_object::release_vec[job_id]++;
-    }
+    jnum = Logger::determine_jnum(job_id, event_type);
 
     utils::mtx_data_log.unlock();
     
@@ -182,16 +185,19 @@ bool data_comparator_with_time(const LogData* a, const LogData* b){
 void Logger::update() {
     utils::mtx_data_log.lock();
 
-    std::ifstream checker("/home/sjade/CPSim_Linux_Generalized/Log/2017_13400_event.log");
-    bool isempty = (!checker) || (checker.peek() == std::ifstream::traits_type::eof());
-    checker.close();
-
-    std::ofstream writer;
-    writer.open(utils::cpsim_path + "/Log/2017_13400_event.log", std::ios::app);
-    if(!writer) return;
-    else if(isempty) {
+std::ofstream writer;
+    if(!cyber_init){
+        rw_init = true;
+        writer.open("/home/jinsol/CPSim_Linux_Generalized/Log/2017_13400_event.log", std::ios::out | std::ofstream::trunc);
         writer << "[TIME][JOB ID][EVENT TYPE]\n";
+        writer.close();
     }
+
+    writer.open("/home/jinsol/CPSim_Linux_Generalized/Log/2017_13400_event.log", std::ios::app);
+    if(!writer) {
+        std::cout << "ERROR : Invalid path to open the file.\n";
+        return;
+    } 
 
     int tmp;
     for(int i = 0 ; i < log_data_list.size(); i++) {
@@ -205,6 +211,8 @@ void Logger::update() {
         if(tmp < 0) return;
         writer << data;
     }
+
+    
     writer.close();
 
     utils::mtx_data_log.unlock();
