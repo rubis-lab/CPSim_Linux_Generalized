@@ -161,7 +161,7 @@ int Logger::determine_jnum(int job_id, std::string event_type) {
     else if(is_finish_dm) return global_object::finish_vec[job_id]++;
     else if(is_release) return global_object::release_vec[job_id]++;
     else {
-	printf("ERROR: Inappropriate parsing of event type");
+	printf("ERROR: Inappropriate parsing of event type\n");
 	return -1;
     }
 }
@@ -185,7 +185,7 @@ bool data_comparator_with_time(const LogData* a, const LogData* b){
 void Logger::update() {
     utils::mtx_data_log.lock();
 
-std::ofstream writer;
+    std::ofstream writer;
     if(!cyber_init){
         rw_init = true;
         writer.open("/home/sjade/CPSim_Linux_Generalized/Log/2017_13400_event.log", std::ios::out | std::ofstream::trunc);
@@ -211,8 +211,6 @@ std::ofstream writer;
         if(tmp < 0) return;
         writer << data;
     }
-
-    
     writer.close();
 
     utils::mtx_data_log.unlock();
