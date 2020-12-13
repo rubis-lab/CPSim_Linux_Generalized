@@ -133,7 +133,7 @@ void Logger::_2017_13400_task_read_write_logger(std::string task_name){
     std::ofstream writer;
     if(!rw_init){
         rw_init = true;
-        writer.open("/home/jinsol/CPSim_Linux_Generalized/Log/2017_13400_read_write.log", std::ios::out | std::ofstream::trunc);
+        writer.open("/home/sjade/CPSim_Linux_Generalized/Log/2017_13400_read_write.log", std::ios::out | std::ofstream::trunc);
         writer << "[TASK NAME][TIME][READ/WRITE][DATA LENGTH][RAW DATA]\n";
         writer.close();
     }
