@@ -188,12 +188,12 @@ void Logger::update() {
 std::ofstream writer;
     if(!cyber_init){
         rw_init = true;
-        writer.open("/home/jinsol/CPSim_Linux_Generalized/Log/2017_13400_event.log", std::ios::out | std::ofstream::trunc);
+        writer.open("/home/sjade/CPSim_Linux_Generalized/Log/2017_13400_event.log", std::ios::out | std::ofstream::trunc);
         writer << "[TIME][JOB ID][EVENT TYPE]\n";
         writer.close();
     }
 
-    writer.open("/home/jinsol/CPSim_Linux_Generalized/Log/2017_13400_event.log", std::ios::app);
+    writer.open("/home/sjade/CPSim_Linux_Generalized/Log/2017_13400_event.log", std::ios::app);
     if(!writer) {
         std::cout << "ERROR : Invalid path to open the file.\n";
         return;
