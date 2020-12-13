@@ -51,9 +51,9 @@ public:
      * My Logging function
      */
     void _2017_13400_task_read_write_logger(std::string); 
+    int determine_jnum(int, std::string );
     void _2017_13400_real_cyber_event_logger(long long, int, std::string);  
     void update(); 
-    int determine_jnum(int, std::string );
 };
 
 #endif
