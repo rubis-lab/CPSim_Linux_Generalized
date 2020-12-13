@@ -198,7 +198,9 @@ void Logger::update() {
         std::cout << "ERROR : Invalid path to open the file.\n";
         return;
     } 
-
+	
+    sort(log_data_list.begin(), log_data_list.end(), data_comparator_with_time);
+	
     int tmp;
     for(int i = 0 ; i < log_data_list.size(); i++) {
         char* data;
