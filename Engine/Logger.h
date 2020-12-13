@@ -20,7 +20,6 @@ private:
     std::vector<double> m_current_time_buffer;
     bool rw_init = false;
     bool cyber_init = false;
-    //bool rw_log_init = false;
     
 public:
     /**
