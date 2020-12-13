@@ -156,6 +156,7 @@ int Logger::determine_jnum(int job_id, std::string event_type) {
     bool is_finish = !event_type.compare("FINISHED");
     bool is_finish_dm = !event_type.compare("FINISHED (DEADLINE MISSED)");
     bool is_release = !event_type.compare("RELEASED");
+	
     if(is_start) return global_object::start_vec[job_id]++;
     else if(is_finish) return global_object::finish_vec[job_id]++;
     else if(is_finish_dm) return global_object::finish_vec[job_id]++;
@@ -178,8 +179,8 @@ void Logger::_2017_13400_real_cyber_event_logger(long long time, int job_id, std
 }
 
 
-bool data_comparator_with_time(const LogData* a, const LogData* b){  
-    return a->time < b->time;
+bool data_comparator_with_time(const LogData a, const LogData b){  
+    return a.time < b.time;
 }
 
 void Logger::update() {
@@ -187,7 +188,7 @@ void Logger::update() {
 
     std::ofstream writer;
     if(!cyber_init){
-        rw_init = true;
+        cyber_init = true;
         writer.open("/home/sjade/CPSim_Linux_Generalized/Log/2017_13400_event.log", std::ios::out | std::ofstream::trunc);
         writer << "[TIME][JOB ID][EVENT TYPE]\n";
         writer.close();
