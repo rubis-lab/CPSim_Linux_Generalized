@@ -36,7 +36,8 @@ private:
     bool m_is_released;
     bool m_is_running;
     bool m_is_simulated;
-
+    bool log_flag;
+    
     int m_job_id;
     
     int m_actual_execution_time;
