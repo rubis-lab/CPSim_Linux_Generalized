@@ -38,7 +38,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "CPSim-0.1.out::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-CPSim-0.1.out-Debug-05bc5cd72c1ad6cb9124.json",
+					"jsonFile" : "target-CPSim-0.1.out-Debug-8a654d2afe3c567d3b40.json",
 					"name" : "CPSim-0.1.out",
 					"projectIndex" : 0
 				}
@@ -48,8 +48,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "/home/park/git/CPSim_Linux_Generalized/build",
-		"source" : "/home/park/git/CPSim_Linux_Generalized"
+		"build" : "/home/akyeast/Workspace/CPSim_Linux_Generalized/build",
+		"source" : "/home/akyeast/Workspace/CPSim_Linux_Generalized"
 	},
 	"version" : 
 	{
