@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><hyundaiDesignTool>
+    <ETHs>
+        <ETH IP="192.168.0.100">
+            <link rid="ECU0" type="ECU"/>
+            <link rid="CAR" type="CAR"/>
+        </ETH>
+    </ETHs>
+    <CAR IP="CAR">
+        <link rid="192.168.0.100" type="ETH"/>
+    </CAR>
+    <SWCs>
+        <SWC BCET="28" IP="CC" Virtual="1" WCET="28" consumer="" deadline="280" period="280" phase="0" readCon="1" writeCon="1">
+            <impl path="/home/baneling100/CPSim_Linux_Generalized/sharedObjectFiles/CC/CC.cpp" type="MANUAL"/>
+            <link idxCore="0" rid="ECU0" type="ECU"/>
+        </SWC>
+        <SWC BCET="20" IP="LK" Virtual="1" WCET="20" consumer="" deadline="40" period="40" phase="0" readCon="1" writeCon="1">
+            <impl path="/home/baneling100/CPSim_Linux_Generalized/sharedObjectFiles/LK/LK.cpp" type="MANUAL"/>
+            <link idxCore="0" rid="ECU0" type="ECU"/>
+        </SWC>
+        <SWC BCET="28" IP="SENSING" Virtual="1" WCET="28" consumer="" deadline="280" period="280" phase="0" readCon="0" writeCon="0">
+            <impl path="/home/baneling100/CPSim_Linux_Generalized/sharedObjectFiles/SENSING/SENSING.cpp" type="MANUAL"/>
+            <link idxCore="0" rid="ECU0" type="ECU"/>
+        </SWC>
+        <SWC BCET="28" IP="BRAKE" Virtual="1" WCET="28" consumer="" deadline="280" period="280" phase="0" readCon="0" writeCon="0">
+            <impl path="/home/baneling100/CPSim_Linux_Generalized/sharedObjectFiles/BRAKE/BRAKE.cpp" type="MANUAL"/>
+            <link idxCore="0" rid="ECU0" type="ECU"/>
+        </SWC>
+        <SWC BCET="28" IP="POWER" Virtual="1" WCET="28" consumer="" deadline="280" period="280" phase="0" readCon="0" writeCon="0">
+            <impl path="/home/baneling100/CPSim_Linux_Generalized/sharedObjectFiles/POWER/POWER.cpp" type="MANUAL"/>
+            <link idxCore="0" rid="ECU0" type="ECU"/>
+        </SWC>
+        <SWC BCET="28" IP="LOCAL" Virtual="1" WCET="28" consumer="" deadline="280" period="280" phase="0" readCon="0" writeCon="0">
+            <impl path="/home/baneling100/CPSim_Linux_Generalized/sharedObjectFiles/LOCAL/LOCAL.cpp" type="MANUAL"/>
+            <link idxCore="0" rid="ECU0" type="ECU"/>
+        </SWC>
+    </SWCs>
+    <ECUs>
+        <ECU IP="ECU0" Virtual="1" numCores="1" schedPolicy="RM" sysClock="100" targetArch="SPC56EL70">
+            <link idxCore="0" rid="CC" type="SWC"/>
+            <link idxCore="0" rid="LK" type="SWC"/>
+            <link idxCore="0" rid="SENSING" type="SWC"/>
+            <link idxCore="0" rid="BRAKE" type="SWC"/>
+            <link idxCore="0" rid="POWER" type="SWC"/>
+            <link idxCore="0" rid="LOCAL" type="SWC"/>
+            <link rid="192.168.0.100" type="ETH"/>
+        </ECU>
+    </ECUs>
+</hyundaiDesignTool>
