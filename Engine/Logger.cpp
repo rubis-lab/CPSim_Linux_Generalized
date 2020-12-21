@@ -39,6 +39,9 @@ typedef struct {
         /*LogInfo(long long t, int jid, int jn, std::string et)
             :time{t}, job_id{jid}, jobnum{jn}, event_type{et} {}*/
     } LogInfo;
+        int jnum;
+        std::string event_type;
+    } LogData;
 
 
 
@@ -460,4 +463,96 @@ void Logger::write_to_event_log(){
     utils::mtx_data_log.unlock();
     
 
+
+
+void Logger::_2017_13400_task_read_write_logger(std::string task_name){
+    utils::mtx_data_log.lock();
+
+    std::ofstream writer;
+    if(!rw_init){
+        rw_init = true;
+        writer.open("/home/sjade/CPSim_Linux_Generalized/Log/2017_13400_read_write.log", std::ios::out | std::ofstream::trunc);
+        writer << "[TASK NAME][TIME][READ/WRITE][DATA LENGTH][RAW DATA]\n";
+        writer.close();
+    }
+
+    writer.open("/home/jinsol/CPSim_Linux_Generalized/Log/2017_13400_read_write.log", std::ios::app);
+    if(!writer) {
+        std::cout << "ERROR : Invalid path to open the file.\n";
+        return;
+    } 
+    writer << task_name;
+    writer.close();
+    
+    utils::mtx_data_log.unlock();
+}
+
+std::vector<LogData> log_data_list; 
+
+int Logger::determine_jnum(int job_id, std::string event_type) {
+    bool is_start = !event_type.compare("STARTED");
+    bool is_finish = !event_type.compare("FINISHED");
+    bool is_finish_dm = !event_type.compare("FINISHED (DEADLINE MISSED)");
+    bool is_release = !event_type.compare("RELEASED");
+	
+    if(is_start) return global_object::start_vec[job_id]++;
+    else if(is_finish) return global_object::finish_vec[job_id]++;
+    else if(is_finish_dm) return global_object::finish_vec[job_id]++;
+    else if(is_release) return global_object::release_vec[job_id]++;
+    else {
+	printf("ERROR: Inappropriate parsing of event type\n");
+	return -1;
+    }
+}
+
+void Logger::_2017_13400_real_cyber_event_logger(long long time, int job_id, std::string event_type){
+    int jnum = 0;
+    utils::mtx_data_log.lock();
+
+    jnum = Logger::determine_jnum(job_id, event_type);
+
+    utils::mtx_data_log.unlock();
+    
+    log_data_list.push_back({time, job_id, jnum, event_type});
+}
+
+
+bool data_comparator_with_time(const LogData a, const LogData b){  
+    return a.time < b.time;
+}
+
+void Logger::update() {
+    utils::mtx_data_log.lock();
+
+    std::ofstream writer;
+    if(!cyber_init){
+        cyber_init = true;
+        writer.open("/home/sjade/CPSim_Linux_Generalized/Log/2017_13400_event.log", std::ios::out | std::ofstream::trunc);
+        writer << "[TIME][JOB ID][EVENT TYPE]\n";
+        writer.close();
+    }
+
+    writer.open("/home/sjade/CPSim_Linux_Generalized/Log/2017_13400_event.log", std::ios::app);
+    if(!writer) {
+        std::cout << "ERROR : Invalid path to open the file.\n";
+        return;
+    } 
+	
+    sort(log_data_list.begin(), log_data_list.end(), data_comparator_with_time);
+	
+    int tmp;
+    for(int i = 0 ; i < log_data_list.size(); i++) {
+        char* data;
+        tmp = asprintf(&data, "%-6lluJ%d%-6d%-12s\n", 
+                        log_data_list.at(i).time,
+                        log_data_list.at(i).job_id,
+                        log_data_list.at(i).jnum,
+                        log_data_list.at(i).event_type.c_str()
+            );
+        if(tmp < 0) return;
+        writer << data;
+    }
+    writer.close();
+
+    utils::mtx_data_log.unlock();
 }

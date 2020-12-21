@@ -22,7 +22,11 @@ void sim_main()
   /********************************************/
   write5 = 0;
   write6 = 0;
+<<<<<<< HEAD:Report/project_1/2014_11235_CC.cpp
   read2 = read2 / 100 + 200000;
+=======
+  read2 = read2 / 100 - 50000; // Set target speed 75km/h
+>>>>>>> pr/17:sharedObjectFiles/CC/201713400_CC.cpp
 
   if(read4 > 6000) {
     

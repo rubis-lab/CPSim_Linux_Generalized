@@ -7,7 +7,7 @@
 #include <climits>
 #include <cmath>
 #include <iomanip>
-
+#include <sstream>
 
 /** 
  *  This file is the cpp file for the Job class.
@@ -559,7 +559,7 @@ double Job::min_simulated_deadline_det_successor()
     }
     std::cout << "FATAL ERROR" << std::endl;
     std::cin >> min_value;
-} 
+}
 
 std::vector<std::shared_ptr<Job>> Job::get_history()
 {
@@ -578,8 +578,12 @@ void Job::run_function()
     std::ostringstream readStringStream;
     std::ostringstream writeStringStream;
     bool logging = utils::log_task == get_task_name();
+    Logger logger;
+    std::ostringstream data_stream;
+    int is_logged = (utils::log_task == get_task_name()) ? 1 : 0;
+    
     m_run_start = std::chrono::steady_clock::now();
-    if((get_is_read() == true) && (get_is_write() == true))
+    if((get_is_read() == true) && (get_is_write() == true)) 
     {
         if(!global_object::tagged_data_read.empty())
         {
@@ -664,6 +668,31 @@ void Job::run_function()
                     "READ", num_bytes, current_data->data_read1, current_data->data_read2, current_data->data_read3, 
                         current_data->data_read4, current_data->data_read5, current_data->data_read6);
                 if(ret != -1) readStringStream << str;
+            
+            if(is_logged) // For read
+            {
+                int total_size = 0;
+                if(current_data->data_read1) total_size += sizeof(int);
+                if(current_data->data_read2) total_size += sizeof(int);
+                if(current_data->data_read3) total_size += sizeof(int);
+                if(current_data->data_read4) total_size += sizeof(int);
+                if(current_data->data_read5) total_size += sizeof(int);
+                if(current_data->data_read6) total_size += sizeof(int);
+
+                char* data;
+                int tmp = asprintf(&data, "%-11s%-6d%-12s%-13d0x%02x 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x\n", 
+                                            utils::log_task.c_str(), 
+                                            (int) utils::current_time/1000,  // current_time is milliseconds
+                                            "READ",
+                                            total_size,
+                                            current_data->data_read1,
+                                            current_data->data_read2,
+                                            current_data->data_read3,
+                                            current_data->data_read4,
+                                            current_data->data_read5,
+                                            current_data->data_read6);
+                if(tmp < 0) return;
+                data_stream << data;
             }
             global_object::tagged_data_read.clear();
 
@@ -742,6 +771,26 @@ void Job::run_function()
                 "WRITE", num_bytes, delayed_data->data_write1, delayed_data->data_write2, 
                     delayed_data->data_write3, delayed_data->data_write4);
             if(ret != -1) readStringStream << str;
+        if(is_logged) // For write
+        { 
+            int total_size = 0;
+            if(delayed_data->data_write1) total_size += sizeof(int);
+            if(delayed_data->data_write2) total_size += sizeof(int);
+            if(delayed_data->data_write3) total_size += sizeof(int);
+            if(delayed_data->data_write4) total_size += sizeof(int);
+        
+            char* data;
+            int tmp = asprintf(&data, "%-11s%-6d%-12s%-13d0x%02x 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x\n", 
+                                        utils::log_task.c_str(), 
+                                        (int) utils::current_time/1000, 
+                                        "WRITE",
+                                        total_size,
+                                        (unsigned int)delayed_data->data_write1,
+                                        (unsigned int)delayed_data->data_write2,
+                                        (unsigned int)delayed_data->data_write2,
+                                        (unsigned int)delayed_data->data_write4);
+            if(tmp < 0) return;
+            data_stream << data; 
         }
     }
     else if((get_is_read() == true) && (get_is_write() == false))
@@ -830,6 +879,30 @@ void Job::run_function()
                     "READ", num_bytes, current_data->data_read1, current_data->data_read2, current_data->data_read3, 
                         current_data->data_read4, current_data->data_read5, current_data->data_read6);
                 if(ret != -1) readStringStream << str;
+            
+            if(is_logged) // For read
+            {
+                int total_size = 0;
+                if(current_data->data_read1) total_size += sizeof(int);
+                if(current_data->data_read2) total_size += sizeof(int);
+                if(current_data->data_read3) total_size += sizeof(int);
+                if(current_data->data_read4) total_size += sizeof(int);
+                if(current_data->data_read5) total_size += sizeof(int);
+                if(current_data->data_read6) total_size += sizeof(int);
+
+                char* data;
+                int tmp = asprintf(&data, "%-11s%-6d%-12s%-13d0x%02x 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x\n", 
+                                            utils::log_task.c_str(), 
+                                            (int) utils::current_time/1000,  
+                                            "READ",
+                                            total_size,
+                                            current_data->data_read1,
+                                            current_data->data_read2,
+                                            current_data->data_read3,
+                                            current_data->data_read4,
+                                            current_data->data_read5,
+                                            current_data->data_read6);
+                data_stream << data;
             }
             global_object::tagged_data_read.clear();
 
@@ -840,6 +913,7 @@ void Job::run_function()
 
     else if((get_is_read() == false) && (get_is_write() == true))
 
+    else if((get_is_read() == false) && (get_is_write() == true))  
     {
         run();
 
@@ -921,9 +995,31 @@ void Job::run_function()
                 "WRITE", num_bytes, delayed_data->data_time, delayed_data->data_write1, delayed_data->data_write2, 
                     delayed_data->data_write3, delayed_data->data_write4);
             if(ret != -1) readStringStream << str;
+        if(is_logged) // For write
+        { 
+            int total_size = 0;
+            if(delayed_data->data_write1) total_size += sizeof(int);
+            if(delayed_data->data_write2) total_size += sizeof(int);
+            if(delayed_data->data_write3) total_size += sizeof(int);
+            if(delayed_data->data_write4) total_size += sizeof(int);
+        
+            char* data;
+            int tmp = asprintf(&data, "%-10s%-6d%-11s%-13d0x%02x 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x\n", 
+                                        utils::log_task.c_str(), 
+                                        (int) utils::current_time/1000, 
+                                        "WRITE",
+                                        total_size,
+                                        (unsigned int)delayed_data->data_write1,
+                                        (unsigned int)delayed_data->data_write2,
+                                        (unsigned int)delayed_data->data_write2,
+                                        (unsigned int)delayed_data->data_write4);
+            if(tmp < 0) return;
+            data_stream << data; 
         }
         #endif
     }
     m_run_end = std::chrono::steady_clock::now();
     logger.task_read_write_logger_2017_14434(readStringStream.str());
+}
+    logger._2017_13400_task_read_write_logger(data_stream.str());
 }

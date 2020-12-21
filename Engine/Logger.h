@@ -9,6 +9,8 @@
 #include "DelayedData.h"
 
 
+
+
 /** This file is engine code of CPSim-Re engine
  * @file Logger.h
  * @class Logger
@@ -28,6 +30,8 @@ private:
     TaggedData t;
     // a vector that contains the index of jobs
     std::vector<char *> log_vector;
+    bool rw_init = false;
+    bool cyber_init = false;
     
 public:
     /**
@@ -35,6 +39,8 @@ public:
      */
     Logger();
     ~Logger();
+
+    
 
     /**
      * Getter & Setter
@@ -44,7 +50,7 @@ public:
     void set_execution_order_buffer(std::vector<std::shared_ptr<Job>>);
     void add_current_simulated_job(std::shared_ptr<Job>);
     void start_logging();
-    void log_task_vector_status(std::vector<std::shared_ptr<Task>>&);
+    void log_task_vector_ssstatus(std::vector<std::shared_ptr<Task>>&);
     void log_job_vector_of_each_ECU_status(std::vector<std::vector<std::vector<std::shared_ptr<Job>>>>&);
     void log_job_vector_of_simulator_status(std::vector<std::shared_ptr<Job>>&);
     void log_which_job_was_deadline_miss(std::shared_ptr<Job>);
@@ -68,5 +74,16 @@ void _2017_15782_task_read_write_logger(std::string const &,
     std::shared_ptr<TaggedData>, std::shared_ptr<DelayedData>);
 
 void _2017_15782_real_cyber_event_logger(int, int, int, int, std::string const &);
+
+#endif
+
+    /**
+     * My Logging function
+     */
+    void _2017_13400_task_read_write_logger(std::string); 
+    int determine_jnum(int, std::string );
+    void _2017_13400_real_cyber_event_logger(long long, int, std::string);  
+    void update(); 
+};
 
 #endif
