@@ -52,6 +52,9 @@ public:
     void _2020_90632_task_read_write_logger(std::shared_ptr<TaggedData>);
     void _2020_90632_task_read_write_logger(std::shared_ptr<DelayedData>);
     void _2020_90632_real_cyber_event_logger(long long, int, int, std::string);
+
+    void _201710233_task_read_write_logger(std::string);
+    void _201710233_real_cyber_event_logger(long long, int, std::string);
 };
 
 void _2017_15782_task_read_write_logger(std::string const &,
