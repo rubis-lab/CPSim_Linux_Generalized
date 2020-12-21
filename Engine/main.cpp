@@ -19,7 +19,7 @@
 
 /**
     Header file lists.. in UNIX standard library
-*/\
+*/
 #include <memory>
 #include <stdio.h>
 #include <unistd.h>
@@ -127,6 +127,7 @@ int main(int argc, char *argv[])
             if(is_simulatable == false)
                 std::cout << "not simulatable" << std::endl;
         }
+
         //  is_simulatable ? ++simulatable_count : ++nonsimulatable_count;
         // if(utils::real_workload == false)
         // {

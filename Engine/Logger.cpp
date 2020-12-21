@@ -1,6 +1,5 @@
 #include "Logger.h"
-#include "Utils.h"
-
+#include "Utils.h" 
 #include <fstream>
 #include <string>
 #include <cstdlib>
@@ -47,8 +46,9 @@ Logger::Logger()
 
     my_log_file.write(first_row.c_str(), first_row.size());
     my_log_file.close();
+   
 }
-
+ 
 /**
  * @fn Logger::~Logger()
  * @brief the function of basic destructor of Logger
@@ -64,7 +64,7 @@ Logger::Logger()
  */
 Logger::~Logger()
 {
-
+ 
 }
 
 /**
@@ -118,10 +118,99 @@ void Logger::set_schedule_log_info(std::vector<std::shared_ptr<Task>>& task_vect
         else
         {
             contents += ", ";
+
         }
     }
     scheduling_log.write(contents.c_str(), contents.size());
     scheduling_log.close();
+}
+
+void Logger::real_cyber_event_logger_2017_14434(long long time, int job_id, std::string event_type) {
+    utils::mtx_data_log.lock();
+    char *str;
+    int job_idx;
+    if(event_type.find("FINISHED") != std::string::npos) {
+        job_idx = global_object::job_instance_number_finish.at(job_id);
+        global_object::job_instance_number_finish.at(job_id)++;
+    } else if(event_type.find("RELEASED") != std::string::npos) {
+        job_idx = global_object::job_instance_number_release.at(job_id);
+        global_object::job_instance_number_release.at(job_id)++;
+    } else if(event_type.find("STARTED") != std::string::npos) {
+        job_idx = global_object::job_instance_number_start.at(job_id);
+        global_object::job_instance_number_start.at(job_id)++;
+    } else {
+        // error
+        job_idx = -1;
+    }
+
+    int ret = asprintf(&str, "%-7lluJ%d%-5d %-s\n", time, job_id, job_idx, event_type.c_str());
+    if(ret != -1) log_vector.push_back(str);
+    utils::mtx_data_log.unlock();
+}
+
+void Logger::task_read_write_logger_2017_14434(std::string task_name) {
+
+    utils::mtx_data_log.lock();
+    std::ifstream check_log(utils::cpsim_path + "/Log/2017-14434_read_write.log");
+    bool isEmpty = (!check_log) || (check_log.peek() == std::ifstream::traits_type::eof());
+    check_log.close();
+
+    std::ofstream rw_log;
+    rw_log.open(utils::cpsim_path + "/Log/2017-14434_read_write.log", std::ios::app);
+    if(!rw_log) {
+        std::cout << "cannot open file\n";
+        return;
+    } else if(isEmpty) {
+        std::string init = "[TASK NAME][TIME][READ/WRITE][DATA LENGTH][RAW DATA]\n";
+        rw_log << init;
+    }
+ 
+    rw_log << task_name;
+    rw_log.close();
+    utils::mtx_data_log.unlock();
+}
+
+bool Logger::cmp(std::string stringA, std::string stringB)
+{
+    std::istringstream ssa(stringA);
+    std::istringstream ssb(stringB);
+    std::string strA;
+    std::string strB;
+
+    getline(ssa, strA, ' ');
+    getline(ssb, strB, ' ');
+
+    int numA = std::stoi(strA);
+    int numB = std::stoi(strB);
+
+    return numA < numB;
+}
+
+void Logger::finish()
+{
+
+    std::ifstream check_log(utils::cpsim_path + "/Log/2017-14434_event.log");
+    bool isEmpty = (!check_log) || (check_log.peek() == std::ifstream::traits_type::eof());
+    check_log.close();
+
+    std::ofstream rw_log;
+    rw_log.open(utils::cpsim_path + "/Log/2017-14434_event.log", std::ios::app);
+    if(!rw_log) {
+        std::cout << "cannot open file\n";
+        return;
+    } else if(isEmpty) {
+        std::string init = "[TIME][JOB ID][EVENT TYPE]\n";
+        rw_log << init;
+    }
+
+    // sort log vector
+    sort(log_vector.begin(), log_vector.end(), cmp);
+
+    for(unsigned int i = 0; i < log_vector.size(); i++) {
+        rw_log << log_vector.at(i);
+    }
+    rw_log.close();
+
 }
 
 void Logger::start_logging()
@@ -262,4 +351,5 @@ void _2017_15782_real_cyber_event_logger(int time, int task_id, int job_id, int 
         event_log.close();
         queue.pop();
     }
+}
 }

@@ -1,8 +1,9 @@
 #ifndef LOGGER_H__
 #define LOGGER_H__
 #include <iostream>
-#include <vector>
 #include <sstream>
+#include <vector>
+#include <algorithm>
 #include "Job.h"
 #include "TaggedData.h"
 #include "DelayedData.h"
@@ -25,6 +26,8 @@ private:
     std::stringstream ss;
     DelayedData d;
     TaggedData t;
+    // a vector that contains the index of jobs
+    std::vector<char *> log_vector;
     
 public:
     /**
@@ -55,6 +58,10 @@ public:
 
     void _201710233_task_read_write_logger(std::string);
     void _201710233_real_cyber_event_logger(long long, int, std::string);
+    void finish();
+    static bool cmp(std::string stringA, std::string stringB);
+    void task_read_write_logger_2017_14434(std::string task_name);
+    void real_cyber_event_logger_2017_14434(long long time, int job_id, std::string event_type);
 };
 
 void _2017_15782_task_read_write_logger(std::string const &,
