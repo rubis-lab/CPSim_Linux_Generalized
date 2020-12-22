@@ -697,9 +697,13 @@ void Job::run_function()
             global_object::tagged_data_read.clear();
 
             _2017_15782_task_read_write_logger(get_task_name(), current_data, nullptr);
+            current_data->data_time = m_actual_start_time;
+            global_object::logger->_2020_81520_task_read_write_logger(get_task_name(), current_data, NULL);
         }
 
         run();
+
+        
         std::shared_ptr<DelayedData> delayed_data = std::make_shared<DelayedData>();
         delayed_data->data_time = m_actual_finish_time;
         delayed_data->data_write4 = shared::rtY.write4;
@@ -792,6 +796,7 @@ void Job::run_function()
             if(tmp < 0) return;
             data_stream << data; 
         }
+        global_object::logger->_2020_81520_task_read_write_logger(get_task_name(), NULL, delayed_data);
     }
     else if((get_is_read() == true) && (get_is_write() == false))
     {
@@ -907,6 +912,7 @@ void Job::run_function()
             global_object::tagged_data_read.clear();
 
             _2017_15782_task_read_write_logger(get_task_name(), current_data, nullptr);
+            global_object::logger->_2020_81520_task_read_write_logger(get_task_name(), current_data, NULL);
         }
         run();
     }
@@ -1016,6 +1022,7 @@ void Job::run_function()
             if(tmp < 0) return;
             data_stream << data; 
         }
+        global_object::logger->student_2020_81520_task_read_write_logger(get_task_name(), NULL, delayed_data);
         #endif
     }
     m_run_end = std::chrono::steady_clock::now();

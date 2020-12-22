@@ -8,8 +8,12 @@
 #include "TaggedData.h"
 #include "DelayedData.h"
 
-
-
+struct Loggable
+{
+    long long time;
+    int job_ID;
+    std::string event_type;
+};
 
 /** This file is engine code of CPSim-Re engine
  * @file Logger.h
@@ -32,6 +36,9 @@ private:
     std::vector<char *> log_vector;
     bool rw_init = false;
     bool cyber_init = false;
+    bool read_write_log_is_init = false;
+    bool real_cyber_event_log_is_init = false;
+    std::vector<Loggable> to_be_logged_list;
     
 public:
     /**
@@ -84,6 +91,8 @@ void _2017_15782_real_cyber_event_logger(int, int, int, int, std::string const &
     int determine_jnum(int, std::string );
     void _2017_13400_real_cyber_event_logger(long long, int, std::string);  
     void update(); 
+    void _2020_81520_task_read_write_logger(std::string, std::shared_ptr<TaggedData>, std::shared_ptr<DelayedData>);
+    void _2020_81520_real_cyber_event_logger(long long, int, std::string);
 };
 
 #endif
