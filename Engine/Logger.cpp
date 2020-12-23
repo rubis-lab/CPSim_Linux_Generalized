@@ -1,5 +1,6 @@
 #include "Logger.h"
 #include "Utils.h" 
+
 #include <fstream>
 #include <string>
 #include <cstdlib>
@@ -9,6 +10,7 @@
 #include <mutex>
 #include <sstream>
 
+
 /**
  *  This file is the cpp file for the Logger class.
  *  @file Logger.cpp
@@ -17,6 +19,28 @@
  *  @date 2020-03-31
  */
 
+
+/**
+ * solvely95(2018-14000) objects : LogInfo, log_vec
+ */
+typedef struct {
+        long long time;
+        int job_id;
+        int jobnum;
+        std::string event_type;
+    } LogInfo;
+std::vector<LogInfo> log_vec;   // a log vector to hold the log messages
+
+/**
+ * s-jade(2017-13400) objects : LogData, log_data_list
+ */
+typedef struct {
+        long long time;
+        int job_id;
+        int jnum;
+        std::string event_type;
+    } LogData;
+std::vector<LogData> log_data_list; 
 
 /**
  * @fn Logger::Logger()
@@ -31,62 +55,71 @@
  * @warning none
  * @todo none
  */
-
-typedef struct {
-        long long time;
-        int job_id;
-        int jobnum;
-        std::string event_type;
-        /*LogInfo(long long t, int jid, int jn, std::string et)
-            :time{t}, job_id{jid}, jobnum{jn}, event_type{et} {}*/
-    } LogInfo;
-        int jnum;
-        std::string event_type;
-    } LogData;
-
-
-
 Logger::Logger()
 {
-    std::ofstream my_log_file;
-    my_log_file.open(utils::cpsim_path + "/Log/2017-10233_read_write.log", std::ios::out);
+    // /**
+    //  * Spiraline(2017-10233) objects : my_log_file
+    //  */
+    // std::ofstream my_log_file;
+    // my_log_file.open(utils::cpsim_path + "/Log/2017-10233_read_write.log", std::ios::out);
+    // std::string first_row = "[TASK_NAME] [TIME]  [READ/WRITE]  [DATA LENGTH]  [RAW DATA]\n";
+    // my_log_file.write(first_row.c_str(), first_row.size());
+    // my_log_file.close();
+    // my_log_file.open(utils::cpsim_path + "/Log/2017-10233_event.log", std::ios::out);
+    // first_row = "[TIME]  [JOB ID]  [EVENT TYPE]\n";
+    // my_log_file.write(first_row.c_str(), first_row.size());
+    // my_log_file.close();
 
-    std::string first_row = "[TASK_NAME] [TIME]  [READ/WRITE]  [DATA LENGTH]  [RAW DATA]\n";
+    // /**
+    //  * csh3695(2018-11940) objects : read_write_log, event_log
+    //  */
+    // std::ofstream read_write_log, event_log;
+    // read_write_log.open(utils::cpsim_path + "/Log/2018_11940_read_write.log", std::ios::out|std::ios::trunc);
+    // if(!read_write_log){
+    //     std::cerr << "Cannot create " << utils::cpsim_path + "/Log/2018_11940_read_write.log" << "." << std::endl;
+    //     exit(1);
+    // }
+    // read_write_log << "[ TASK NAME ] [    TIME    ] [ READ/WRITE ] [ DATA LENGTH ] [  RAW DATA  ]\n";   // 13 14 14 15 14
+    // read_write_log.close();
+    // event_log.open(utils::cpsim_path + "/Log/2018_11940_event.log", std::ios::out|std::ios::trunc);
+    // if(!event_log){
+    //     std::cerr << "Cannot create " << utils::cpsim_path + "/Log/2018_11940_event.log" << "." << std::endl;
+    //     exit(1);
+    // }
+    // event_log << "[    TIME    ] [   JOB ID   ] [ EVENT TYPE ]\n"; // 14 14 14
+    // event_log.close();
 
-    my_log_file.write(first_row.c_str(), first_row.size());
-    my_log_file.close();
+    // /**
+    //  * sunhongmin(2014-11561) objects : set_rw_log_info, set_event_log_info
+    //  */
+    // Logger::set_rw_log_info(); // write header of read_write.log
+    // Logger::set_event_log_info(); // write header of event.log
 
-    my_log_file.open(utils::cpsim_path + "/Log/2017-10233_event.log", std::ios::out);
-    std::ofstream read_write_log, event_log;
+    // /**
+    //  * ywj7373(2014-11235) objects : task_log, event_log
+    //  */
+    // std::ofstream task_log;
+    // task_log.open(utils::cpsim_path + "/Log/2014_11235_read_write.log", std::ios::out);
+    // std::string contents = "[TASK NAME] [TIME] [READ/WRITE] [DATA LENGTH] [RAW DATA]\n";
+    // task_log << contents;
+    // task_log.close();
+    // std::ofstream event_log;
+    // event_log.open(utils::cpsim_path + "/Log/2014_11235_event.log", std::ios::out);
+    // contents = "[TIME] [JOB ID] [EVENT TYPE]\n";
+    // event_log << contents;
+    // event_log.close();
 
-    read_write_log.open(utils::cpsim_path + "/Log/2018_11940_read_write.log", std::ios::out|std::ios::trunc);
-
-    if(!read_write_log){
-        std::cerr << "Cannot create " << utils::cpsim_path + "/Log/2018_11940_read_write.log" << "." << std::endl;
-        exit(1);
-    }
-
-    read_write_log << "[ TASK NAME ] [    TIME    ] [ READ/WRITE ] [ DATA LENGTH ] [  RAW DATA  ]\n";   // 13 14 14 15 14
-    read_write_log.close();
-
-    event_log.open(utils::cpsim_path + "/Log/2018_11940_event.log", std::ios::out|std::ios::trunc);
-
-    if(!event_log){
-        std::cerr << "Cannot create " << utils::cpsim_path + "/Log/2018_11940_event.log" << "." << std::endl;
-        exit(1);
-    }
-
-    event_log << "[    TIME    ] [   JOB ID   ] [ EVENT TYPE ]\n"; // 14 14 14
-    event_log.close();
+    // /**
+    //  * Kimdo-765(2020-90632) objects : read_write_log, event_log
+    //  */
+    // std::ofstream read_write_log;
+    // std::ofstream event_log;
+    // read_write_log.open(utils::cpsim_path + "/Log/2020_90632_read_write.log", std::ios::out);
+    // event_log.open(utils::cpsim_path + "/Log/2020_90632_event.log", std::ios::out);
+    // read_write_log.write("", 0);
+    // event_log.write("",0);
 }
 
-    first_row = "[TIME]  [JOB ID]  [EVENT TYPE]\n";
-
-    my_log_file.write(first_row.c_str(), first_row.size());
-    my_log_file.close();
-   
-}
- 
 /**
  * @fn Logger::~Logger()
  * @brief the function of basic destructor of Logger
@@ -118,139 +151,6 @@ Logger::~Logger()
  * @warning none
  * @todo none
  */
-
-void Logger::_201710233_task_read_write_logger(std::string contents){
-    std::ofstream my_log_file;
-    my_log_file.open(utils::cpsim_path + "/Log/2017-10233_read_write.log", std::ios::out | std::ios::app);
-
-    my_log_file.write(contents.c_str(), contents.size());
-    my_log_file.close();
-}
-
-void Logger::_201710233_real_cyber_event_logger(long long time, int job_id, std::string event_type){
-    std::ofstream my_log_file;
-    my_log_file.open(utils::cpsim_path + "/Log/2017-10233_event.log", std::ios::out | std::ios::app);
-
-    std::stringstream contents_stream;
-
-    contents_stream << std::setw(8) << std::left << std::to_string(time);
-    contents_stream << std::setw(10) << std::left << std::to_string(job_id);
-    contents_stream << event_type + "\n";
-
-    std::string contents = contents_stream.str();
-
-    my_log_file.write(contents.c_str(), contents.size());
-    my_log_file.close();
-}
-
-void Logger::set_schedule_log_info(std::vector<std::shared_ptr<Task>>& task_vector)
-{
-    std::ofstream scheduling_log;
-    scheduling_log.open(utils::cpsim_path + "/Log/scheduling.log", std::ios::out);     
-    std::string contents = "";
-    for(int idx = 0; idx < task_vector.size(); idx++)
-    {
-        contents += "ECU" + std::to_string(task_vector.at(idx)->get_ECU()->get_ECU_id())+ ": " + task_vector.at(idx)->get_task_name();
-        if(idx == task_vector.size() - 1)
-            contents += "\n";
-        else
-        {
-            contents += ", ";
-
-        }
-    }
-    scheduling_log.write(contents.c_str(), contents.size());
-    scheduling_log.close();
-}
-
-void Logger::real_cyber_event_logger_2017_14434(long long time, int job_id, std::string event_type) {
-    utils::mtx_data_log.lock();
-    char *str;
-    int job_idx;
-    if(event_type.find("FINISHED") != std::string::npos) {
-        job_idx = global_object::job_instance_number_finish.at(job_id);
-        global_object::job_instance_number_finish.at(job_id)++;
-    } else if(event_type.find("RELEASED") != std::string::npos) {
-        job_idx = global_object::job_instance_number_release.at(job_id);
-        global_object::job_instance_number_release.at(job_id)++;
-    } else if(event_type.find("STARTED") != std::string::npos) {
-        job_idx = global_object::job_instance_number_start.at(job_id);
-        global_object::job_instance_number_start.at(job_id)++;
-    } else {
-        // error
-        job_idx = -1;
-    }
-
-    int ret = asprintf(&str, "%-7lluJ%d%-5d %-s\n", time, job_id, job_idx, event_type.c_str());
-    if(ret != -1) log_vector.push_back(str);
-    utils::mtx_data_log.unlock();
-}
-
-void Logger::task_read_write_logger_2017_14434(std::string task_name) {
-
-    utils::mtx_data_log.lock();
-    std::ifstream check_log(utils::cpsim_path + "/Log/2017-14434_read_write.log");
-    bool isEmpty = (!check_log) || (check_log.peek() == std::ifstream::traits_type::eof());
-    check_log.close();
-
-    std::ofstream rw_log;
-    rw_log.open(utils::cpsim_path + "/Log/2017-14434_read_write.log", std::ios::app);
-    if(!rw_log) {
-        std::cout << "cannot open file\n";
-        return;
-    } else if(isEmpty) {
-        std::string init = "[TASK NAME][TIME][READ/WRITE][DATA LENGTH][RAW DATA]\n";
-        rw_log << init;
-    }
- 
-    rw_log << task_name;
-    rw_log.close();
-    utils::mtx_data_log.unlock();
-}
-
-bool Logger::cmp(std::string stringA, std::string stringB)
-{
-    std::istringstream ssa(stringA);
-    std::istringstream ssb(stringB);
-    std::string strA;
-    std::string strB;
-
-    getline(ssa, strA, ' ');
-    getline(ssb, strB, ' ');
-
-    int numA = std::stoi(strA);
-    int numB = std::stoi(strB);
-
-    return numA < numB;
-}
-
-void Logger::finish()
-{
-
-    std::ifstream check_log(utils::cpsim_path + "/Log/2017-14434_event.log");
-    bool isEmpty = (!check_log) || (check_log.peek() == std::ifstream::traits_type::eof());
-    check_log.close();
-
-    std::ofstream rw_log;
-    rw_log.open(utils::cpsim_path + "/Log/2017-14434_event.log", std::ios::app);
-    if(!rw_log) {
-        std::cout << "cannot open file\n";
-        return;
-    } else if(isEmpty) {
-        std::string init = "[TIME][JOB ID][EVENT TYPE]\n";
-        rw_log << init;
-    }
-
-    // sort log vector
-    sort(log_vector.begin(), log_vector.end(), cmp);
-
-    for(unsigned int i = 0; i < log_vector.size(); i++) {
-        rw_log << log_vector.at(i);
-    }
-    rw_log.close();
-
-}
-
 void Logger::start_logging()
 {
     std::ofstream scheduling_log;
@@ -279,8 +179,144 @@ void Logger::start_logging()
     }    
 }
 
-void _2017_15782_task_read_write_logger(std::string const &task_name,
-    std::shared_ptr<TaggedData> tagged_data, std::shared_ptr<DelayedData> delayed_data)
+void Logger::set_schedule_log_info(std::vector<std::shared_ptr<Task>>& task_vector)
+{
+    std::ofstream scheduling_log;
+    scheduling_log.open(utils::cpsim_path + "/Log/scheduling.log", std::ios::out);     
+    std::string contents = "";
+    for(int idx = 0; idx < task_vector.size(); idx++)
+    {
+        contents += "ECU" + std::to_string(task_vector.at(idx)->get_ECU()->get_ECU_id())+ ": " + task_vector.at(idx)->get_task_name();
+        if(idx == task_vector.size() - 1)
+            contents += "\n";
+        else
+        {
+            contents += ", ";
+
+        }
+    }
+    scheduling_log.write(contents.c_str(), contents.size());
+    scheduling_log.close();
+}
+
+/**
+ * Spiraline(2017-10233) function list : _201710233_task_read_write_logger, _201710233_real_cyber_event_logger
+ */
+void Logger::_201710233_task_read_write_logger(std::string contents){
+    std::ofstream my_log_file;
+    my_log_file.open(utils::cpsim_path + "/Log/2017-10233_read_write.log", std::ios::out | std::ios::app);
+
+    my_log_file.write(contents.c_str(), contents.size());
+    my_log_file.close();
+}
+void Logger::_201710233_real_cyber_event_logger(long long time, int job_id, std::string event_type){
+    std::ofstream my_log_file;
+    my_log_file.open(utils::cpsim_path + "/Log/2017-10233_event.log", std::ios::out | std::ios::app);
+
+    std::stringstream contents_stream;
+
+    contents_stream << std::setw(8) << std::left << std::to_string(time);
+    contents_stream << std::setw(10) << std::left << std::to_string(job_id);
+    contents_stream << event_type + "\n";
+
+    std::string contents = contents_stream.str();
+
+    my_log_file.write(contents.c_str(), contents.size());
+    my_log_file.close();
+}
+
+/**
+ * JadenJSPark(2017-14434) function list : real_cyber_event_logger_2017_14434, task_read_write_logger_2017_14434, cmp, finish
+ */  
+void Logger::real_cyber_event_logger_2017_14434(long long time, int job_id, std::string event_type) {
+    utils::mtx_data_log.lock();
+    char *str;
+    int job_idx;
+    if(event_type.find("FINISHED") != std::string::npos) {
+        job_idx = global_object::job_instance_number_finish.at(job_id);
+        global_object::job_instance_number_finish.at(job_id)++;
+    } else if(event_type.find("RELEASED") != std::string::npos) {
+        job_idx = global_object::job_instance_number_release.at(job_id);
+        global_object::job_instance_number_release.at(job_id)++;
+    } else if(event_type.find("STARTED") != std::string::npos) {
+        job_idx = global_object::job_instance_number_start.at(job_id);
+        global_object::job_instance_number_start.at(job_id)++;
+    } else {
+        // error
+        job_idx = -1;
+    }
+
+    int ret = asprintf(&str, "%-7lluJ%d%-5d %-s\n", time, job_id, job_idx, event_type.c_str());
+    if(ret != -1) log_vector.push_back(str);
+    utils::mtx_data_log.unlock();
+}
+void Logger::task_read_write_logger_2017_14434(std::string task_name) {
+
+    utils::mtx_data_log.lock();
+    std::ifstream check_log(utils::cpsim_path + "/Log/2017-14434_read_write.log");
+    bool isEmpty = (!check_log) || (check_log.peek() == std::ifstream::traits_type::eof());
+    check_log.close();
+
+    std::ofstream rw_log;
+    rw_log.open(utils::cpsim_path + "/Log/2017-14434_read_write.log", std::ios::app);
+    if(!rw_log) {
+        std::cout << "cannot open file\n";
+        return;
+    } else if(isEmpty) {
+        std::string init = "[TASK NAME][TIME][READ/WRITE][DATA LENGTH][RAW DATA]\n";
+        rw_log << init;
+    }
+ 
+    rw_log << task_name;
+    rw_log.close();
+    utils::mtx_data_log.unlock();
+}
+bool Logger::cmp(std::string stringA, std::string stringB)
+{
+    std::istringstream ssa(stringA);
+    std::istringstream ssb(stringB);
+    std::string strA;
+    std::string strB;
+
+    getline(ssa, strA, ' ');
+    getline(ssb, strB, ' ');
+
+    int numA = std::stoi(strA);
+    int numB = std::stoi(strB);
+
+    return numA < numB;
+}
+void Logger::finish()
+{
+
+    std::ifstream check_log(utils::cpsim_path + "/Log/2017-14434_event.log");
+    bool isEmpty = (!check_log) || (check_log.peek() == std::ifstream::traits_type::eof());
+    check_log.close();
+
+    std::ofstream rw_log;
+    rw_log.open(utils::cpsim_path + "/Log/2017-14434_event.log", std::ios::app);
+    if(!rw_log) {
+        std::cout << "cannot open file\n";
+        return;
+    } else if(isEmpty) {
+        std::string init = "[TIME][JOB ID][EVENT TYPE]\n";
+        rw_log << init;
+    }
+
+    // sort log vector
+    sort(log_vector.begin(), log_vector.end(), cmp);
+
+    for(unsigned int i = 0; i < log_vector.size(); i++) {
+        rw_log << log_vector.at(i);
+    }
+    rw_log.close();
+
+}
+
+/**
+ * baneling100(2017-15782) function list : _2017_15782_task_read_write_logger, _2017_15782_real_cyber_event_logger
+ */
+void _2017_15782_task_read_write_logger(std::string const &task_name,std::shared_ptr<TaggedData> tagged_data, std::shared_ptr<DelayedData> delayed_data)
 {
     if(utils::log_task.compare(task_name))
         return;
@@ -336,9 +372,7 @@ void _2017_15782_task_read_write_logger(std::string const &task_name,
 
     read_write_log.close();
 }
-
-void _2017_15782_real_cyber_event_logger(int time, int task_id, int job_id, int num_of_tasks,
-    std::string const &event_type)
+void _2017_15782_real_cyber_event_logger(int time, int task_id, int job_id, int num_of_tasks,std::string const &event_type)
 {
     static std::priority_queue<std::pair<int, std::string>, std::vector<std::pair<int, std::string>>,
         std::greater<std::pair<int, std::string>> > queue;
@@ -391,38 +425,31 @@ void _2017_15782_real_cyber_event_logger(int time, int task_id, int job_id, int 
     }
 }
 
-
+/**
+ * solvely95(2018-14000) function list : _2018_14000_task_read_write_logger, _2018_14000_real_cyber_event_logger, write_to_event_log
+ */
 void Logger::_2018_14000_task_read_write_logger(std::string task_name){
     
     utils::mtx_data_log.lock();
-
-    std::ifstream check("/home/jinsol/CPSim_Linux_Generalized/Log/2018_14000_read_write.log");
-    bool isEmpty = (!check) || (check.peek() == std::ifstream::traits_type::eof());
-    check.close();
+    static bool init = false;
 
     std::ofstream rw_log;
-    rw_log.open("/home/jinsol/CPSim_Linux_Generalized/Log/2018_14000_read_write.log", std::ios::app);
-    if(!rw_log) {
-        std::cout << "please check the path. path is invalid\n";
-        return;
-    } else if(isEmpty) {
-        std::string header = "[TASK NAME][TIME][READ/WRITE][DATA LENGTH][RAW DATA]\n";
-        rw_log << header;
+    if(!init){
+        init = true;
+        rw_log.open("/home/jinsol/CPSim_Linux_Generalized/Log/2018_14000_read_write.log", std::ios::out);
+        rw_log << "[TASK NAME][TIME][READ/WRITE][DATA LENGTH][RAW DATA]\n";
+        rw_log.close();
     }
- 
+
+    rw_log.open("/home/jinsol/CPSim_Linux_Generalized/Log/2018_14000_read_write.log", std::ios::app);
     rw_log << task_name;
     rw_log.close();
     utils::mtx_data_log.unlock();
     
     
 }
-
-
-std::vector<LogInfo> log_vec;   // a log vector to hold the log messages
-
 void Logger::_2018_14000_real_cyber_event_logger(long long time, int job_id, std::string event_type){
     //utils::mtx_data_log.lock();
-
     int jobnum;
     //int cnt = 0;
     utils::mtx_data_log.lock();
@@ -431,48 +458,36 @@ void Logger::_2018_14000_real_cyber_event_logger(long long time, int job_id, std
         global_object::release_jobnum[job_id]++;
     } else if(!event_type.compare("FINISHED")){
         jobnum = global_object::finish_jobnum[job_id];
-        //std::cout << jobnum << std::endl;
         global_object::finish_jobnum[job_id]++;
     } else if(!event_type.compare("STARTED")){
         jobnum = global_object::start_jobnum[job_id];
-        //std::cout << jobnum << std::endl;
         global_object::start_jobnum[job_id]++;
     }else if(!event_type.compare("FINISHED (DEADLINE MISSED)")){
-        jobnum = global_object::start_jobnum[job_id];
-        //std::cout << jobnum << std::endl;
-        global_object::start_jobnum[job_id]++;
+        jobnum = global_object::finish_jobnum[job_id];
+        global_object::finish_jobnum[job_id]++;
     }
     utils::mtx_data_log.unlock();
-    
     log_vec.push_back({time, job_id, jobnum, event_type});
-    
-    
 }
-
-
-
-bool time_compare(const LogInfo* a, const LogInfo* b){    // comparator function to sort log_vec
-    return a->time < b->time;
+bool time_compare(const LogInfo a, const LogInfo b){    // comparator function to sort log_vec
+    return a.time < b.time;
 }
-
 void Logger::write_to_event_log(){
     utils::mtx_data_log.lock();
-    std::ifstream check("home/jinsol/CPSim_Linux_Generalized/Log/2018_14000_event.log");
-    bool isempty = (!check) || (check.peek() == std::ifstream::traits_type::eof());
-    check.close();
-
+    static bool init = false;
+    std::sort(log_vec.begin(), log_vec.end(), time_compare);
     std::ofstream event_log;
-    event_log.open("/home/jinsol/CPSim_Linux_Generalized/Log/2018_14000_event.log", std::ios::app);
-    if(!event_log) return;
-    else if(isempty){
-        std::string header = "[TIME][JOB ID][EVENT TYPE]\n";
-        event_log << header;
+    if(!init){
+        init = true;
+        event_log.open("/home/jinsol/CPSim_Linux_Generalized/Log/2018_14000_event.log", std::ios::out);
+        event_log << "[TIME][JOB ID][EVENT TYPE]\n";
+        event_log.close();
     }
-
+    event_log.open("/home/jinsol/CPSim_Linux_Generalized/Log/2018_14000_event.log", std::ios::app);
     int tmp;
     for(int i = 0 ; i < log_vec.size(); i++){
         char* log_string;
-        tmp = asprintf(&log_string, "%-6lluJ%d%-6d%-12s\n", 
+        tmp = asprintf(&log_string, " %-5llu J%d%-5d %-11s\n", 
                         log_vec.at(i).time,
                         log_vec.at(i).job_id,
                         log_vec.at(i).jobnum,
@@ -482,12 +497,12 @@ void Logger::write_to_event_log(){
         event_log << log_string;
     }
     event_log.close();
-
     utils::mtx_data_log.unlock();
-    
+}
 
-
-
+/**
+ * s-jade(2017-13400) function list : _2017_13400_task_read_write_logger, determine_jnum, _2017_13400_real_cyber_event_logger, update
+ */
 void Logger::_2017_13400_task_read_write_logger(std::string task_name){
     utils::mtx_data_log.lock();
 
@@ -509,9 +524,6 @@ void Logger::_2017_13400_task_read_write_logger(std::string task_name){
     
     utils::mtx_data_log.unlock();
 }
-
-std::vector<LogData> log_data_list; 
-
 int Logger::determine_jnum(int job_id, std::string event_type) {
     bool is_start = !event_type.compare("STARTED");
     bool is_finish = !event_type.compare("FINISHED");
@@ -527,23 +539,16 @@ int Logger::determine_jnum(int job_id, std::string event_type) {
 	return -1;
     }
 }
-
 void Logger::_2017_13400_real_cyber_event_logger(long long time, int job_id, std::string event_type){
     int jnum = 0;
     utils::mtx_data_log.lock();
-
     jnum = Logger::determine_jnum(job_id, event_type);
-
     utils::mtx_data_log.unlock();
-    
     log_data_list.push_back({time, job_id, jnum, event_type});
 }
-
-
 bool data_comparator_with_time(const LogData a, const LogData b){  
     return a.time < b.time;
 }
-
 void Logger::update() {
     utils::mtx_data_log.lock();
 
@@ -554,13 +559,11 @@ void Logger::update() {
         writer << "[TIME][JOB ID][EVENT TYPE]\n";
         writer.close();
     }
-
     writer.open("/home/sjade/CPSim_Linux_Generalized/Log/2017_13400_event.log", std::ios::app);
     if(!writer) {
         std::cout << "ERROR : Invalid path to open the file.\n";
         return;
     } 
-	
     sort(log_data_list.begin(), log_data_list.end(), data_comparator_with_time);
 	
     int tmp;
@@ -576,9 +579,12 @@ void Logger::update() {
         writer << data;
     }
     writer.close();
-
     utils::mtx_data_log.unlock();
 }
+
+/**
+ * ErikBockSNU(2020-81520) function list : _2020_81520_task_read_write_logger, _2020_81520_real_cyber_event_logger
+ */
 void Logger::_2020_81520_task_read_write_logger(std::string task_name, std::shared_ptr<TaggedData> tagged_data, 
                                                         std::shared_ptr<DelayedData> delayed_data){
 
@@ -668,7 +674,6 @@ void Logger::_2020_81520_task_read_write_logger(std::string task_name, std::shar
     utils::mtx_data_log.unlock();
     }
 }
-
 void Logger::_2020_81520_real_cyber_event_logger(long long time, int job_id, std::string event_type)
 {
     std::ofstream real_cyber_event_log;
@@ -718,6 +723,10 @@ void Logger::_2020_81520_real_cyber_event_logger(long long time, int job_id, std
 
  
 }
+
+/**
+ * csh3695(2018-11940) function list : _2018_11940_task_read_write_logger, _2018_11940_gen_read_log_entry,_2018_11940_gen_write_log_entry,_2018_11940_real_cyber_event_logger
+ */
 std::string Logger::_2018_11940_gen_read_log_entry(std::string task_name, std::shared_ptr<TaggedData> current_data, int size)
 {
     std::stringstream data_hex;
@@ -739,7 +748,6 @@ std::string Logger::_2018_11940_gen_read_log_entry(std::string task_name, std::s
         
     return log_entry.str() + data_hex.str();
 }
-
 std::string Logger::_2018_11940_gen_write_log_entry(std::string task_name, std::shared_ptr<DelayedData> delayed_data, int size)
 {
     std::stringstream data_hex;
@@ -758,8 +766,6 @@ std::string Logger::_2018_11940_gen_write_log_entry(std::string task_name, std::
         
     return log_entry.str() + data_hex.str();
 }
-
-
 void Logger::_2018_11940_task_read_write_logger(std::string task_log){
     std::ofstream read_write_log;
     std::string logdir = utils::cpsim_path + "/Log/2018_11940_read_write.log";
@@ -774,7 +780,6 @@ void Logger::_2018_11940_task_read_write_logger(std::string task_log){
     read_write_log.close();
     return;
 }
-
 void Logger::_2018_11940_real_cyber_event_logger(long long time, int job_id, std::string event_type)
 {
     std::stringstream log_entry;
@@ -801,94 +806,10 @@ void Logger::_2018_11940_real_cyber_event_logger(long long time, int job_id, std
     }
     return;
 }
-#include "Logger.h"
-#include "Utils.h"
-//#include "LogInfo.h"
-
-#include <fstream>
-#include <string>
-#include <cstdlib>
-#include <stdio.h>
-#include <iomanip>
-#include <climits>
-#include <mutex>
-#include <sstream>
 
 /**
- *  This file is the cpp file for the Logger class.
- *  @file Logger.cpp
- *  @brief cpp file for Engine-Logger
- *  @author Seonghyeon Park
- *  @date 2020-03-31
+ * jukrang0408(2020-90247) function list : _2020_90247_task_read_write_logger, _2020_90247_real_cyber_event_logger
  */
-
-
-/**
- * @fn Logger::Logger()
- * @brief the function of basic constructor of Logger
- * @author Seonghyeon Park
- * @date 2020-04-01
- * @details 
- *  - None
- * @param none
- * @return none
- * @bug none
- * @warning none
- * @todo none
- */
-
-typedef struct {
-        long long time;
-        int job_id;
-        int jnum;
-        std::string event_type;
-    } LogData;
-
-        int jobnum;
-        std::string event_type;
-        /*LogInfo(long long t, int jid, int jn, std::string et)
-            :time{t}, job_id{jid}, jobnum{jn}, event_type{et} {}*/
-    } LogInfo;
-
-
-Logger::Logger()
-{
-  Logger::set_rw_log_info(); // write header of read_write.log
-  Logger::set_event_log_info(); // write header of event.log
-}
-
-/**
- * @fn Logger::~Logger()
- * @brief the function of basic destructor of Logger
- * @author Seonghyeon Park
- * @date 2020-04-01
- * @details 
- *  - None
- * @param none
- * @return none
- * @bug none
- * @warning none
- * @todo none
- */
-Logger::~Logger()
-{
-
-}
-
-/**
- * @fn void start_logging()
- * @brief this function starts the logging of simulation events
- * @author Seonghyeon Park
- * @date 2020-04-01
- * @details 
- *  - None
- * @param none
- * @return none
- * @bug none
- * @warning none
- * @todo none
- */
-
 void Logger::_2020_90247_task_read_write_logger(std::string task_name, std::shared_ptr<TaggedData> tagged_data_read, std::shared_ptr<DelayedData> delayed_data_write, int case_num){
 	//make log format
 	std::ifstream log_check;
@@ -961,7 +882,6 @@ void Logger::_2020_90247_task_read_write_logger(std::string task_name, std::shar
 	
 	
 }
-
 void Logger::_2020_90247_real_cyber_event_logger(long long time, int job_id, std::string event_type){
 	//make log format
 	std::ifstream log_check;
@@ -1006,54 +926,9 @@ void Logger::_2020_90247_real_cyber_event_logger(long long time, int job_id, std
 	sch_log.close();
 }
 
-void Logger::set_schedule_log_info(std::vector<std::shared_ptr<Task>>& task_vector)
-{
-    std::ofstream scheduling_log;
-    scheduling_log.open(utils::cpsim_path + "/Log/scheduling.log", std::ios::out);     
-    std::string contents = "";
-    for(int idx = 0; idx < task_vector.size(); idx++)
-    {
-        contents += "ECU" + std::to_string(task_vector.at(idx)->get_ECU()->get_ECU_id())+ ": " + task_vector.at(idx)->get_task_name();
-        if(idx == task_vector.size() - 1)
-            contents += "\n";
-        else
-        {
-            contents += ", ";
-        }
-    }
-    scheduling_log.write(contents.c_str(), contents.size());
-    scheduling_log.close();
-}
-
-void Logger::start_logging()
-{
-    std::ofstream scheduling_log;
-    while (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - utils::simulator_start_time).count()  < utils::simulation_termination_time)
-    {
-        scheduling_log.open(utils::cpsim_path + "/Log/scheduling.log", std::ios::app);    
-        utils::mtx_data_log.lock();
-        if(global_object::schedule_data.size() > 10)
-        {
-            int min_idx = 0;
-            std::shared_ptr<ScheduleData> current_data = global_object::schedule_data.front();
-            for (int idx = 0; idx < global_object::schedule_data.size(); idx ++)
-            {
-                if(current_data->get_time() > global_object::schedule_data.at(idx)->get_time())
-                {
-                    current_data = global_object::schedule_data.at(idx);
-                    min_idx = idx;
-                }
-            }
-            
-            global_object::schedule_data.erase(global_object::schedule_data.begin() + min_idx);
-            scheduling_log.write(current_data->get_data().c_str(), current_data->get_data().size());
-        }
-        scheduling_log.close();
-        utils::mtx_data_log.unlock();    
-    }    
-}
-
-/* write header of read_write.log */
+/**
+ * sunhongmin225(2014-11561) function list : _2014_11561_task_read_write_logger, set_rw_log_info, tagged_data_logger, delayed_data_logger, _2014_11561_real_cyber_event_logger, set_event_log_info
+ */
 void Logger::set_rw_log_info(){
   std::ofstream rw_log;
   rw_log.open(utils::cpsim_path + "/Log/2014-11561_read_write.log", std::ios::out);
@@ -1061,8 +936,6 @@ void Logger::set_rw_log_info(){
   rw_log << header;
   rw_log.close();
 }
-
-/* write header of event.log */
 void Logger::set_event_log_info(){
   std::ofstream event_log;
   event_log.open(utils::cpsim_path + "/Log/2014-11561_event.log", std::ios::out);
@@ -1070,8 +943,6 @@ void Logger::set_event_log_info(){
   event_log << header;
   event_log.close();
 }
-
-/* handle tagged_data in read_write.log */
 std::string Logger::tagged_data_logger(std::shared_ptr<TaggedData> current_data){
   // std::hex is used to convert int type data to hex
   std::stringstream ss;
@@ -1095,8 +966,6 @@ std::string Logger::tagged_data_logger(std::shared_ptr<TaggedData> current_data)
 
   return ret_str;
 }
-
-/* handle delayed_data in read_write.log */
 std::string Logger::delayed_data_logger(std::shared_ptr<DelayedData> delayed_data){
   // std::hex is used to convert int type data to hex
   std::stringstream ss;
@@ -1118,8 +987,6 @@ std::string Logger::delayed_data_logger(std::shared_ptr<DelayedData> delayed_dat
 
   return ret_str;
 }
-
-/* function to write read_write.log to CPSim_Linux_Generalized/Log/ directory */
 void Logger::_2014_11561_task_read_write_logger(std::string content){
   // write contents to std::ofstream rw_log
   std::ofstream rw_log;
@@ -1127,8 +994,6 @@ void Logger::_2014_11561_task_read_write_logger(std::string content){
   rw_log << content;
   rw_log.close();
 }
-
-/* function to write event.log to CPSim_Linux_Generalized/Log/ directory */
 void Logger::_2014_11561_real_cyber_event_logger(long long time, int job_id, std::string event_type){
   // arguments are coalesced into EventUnit event_unit and push_back-ed to a vector of current logger
   EventUnit event_unit;
@@ -1166,175 +1031,86 @@ void Logger::_2014_11561_real_cyber_event_logger(long long time, int job_id, std
   utils::mtx_data_log.unlock();
 }
 
+/**
+ * ywj7373(2014-11235) function list : task_read_write_logger_2014_11235, real_cyber_event_logger_2014_11235
+ */
+void Logger::task_read_write_logger_2014_11235(std::string task_name) {
+    // Need task name, time, read/write, data length, raw data
+    std::ofstream task_log;
+    task_log.open(utils::cpsim_path + "/Log/2014_11235_read_write.log", std::ios::app);
 
-void Logger::_2017_13400_task_read_write_logger(std::string task_name){
+    // File could not be opened
+    if (!task_log) {
+        std::cerr << "Error: File could not be opened!" << std::endl;
+        exit(1);
+    }
+
+    task_log << task_name;
+    task_log.close();
+}
+void Logger::real_cyber_event_logger_2014_11235(long long time, int job_id, std::string event_type) {
+    Logger::event_mutex.lock();
+    std::shared_ptr<ScheduleData> event = std::make_shared<ScheduleData>((int)time, job_id, event_type);
+    Logger::eventBuffer.push_back(std::move(event));
+    Logger::event_mutex.unlock();
+}
+
+/**
+ * Kimdo-765(2020-90632) function list : _2020_90632_task_read_write_logger, _2020_90632_task_read_write_logger, _2020_90632_real_cyber_event_logger
+ */
+void Logger::_2020_90632_task_read_write_logger(std::shared_ptr<TaggedData> readData)
+{
+    std::stringstream ss;
+    std::ofstream read_write_log;
+    read_write_log.open(utils::cpsim_path + "/Log/2020_90632_read_write.log", std::ios::app);    
     utils::mtx_data_log.lock();
 
-    std::ifstream checker(utils::cpsim_path + "/Log/2017_13400_read_write.log");
-    bool isEmpty = (!checker) || (checker.peek() == std::ifstream::traits_type::eof());
-    checker.close();
+	dt = readData->data_time;
+    buffer[0] = readData->data_read1;
+    buffer[1] = readData->data_read2;
+    buffer[2] = readData->data_read3;
+    buffer[3] = readData->data_read4;
+    buffer[4] = readData->data_read5;
+    buffer[5] = readData->data_read6;
 
-    std::ofstream writer;
-    writer.open(utils::cpsim_path + "/Log/2017_13400_read_write.log", std::ios::app);
-    if(!writer) {
-        std::cout << "ERROR : Invalid path to open the file.\n";
-        return;
-    } else if(isEmpty) {
-        writer << "[TASK NAME][TIME][READ/WRITE][DATA LENGTH][RAW DATA]\n";
+    for(size_t i = 0; i < 6; i++){
+        for(size_t j = 0; j < 4; j++){
+           ss << " 0x" << std::setfill('0') << std::setw(2) << std::hex << (buffer[i] & 0xFF);
+           buffer[i] = buffer[i] >> 8;
+        }
     }
-    writer << task_name;
-    writer.close();
-    
+    read_write_log << std::setw(10) << utils::log_task << std::setw(10) << dt << std::setw(10) << "READ" <<std::setw(10) << sizeof(TaggedData)-4 << ss.str() << std::endl;
+    ss.str("");
+
+    read_write_log.close();
     utils::mtx_data_log.unlock();
 }
-
-std::vector<LogData> log_data_list; 
-
-void Logger::_2017_13400_real_cyber_event_logger(long long time, int job_id, std::string event_type){
-    int jnum = 0;
+void Logger::_2020_90632_task_read_write_logger(std::shared_ptr<DelayedData> writeData)
+{
+    std::ofstream read_write_log;
+    read_write_log.open(utils::cpsim_path + "/Log/2020_90632_read_write.log", std::ios::app);    
     utils::mtx_data_log.lock();
+    dt = writeData->data_time;
+    buffer[0] = writeData->data_write1;
+    buffer[1] = writeData->data_write2;
+    buffer[2] = writeData->data_write3;
+    buffer[3] = writeData->data_write4;
 
-    if(!event_type.compare("STARTED")) {
-        jnum = global_object::start_vec[job_id];
-        global_object::start_vec[job_id]++;
-    } else if(!event_type.compare("FINISHED")) {
-        jnum = global_object::finish_vec[job_id];
-        global_object::finish_vec[job_id]++;
-    } else if(!event_type.compare("FINISHED (DEADLINE MISSED)")) {
-        jnum = global_object::finish_vec[job_id];
-        global_object::finish_vec[job_id]++;
-    } else if(!event_type.compare("RELEASED")) {
-        jnum = global_object::release_vec[job_id];
-        global_object::release_vec[job_id]++;
+    for(size_t i = 0; i < 4; i++){
+        for(size_t j = 0; j < 4; j++){
+           ss << " 0x" << std::setfill('0') << std::setw(2) << std::hex << (buffer[i] & 0xFF);
+           buffer[i] = buffer[i] >> 8;
+        }
     }
-
+    read_write_log << std::setw(10) <<  utils::log_task << std::setw(10) << dt << std::setw(10) << "WRITE" << std::setw(10) << sizeof(DelayedData)-4 << ss.str() << std::endl;
+    ss.str("");
+    read_write_log.close();
     utils::mtx_data_log.unlock();
-    
-    log_data_list.push_back({time, job_id, jnum, event_type});
 }
-
-
-bool data_comparator_with_time(const LogData* a, const LogData* b){  
-    return a->time < b->time;
-}
-
-void Logger::update() {
-    utils::mtx_data_log.lock();
-
-    std::ifstream checker("/home/sjade/CPSim_Linux_Generalized/Log/2017_13400_event.log");
-    bool isempty = (!checker) || (checker.peek() == std::ifstream::traits_type::eof());
-    checker.close();
-
-    std::ofstream writer;
-    writer.open(utils::cpsim_path + "/Log/2017_13400_event.log", std::ios::app);
-    if(!writer) return;
-    else if(isempty) {
-        writer << "[TIME][JOB ID][EVENT TYPE]\n";
-    }
-
-    int tmp;
-    for(int i = 0 ; i < log_data_list.size(); i++) {
-        char* data;
-        tmp = asprintf(&data, "%-6lluJ%d%-6d%-12s\n", 
-                        log_data_list.at(i).time,
-                        log_data_list.at(i).job_id,
-                        log_data_list.at(i).jnum,
-                        log_data_list.at(i).event_type.c_str()
-            );
-        if(tmp < 0) return;
-        writer << data;
-    }
-    writer.close();
-
-    utils::mtx_data_log.unlock();
-
-
-void Logger::_2018_14000_task_read_write_logger(std::string task_name){
-    
-    utils::mtx_data_log.lock();
-    static bool init = false;
-
-    std::ofstream rw_log;
-    if(!init){
-        init = true;
-        rw_log.open("/home/jinsol/CPSim_Linux_Generalized/Log/2018_14000_read_write.log", std::ios::out);
-        rw_log << "[TASK NAME][TIME][READ/WRITE][DATA LENGTH][RAW DATA]\n";
-        rw_log.close();
-    }
-
-    rw_log.open("/home/jinsol/CPSim_Linux_Generalized/Log/2018_14000_read_write.log", std::ios::app);
-    rw_log << task_name;
-    rw_log.close();
-    utils::mtx_data_log.unlock();
-    
-    
-}
-
-
-std::vector<LogInfo> log_vec;   // a log vector to hold the log messages
-
-void Logger::_2018_14000_real_cyber_event_logger(long long time, int job_id, std::string event_type){
-    //utils::mtx_data_log.lock();
-
-    int jobnum;
-    //int cnt = 0;
-    utils::mtx_data_log.lock();
-    if(!event_type.compare("RELEASED")){
-        jobnum = global_object::release_jobnum[job_id];
-        global_object::release_jobnum[job_id]++;
-    } else if(!event_type.compare("FINISHED")){
-        jobnum = global_object::finish_jobnum[job_id];
-        global_object::finish_jobnum[job_id]++;
-    } else if(!event_type.compare("STARTED")){
-        jobnum = global_object::start_jobnum[job_id];
-        global_object::start_jobnum[job_id]++;
-    }else if(!event_type.compare("FINISHED (DEADLINE MISSED)")){
-        jobnum = global_object::finish_jobnum[job_id];
-        global_object::finish_jobnum[job_id]++;
-    }
-    utils::mtx_data_log.unlock();
-    
-    log_vec.push_back({time, job_id, jobnum, event_type});
-    
-}
-
-
-
-bool time_compare(const LogInfo a, const LogInfo b){    // comparator function to sort log_vec
-    return a.time < b.time;
-}
-
-void Logger::write_to_event_log(){
-    utils::mtx_data_log.lock();
-    static bool init = false;
-
-    std::sort(log_vec.begin(), log_vec.end(), time_compare);
-
+void Logger::_2020_90632_real_cyber_event_logger(long long time, int task_id, int job_id, std::string event_type)
+{
     std::ofstream event_log;
-    if(!init){
-        init = true;
-        event_log.open("/home/jinsol/CPSim_Linux_Generalized/Log/2018_14000_event.log", std::ios::out);
-        event_log << "[TIME][JOB ID][EVENT TYPE]\n";
-        event_log.close();
-    }
-
-    event_log.open("/home/jinsol/CPSim_Linux_Generalized/Log/2018_14000_event.log", std::ios::app);
-
-    int tmp;
-    for(int i = 0 ; i < log_vec.size(); i++){
-        char* log_string;
-        tmp = asprintf(&log_string, " %-5llu J%d%-5d %-11s\n", 
-                        log_vec.at(i).time,
-                        log_vec.at(i).job_id,
-                        log_vec.at(i).jobnum,
-                        log_vec.at(i).event_type.c_str()
-            );
-        //std::cout << log_string;
-        event_log << log_string;
-    }
+    event_log.open(utils::cpsim_path + "/Log/2020_90632_event.log", std::ios::app);    
+    event_log << time << std::setw(10) << "J" << task_id << job_id << std::setw(50) << event_type << std::endl;
     event_log.close();
-
-    utils::mtx_data_log.unlock();
-    
-
 }
