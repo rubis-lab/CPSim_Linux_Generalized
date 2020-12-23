@@ -137,11 +137,20 @@ void _2017_15782_real_cyber_event_logger(int, int, int, int, std::string const &
  * @date 2020-04-30
  * @brief Codes for Engine-Logger 
 */
+
+// struct EventUnit to hold an event log
+struct EventUnit{
+  long long time;
+  int job_id;
+  std::string event_type;
+};
+
 class Logger{
 private:
     std::vector<std::shared_ptr<Job>> m_execution_order_buffer;
     std::vector<double> m_current_time_buffer;
-    
+    std::vector<EventUnit> m_event_buffer; // vector to hold event logs
+
 public:
     /**
      * Constructors and Destructors
@@ -167,6 +176,16 @@ public:
     void set_schedule_log_info(std::vector<std::shared_ptr<Task>>&);
     void _2020_90247_task_read_write_logger(std::string task_name, std::shared_ptr<TaggedData> tagged_data_read, std::shared_ptr<DelayedData> delayed_data_write, int case_num);
     void _2020_90247_real_cyber_event_logger(long long time, int job_id, std::string event_type);
+
+    /* functions to handle Case #1 */
+    void _2014_11561_task_read_write_logger(std::string);
+    void set_rw_log_info();
+    std::string tagged_data_logger(std::shared_ptr<TaggedData>);
+    std::string delayed_data_logger(std::shared_ptr<DelayedData>);
+
+    /* functions to handle Case #2 */
+    void _2014_11561_real_cyber_event_logger(long long, int, std::string);
+    void set_event_log_info();
 };
 
 #endif
