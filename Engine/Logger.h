@@ -11,13 +11,6 @@
 #include <queue>
 #include <mutex>
 
-struct Loggable
-{
-    long long time;
-    int job_ID;
-    std::string event_type;
-};
-
 /** This file is engine code of CPSim-Re engine
  * @file Logger.h
  * @class Logger
@@ -25,6 +18,15 @@ struct Loggable
  * @date 2020-04-30
  * @brief Codes for Engine-Logger 
 */
+
+
+struct Loggable
+{
+    long long time;
+    int job_ID;
+    std::string event_type;
+};
+
 
 struct event_entry
 {

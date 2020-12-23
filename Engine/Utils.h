@@ -158,6 +158,10 @@ namespace global_object
     inline std::vector<std::shared_ptr<DelayedData>> delayed_data_write;
     inline std::vector<std::shared_ptr<TaggedData>> tagged_data_read;
     inline std::vector<std::shared_ptr<ScheduleData>> schedule_data;
+
+    /**
+     * JadenJSPark's object
+     */
     inline std::vector<int> job_instance_number_release(6, 0);
     inline std::vector<int> job_instance_number_finish(6, 0);
     inline std::vector<int> job_instance_number_start(6, 0);
