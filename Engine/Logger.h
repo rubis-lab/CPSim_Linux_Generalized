@@ -7,6 +7,9 @@
 #include "Job.h"
 #include "TaggedData.h"
 #include "DelayedData.h"
+#include <functional>
+#include <queue>
+#include <mutex>
 
 struct Loggable
 {
@@ -22,6 +25,23 @@ struct Loggable
  * @date 2020-04-30
  * @brief Codes for Engine-Logger 
 */
+
+struct event_entry
+{
+    long long time;
+    int job_id;
+    std::string log_entry;
+};
+
+struct cmp{
+    bool operator()(event_entry t, event_entry u){
+        if (t.time == u.time){
+            return t.job_id > u.job_id;
+        }
+        return t.time > u.time;
+    }
+};
+
 class Logger{
 private:
     std::vector<std::shared_ptr<Job>> m_execution_order_buffer;
@@ -40,6 +60,8 @@ private:
     bool real_cyber_event_log_is_init = false;
     std::vector<Loggable> to_be_logged_list;
     
+    std::mutex mtx_event_log;
+    std::priority_queue<event_entry, std::vector<event_entry>, cmp> event_entry_buffer;
 public:
     /**
      * Constructors and Destructors
@@ -93,6 +115,10 @@ void _2017_15782_real_cyber_event_logger(int, int, int, int, std::string const &
     void update(); 
     void _2020_81520_task_read_write_logger(std::string, std::shared_ptr<TaggedData>, std::shared_ptr<DelayedData>);
     void _2020_81520_real_cyber_event_logger(long long, int, std::string);
+    void _2018_11940_task_read_write_logger(std::string);
+    std::string _2018_11940_gen_read_log_entry(std::string, std::shared_ptr<TaggedData>, int);
+    std::string _2018_11940_gen_write_log_entry(std::string, std::shared_ptr<DelayedData>, int);
+    void _2018_11940_real_cyber_event_logger(long long, int, std::string);
 };
 
 #endif
