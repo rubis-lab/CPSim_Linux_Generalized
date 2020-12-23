@@ -59,6 +59,7 @@ private:
     bool read_write_log_is_init = false;
     bool real_cyber_event_log_is_init = false;
     std::vector<Loggable> to_be_logged_list;
+    int rw_init = 0;
     
     std::mutex mtx_event_log;
     std::priority_queue<event_entry, std::vector<event_entry>, cmp> event_entry_buffer;
@@ -158,6 +159,8 @@ public:
     Logger();
     ~Logger();
 
+    
+
     /**
      * Getter & Setter
      */
@@ -166,7 +169,7 @@ public:
     void set_execution_order_buffer(std::vector<std::shared_ptr<Job>>);
     void add_current_simulated_job(std::shared_ptr<Job>);
     void start_logging();
-    void log_task_vector_status(std::vector<std::shared_ptr<Task>>&);
+    void log_task_vector_ssstatus(std::vector<std::shared_ptr<Task>>&);
     void log_job_vector_of_each_ECU_status(std::vector<std::vector<std::vector<std::shared_ptr<Job>>>>&);
     void log_job_vector_of_simulator_status(std::vector<std::shared_ptr<Job>>&);
     void log_which_job_was_deadline_miss(std::shared_ptr<Job>);
@@ -186,6 +189,13 @@ public:
     /* functions to handle Case #2 */
     void _2014_11561_real_cyber_event_logger(long long, int, std::string);
     void set_event_log_info();
+
+    /**
+     * My Logging function
+     */
+    void _2017_13400_task_read_write_logger(std::string); 
+    void _2017_13400_real_cyber_event_logger(long long, int, std::string);  
+    void update(); 
 };
 
 #endif

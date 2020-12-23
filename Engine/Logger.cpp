@@ -803,6 +803,7 @@ void Logger::_2018_11940_real_cyber_event_logger(long long time, int job_id, std
 }
 #include "Logger.h"
 #include "Utils.h"
+//#include "LogInfo.h"
 
 #include <fstream>
 #include <string>
@@ -835,6 +836,16 @@ void Logger::_2018_11940_real_cyber_event_logger(long long time, int job_id, std
  * @warning none
  * @todo none
  */
+
+typedef struct {
+        long long time;
+        int job_id;
+        int jnum;
+        std::string event_type;
+    } LogData;
+
+
+
 Logger::Logger()
 {
   Logger::set_rw_log_info(); // write header of read_write.log
@@ -1148,4 +1159,87 @@ void Logger::_2014_11561_real_cyber_event_logger(long long time, int job_id, std
   }
   event_log.close();
   utils::mtx_data_log.unlock();
+}
+
+
+void Logger::_2017_13400_task_read_write_logger(std::string task_name){
+    utils::mtx_data_log.lock();
+
+    std::ifstream checker(utils::cpsim_path + "/Log/2017_13400_read_write.log");
+    bool isEmpty = (!checker) || (checker.peek() == std::ifstream::traits_type::eof());
+    checker.close();
+
+    std::ofstream writer;
+    writer.open(utils::cpsim_path + "/Log/2017_13400_read_write.log", std::ios::app);
+    if(!writer) {
+        std::cout << "ERROR : Invalid path to open the file.\n";
+        return;
+    } else if(isEmpty) {
+        writer << "[TASK NAME][TIME][READ/WRITE][DATA LENGTH][RAW DATA]\n";
+    }
+    writer << task_name;
+    writer.close();
+    
+    utils::mtx_data_log.unlock();
+}
+
+std::vector<LogData> log_data_list; 
+
+void Logger::_2017_13400_real_cyber_event_logger(long long time, int job_id, std::string event_type){
+    int jnum = 0;
+    utils::mtx_data_log.lock();
+
+    if(!event_type.compare("STARTED")) {
+        jnum = global_object::start_vec[job_id];
+        global_object::start_vec[job_id]++;
+    } else if(!event_type.compare("FINISHED")) {
+        jnum = global_object::finish_vec[job_id];
+        global_object::finish_vec[job_id]++;
+    } else if(!event_type.compare("FINISHED (DEADLINE MISSED)")) {
+        jnum = global_object::finish_vec[job_id];
+        global_object::finish_vec[job_id]++;
+    } else if(!event_type.compare("RELEASED")) {
+        jnum = global_object::release_vec[job_id];
+        global_object::release_vec[job_id]++;
+    }
+
+    utils::mtx_data_log.unlock();
+    
+    log_data_list.push_back({time, job_id, jnum, event_type});
+}
+
+
+bool data_comparator_with_time(const LogData* a, const LogData* b){  
+    return a->time < b->time;
+}
+
+void Logger::update() {
+    utils::mtx_data_log.lock();
+
+    std::ifstream checker("/home/sjade/CPSim_Linux_Generalized/Log/2017_13400_event.log");
+    bool isempty = (!checker) || (checker.peek() == std::ifstream::traits_type::eof());
+    checker.close();
+
+    std::ofstream writer;
+    writer.open(utils::cpsim_path + "/Log/2017_13400_event.log", std::ios::app);
+    if(!writer) return;
+    else if(isempty) {
+        writer << "[TIME][JOB ID][EVENT TYPE]\n";
+    }
+
+    int tmp;
+    for(int i = 0 ; i < log_data_list.size(); i++) {
+        char* data;
+        tmp = asprintf(&data, "%-6lluJ%d%-6d%-12s\n", 
+                        log_data_list.at(i).time,
+                        log_data_list.at(i).job_id,
+                        log_data_list.at(i).jnum,
+                        log_data_list.at(i).event_type.c_str()
+            );
+        if(tmp < 0) return;
+        writer << data;
+    }
+    writer.close();
+
+    utils::mtx_data_log.unlock();
 }
