@@ -152,6 +152,7 @@ private:
     std::vector<double> m_current_time_buffer;
     std::vector<EventUnit> m_event_buffer; // vector to hold event logs
 
+    
 public:
     /**
      * Constructors and Destructors
@@ -196,6 +197,11 @@ public:
     void _2017_13400_task_read_write_logger(std::string); 
     void _2017_13400_real_cyber_event_logger(long long, int, std::string);  
     void update(); 
+
+    void _2018_14000_task_read_write_logger(std::string);   // my logger function for case #1
+    void _2018_14000_real_cyber_event_logger(long long, int, std::string);  // my logger function for case #2
+    //bool time_compare(const LogInfo*, const LogInfo*); //comparator for sorting log messages by time
+    void write_to_event_log();  // to sort log messages and write to file at end of run_simulation
 };
 
 #endif

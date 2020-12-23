@@ -167,6 +167,10 @@ namespace global_object
     inline int release_vec[6] = {0};
     inline int finish_vec[6] = {0};
     inline int start_vec[6] = {0};
+
+    inline int release_jobnum[6] = {0};
+    inline int start_jobnum[6] = {0};
+    inline int finish_jobnum[6] = {0};
 }
 #ifdef CANMODE__
 namespace can
