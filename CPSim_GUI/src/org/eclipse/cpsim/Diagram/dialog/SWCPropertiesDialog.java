@@ -220,6 +220,14 @@ public class SWCPropertiesDialog extends PropertiesDialog {
 
 		typeText = swc.getReadCon();
 		typeTimer.setText("Timer");
+		typeTimer.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event e) {
+				typeText = "Timer";
+			}
+		});
+
+
+
 
 		// Period
 		Label periodLabel = new Label(parent, SWT.NONE);
