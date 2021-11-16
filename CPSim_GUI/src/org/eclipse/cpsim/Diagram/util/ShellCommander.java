@@ -14,7 +14,8 @@ public class ShellCommander {
 		StringBuffer theRun = null;
 		Runtime runtime = Runtime.getRuntime();
 	 	Process process = runtime.exec(strings);
-		BufferedReader reader = new BufferedReader();
+		BufferedReader reader = new BufferedReader(
+			new InputStreamReader(process.getInputStream()));
 
 
 
