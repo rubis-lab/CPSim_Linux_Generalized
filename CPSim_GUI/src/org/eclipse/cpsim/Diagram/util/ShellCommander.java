@@ -25,4 +25,6 @@ public class ShellCommander {
 		System.out.println(theRun);
 		reader.close();
 		process.waitFor();
+		return theRun;
+	}
 }
