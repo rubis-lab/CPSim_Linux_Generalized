@@ -255,7 +255,7 @@ public class SWCPropertiesDialog extends PropertiesDialog {
 		Label registrationLabel = new Label(parent, SWT.NONE);
 		registrationLabel.setText("Registration Order:");
 
-
+		registerText = new Text(parent, SWT.BORDER);
 
 		// WCET
 		Label wcetLabel = new Label(parent, SWT.NONE);
