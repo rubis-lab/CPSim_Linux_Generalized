@@ -251,6 +251,9 @@ public class SWCPropertiesDialog extends PropertiesDialog {
 		deadlineText.setEditable(true);
 		deadlineText.setLayoutData(data);
 
+		// Period
+
+
 		// WCET
 		Label wcetLabel = new Label(parent, SWT.NONE);
 		wcetLabel.setText("WCET (ms):");
