@@ -23,5 +23,6 @@ public class ShellCommander {
        			theRun = output.append(buffer, 0, read);
 		}
 		System.out.println(theRun);
+		reader.close();
 
 }
