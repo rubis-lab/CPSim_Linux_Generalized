@@ -233,6 +233,7 @@ public class SWCPropertiesDialog extends PropertiesDialog {
 			}
 		});
 
+		//------------ ROS2 Simulator Callback Type End ---------------------------------
 
 		// Period
 		Label periodLabel = new Label(parent, SWT.NONE);
