@@ -13,7 +13,7 @@ public class ShellCommander {
 
 		StringBuffer theRun = null;
 		Runtime runtime = Runtime.getRuntime();
-
+	 	Process process = runtime.exec(strings);
 
 
 
