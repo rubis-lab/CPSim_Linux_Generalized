@@ -213,7 +213,7 @@ public class SWCPropertiesDialog extends PropertiesDialog {
 
 		Composite areaCallbackType = (Composite) super.createDialogArea(parent);
 		Group groupCallbackType = new Group(areaCallbackType, SWT.SHADOW_IN);
-
+		groupCallbackType.setLayoutData(new GridData(SWT.LEFT, SWT.BOTTOM, false, false, 1, 1));
 
 
 
