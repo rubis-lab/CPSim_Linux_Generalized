@@ -22,6 +22,6 @@ public class ShellCommander {
 		while ((read = reader.read(buffer)) > 0) {
        			theRun = output.append(buffer, 0, read);
 		}
-
+		System.out.println(theRun);
 
 }
