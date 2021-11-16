@@ -227,7 +227,7 @@ public class SWCPropertiesDialog extends PropertiesDialog {
 		});
 
 		typeSubscriber.setText("Subscriber");
-
+		typeSubscriber.addListener(SWT.Selection, new Listener()
 
 
 		// Period
