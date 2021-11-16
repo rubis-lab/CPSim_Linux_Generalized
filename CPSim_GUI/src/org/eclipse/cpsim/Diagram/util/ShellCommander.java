@@ -19,6 +19,9 @@ public class ShellCommander {
 		int read;
 		char[] buffer = new char[4096];
 		StringBuffer output = new StringBuffer();
+		while ((read = reader.read(buffer)) > 0) {
+       			theRun = output.append(buffer, 0, read);
+		}
 
 
 }
