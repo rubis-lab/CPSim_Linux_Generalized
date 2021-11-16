@@ -11,4 +11,6 @@ public class ShellCommander {
 	}
 	public static StringBuffer shellCmdTopic(String[] strings) throws Exception {
 
+		StringBuffer theRun = null;
+
 }
