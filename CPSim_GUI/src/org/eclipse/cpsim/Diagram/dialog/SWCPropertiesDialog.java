@@ -257,8 +257,7 @@ public class SWCPropertiesDialog extends PropertiesDialog {
 
 		registerText = new Text(parent, SWT.BORDER);
 		registerText.setEditable(true);
-
-
+		registerText.setLayoutData(data);
 
 		// WCET
 		Label wcetLabel = new Label(parent, SWT.NONE);
