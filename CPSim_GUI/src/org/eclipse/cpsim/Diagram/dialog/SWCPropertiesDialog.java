@@ -252,7 +252,7 @@ public class SWCPropertiesDialog extends PropertiesDialog {
 		deadlineText.setLayoutData(data);
 
 		// Period
-
+		Label registrationLabel = new Label(parent, SWT.NONE);
 
 		// WCET
 		Label wcetLabel = new Label(parent, SWT.NONE);
