@@ -18,7 +18,7 @@ public class ShellCommander {
 			new InputStreamReader(process.getInputStream()));
 		int read;
 		char[] buffer = new char[4096];
-
+		StringBuffer output = new StringBuffer();
 
 
 }
