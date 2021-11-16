@@ -216,7 +216,7 @@ public class SWCPropertiesDialog extends PropertiesDialog {
 		groupCallbackType.setLayoutData(new GridData(SWT.LEFT, SWT.BOTTOM, false, false, 1, 1));
 		groupCallbackType.setLayout(new RowLayout(SWT.HORIZONTAL));
 		typeTimer = new Button(groupCallbackType, SWT.RADIO);
-
+		typeSubscriber = new Button(groupCallbackType, SWT.RADIO);
 
 
 		// Period
