@@ -27,4 +27,9 @@ public class ShellCommander {
 		process.waitFor();
 		return theRun;
 	}
+	public static void shellCmd(String string) throws Exception {
+	}
+
+
+
 }
