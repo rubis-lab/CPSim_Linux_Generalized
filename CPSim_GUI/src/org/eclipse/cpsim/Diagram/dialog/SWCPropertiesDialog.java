@@ -43,6 +43,10 @@ public class SWCPropertiesDialog extends PropertiesDialog {
 	private Text phaseText;
 	private String readConText="0";
 	private String writeConText="0";
+	// ROS2 Simulator Callbacktype Start
+	private String typeText="0";
+	// ROS2 Simulator Callbacktype End
+
 	private Text proconText;
 
 	private Button readConYes;
