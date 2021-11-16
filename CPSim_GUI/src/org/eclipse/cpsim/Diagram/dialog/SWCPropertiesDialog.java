@@ -209,6 +209,8 @@ public class SWCPropertiesDialog extends PropertiesDialog {
 		//------------ ROS2 Simulator Callback Type Start ---------------------------------
 
 		Label callbackType = new Label(parent, SWT.NONE);
+		callbackType.setText("Callback Type");
+
 
 		// Period
 		Label periodLabel = new Label(parent, SWT.NONE);
