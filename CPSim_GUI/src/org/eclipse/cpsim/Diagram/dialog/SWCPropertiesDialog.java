@@ -173,6 +173,7 @@ public class SWCPropertiesDialog extends PropertiesDialog {
 		idText.setText(id == null ? Message.DEFAULT_CAN_NAME : id);
 		periodText.setText("" + swc.getPeriod());
 		deadlineText.setText("" + swc.getDeadline());
+		registerText.setText("" + swc.getPeriod());
 		wcetText.setText("" + swc.getWcet());
 		bcetText.setText("" + swc.getBcet());
 		phaseText.setText("" + swc.getPhase());
