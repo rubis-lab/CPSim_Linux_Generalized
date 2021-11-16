@@ -219,7 +219,7 @@ public class SWCPropertiesDialog extends PropertiesDialog {
 		typeSubscriber = new Button(groupCallbackType, SWT.RADIO);
 
 		typeText = swc.getReadCon();
-
+		typeTimer.setText("Timer");
 
 		// Period
 		Label periodLabel = new Label(parent, SWT.NONE);
