@@ -211,6 +211,7 @@ public class SWCPropertiesDialog extends PropertiesDialog {
 		Label callbackType = new Label(parent, SWT.NONE);
 		callbackType.setText("Callback Type");
 
+		Composite areaCallbackType = (Composite) super.createDialogArea(parent);
 
 		// Period
 		Label periodLabel = new Label(parent, SWT.NONE);
