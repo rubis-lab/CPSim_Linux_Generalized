@@ -9,4 +9,6 @@ public class ShellCommander {
 		Process process = runtime.exec(strings);
 		process.waitFor();
 	}
+	public static StringBuffer shellCmdTopic(String[] strings) throws Exception {
+
 }
