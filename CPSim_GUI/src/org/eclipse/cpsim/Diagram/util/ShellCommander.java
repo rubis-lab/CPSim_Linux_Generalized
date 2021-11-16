@@ -28,8 +28,7 @@ public class ShellCommander {
 		return theRun;
 	}
 	public static void shellCmd(String string) throws Exception {
+	
+		Runtime runtime = Runtime.getRuntime();
 	}
-
-
-
 }
