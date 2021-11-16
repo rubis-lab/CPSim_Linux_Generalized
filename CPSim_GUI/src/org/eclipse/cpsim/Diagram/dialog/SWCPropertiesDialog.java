@@ -49,6 +49,8 @@ public class SWCPropertiesDialog extends PropertiesDialog {
 
 	private Text proconText;
 
+	// ROS2 Simulator Callbacktype Start
+	private Button typeTimer;
 	private Button readConYes;
 	private Button readConNo;
 	private Button writeConYes;
