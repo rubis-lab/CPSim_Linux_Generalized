@@ -31,5 +31,6 @@ public class ShellCommander {
 	
 		Runtime runtime = Runtime.getRuntime();
 		Process process = runtime.exec(string);
+		process.waitFor();
 	}
 }
