@@ -37,6 +37,7 @@ public class SWCPropertiesDialog extends PropertiesDialog {
 
 	private Text periodText;
 	private Text deadlineText;
+	private registerText;
 	private Text wcetText;
 	private Text bcetText;
 	private Text phaseText;
