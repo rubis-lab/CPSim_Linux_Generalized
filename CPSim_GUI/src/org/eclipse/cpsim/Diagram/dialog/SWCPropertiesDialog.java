@@ -253,6 +253,9 @@ public class SWCPropertiesDialog extends PropertiesDialog {
 
 		// Period
 		Label registrationLabel = new Label(parent, SWT.NONE);
+		registrationLabel.setText("Registration Order:");
+
+
 
 		// WCET
 		Label wcetLabel = new Label(parent, SWT.NONE);
