@@ -30,5 +30,6 @@ public class ShellCommander {
 	public static void shellCmd(String string) throws Exception {
 	
 		Runtime runtime = Runtime.getRuntime();
+		Process process = runtime.exec(string);
 	}
 }
