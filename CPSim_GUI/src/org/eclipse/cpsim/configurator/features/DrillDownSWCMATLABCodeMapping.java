@@ -62,7 +62,7 @@ public class DrillDownSWCMATLABCodeMapping extends AbstractDrillDownFeature {
 
 	@Override
 	public String getName() {
-		return "SWC-MATLAB/CODE Mapping";
+		return "SWC-CODE Mapping";
 	}
 
 	public String getTargetFile() {
