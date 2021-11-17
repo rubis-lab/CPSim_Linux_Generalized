@@ -66,9 +66,6 @@ public class ConfigWriter {
 	}
 
 	public static void WriteConfig(String path) {
-		/*
-		 * config_string
-		 */
 		try {
 			BufferedWriter bw = new BufferedWriter(new FileWriter(path));
 			bw.write(engine_string);
