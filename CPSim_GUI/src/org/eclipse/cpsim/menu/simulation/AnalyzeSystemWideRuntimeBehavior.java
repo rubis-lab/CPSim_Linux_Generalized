@@ -161,9 +161,6 @@ class SchedulingViewer extends JPanel {
 
 			// Reverse order of axises
 			/*
-			 * axises[nNodes-i-1]; axises[nNodes-i-1] = temp; }
-			 */
-			/*
 			 * for(int i=0; i<nNodes; ++i) System.out.print(axises[i] + " ");
 			 */
 		} catch (FileNotFoundException e) {
