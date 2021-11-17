@@ -58,7 +58,6 @@ public class DevelopmentSetting extends AbstractHandler {
 			return cpsim_path;
 
 		} catch (Exception e) {
-			// e.printStackTrace();
 			return null;
 		}
 
