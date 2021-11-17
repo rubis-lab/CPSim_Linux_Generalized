@@ -367,7 +367,6 @@ public class AnalyzeSystemWideRuntimeBehavior extends AbstractHandler {
 			return null;
 		}
 
-		// System.out.println("System-Wide: "+state.getValue());
 		if (!(boolean) state.getValue())
 			return null;
 
