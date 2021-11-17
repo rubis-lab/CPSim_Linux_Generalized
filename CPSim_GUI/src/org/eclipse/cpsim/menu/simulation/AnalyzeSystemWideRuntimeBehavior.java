@@ -128,7 +128,6 @@ class SchedulingViewer extends JPanel {
 	String[] axises;
 
 	/* For test */
-	TaskSeriesCollection tsCollection2 = new TaskSeriesCollection();
 	TaskSeries[] ts2;
 	/* test end */
 
