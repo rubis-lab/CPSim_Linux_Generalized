@@ -52,7 +52,6 @@ public class AnalyzeStaticMemory extends AbstractHandler {
 			return line.trim();
 
 		} catch (Exception e) {
-			// e.printStackTrace();
 			return null;
 		}
 
