@@ -67,7 +67,6 @@ public class ConfigWriter {
 
 	public static void WriteConfig(String path) {
 		/*
-		 * default config path: getCPSIMenv() + "\\" + folder_string + "\\" +
 		 * config_string
 		 */
 		try {
