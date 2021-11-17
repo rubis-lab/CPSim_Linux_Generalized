@@ -81,8 +81,7 @@ public class CustomImageProvider extends AbstractImageProvider {
 	public static final int DUAL_WIDTH = 170;
 	public static final int DUAL_HEIGHT = 64;
 	/*
-	 * public static final int SWC_WIDTH = 113; public static final int SWC_HEIGHT =
-	 * 88;
+	 * public static final int SWC_WIDTH = 113; 
 	 */
 
 	@Override
