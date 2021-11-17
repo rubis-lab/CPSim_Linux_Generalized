@@ -159,10 +159,6 @@ class SchedulingViewer extends JPanel {
 
 			Arrays.sort(axises);
 
-			// Reverse order of axises
-			/*
-			 * for(int i=0; i<nNodes; ++i) System.out.print(axises[i] + " ");
-			 */
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
