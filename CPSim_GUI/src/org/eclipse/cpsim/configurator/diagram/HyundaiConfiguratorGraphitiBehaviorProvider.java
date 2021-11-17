@@ -270,7 +270,6 @@ public class HyundaiConfiguratorGraphitiBehaviorProvider extends DefaultToolBeha
 						String cpsimenv = null;
 						try {
 							String line = System.getenv(env_string);
-//							String line = "/home/rubis/Re-implemented-CPSim/Engine/";
 
 							// check there are several paths
 							if (line.indexOf(";") < 0) {
