@@ -113,7 +113,6 @@ public class AutomaticallyGenerateECUCode extends AbstractHandler {
 
 		/* Selected result */
 		if (dia.open() == Window.OK) {
-			// (ECU)dia.getResult()[0] : Selected ECU
 
 			// get cmdPath
 			String cpsim_env = getCPSIMenv();
