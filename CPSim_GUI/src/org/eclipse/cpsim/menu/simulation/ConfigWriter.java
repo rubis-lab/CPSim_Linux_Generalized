@@ -41,9 +41,7 @@ public class ConfigWriter {
 					"Check the following environment variable: " + env_string);
 			return false;
 		}
-		/*
-		 * config_string
-		 */
+
 		File f = new File(path);
 
 		if (f.isFile()) {
