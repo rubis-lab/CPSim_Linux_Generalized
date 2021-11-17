@@ -159,7 +159,6 @@ public class AnalyzeStaticMemory extends AbstractHandler {
 
 		public void init() {
 			/*
-			 * Button btn = new Button("Close"); btn.addActionListener(new ActionListener()
 			 * { public void actionPerformed(ActionEvent e) { Button b =
 			 * (Button)e.getSource(); Frame f = (Frame)b.getParent(); f.dispose(); } });
 			 * 
