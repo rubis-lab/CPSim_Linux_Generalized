@@ -42,7 +42,6 @@ public class ConfigWriter {
 			return false;
 		}
 		/*
-		 * default config path: getCPSIMenv() + "\\" + folder_string + "\\" +
 		 * config_string
 		 */
 		File f = new File(path);
