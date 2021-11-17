@@ -159,7 +159,6 @@ public class AnalyzeStaticMemory extends AbstractHandler {
 
 		public void init() {
 			/*
-			 * (Button)e.getSource(); Frame f = (Frame)b.getParent(); f.dispose(); } });
 			 * 
 			 * panelHolder[x-1][0].add(btn); panelHolder[x-1][0].setVisible(true);
 			 */
