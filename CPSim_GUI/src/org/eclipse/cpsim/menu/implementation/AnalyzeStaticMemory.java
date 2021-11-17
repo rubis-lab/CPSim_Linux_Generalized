@@ -155,7 +155,6 @@ public class AnalyzeStaticMemory extends AbstractHandler {
 					add(panelHolder[i][j]);
 				}
 			}
-			// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		}
 
 		public void init() {
