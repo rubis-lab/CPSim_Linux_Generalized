@@ -51,7 +51,6 @@ public class AutomaticallyGenerateECUCode extends AbstractHandler {
 			return line.trim();
 
 		} catch (Exception e) {
-			// e.printStackTrace();
 			return null;
 		}
 
