@@ -30,7 +30,6 @@ public class ConfigWriter {
 			return line.trim();
 
 		} catch (Exception e) {
-			// e.printStackTrace();
 			return null;
 		}
 
