@@ -2,7 +2,7 @@
 ### Last updated 2023-01-13 
 ### Author Seonghyeon Park
 
-## The open source project
+## The CPSim is open source project. it stands for Cyber Physical Simulator.
 
    
    
