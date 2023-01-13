@@ -1,4 +1,11 @@
+# CPSim Linux Generalized 
+### Last updated 2023-01-13 
+### Author Seonghyeon Park
 
+## The open source project
+
+   
+   
     // SHARED OBJECT VARIABLE SHARING TEST
     // NAME OF SHARED VARIABLES: shared1, shared2, shared3, shared4
     // dlerror();
